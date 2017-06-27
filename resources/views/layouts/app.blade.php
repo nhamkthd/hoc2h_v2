@@ -10,14 +10,15 @@
 
     <!--  bootstrap styles -->
     <link  href="{{asset('css/bootstrap/bootstrap.min.css')}}" rel="stylesheet">
-    <link  href="{{asset('node_modules/angular-material/angular-material.min.css')}}" rel="stylesheet">
     <link  href="{{asset('css/bootstrap/animate.min.css')}}" rel="stylesheet">
     <link  href="{{asset('css/bootstrap/bootstrap-dropdownhover.min.css')}}" rel="stylesheet">
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
+    <script src="{{asset('js/flugin/angular.min.js')}}"></script>
 </head>
-<body ng-ap = "myApp">
+<body ng-ap = "myApp" ng-controller="myCtrl">
     <div id="app">
         <nav class="navbar navbar-default fixed-top">
             <div class="container">
@@ -40,8 +41,8 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         <li><a href="#nothing">Lớp học</a></li>
-                        <li><a href="#nothing">Đề Thi</a></li>
-                        <li><a href="#nothing">Hỏi Đáp</a></li>
+                        <li><a href="{{url('tests/')}}">Đề Thi</a></li>
+                        <li><a href="{{url('questions/')}}">Hỏi Đáp</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-expanded="false" >Danh Mục <span class="caret"></span></a>
                             <ul class="dropdown-menu dropdownhover-bottom" role="menu" >
@@ -66,8 +67,8 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
+                            <li><a href="{{ route('login') }}">Đăng Nhập</a></li>
+                            <li><a href="{{ route('register') }}">Đăng Ký</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -76,10 +77,13 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
+                                        <a href="#nothing">Trang cá nhân</a>
+                                    </li>
+                                    <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Logout
+                                           Đăng xuất
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -95,20 +99,18 @@
         </nav>
         @yield('content')
     </div>
+
     <!-- Scripts -->
     <script src="{{asset('js/flugin/jquery-3.2.1.min.js')}}"></script>
     <script src="{{asset('js/flugin/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/flugin/bootstrap/bootstrap-dropdownhover.min.js')}}"></script>
-    <script src="{{asset('js/flugin/angular.min.js')}}"></script>
-    <script src="{{asset('node_modules/angular-material/angular-material.min.js')}}"></script>
-    <script src="{{asset('node_modules/angular-animate/angular-animate.min.js')}}"></script>
-    <script src="{{asset('node_modules/angular-aria/angular-aria.min.js')}}"></script>
+
+     <!--  angular js framework -->
+   
     <script src="{{ asset('js/app.js') }}"></script>
+
 </body>
     <script type="text/javascript">
-            var app = angular.module('myApp',['ngMaterial'])
-                .run(function(){
-                    console.log("hello angular-material");
-                });
+            
     </script>
 </html>
