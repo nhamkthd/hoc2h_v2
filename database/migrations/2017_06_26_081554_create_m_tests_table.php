@@ -13,6 +13,7 @@ class CreateMTestsTable extends Migration
      */
     public function up()
     {
+        //table multichoice test
         Schema::create('m_tests', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('test_id')->unsigned();
@@ -20,6 +21,7 @@ class CreateMTestsTable extends Migration
             $table->text('conetent');
             $table->text('explan')->nullable();
             $table->integer('state')->default(0);//this is attribute to check question creating 
+            $table->integer('incorrect_id')->nullable();
             $table->timestamps();
         });
     }

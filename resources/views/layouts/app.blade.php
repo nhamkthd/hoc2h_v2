@@ -4,21 +4,24 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'Hoc2H') }}</title>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <!--  bootstrap styles -->
+    <link  href="{{asset('css/bootstrap/bootstrap.min.css')}}" rel="stylesheet">
+    <link  href="{{asset('node_modules/angular-material/angular-material.min.css')}}" rel="stylesheet">
+    <link  href="{{asset('css/bootstrap/animate.min.css')}}" rel="stylesheet">
+    <link  href="{{asset('css/bootstrap/bootstrap-dropdownhover.min.css')}}" rel="stylesheet">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body ng-ap = "myApp">
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-default fixed-top">
             <div class="container">
                 <div class="navbar-header">
-
                     <!-- Collapsed Hamburger -->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                         <span class="sr-only">Toggle Navigation</span>
@@ -28,17 +31,37 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a style="color: #1C2331; font-size: 18px;" class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-animations" data-hover="dropdown"  data-animations="fadeInDown">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        <li><a href="#nothing">Lớp học</a></li>
+                        <li><a href="#nothing">Đề Thi</a></li>
+                        <li><a href="#nothing">Hỏi Đáp</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-expanded="false" >Danh Mục <span class="caret"></span></a>
+                            <ul class="dropdown-menu dropdownhover-bottom" role="menu" >
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-expanded="false" ><span class="caret"></span>Kiến Thức THPT</a>
+                                    <ul class="dropdown-menu dropdownhover-left " role="menu" >
+                                        <li><a href="#nothing">Lớp 12</a></li>
+                                        <li><a href="#nothing">Lớp 11</a></li>
+                                        <li><a href="#nothing">Lớp 10</a></li>
+                                          {{-- @foreach($superCategories as $superCategory)
+                                          @include('layouts.recursive_menu', $superCategory)
+                                          @endforeach --}}
+                                    </ul>
+                                </li>
+                                <li><a href="#nothing">Kiến Thức THCS</a></li>
+                                <li><a href="#nothing">Ngoại Ngữ</a></li>
+                            </ul>
+                        </li>
                     </ul>
-
+                    
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
@@ -70,11 +93,22 @@
                 </div>
             </div>
         </nav>
-
         @yield('content')
     </div>
-
     <!-- Scripts -->
+    <script src="{{asset('js/flugin/jquery-3.2.1.min.js')}}"></script>
+    <script src="{{asset('js/flugin/bootstrap/bootstrap.min.js')}}"></script>
+    <script src="{{asset('js/flugin/bootstrap/bootstrap-dropdownhover.min.js')}}"></script>
+    <script src="{{asset('js/flugin/angular.min.js')}}"></script>
+    <script src="{{asset('node_modules/angular-material/angular-material.min.js')}}"></script>
+    <script src="{{asset('node_modules/angular-animate/angular-animate.min.js')}}"></script>
+    <script src="{{asset('node_modules/angular-aria/angular-aria.min.js')}}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
+    <script type="text/javascript">
+            var app = angular.module('myApp',['ngMaterial'])
+                .run(function(){
+                    console.log("hello angular-material");
+                });
+    </script>
 </html>

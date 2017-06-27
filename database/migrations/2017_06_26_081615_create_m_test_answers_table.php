@@ -13,8 +13,14 @@ class CreateMTestAnswersTable extends Migration
      */
     public function up()
     {
+        //table multichoice test answer
         Schema::create('m_test_answers', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('mtest_id')->unsigned();
+            $table->foreign('mtest_id')->references('id')->on('m_tests')->onDelete('cascade');
+            $table->string('title');
+            $table->integer('order_id');
+            $table->boolean('is_correct')->default(false);
             $table->timestamps();
         });
     }

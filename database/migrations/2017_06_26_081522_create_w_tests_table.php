@@ -20,6 +20,8 @@ class CreateWTestsTable extends Migration
             $table->foreign('test_id')->references('id')->on('tests')->onDelete('cascade');
             $table->text('content');
             $table->text('explan')->nullable();
+            $table->integer('is_document')->default(0);
+            $table->integer('is_document_explan')->default(0);
             $table->timestamps();
         });
     }
