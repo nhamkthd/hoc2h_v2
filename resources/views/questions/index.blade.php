@@ -5,24 +5,25 @@
 	table >tr >td,th {padding: 10px;}
 </style>
 <div class="container" ng-app="hoc2h-quuestion" ng-controller="QuestionController as mCtrl">
-    <div class="row">
-        <div class="col-md-12" style="height:800px;">
-        	<input type="text" name="" ng-model="x">
-        	<input type="text" name="" ng-model="y">
-        	<p>sum = @{{total}}</p>
-			<table >
-				<tr>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Phone</th>
-				</tr>
-				<tr ng-repeat="user in users">
-					<td>@{{user.name}}</td>
-					<td>@{{user.email}}</td>
-					<td>@{{user.phone}}</td>
-				</tr>
-			</table>
-        </div>
-    </div>
+	<md-sidenav
+			class="md-sidenav-left"
+			md-component-id="left"
+			md-is-locked-open="$mdMedia('gt-md')"
+			md-whiteframe="4">
+
+		<md-toolbar class="md-theme-indigo">
+			<h1 class="md-toolbar-tools">Sidenav Left</h1>
+		</md-toolbar>
+		<md-content layout-padding ng-controller="LeftCtrl">
+			<md-button ng-click="close()" class="md-primary" hide-gt-md>
+				Close Sidenav Left
+			</md-button>
+			<p hide show-gt-md>
+				This sidenav is locked open on your device. To go back to the default behavior,
+				narrow your display.
+			</p>
+		</md-content>
+
+	</md-sidenav>
 </div>
 @endsection

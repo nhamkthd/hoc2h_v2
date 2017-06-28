@@ -64,12 +64,12 @@
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" ng-model="accept">Đồng ý với điều khoản sử dụng.
+                                        <input for="checkbox" type="checkbox" ng-model="accept">Đồng ý với điều khoản sử dụng.
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" ng-show="accept">
+                        <div class="form-group" ng-disabled="!accept">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-main">
                                    Đăng ký

@@ -9,84 +9,28 @@
     <title>{{ config('app.name', 'Hoc2H') }}</title>
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
     
 </head>
 <body ng-app = "hoc2h-app">
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{url('/tests')}}">ĐỀ THI</a></li>
-                        <li><a href="{{url('/questions')}}">HỎI ĐÁP</a></li>
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-                                
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                                Logout
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-                        </li>
-                        @endif
-                    </ul>
-                </div>
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools">
+             <md-button class="nav-btn">Hoc2H</md-button>
             </div>
-        </nav>
+        </md-toolbar>
 
         @yield('content')
     </div>
     <!--scripts -->
-   <script src="{{asset('js/flugin/angular.min.js')}}"></script>
+    <script src="{{asset('node_modules/angular/angular.min.js')}}"></script>
+    <script src="{{asset('node_modules/angular-animate/angular-animate.min.js')}}"></script>
+    <script src="{{asset('node_modules/angular-aria/angular-aria.min.js')}}"></script>
+    <script src="{{asset('node_modules/angular-material/angular-material.min.js')}}"></script>
+    <script src="{{asset('node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js')}}"></script>
     <!-- Applycation Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/controllers/question.js') }}"></script>

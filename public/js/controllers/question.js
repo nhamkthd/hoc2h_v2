@@ -16,4 +16,7 @@
 		        $scope.loading = false;
 		    });
 	 });
+	app.controller('LeftCtrl',function () {
+
+	});
 })();
