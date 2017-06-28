@@ -13,6 +13,7 @@ Route::group(['prefix' => 'tests'], function(){
 
 	Route::group(['prefix' => 'api'], function(){
 		//this is group route api angular js
+		Route::get('/users','TestController@listUser');
 	});
 });
 
