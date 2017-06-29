@@ -1,22 +1,16 @@
 (function(){
 	 var app = angular.module('hoc2h-quuestion', []);
 	 app.run(function(){
-	 	console.log('hello questions');
+	 	console.log('hello Question');
 	 });
 	 app.controller('QuestionController',function($http, $scope){
-	 	$scope.total = $scope.x + $scope.y;
-	 	$scope.users = {};
-	 	$scope.header = "heloo"
-	 	$scope.loading = true;
-	 	$http.get('tests/api/users').
-	 		then(function(response) {
-	 			
-		        $scope.users = response.data;
-		        console.log($scope.users);
-		        $scope.loading = false;
-		    });
-	 });
-	app.controller('LeftCtrl',function () {
-
-	});
+	 	$scope.tab = 2;
+	 	$scope.selectTab = function(setTab){
+	 		console.log(setTab);
+	 		this.tab = setTab;
+	 	}
+	 	$scope.isSelected = function(checkTab) {
+	 		return this.tab === checkTab;
+	 	}
+	 });	
 })();
