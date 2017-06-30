@@ -2,20 +2,13 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
       <a class="navbar-brand" href="#">Hoc2H</a>
     </div>
-
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div >
       <ul class="nav navbar-nav">
-        <li><a href="{{url('tests/')}}">Đề Thi <span class="sr-only">(current)</span></a></li>
-        <li><a href="{{url('questions/')}}">Hỏi Đáp </a></li>
+        <li><a href="{{route('tests')}}">Đề Thi <span class="sr-only">(current)</span></a></li>
+        <li><a href="{{route('questions')}}">Hỏi Đáp </a></li>
         <li><a href="#">Tài liệu</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Danh Mục<span class="caret"></span></a>
@@ -43,8 +36,13 @@
                   <li role="separator" class="divider"></li>
                   <li><a href="#">Cài đặt tài khoản</a></li>
                   <li><a href="#">Cài Đặt thông báo</a></li>
-                  <li><a href="{{route('logout') }}">Thoát</a></li>
-                </ul>
+                  <li><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">Đăng xuất</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                     {{ csrf_field() }}
+                   </form>
+                 </li>
+               </ul>
               </li>
             @else
               <li><a href="{{url('/login')}}">Đăng nhập</a></li>

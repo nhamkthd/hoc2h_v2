@@ -1,40 +1,49 @@
-					<form class="form-horizontal" method="POST" accept="">
-						<fieldset>
-							<!-- Form Name -->
-							<legend>Đăng câu hỏi</legend>
-							<!-- Select Basic -->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="selectbasic">Thể loại</label>
-								<div class="col-md-5">
-									<select id="selectbasic" name="selectbasic" class="form-control">
-										<option value="1">Văn Học</option>
-										<option value="2">THPT</option>
-									</select>
-								</div>
-							</div>
-							<!-- Text input-->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="title">Tiêu đề</label>  
-								<div class="col-md-8">
-									<input id="title" name="title" type="text" placeholder="Tiêu đề" class="form-control input-md" required="">
-
-								</div>
-							</div>
-							<!-- Textarea -->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="textarea">Nội dung</label>
-								<div class="col-md-8">                     
-									<textarea class="form-control" id="textarea" name="textarea"  placeholder="Nội dung"></textarea>
-								</div>
-							</div>
-							<!-- Button (Double) -->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="cancel"></label>
-								<div class="col-md-8">
-								<button id="cancel" name="cancel" class="btn btn-default">Huỷ bỏ</button>
-								<button id="submit" name="submit" class="btn btn-main">Đăng lên</button>
-								</div>
-							</div>
-						</fieldset>
-					</form>
+<div class="row">
+	<form name="frmQuestion" novalidate="" > 
+		<legend class="text-center">Đăng câu hỏi</legend>
+		<div class="form-group col-md-12">
+			<div class="row">
+				<label class="control-label col-md-10 col-md-offset-1" for="selectbasic">Thể loại</label>
+				<div class="col-md-8  col-md-offset-1">
+					<select class="form-control" 
+					    ng-model="category_id">
+					    <option>--</option>
+					    <option value="1">Kiến thức THPT</option>
+					    <option value="2">Kiến thức THCS</option>
+					</select>
 				</div>
+			</div>
+		</div>
+		<div class="form-group col-md-12">
+			<div class="row">
+				<label class="control-label col-md-10 col-md-offset-1" for="selectbasic">Tiêu đề</label>
+				<div class="col-md-10  col-md-offset-1">
+					<input id="title" name="title" type="text" ng-model="title" class="form-control input-md" required >
+					<span class="help-inline danger-color" 
+	                      ng-show="frmQuestion.title.$invalid && frmQuestion.title.$touched">Tiêu đề không được để trống!</span>
+
+	                @verbatim
+	                	{{input3}}
+	                @endverbatim
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-md-12">
+			<div class="row">
+				<label class="control-label col-md-10 col-md-offset-1" for="selectbasic">Nội dung</label>
+				<div class="col-md-10  col-md-offset-1">
+					<textarea id="question_field" ng-model="content" class="form-control"></textarea>
+					<script>
+						CKEDITOR.replace( 'question_field',{
+							filebrowserUploadUrl: "upload/upload.php" 
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-md-offset-1">
+			<button class="btn btn-default" type="button" ng-click="selectTab(2)">Huỷ bỏ</button>
+			<button class="btn btn-main" type="button" id="submit" ng-click="createSubmit()" >Đăng lên</button>
+		</div>
+	</form>
+</div>

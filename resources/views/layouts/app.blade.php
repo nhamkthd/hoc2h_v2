@@ -9,22 +9,27 @@
         <title>{{ config('app.name', 'Hoc2H') }}</title>
         
         <!-- Styles -->
-        <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap/bootstrap.min.css')}}">
-        <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet"> 
+        <link rel="stylesheet" href="{{asset('css/bootstrap/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('css/font-awesome/css/font-awesome.css') }}"> 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-
+       
+        <!--App style-->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
+
+        <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+       
     </head>
-    <body ng-app = "hoc2h-app">
+    <body>
         <div id="app">
             @include('layouts.navbar')
             @yield('content')
         </div>
         <!--scripts -->
-        <!-- Angular Material Dependencies -->
-        <script src="{{asset('js/flugin/angular.min.js')}}"></script>     
+        <script src="{{asset('js/flugin/angular.min.js')}}"></script> 
         <!-- Applycation Scripts -->
-        <script src="{{ asset('js/app.js') }}"></script>
+        {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
         <script src="{{ asset('js/controllers/question.js') }}"></script>
+        <script src="{{ asset('js/controllers/test.js') }}"></script>
+    </body>
     </body>
 </html>

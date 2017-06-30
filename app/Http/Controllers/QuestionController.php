@@ -7,22 +7,22 @@ use App\Question;
 use Auth;
 class QuestionController extends Controller
 {
-    public function index($id)
+    public function index()
     {
-    	$question = Question::find($id);
-    	return view('questions.index',compact('question'));
+    	return view('questions.index');
     }
 
 
     public function create(Request $request)
     {
     	$question = new Question;
-    	$question->category = $request->category;
+    	$question->categories_id = $request->category_id;
     	$question->user_id = Auth::user()->id;
     	$question->title = $request->title;
     	$question->content = $request->content;
     	$question->save();
-    	// return redirect('')
+       
+    	return response()->json($question);
     }
 
      public function apiGetAll()

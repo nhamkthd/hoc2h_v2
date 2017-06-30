@@ -11,9 +11,9 @@ body{
 .navbar-default .navbar-nav>li >.notification:hover {background-color:#2BBBAD;}
 .navbar-default .dropdown:hover {background-color: #fff;}
 .navbar-default .dropdown:hover .dropdown-menu{display: block;}
-.navbar-default .navbar-nav>li>a {color: #37474F;}
+.navbar-default .navbar-nav>li>a, a.navbar-brand {color: #37474F;}
 /*side bar style */
-.sidebar{background-color: #fafafa; border-right:solid 1px #e0e0e0 ;}
+.sidebar {border-right:solid 1px #e0e0e0 ;}
 .menu-label {font-weight: 700;font-size: 15px;letter-spacing: -.5px;margin-bottom: 1em;color:#757575; text-align: center;}
 .menu-list{list-style-type:none;list-style-position: outside; padding-left: 0px;}
 .menu-list >li{    
@@ -26,14 +26,20 @@ body{
     letter-spacing: -.5px;
 }
 .menu-list >li:hover {background-color:#eceff1 ;}
-a , a:hover, li.active a {text-decoration: none; padding-left: 5px;}
-li > a{font-weight: 400; font-size: 15px;}
-li.active a {color:#2bbbad; font-weight: 600;}
+a {color: #30b1a4;}
+a , a:hover, li.active a {text-decoration: none;}
+li > a{font-weight: 400; font-size: 15px; padding-left: 5px;}
+li.active a {color:#2bbbad; font-weight: 600; margin-left: 10px; text-decoration: blink;}
 .main-content {padding-left: 20px;}
 
+/*list style*/
+.list-group-item {border-left:none; border-right:none;}
+.list-group-item:first-child {border-top:none;}
+.list-group-item:first-child, .list-group-item:last-child {border-radius: 0;}
+.list-group-item > a {font-size: 18;}
 /*input style*/
-.box {border: 1px solid #e6e6e6;border-radius: 0;position: relative; padding: 20px;}
-.form-control{ box-shadow:none; border-color:#bdbdbd; height:35px;}
+.box {border: 1px solid #e6e6e6; border-radius: 0; position: relative; padding: 20px;}
+.form-control{ box-shadow:none; border-color:#bdbdbd; height:35px; border-radius: 0;}
 .form-control:focus{ box-shadow:none; border-color:#00b09c;}
 .form-control-feedback{ line-height:50px;}
 
@@ -74,7 +80,7 @@ li.active a {color:#2bbbad; font-weight: 600;}
     font-size: 15px;
     cursor: pointer;
     outline: none !important;
-    padding: 10px;
+    padding:5px 10px;
     border-radius:4px;
     color: #4d545d;
 }
@@ -101,6 +107,6 @@ a .btn .btn-link {color:#3F729B; }
 .btn-danger:hover {background: #da190b;}
 
 .btn-default {background-color: #fff; border:solid 1px #ddd;} /* Gray */ 
-.btn-default:hover {background: #ddd;}
+.btn-default:hover {background: #ddd;color: #000;}
 
 label {font-weight: 700; margin-bottom: 5px;}
