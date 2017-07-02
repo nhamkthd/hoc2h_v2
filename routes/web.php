@@ -23,6 +23,7 @@ Route::group(['prefix' => 'questions'], function(){
 	Route::get('/','QuestionController@index')->name('questions');
 	Route::get('/question-create','QuestionController@create')->name('showQuestionCreateFrom');
 	Route::get('/question/{id}','QuestionController@showDetail');
+	Route::post('/store','QuestionController@store')->name('storeQuestion');
 	Route::group(['prefix' => 'api'], function(){
 		//this is group route api angular js
 		Route::post('/vote','QuestionController@vote');
