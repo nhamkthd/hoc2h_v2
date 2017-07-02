@@ -18,13 +18,13 @@
 
         <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
          <!--scripts -->
-          <script src="{{asset('js/flugin/jquery-3.2.1.min.js')}}"></script> 
+        <script src="{{asset('js/flugin/jquery-3.2.1.min.js')}}"></script> 
         <script src="{{asset('js/flugin/angular.min.js')}}"></script> 
         <!-- Applycation Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/controllers/question.js') }}"></script>
         <script src="{{ asset('js/controllers/test.js') }}"></script>
-              
+             
         
         <style type="text/css">
             #loading{
@@ -38,8 +38,6 @@
             }
         </style>
 
-
-
     </head>
     <body>
         <div class="loading" id="loading"></div>
@@ -48,7 +46,6 @@
             @include('layouts.navbar')
             @yield('content')
         </div>
-       
     </body>
     </body>
 </html>
