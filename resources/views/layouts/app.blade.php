@@ -17,19 +17,38 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
 
         <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
-       
+         <!--scripts -->
+          <script src="{{asset('js/flugin/jquery-3.2.1.min.js')}}"></script> 
+        <script src="{{asset('js/flugin/angular.min.js')}}"></script> 
+        <!-- Applycation Scripts -->
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/controllers/question.js') }}"></script>
+        <script src="{{ asset('js/controllers/test.js') }}"></script>
+              
+        
+        <style type="text/css">
+            #loading{
+                background: url({{ asset('images/loading.gif') }}) center no-repeat #fff;
+                position: fixed;
+                left: 0px;
+                top: 0px,;
+                width: 100%;
+                height: 100%;
+                z-index: 9999
+            }
+        </style>
+
+
+
     </head>
     <body>
+        <div class="loading" id="loading"></div>
+
         <div id="app">
             @include('layouts.navbar')
             @yield('content')
         </div>
-        <!--scripts -->
-        <script src="{{asset('js/flugin/angular.min.js')}}"></script> 
-        <!-- Applycation Scripts -->
-        {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
-        <script src="{{ asset('js/controllers/question.js') }}"></script>
-        <script src="{{ asset('js/controllers/test.js') }}"></script>
+       
     </body>
     </body>
 </html>

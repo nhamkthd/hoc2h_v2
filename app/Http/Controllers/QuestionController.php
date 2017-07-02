@@ -21,8 +21,7 @@ class QuestionController extends Controller
     	$question->title = $request->title;
     	$question->content = $request->content;
     	$question->save();
-       
-    	return response()->json($question);
+    	return $question;
     }
 
      public function apiGetAll()

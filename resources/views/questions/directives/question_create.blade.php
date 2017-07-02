@@ -18,7 +18,7 @@
 			<div class="row">
 				<label class="control-label col-md-10 col-md-offset-1" for="selectbasic">Tiêu đề</label>
 				<div class="col-md-10  col-md-offset-1">
-					<input id="title" name="title" type="text" ng-model="title" class="form-control input-md" required >
+					<input name="title" type="text" ng-model="title" class="form-control input-md" required >
 					<span class="help-inline danger-color" 
 	                      ng-show="frmQuestion.title.$invalid && frmQuestion.title.$touched">Tiêu đề không được để trống!</span>
 

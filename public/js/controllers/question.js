@@ -13,9 +13,7 @@
 	 		console.log(setTab);
 	 		this.tab = setTab;
 	 	}
-	 	$scope.isSelected = function(checkTab) {
-	 		return this.tab === checkTab;
-	 	}
+	 	
 	 	
 	 	$scope.createSubmit = function(){
 	 		var content = CKEDITOR.instances.question_field.getData();

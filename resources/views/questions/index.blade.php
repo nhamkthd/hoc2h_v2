@@ -47,6 +47,7 @@
 					</ul>
 				</div>
 				<div ng-show="tab === 5">
+
 					@include('questions.directives.question_detail')
 				</div>
 			</div>

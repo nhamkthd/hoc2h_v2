@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->integer('status')->default(1);
             $table->text('description')->nullable();
             $table->string('password');
-            $table->string('code');
+            $table->string('code')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

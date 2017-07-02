@@ -8,10 +8,14 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'tests'], function(){
+Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	Route::get('/','TestController@index')->name('tests');
+	Route::get('create', function() {
+	    return view('tests.create');
+	});
 	Route::group(['prefix' => 'api'], function(){
 		//this is group route api angular js
+		Route::get('/getCategory', 'CategoryController@show');
 	});
 });
 
