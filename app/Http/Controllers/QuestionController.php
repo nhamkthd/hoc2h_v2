@@ -21,13 +21,7 @@ class QuestionController extends Controller
 
     public  function  showDetail($id){
         $question = Question::find($id);
-        $votes_count = $question->votes->count();
-        $answers_count = $question->answers->count();
-        $isVoted = 0;
-        if (Auth::user()->questionVotes->where('question_id',$question->id)->count()) {
-                $isVoted = 1;
-        }
-        return view('questions.directives.question_detail',compact('question','votes_count','answers_count','isVoted'));
+        return view('questions.directives.question_detail',compact('question'));
     }
 
     /**
@@ -48,6 +42,23 @@ class QuestionController extends Controller
      public function apiGetAll()
     {
     	return Question::all();
+    }
+
+    public function apiQuestionWithID(Request $request){
+        $question = Question::find($request->id);
+        $question->votes;
+        $question->answers;
+        $question->user;
+        $answers = array();
+        foreach ($question->answers as $answer) {
+            $answer->user;
+            $answer->comments;
+        }
+         $isVoted = 0;
+        if (Auth::user()->questionVotes->where('question_id',$question->id)->count()) {
+                $isVoted = 1;
+        }
+         return response()->json(array('question'=>$question,'isVoted'=>$isVoted));
     }
 
     public function vote(Request $request){

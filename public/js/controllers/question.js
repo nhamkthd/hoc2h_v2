@@ -1,34 +1,57 @@
 (function(){
 	'use strict';
 	var app = angular.module('hoc2h-question', []);
-	app.run(function(){
-		console.log('hello Question');
+
+	//app services
+	app.factory('questionService',function(){
+		var questionService = {};
+		questionService.user = {};
+		questionService.question = {};
+    	questionService.answers = [];
+
+    	questionService.addAnswers = function(answers) {
+    		angular.forEach(answers, function(answer){
+    			questionService.answers.push(answer);
+    		});
+    	}
+    	return questionService;
 	});
-	 
-	 app.controller('QuestionController',function($http, $scope, $sce,$filter){
-	 	$scope.tab = 1;
-	 	$scope.isShowAnswers = 0;
-	 	$scope.selectTab = function(setTab){
-	 		this.tab = setTab;
+	//main question controller
+	app.controller('QuestionController',function(){
+		this.tab = 1;
+	 	this.setSelectedTab = function(sTab){
+	 		this.tab = sTab;
 	 	}
-	 	$scope.isSelected = function(checkTab) {
-	 		return this.tab === checkTab;
-	 	}
+	})
+
+	//question detail controller
+	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,questionService){
+	 	
 		 
 		$scope.convertHtml = function(htmlText) {
                return $sce.trustAsHtml(htmlText);
         }
 
-	 	$scope.initQuestion = function (question,user,votes_count,answers_count,isVoted) {
-			this.question = question;
-			this.question_author = user;
-			this.question_votes = votes_count;
-			this.question_answers = answers_count;
-			this.isVotedQuestion = isVoted;
+	 	$scope.initQuestion = function (question_id,user) {
+	 		questionService.user = user;
+	 		$scope.user = questionService.user;
+	 		$scope.question ={};
+	 		$http.post('/questions/api/getQuestionInfo/',{id:question_id})
+	 			 .then(function(response){
+	 			 	questionService.question = response.data.question;
+	 			 	$scope.question = questionService.question;
+	 			 	questionService.addAnswers($scope.question.answers);
+	 			 	console.log('Question:',$scope.question);
+	 			 	$scope.question_votes = $scope.question.votes.length;
+	 			 	$scope.question_answers = $scope.question.answers.length;
+					$scope.isVotedQuestion = response.data.isVoted;
+	 			 },function(error){
+	 			 	console.log(error);
+	 		 });
 		}
 
 		$scope.voteQuestion = function(){
-			$http.post('/questions/api/vote',{question_id:this.question.id,isVoted:this.isVotedQuestion})
+			$http.post('/questions/api/vote',{question_id:$scope.question.id,isVoted:$scope.isVotedQuestion})
 	 			 .then(function(response){
 	 			 	console.log(response);
 	 			 	$scope.isVotedQuestion = response.data;
@@ -40,34 +63,30 @@
 
 		}
 
-		$scope.answer = function(){
-			$scope.isShowAnswers = 1;
-			$scope.answers = [];
-			$http.post('/questions/api/answers/',{question_id: this.question.id})
+		$scope.addAnswer = function(){
+			var answer_content = CKEDITOR.instances.answer_field.getData();
+			$http.post('/questions/api/answers/',{question_id:$scope.question.id,content:answer_content})
 	 			 .then(function(response){
-	 			 	$scope.answers = response.data;
+	 			 	console.log(response.data);
+	 			 	$scope.question.answers.push(response.data);
+	 			 	$scope.question_answers++;
+	 			 	CKEDITOR.instances.answer_field.setData('');
 	 			 },function(error){
 	 			 	console.log(error);
 	 		 });
 		}
 	 });
 
-	 app.controller('AnswerController',function($rootScope, $scope,$http){
+	//answers controller
+	 app.controller('AnswerController',function($scope,$http,questionService){
 	 	$scope.isShowComments = 0;
-	 	$scope.isVotedAnswer = 0;
-	 	$scope.isVotedComment = 0;
-
+	 	$scope.user = questionService.user;
+	 	$scope.answers = questionService.answers;
+	 	console.log('user:',$scope.user);
+	 	console.log('answers:',$scope.answers);
+	 	
 	 	$scope.comments = function(answer_id){
-	 		console.log('click...');
-	 		$scope.isShowComments = 1;
-	 		$scope.coments = [];
-	 		$http.post('/questions/api/answer/comments',{answer_id:answer_id})
-	 			 .then(function(response){
-	 			 	console.log(response.data);
-	 			 	$scope.coments = response.data;
-	 			 },function(error){
-	 			 	console.log(error);
-	 		 });
 	 	}
 	 });
+
 })();

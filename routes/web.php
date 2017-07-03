@@ -26,8 +26,11 @@ Route::group(['prefix' => 'questions'], function(){
 	Route::post('/store','QuestionController@store')->name('storeQuestion');
 	Route::group(['prefix' => 'api'], function(){
 		//this is group route api angular js
+		Route::post('/getQuestionInfo','QuestionController@apiQuestionWithID');
 		Route::post('/vote','QuestionController@vote');
-		Route::post('/answers','AnswerController@index');
+
+		Route::post('/answers','AnswerController@store');
+		Route::post('/answer/check-vote','AnswerController@checkVote');
 		Route::post('/answer/comments','AnswerController@comments');
 	});
 });

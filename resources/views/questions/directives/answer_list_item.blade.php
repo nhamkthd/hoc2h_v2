@@ -5,16 +5,16 @@
 	</span>
 	<div class="media-body">
 		<div class="media-heading">
-			<a href class="default-color">Aries1992</a>
+			<a href class="default-color">{{answer.user.user_name}}</a>
 			<small class="pull-right"> 11 phút trước</small>
 		</div>
 		<div class="">
-			{{answer.content}}
+			<p class="answer-body" ng-bind-html="convertHtml(answer.content)">{{answer.content}}</p>
 		</div>
 		<div class=" post-action">
 			<ul class="nav nav-pills " role="tablist">
-				<li ng-show ="isVotedAnswer == 0"><a href ng-click="voteAnswer()"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Thích <span class="badge ">{{question_votes}}</span> </a></li>
-				<li ng-show ="isVotedAnswer == 1"><a href ng-click="voteAnswer()"><i class="fa fa-thumbs-down" aria-hidden="true"></i> Bỏ thích </a></li>
+				<li ng-show ="isVotedAnswer"><a href ng-click="voteAnswer(answer.id)"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Thích <span class="badge ">{{question_votes}}</span> </a></li>
+				<li ng-show ="isVotedAnswer == 1"><a href ng-click="voteAnswer(answer.id)"><i class="fa fa-thumbs-down" aria-hidden="true"></i> Bỏ thích </a></li>
 				<li ><a href ng-click="comments()"><i class="fa fa-comment" aria-hidden="true"></i> Bình luận <span class="badge ">{{question_votes}}</span></a> </li>
 				<li ><a href=""><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a> </li>
 			</ul>
@@ -34,7 +34,7 @@
 					<ul class="nav nav-pills " role="tablist">
 						<li ng-show ="isVotedComment== 0"><a href ng-click="voteComment()"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Thích <span class="badge ">{{question_votes}}</span> </a></li>
 						<li ng-show ="isVotedComment == 1"><a href ng-click="voteCommnet()"><i class="fa fa-thumbs-down" aria-hidden="true"></i> Bỏ thích </a></li>
-						<li ><a href=""><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a> </li>
+						<li ng-show="user.id == answer.user_id" ><a href=""><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a> </li>
 						<li style="margin-top:5px;"> 11 phút trước</li>
 					</ul>
 				</div>
