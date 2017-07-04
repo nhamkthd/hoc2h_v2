@@ -19,7 +19,7 @@
 
         <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
          <!--scripts -->
-          <script src="{{asset('js/flugin/jquery-3.2.1.min.js')}}"></script> 
+        <script src="{{asset('js/flugin/jquery-3.2.1.min.js')}}"></script> 
         <script src="{{asset('js/flugin/angular.min.js')}}"></script> 
         <!-- Applycation Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
@@ -28,7 +28,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="{{asset('js/flugin/alert/sweetalert.min.js')}}"></script>
         <link rel="stylesheet" type="text/css" href="{{asset('js/flugin/alert/sweetalert.css')}}">
-        
         <style type="text/css">
             #loading{
                 background: url({{ asset('images/loading.gif') }}) center no-repeat #fff;
@@ -41,8 +40,6 @@
             }
         </style>
 
-
-
     </head>
     <body>
         <div class="loading" id="loading"></div>
@@ -51,7 +48,6 @@
             @include('layouts.navbar')
             @yield('content')
         </div>
-       
     </body>
     </body>
 </html>
