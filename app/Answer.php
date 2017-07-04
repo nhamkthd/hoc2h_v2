@@ -17,4 +17,8 @@ class Answer extends Model
     public function comments(){
     	return $this->hasMany('App\AnswerComment','answer_id','id');
     }
+
+    public function votes(){
+    	return $this->hasMany('App\AnswerVote','answer_id','id');
+    }
 }

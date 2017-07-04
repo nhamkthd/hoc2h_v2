@@ -47,18 +47,49 @@ class QuestionController extends Controller
     public function apiQuestionWithID(Request $request){
         $question = Question::find($request->id);
         $question->votes;
-        $question->answers;
         $question->user;
-        $answers = array();
-        foreach ($question->answers as $answer) {
-            $answer->user;
-            $answer->comments;
-        }
-         $isVoted = 0;
+        $answer_comments = array();
+        $answerUsers = array();
+        $answerVoted = array();
+        $answerVoteCount = array();
+        $answerComments = array();
+        $answerCommentCount = array();
+        if ($question->answers->count()) {
+            
+           foreach ($question->answers as $answer) {
+                $answerUsers[$answer->id] = $answer->user;
+                $answerVoteCount[$answer->id] = $answer->votes->count();
+                $answerCommentCount[$answer->id] = $answer->comments->count();
+                if (Auth::user()->answerVotes->where('answer_id',$answer->id)->count()) {
+                    $answerVoted[$answer->id] = 1;
+                }else
+                     $answerVoted[$answer->id] = 0;
+               
+               if ($answer->comments->count()) {
+                    $commentUsers = array();
+                    $commentVoted = array();
+                    $commentVoteCount = array();
+                   foreach ($answer->comments as $comment) {
+                        $commentUsers[$comment->id] = $comment->user;
+                        $commentVoteCount[$comment->id] = $comment->votes->count();
+                        if (Auth::user()->answerCommentVotes->where('answer_comment_id',$comment->id)->count()) {
+                            $commentVoted[$comment->id] = 1;
+                        }else
+                             $commentVoted[$comment->id] = 0;
+                    }
+                    $comments = array('comments'=>$answer->comments,'users'=>$commentUsers,'voted'=>$commentVoted,'voteCount'=>$commentVoteCount);
+                    $answerComments[$answer->id] = $comments;
+                }
+            }
+        }  
+        $answers = array('users'=>$answerUsers,'comments'=>$answerComments,'voted'=>$answerVoted,'voteCount'=>$answerVoteCount,'commentCount'=>$answerCommentCount);
+
+        $isVoted = 0;
         if (Auth::user()->questionVotes->where('question_id',$question->id)->count()) {
                 $isVoted = 1;
         }
-         return response()->json(array('question'=>$question,'isVoted'=>$isVoted));
+
+        return response()->json(array('question'=>$question,'isVoted'=>$isVoted,'answers'=>$answers));
     }
 
     public function vote(Request $request){

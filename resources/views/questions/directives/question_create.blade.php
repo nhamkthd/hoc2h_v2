@@ -2,7 +2,7 @@
 @section('question_content')
 <div class="row box">
 	@verbatim
-	{{selectTab(0)}}
+		{{setSelectedTab(0)}}	
 	@endverbatim
 	<form name="frmQuestion" novalidate="" method="post" action="{{route('storeQuestion')}}">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">

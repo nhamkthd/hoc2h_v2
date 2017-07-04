@@ -30,7 +30,8 @@ Route::group(['prefix' => 'questions'], function(){
 		Route::post('/vote','QuestionController@vote');
 
 		Route::post('/answers','AnswerController@store');
-		Route::post('/answer/check-vote','AnswerController@checkVote');
-		Route::post('/answer/comments','AnswerController@comments');
+		Route::post('/answer/vote','AnswerController@vote');
+		Route::post('/answer/comment-add','AnswerController@addComment');
+		Route::post('answer/comment/vote','AnswerController@voteCommment');
 	});
 });
