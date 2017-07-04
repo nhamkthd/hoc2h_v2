@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="{{asset('css/bootstrap/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('css/font-awesome/css/font-awesome.css') }}"> 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+         
        
         <!--App style-->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
@@ -24,7 +25,9 @@
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/controllers/question.js') }}"></script>
         <script src="{{ asset('js/controllers/test.js') }}"></script>
-              
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="{{asset('js/flugin/alert/sweetalert.min.js')}}"></script>
+        <link rel="stylesheet" type="text/css" href="{{asset('js/flugin/alert/sweetalert.css')}}">
         
         <style type="text/css">
             #loading{

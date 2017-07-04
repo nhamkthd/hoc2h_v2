@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Test;
 use App\User;
+use Auth;
 class TestController extends Controller
 {
     public function index()
@@ -12,8 +13,5 @@ class TestController extends Controller
     	return view('tests.index');
     }
 
-    public function listUser()
-    {
-    	return User::all();
-    }
+  	
 }

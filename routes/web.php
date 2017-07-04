@@ -13,9 +13,11 @@ Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	Route::get('create', function() {
 	    return view('tests.create');
 	});
+	Route::post('create_write_test','WTestController@store')->name('create_write_test');
 	Route::group(['prefix' => 'api'], function(){
 		//this is group route api angular js
 		Route::get('/getCategory', 'CategoryController@show');
+		Route::post('/create_mtest', 'MTestController@store');
 	});
 });
 
