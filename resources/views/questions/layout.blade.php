@@ -3,7 +3,7 @@
     <div class="container" ng-app="hoc2h-question" ng-controller="QuestionController">
         <div class="row">
             <div class="col-md-3 sidebar">
-                <a href="{{route('showQuestionCreateFrom')}}"  class="btn btn-main" style="width: 100%;" >Đăng câu hỏi</a>
+                <a href="{{route('showQuestionCreateFrom')}}"  class="btn btn-outline-default waves-effect" style="width: 100%;" >Đăng câu hỏi</a>
                 <hr>
                 <p class="menu-label">Thống Kê</>
                 <section>

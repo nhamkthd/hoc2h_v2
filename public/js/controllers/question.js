@@ -21,17 +21,13 @@
 
 	//Question detail controller
 	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location){
-	 	
+	 	$scope.showComments = [];
 	 	//auto scroll
 		$scope.gotoAnchor = function(x) {
 	      	var newHash = 'anchor' + x;
 	      	if ($location.hash() !== newHash) {
-	        // set the $location.hash to `newHash` and
-	        // $anchorScroll will automatically scroll to it
 	        	$location.hash('anchor' + x);
 	      	} else {
-	        // call $anchorScroll() explicitly,
-	        // since $location.hash hasn't changed
 	        	$anchorScroll();
 	      	}
 	    };
@@ -74,6 +70,21 @@
 
 		}
 
+		$scope.showEditQuestion = function(){
+			$scope.title_edit = $scope.question.title;
+			CKEDITOR.instances.edit_question_field.setData($scope.question.content);
+
+		}
+		$scope.editQuestion = function(){
+			$http.post('/questions/api/edit',{id:$scope.question.id,title:$scope.title_edit,content:CKEDITOR.instances.edit_question_field.getData()})
+	 			 .then(function(response){
+	 			 	console.log('Edit question: ',response);
+	 			 	$scope.question.title = response.data.title;
+	 			 	$scope.question.content = response.data.content;
+	 			 },function(error){
+	 			 	console.log(error);
+	 		 });
+		}
 		//set default value when add new answer...
 		var setNewAnswerDefault = function (answer_id) {
 			$scope.answers.comments[answer_id] = {comments:[],users:[],voteCount:[],voted:[]};
@@ -123,8 +134,22 @@
 	 		 });
 		}
 
-		$scope.comments = function(answer_id) {
-			$scope.comment_box_id = answer_id;
+		$scope.deleteAnswer = function(index){
+			$http.post('/questions/api/answer/delete',{id:$scope.question.answers[index].id})
+	 			 .then(
+	 			 	function(response){
+		 			 	console.log('delete answer: ',response);
+		 			 	$scope.question.answers.splice(index,1);
+		 			 	$scope.answer_count--;
+		 			 	angular.element('delete_answer_m').modal('hide');
+	 			 	}
+	 			 	,function(error){
+	 			 		console.log(error);
+	 		});
+		}
+
+		$scope.showComments = function(answer_id){
+			$scope.showComments[answer_id] = !$scope.showComments[answer_id];
 		}
 
 		//add new comment
@@ -159,10 +184,6 @@
 	 			 	,function(error){
 	 			 	console.log(error);
 	 		});
-		}
-
-		$scope.showCommentDropMenu = function(comment_id) {
-			$scope.comment_menu_id = comment_id;
 		}
 	 });
 

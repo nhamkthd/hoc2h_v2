@@ -30,9 +30,12 @@ Route::group(['prefix' => 'questions'], function(){
 		//this is group route api angular js
 		Route::post('/getQuestionInfo','QuestionController@apiQuestionWithID');
 		Route::post('/vote','QuestionController@vote');
+		Route::post('/edit','QuestionController@edit');
+		Route::post('/delete','QuestionController@delete');
 
 		Route::post('/answers','AnswerController@store');
 		Route::post('/answer/vote','AnswerController@vote');
+		Route::post('/answer/delete','AnswerController@delete');
 		Route::post('/answer/comment-add','AnswerController@addComment');
 		Route::post('answer/comment/vote','AnswerController@voteCommment');
 	});

@@ -14,6 +14,11 @@ class QuestionController extends Controller
     	return view('questions.index');
     }
 
+    public function apiGetAll()
+    {
+        return Question::all();
+    }
+
     public function create()
     {
        return view('questions.directives.question_create');
@@ -24,10 +29,6 @@ class QuestionController extends Controller
         return view('questions.directives.question_detail',compact('question'));
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
     public function store(Request $request)
     {
     	$question = new Question;
@@ -39,9 +40,20 @@ class QuestionController extends Controller
     	return redirect('questions/question/'.$question->id);
     }
 
-     public function apiGetAll()
+    public function edit(Request $request)
     {
-    	return Question::all();
+        $question = Question::find($request->id);
+        $question->title  = $request->title;
+        $question->content = $request->content;
+        $question->save();
+        return $question;
+    }
+
+    public function delete(Request $request)
+    {
+        $question = Question::find($request->id);
+        $question->delete();
+        return 1;
     }
 
     public function apiQuestionWithID(Request $request){
@@ -54,6 +66,9 @@ class QuestionController extends Controller
         $answerVoteCount = array();
         $answerComments = array();
         $answerCommentCount = array();
+        $commentUsers = array();
+        $commentVoted = array();
+        $commentVoteCount = array();
         if ($question->answers->count()) {
             
            foreach ($question->answers as $answer) {
@@ -66,9 +81,6 @@ class QuestionController extends Controller
                      $answerVoted[$answer->id] = 0;
                
                if ($answer->comments->count()) {
-                    $commentUsers = array();
-                    $commentVoted = array();
-                    $commentVoteCount = array();
                    foreach ($answer->comments as $comment) {
                         $commentUsers[$comment->id] = $comment->user;
                         $commentVoteCount[$comment->id] = $comment->votes->count();
@@ -77,9 +89,9 @@ class QuestionController extends Controller
                         }else
                              $commentVoted[$comment->id] = 0;
                     }
-                    $comments = array('comments'=>$answer->comments,'users'=>$commentUsers,'voted'=>$commentVoted,'voteCount'=>$commentVoteCount);
-                    $answerComments[$answer->id] = $comments;
                 }
+                $comments = array('comments'=>$answer->comments,'users'=>$commentUsers,'voted'=>$commentVoted,'voteCount'=>$commentVoteCount);
+                $answerComments[$answer->id] = $comments;
             }
         }  
         $answers = array('users'=>$answerUsers,'comments'=>$answerComments,'voted'=>$answerVoted,'voteCount'=>$answerVoteCount,'commentCount'=>$answerCommentCount);

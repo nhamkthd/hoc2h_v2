@@ -10,6 +10,8 @@
         
         <!-- Styles -->
         <link rel="stylesheet" href="{{asset('css/bootstrap/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('mdb/css/mdb.css')}}" >
+        <link rel="stylesheet" href="{{asset('mdb/css/style.css')}}" >
         <link rel="stylesheet" href="{{asset('css/font-awesome/css/font-awesome.css') }}"> 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
          

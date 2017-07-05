@@ -22,6 +22,20 @@ class AnswerController extends Controller
     	return $answer;
     }
 
+    public function edit(Request $request) 
+    {
+        $answer = Answer::find($request->id);
+        $answer->content  = $request->content;
+        $answer->save();
+        return $answer;     
+    }
+
+    public function delete(Request $request)
+    {
+        Answer::find($request->id)->delete();
+        return 1;
+    }
+
     public function vote(Request $request) {
     	if ($request->isVoted == 0) {
            	$answer_vote = new AnswerVote;
