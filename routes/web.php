@@ -35,8 +35,12 @@ Route::group(['prefix' => 'questions'], function(){
 
 		Route::post('/answers','AnswerController@store');
 		Route::post('/answer/vote','AnswerController@vote');
+		Route::post('/answer/edit','AnswerController@edit');
 		Route::post('/answer/delete','AnswerController@delete');
+
 		Route::post('/answer/comment-add','AnswerController@addComment');
-		Route::post('answer/comment/vote','AnswerController@voteCommment');
+		Route::post('/answer/comment/vote','AnswerController@voteCommment');
+		Route::post('/answer/comment/edit','AnswerController@editComment');
+		Route::post('/answer/comment/delete','AnswerController@deleteComment');
 	});
 });

@@ -19,9 +19,15 @@
 			<div class="post-info" ng-show="user.id == question.user_id">
 				<ul class="nav nav-pills" role="tablist">
 				  	<li class="action">
-				  		<a data-toggle="modal" data-target="#edit_question_m" ng-click="showEditQuestion()"><i class="fa fa-edit" aria-hidden="true"></i> Sửa</a>
+				  		<a data-toggle="modal" data-target="#edit_question_m" ng-click="showEditQuestion()">
+				  			<i class="fa fa-edit" aria-hidden="true"></i> Sửa
+				  		</a>
 				  	</li>
-				  	<li class="action"><a data-toggle="modal" data-target="#delete_question_m"><i class="fa fa-close" aria-hidden="true"></i> Xoá</a></li>
+				  	<li class="action">
+				  		<a data-toggle="modal" data-target="#delete_question_m">
+				  			<i class="fa fa-trash" aria-hidden="true"></i> Xoá
+				  		</a>
+				  	</li>
 				  	<li class="action"><a><i class="fa fa-magic" aria-hidden="true"></i> Yêu cầu</a></li>
 				</ul>
 				@endverbatim
@@ -61,13 +67,11 @@
 			</div>
 			<div class="col-md-12 commet-box" id="anchor{{1}}">
 				<label>Câu trả lời của bạn</label>
-				<textarea class="answer-edit-box" id="answer_field" class="form-control"></textarea>
-				<script>
-					CKEDITOR.replace('answer_field');
-				</script>
+				<div ckeditor="options" ng-model="answer_content_field" ready="onReady()"></div>
 			</div>
 			<button class="btn btn-outline-default waves-effect pull-right" style="margin-top:20px; margin-right: 10px;" type="button" ng-click="addAnswer()">Gửi trả lời</button>
 		</div>
+		
 	</div>
 	@endverbatim
 </div>

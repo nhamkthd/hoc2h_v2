@@ -9,10 +9,7 @@
 			</div>
 			<div class="modal-body">
 				<input placeholder="Tiêu đề" id="title" name="title" type="text" ng-model="title_edit" class="form-control" required>
-				<textarea class="answer-edit-box" id="edit_question_field" class="form-control"></textarea>
-				<script>
-					CKEDITOR.replace('edit_question_field');
-				</script>
+				<div ckeditor="options" ng-model="edit_question_content" ready="onReady()"></div>
 			</div>
 			<div class="modal-footer">
 				<button data-dismiss="modal" class="btn btn-warning">Huỷ bỏ</button>
@@ -33,7 +30,7 @@
 				<p class="danger-dark-text">Lưu ý rằng khi bạn chọn xoá câu hỏi này, tất cả những gì liên quan sẽ đều bị xoá...</p>
 			</div>
 			<div class="modal-footer">
-				<button data-dismiss="modal" class="btn btn-warning">Vẫn xoá</button>
+				<a href="{{route('')}}" data-dismiss="modal" class="btn btn-warning">Vẫn xoá</a>
 				<button data-dismiss="modal" class="btn btn-info">Thôi</button>
 			</div>
 		</div>

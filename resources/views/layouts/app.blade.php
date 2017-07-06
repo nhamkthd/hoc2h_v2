@@ -10,26 +10,31 @@
         
         <!-- Styles -->
         <link rel="stylesheet" href="{{asset('css/bootstrap/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('js/flugin/alert/sweetalert.css')}}">
         <link rel="stylesheet" href="{{asset('mdb/css/mdb.css')}}" >
         <link rel="stylesheet" href="{{asset('mdb/css/style.css')}}" >
         <link rel="stylesheet" href="{{asset('css/font-awesome/css/font-awesome.css') }}"> 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-         
-       
         <!--App style-->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
-
-        <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+        
          <!--scripts -->
+        
         <script src="{{asset('js/flugin/jquery-3.2.1.min.js')}}"></script> 
         <script src="{{asset('js/flugin/angular.min.js')}}"></script> 
+        <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ckeditor/1.0.3/angular-ckeditor.js"></script>
+        <script src="{{asset('js/flugin/bootstrap/bootstrap.min.js')}}"></script>
+        <script src="{{asset('js/flugin/bootstrap/ui-bootstrap-tpls-2.5.0.min.js')}}"></script>
+        <script src="{{asset('js/flugin/alert/sweetalert.min.js')}}"></script>
+
         <!-- Applycation Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/controllers/question.js') }}"></script>
         <script src="{{ asset('js/controllers/test.js') }}"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="{{asset('js/flugin/alert/sweetalert.min.js')}}"></script>
-        <link rel="stylesheet" type="text/css" href="{{asset('js/flugin/alert/sweetalert.css')}}">
+    
+       
+        
         <style type="text/css">
             #loading{
                 background: url({{ asset('images/loading.gif') }}) center no-repeat #fff;
@@ -46,7 +51,7 @@
     <body>
         <div class="loading" id="loading"></div>
 
-        <div id="app">
+        <div id="app" ng-app="Hoc2h">
             @include('layouts.navbar')
             @yield('content')
         </div>

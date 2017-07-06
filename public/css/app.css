@@ -83,7 +83,7 @@ label {font-weight: 700; margin-bottom: 5px;}
 .post-header p > a {font-weight:600;}
 
 .post-body { padding-top: 10px;border-bottom: solid 1px #e6e6e6;}
-.post-info {border-bottom: solid 1px #e6e6e6; padding-bottom:0px;float: right;}
+.post-info {border-bottom: solid 1px #e6e6e6; padding-bottom:0px;float: right; margin-bottom: 10px;}
 .nav-pills >li {padding-right: 10px; font-size: 12px;}
 .nav-pills >li span {background:#e0f2f1; color:#0d47a1;}
 .nav-pills  li .action {color:#0099CC;}
@@ -101,4 +101,5 @@ label {font-weight: 700; margin-bottom: 5px;}
 .comment-block .media-body {padding-left:10px;}
 .comment-block  .avt {padding-top:5px;}
 .comment-box {margin-top: 20px;}
+.list-questions {padding:20px 10px;}
 

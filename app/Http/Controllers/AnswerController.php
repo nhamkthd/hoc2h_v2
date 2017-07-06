@@ -70,4 +70,18 @@ class AnswerController extends Controller
     		return 0;
     	}
     }
+
+    public function editComment(Request $request)
+    {
+        $comment = AnswerComment::find($request->id);
+        $comment->content = $request->content;
+        $comment->save();
+        return $comment;
+    }
+    
+    public function deleteComment(Request $request)
+    {
+        AnswerComment::find($request->id)->delete();
+        return 1;
+    }
 }

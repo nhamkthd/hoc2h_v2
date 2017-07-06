@@ -11,12 +11,8 @@ class QuestionController extends Controller
 {
     public function index()
     {
-    	return view('questions.index');
-    }
-
-    public function apiGetAll()
-    {
-        return Question::all();
+        $questions = Question::all();
+    	return view('questions.index',compact('questions'));
     }
 
     public function create()
