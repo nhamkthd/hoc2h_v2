@@ -22,6 +22,20 @@ class AnswerController extends Controller
     	return $answer;
     }
 
+    public function edit(Request $request) 
+    {
+        $answer = Answer::find($request->id);
+        $answer->content  = $request->content;
+        $answer->save();
+        return $answer;     
+    }
+
+    public function delete(Request $request)
+    {
+        Answer::find($request->id)->delete();
+        return 1;
+    }
+
     public function vote(Request $request) {
     	if ($request->isVoted == 0) {
            	$answer_vote = new AnswerVote;
@@ -55,5 +69,19 @@ class AnswerController extends Controller
     		$comment_vote->delete();
     		return 0;
     	}
+    }
+
+    public function editComment(Request $request)
+    {
+        $comment = AnswerComment::find($request->id);
+        $comment->content = $request->content;
+        $comment->save();
+        return $comment;
+    }
+    
+    public function deleteComment(Request $request)
+    {
+        AnswerComment::find($request->id)->delete();
+        return 1;
     }
 }

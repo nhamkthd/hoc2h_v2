@@ -16,18 +16,20 @@
 					    <option value="1">Kiến thức THPT</option>
 					    <option value="2">Kiến thức THCS</option>
 					</select>
-					<span class="help-inline danger-color"
-							ng-show="frmQuestion.category.$invalid && frmQuestion.category.$touched">Thể  không được để trống!</span>
+					<span class="help-inline validate-text"
+						  ng-show="frmQuestion.category.$invalid && frmQuestion.category.$touched">Thể  không được để trống!</span>
 				</div>
 			</div>
 		</div>
 		<div class="form-group col-md-12">
 			<div class="row">
-				<label class="control-label col-md-10 col-md-offset-1" for="selectbasic">Tiêu đề</label>
-				<div class="col-md-10  col-md-offset-1">
-					<input name="title" type="text" ng-model="title" class="form-control input-md" required >
-					<span class="help-inline danger-color" 
+				<div class="col-md-10 col-md-offset-1">
+					<div class="md-form">
+    				<input placeholder="Tiêu đề" id="title" name="title" type="text" ng-model="title" class="form-control" required>
+    				<span class="help-inline validate-text" 
 	                      ng-show="frmQuestion.title.$invalid && frmQuestion.title.$touched">Tiêu đề không được để trống!</span>
+					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -44,9 +46,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-4 col-md-offset-1" style="margin-top: 20px;">
-			<a href="{{route('questions')}}" class="btn btn-default" type="button" >Huỷ bỏ</a>
-			<button class="btn btn-main" type="submit" id="submit"  >Đăng lên</button>
+		<div class="col-md-8 col-md-offset-1" style="margin-top: 20px;">
+			<a href="{{route('questions')}}" class="btn btn-warning" type="button" >Huỷ bỏ</a>
+			<button class="btn btn-default" type="submit" id="submit"  >Đăng lên</button>
 		</div>
 	</form>
 </div>

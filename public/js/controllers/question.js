@@ -1,15 +1,18 @@
 (function(){
 	'use strict';
 	var app = angular.module('hoc2h-question', []);
+
 	app.run(['$anchorScroll', function($anchorScroll) {
   		$anchorScroll.yOffset = 50;   // always scroll by 50 extra pixels
 	}]);
+
 	//app services
 	app.factory('questionService',function(){
 		var questionService = {};
 
     	return questionService;
 	});
+
 	//main question controller
 	app.controller('QuestionController',function($scope){
 		$scope.tab = 1;
@@ -18,20 +21,60 @@
 	 		// console.log('set selected tab:',sTab);
 	 	}
 	})
+	//confirm delete driective
+	app.directive('confirmDelete', [function () {
+        return {
+            priority: 100,
+            restrict: 'A',
+            link: {
+                pre: function (scope, element, attrs) {
+                    var msg = attrs.confirm || "Bạn thật sự muốn xoá?";
+
+                    element.bind('click', function (event) {
+                        if (!confirm(msg)) {
+                            event.stopImmediatePropagation();
+                            event.preventDefault;
+                        }
+                    });
+                }
+            }
+        };
+    }]);
+
+	//enter submit directive (shift+enter => next line)
+	app.directive('enterSubmit', function () {
+	    return {
+	      restrict: 'A',
+	      link: function (scope, elem, attrs) {
+	       
+	        elem.bind('keydown', function(event) {
+	          var code = event.keyCode || event.which;    
+	          if (code === 13) {
+	            if (!event.shiftKey) {
+	              event.preventDefault();
+	              scope.$apply(attrs.enterSubmit);
+	            }
+	          }
+	        });
+	      }
+	    }
+  	});
+
 
 	//Question detail controller
-	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location){
-	 	
+	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location,$uibModal){
+
+	 	$scope.showComments = [];
+	 	$scope.edit_answer_content = [];
+	 	$scope.comment_content_field = [];
+	 	$scope.comment_editing = [];
+	 	$scope.comment_editing_field = [];
 	 	//auto scroll
 		$scope.gotoAnchor = function(x) {
 	      	var newHash = 'anchor' + x;
 	      	if ($location.hash() !== newHash) {
-	        // set the $location.hash to `newHash` and
-	        // $anchorScroll will automatically scroll to it
 	        	$location.hash('anchor' + x);
 	      	} else {
-	        // call $anchorScroll() explicitly,
-	        // since $location.hash hasn't changed
 	        	$anchorScroll();
 	      	}
 	    };
@@ -59,6 +102,11 @@
 	 			 	console.log(error);
 	 		 });
 		}
+		 $scope.options = {
+		    language: 'vn',
+		    allowedContent: true,
+		    entities: false
+		  };
 
 		//vote question
 		$scope.voteQuestion = function(){
@@ -74,6 +122,22 @@
 
 		}
 
+		$scope.showEditQuestion = function(){
+			$scope.title_edit = $scope.question.title;
+			$scope.edit_question_content = $scope.question.content;
+			
+
+		}
+		$scope.editQuestion = function(){
+			$http.post('/questions/api/edit',{id:$scope.question.id,title:$scope.title_edit,content:$scope.edit_question_content})
+	 			 .then(function(response){
+	 			 	console.log('Edit question: ',response);
+	 			 	$scope.question.title = response.data.title;
+	 			 	$scope.question.content = response.data.content;
+	 			 },function(error){
+	 			 	console.log(error);
+	 		 });
+		}
 		//set default value when add new answer...
 		var setNewAnswerDefault = function (answer_id) {
 			$scope.answers.comments[answer_id] = {comments:[],users:[],voteCount:[],voted:[]};
@@ -91,8 +155,7 @@
 
 		//ad new answer
 		$scope.addAnswer = function(){
-			var answer_content = CKEDITOR.instances.answer_field.getData();
-			$http.post('/questions/api/answers/',{question_id:$scope.question.id,content:answer_content})
+			$http.post('/questions/api/answers/',{question_id:$scope.question.id,content:$scope.answer_content_field})
 	 			 .then(function(response){
 	 			 	console.log('Add new answer: ',response.data);
 	 			 	var newAnswer = response.data;
@@ -100,7 +163,7 @@
 	 			 	$scope.answer_count++;
 	 			 	setNewAnswerDefault(newAnswer.id);
 	 			 	console.log($scope.answers);
-	 			 	CKEDITOR.instances.answer_field.setData('');
+	 			 	$scope.answer_content_field = " ";
 	 			 },function(error){
 	 			 	console.log(error);
 	 		 });
@@ -123,21 +186,49 @@
 	 		 });
 		}
 
-		$scope.comments = function(answer_id) {
-			$scope.comment_box_id = answer_id;
+		$scope.showEditAnswerModal = function(index){
+			$scope.edit_answer_content[index] = $scope.question.answers[index].content;
+		}
+		$scope.editAnswer = function(index) {
+			$http.post('/questions/api/answer/edit',{id:$scope.question.answers[index].id,content:$scope.edit_answer_content[index]})
+	 			 .then(
+	 			 	function(response){
+		 			 	console.log('Edit answer: ',response);
+		 			 	$scope.question.answers[index].content = response.data.content;
+	 			 	}
+	 			 	,function(error){
+	 			 		console.log(error);
+	 		});
+		}
+		$scope.deleteAnswer = function(index){
+
+			$http.post('/questions/api/answer/delete',{id:$scope.question.answers[index].id})
+	 			 .then(
+	 			 	function(response){
+		 			 	console.log('delete answer: ',response);
+		 			 	$scope.question.answers.splice(index,1);
+		 			 	$scope.answer_count--;
+	 			 	}
+	 			 	,function(error){
+	 			 		console.log(error);
+	 		});
+		}
+
+		$scope.showComments = function(answer_id){
+			$scope.showComments[answer_id] = !$scope.showComments[answer_id];
 		}
 
 		//add new comment
-		$scope.addComment = function(answer_id) {
-
-			$http.post('/questions/api/answer/comment-add',{answer_id:answer_id,content:this.comment_content})
+		$scope.addComment = function(index,answer_id) {
+			var comment_content = $scope.comment_content_field[index];
+			$http.post('/questions/api/answer/comment-add',{answer_id:answer_id,content:comment_content})
 	 			 .then(
 	 			 	function(response){
 		 			 	console.log('Add new comment: ',response.data);
 		 			 	$scope.answers.commentCount[answer_id]++;
 		 			 	$scope.answers.comments[answer_id].comments.push(response.data);
 		 			 	setNewCommentDefault(response.data.id,answer_id);
-		 			 	$scope.comment_content="";
+		 			 	$scope.comment_content_field[index]="";
 	 			 	}
 	 			 	,function(error){
 	 			 		console.log(error);
@@ -160,9 +251,42 @@
 	 			 	console.log(error);
 	 		});
 		}
+		$scope.editCommentMode = function(index,answer_id) {
+			console.log('editing comment....');
+			$scope.comment_editing[index] = 1;
+			$scope.comment_editing_field[index] = $scope.answers.comments[answer_id].comments[index].content;
+		}
+		$scope.cancelEditComment = function(index) {
+			console.log('cancel edit comment....');
+			$scope.comment_editing[index] = 0;
+		}
 
-		$scope.showCommentDropMenu = function(comment_id) {
-			$scope.comment_menu_id = comment_id;
+		$scope.editComment = function(index, answer_id){
+			var comment_id = $scope.answers.comments[answer_id].comments[index].id;
+			var comment_content = $scope.comment_editing_field[index];
+			$http.post('/questions/api/answer/comment/edit',{id:comment_id,content:comment_content})
+	 			 .then(
+	 			 	function(response){
+		 			 	console.log('Edit comment: ',response);
+		 			 	$scope.answers.comments[answer_id].comments[index].content = response.data.content;
+		 			 	$scope.comment_editing[index] = 0;
+	 			 	}
+	 			 	,function(error){
+	 			 		console.log(error);
+	 		});
+		}
+
+		$scope.deleteComment = function(index,answer_id){
+			var comment_id = $scope.answers.comments[answer_id].comments[index].id;
+			$http.post('/questions/api/answer/comment/delete',{id:comment_id})
+	 			 .then(
+	 			 	function(response){
+	 			 		console.log('Delete comment:',response);
+	 			 		$scope.answers.comments[answer_id].comments.splice(index,1);
+	 			 	}
+	 			 	,function(error){
+	 			 	console.log(error);
+	 		});
 		}
 	 });
 
