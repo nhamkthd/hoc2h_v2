@@ -13,7 +13,10 @@ Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	Route::get('create', function() {
 	    return view('tests.create');
 	});
+	Route::get('UserCreate','TestController@getUserCreateTest');
 	Route::post('create_write_test','WTestController@store')->name('create_write_test');
+	Route::get('show/{id}', 'TestController@show');
+
 	Route::group(['prefix' => 'api'], function(){
 		//this is group route api angular js
 		Route::get('/getCategory', 'CategoryController@show');

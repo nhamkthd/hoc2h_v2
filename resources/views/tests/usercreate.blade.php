@@ -20,7 +20,7 @@
 						</div>
 						<div class="col-xs-10 col-md-10">
 							<div>
-								<a class="list-titel" href="{{url('tests/show')}}/{{$test->id}}">{{$test->title}}</a>
+								<a class="list-titel" href="http://localhost/duanweb/laravel/public/tests/show/3">{{$test->title}}</a>
 								<div class="mic-info">
 									Đăng bởi <a href="#">{{$test->user->name}}</a> tại <a href="#"><span class="orange-text"> {{$test->category->title}} </span></a> {{$test->created_at->diffForHumans()}}
 									<span class="pull-right green-text">2 lượt tham gia</span>
