@@ -15,7 +15,7 @@
 					<span class="pull-right">{{question.created_at}}</span>
 				</p>
 			</div>
-			<p class="post-body" ng-bind-html="convertHtml(question.content)"></p>
+			<p class="post-body" ng-bind-html="question.content"></p>
 			<div class="post-info" ng-show="user.id == question.user_id">
 				<ul class="nav nav-pills" role="tablist">
 				  	<li class="action">

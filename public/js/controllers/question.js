@@ -12,15 +12,24 @@
 
     	return questionService;
 	});
+	
+	//show limit line content filter
+	app.filter('textShortenerFilter', function() {
+	  return function(text, length) {
+	    if (text.length > length) {
+	      return text.substr(0, length) + "...";
+	    }
+	    return text;
+	  }
+	});
 
-	//main question controller
-	app.controller('QuestionController',function($scope){
-		$scope.tab = 1;
-	 	$scope.setSelectedTab = function(sTab){
-	 		$scope.tab = sTab;
-	 		// console.log('set selected tab:',sTab);
-	 	}
-	})
+    //question-list-card directive
+	app.directive('questionCard',function(){
+		return {
+			restrict:'E',
+			templateUrl:'/questions/question-card',
+		}	
+	});
 	//confirm delete driective
 	app.directive('confirmDelete', [function () {
         return {
@@ -60,6 +69,28 @@
 	    }
   	});
 
+	//main question controller
+	app.controller('QuestionController',function($scope, $http,$sce){
+		$scope.date = '20140313T00:00:00';
+		$scope.tab = 1;
+	 	$scope.setSelectedTab = function(sTab){
+	 		$scope.tab = sTab;
+	 	}
+	 	$scope.getQuestionsWithTab = function(tab){
+	 		console.log(tab);
+	 		if (tab == 1) {
+	 			$http.get('/questions/api/')
+	 			 .then(function(response){
+	 			 		console.log(response.data);
+	 			 		$scope.questions  = response.data;
+	 			 	}, function(error){
+
+	 			 });
+	 		}
+	 		
+	 	}
+	 	
+	})
 
 	//Question detail controller
 	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location,$uibModal){
