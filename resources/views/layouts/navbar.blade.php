@@ -1,5 +1,5 @@
-<nav class="navbar navbar-default fixed-top">
-  <div class="container-fluid">
+<nav class="navbar navbar-default fixed-top" ng-app="hoc2h-heading" >
+  <div class="container-fluid" ng-controller="HeadingController">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <a class="navbar-brand" href="#">Hoc2H</a>
