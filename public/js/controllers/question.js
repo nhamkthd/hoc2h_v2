@@ -3,7 +3,6 @@
 	var app = angular.module('hoc2h-question', []);
 
 	app.run(['$anchorScroll', function($anchorScroll) {
-		//console.log('ok');
   		$anchorScroll.yOffset = 50;   // always scroll by 50 extra pixels
 	}]);
 

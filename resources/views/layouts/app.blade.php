@@ -30,7 +30,6 @@
 
         <!-- Applycation Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
-        <script src="{{ asset('js/controllers/notification.js') }}"></script>
         <script src="{{ asset('js/controllers/question.js') }}"></script>
         <script src="{{ asset('js/controllers/test.js') }}"></script>
         
