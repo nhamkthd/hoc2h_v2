@@ -36,8 +36,6 @@
 				$scope.test.category=res.data.test_category;
 				$scope.avg_rate=res.data.rate_avg;
 				$scope.user_rate=res.data.user_rate;
-				console.log($scope.test.cmts[1].user_like.indexOf(user.id));
-				console.log($scope.test.cmts[1]);
 			}, function(error) {
 				console.log(error)
 			})

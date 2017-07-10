@@ -39,7 +39,7 @@
         <link rel="stylesheet" type="text/css" href="{{asset('js/flugin/alert/sweetalert.css')}}">
         <style type="text/css">
             #loading{
-                background: url({{ asset('images/loading.gif') }}) center no-repeat #fff;
+                background: url({{ asset('img/loading.gif') }}) center no-repeat #fff;
                 position: fixed;
                 left: 0px;
                 top: 0px,;
