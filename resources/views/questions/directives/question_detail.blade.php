@@ -15,16 +15,16 @@
 					<span class="pull-right">{{question.created_at}}</span>
 				</p>
 			</div>
-			<p class="post-body" ng-bind-html="convertHtml(question.content)"></p>
+			<p class="post-body" ng-bind-html="question.content"></p>
 			<div class="post-info" ng-show="user.id == question.user_id">
 				<ul class="nav nav-pills" role="tablist">
 				  	<li class="action">
-				  		<a data-toggle="modal" data-target="#edit_question_m" ng-click="showEditQuestion()">
+				  		<a ng-click="editQuestion()">
 				  			<i class="fa fa-edit" aria-hidden="true"></i> Sửa
 				  		</a>
 				  	</li>
 				  	<li class="action">
-				  		<a data-toggle="modal" data-target="#delete_question_m">
+				  		<a ng-click="deleteQuestion()">
 				  			<i class="fa fa-trash" aria-hidden="true"></i> Xoá
 				  		</a>
 				  	</li>

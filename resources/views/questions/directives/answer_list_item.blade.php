@@ -3,24 +3,27 @@
 	<span class="pull-left">
 		<img src="" width="40" height="40">
 	</span>
-	<div class="modal fade" id="{{answer.id}}" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Sửa trả lời</h4>
-				</div>
-				<div class="modal-body">
-					<div ckeditor="options" ng-model="edit_answer_content[$index]" ready="onReady()"></div>
-				</div>
-				<div class="modal-footer">
-					<button data-dismiss="modal" class="btn btn-warning">Huỷ bỏ</button>
-					<button data-dismiss="modal" class="btn btn-info" ng-click="editAnswer($index)">Lưu thay đổi</button>
-				</div>
-			</div>
+	<script type="text/ng-template" id="editAnswerModal.html">
+		<div class="modal-header">
+			<h3 class="modal-title" id="modal-title"><i class="fa fa-edit" aria-hidden="true"></i> Sửa câu trả lời</h3>
 		</div>
-	</div>
+		<div class="modal-body" id="modal-body">
+			<div ckeditor="options" ng-model="edit_answer_content" ready="onReady()"></div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-warning" type="button" ng-click="cancel()">Huỷ bỏ</button>
+			<button class="btn btn-primary" type="button" ng-click="submit()">Lưu lại</button>
+		</div>
+	</script>
+	<script type="text/ng-template" id="deleteAnswerModal.html">
+		<div class="modal-header">
+			<h3 class="modal-title text-center" id="modal-title"><i class="fa fa-warning danger-dark-text" aria-hidden="true"></i> Bạn thật sự muốn câu trả lời này...!</h3>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-warning" type="button" ng-click="cancel()">Huỷ bỏ</button>
+			<button class="btn btn-primary" type="submit" ng-click="submit()">Vẫn xoá</button>
+		</div>
+	</script>
 	<div class="media-body">
 		<div class="media-heading">
 			<a href class="primary-text">{{answer.user.user_name}}</a>
@@ -32,12 +35,12 @@
 		<div class="post-info" ng-show="user.id == answer.user_id">
 			<ul class="nav nav-pills" role="tablist">
 				<li class="action">
-					<a data-toggle="modal" data-target="#{{answer.id}}" ng-click="showEditAnswerModal($index)">
+					<a ng-click="editAnswer($index)">
 						<i class="fa fa-edit" aria-hidden="true"></i> Sửa 
 					</a>
 				</li>
 				<li class="action">
-					<a confirm-delete="Delete Answer?" ng-click="deleteAnswer($index)">
+					<a ng-click="deleteAnswer($index)">
 						<i class="fa fa-trash" aria-hidden="true"></i> Xoá 
 					</a>
 				</li>

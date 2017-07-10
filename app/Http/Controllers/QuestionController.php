@@ -11,10 +11,18 @@ class QuestionController extends Controller
 {
     public function index()
     {
-        $questions = Question::all();
-    	return view('questions.index',compact('questions'));
+    	return view('questions.index');
     }
+    public function getAll () {
 
+        $questions =  Question::orderby('id','desc')->get();
+        foreach ($questions as $question) {
+            $question->user;
+            $question->answers;
+            $question->votes;
+        }
+        return $questions;
+    }
     public function create()
     {
        return view('questions.directives.question_create');
@@ -47,9 +55,9 @@ class QuestionController extends Controller
 
     public function delete(Request $request)
     {
-        $question = Question::find($request->id);
+        $question = Question::find($request->question_id);
         $question->delete();
-        return 1;
+        return redirect('questions/');
     }
 
     public function apiQuestionWithID(Request $request){

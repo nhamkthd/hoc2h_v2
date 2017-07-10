@@ -7,16 +7,14 @@
 </script>
 <div class="container" ng-app ="hoc2h-test" ng-controller="createTest">
 	<div class="row">
-		<div class="col-md-12 main-content">
+		<div class="col-md-12 main-content box">
 				<div ng-show="tab === 1" >
-					<div class="col-md-10 col-md-offset-1 main-content">
-						<h1 class="text-center" style="color:green;">Soạn Đề Thi</h1>
-						<hr style="border: solid 1px #9e9e9e;">
+					<div class="col-md-10 col-md-offset-1 ">
+						<legend class="text-center">Tạo đề thi</legend>
 						<div class="row">
-							<div class="col-md-12" style="background:white; border: solid 1px #e0e0e0 ; margin-bottom: 100px;">
+							<div class="col-md-12">
 								<form novalidate name="form" >
 									
-
 									<div class="col-md-10 col-md-offset-1" style="margin-top: 20px;">
 										<div class="form-group pmd-textfield pmd-textfield-floating-label">
 										<label>Chọn thể loại *</label>
@@ -72,12 +70,12 @@
 									<div class="col-md-10 col-md-offset-1" ng-init="test_type=1">
 										<div class="form-group pmd-textfield">
 											<label style="color:#4B515D; margin-top: 15px; margin-right: 20px;" for="Small">Dạng Đề *</label>
-											<label class="radio-inline pmd-radio pmd-radio-ripple-effect" style="margin-bottom: 5px;">
-												<input type="radio" ng-model="test_type" name="test_type" value="0">
+											<label class="radio-inline" style="margin-bottom: 5px;">
+												<input type="radio"  ng-checked="true" ng-model="test_type" name="test_type" value="0">
 												<span for="inlineRadio1">Trắc Nghiệm</span>
 											</label>
-											<label class="radio-inline pmd-radio pmd-radio-ripple-effect" style="margin-bottom: 5px;">
-												<input type="radio" ng-checked="true" ng-model="test_type" name="test_type" value="1">
+											<label class="radio-inline " style="margin-bottom: 5px;">
+												<input type="radio" ng-model="test_type" name="test_type" value="1">
 												<span for="inlineRadio2">Tự Luận</span>
 											</label>
 										</div>
@@ -100,7 +98,7 @@
 									</div>
 									
 									<div class="col-md-4 col-md-offset-5" style="margin-top: 20px; margin-bottom: 20px;">
-										<button ng-click="submit_test(test_type)" ng-disabled="form.$invalid" type="submit" class="btn pmd-ripple-effect btn-primary"> Tiếp Tục </button >
+										<button ng-click="submit_test(test_type)" ng-disabled="form.$invalid" type="submit" class="btn btn-outline-primary waves-effect"> Tiếp Tục </button >
 										</div>
 									</form>
 								</div>
