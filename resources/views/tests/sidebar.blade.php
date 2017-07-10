@@ -1,5 +1,5 @@
 <div class="col-md-3 sidebar">
-	<button ng-click="selectTab(1)" class="btn btn-main" style="width: 100%; margin-top:20px;">Tạo Đề</button>
+	<button ng-click="selectTab(1)" class="btn btn-outline-default waves-effect" style="width: 100%; margin-top:20px;">Tạo Đề</button>
 	<hr>
 	<p class="menu-label">Thống Kê</>
 		<section>

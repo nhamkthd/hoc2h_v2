@@ -5,7 +5,9 @@
 	app.run(['$anchorScroll', function($anchorScroll) {
   		$anchorScroll.yOffset = 50;   // always scroll by 50 extra pixels
 	}]);
-
+	app.config(['$qProvider', function ($qProvider) {
+   	 $qProvider.errorOnUnhandledRejections(false);
+	}]);
 	//app services
 	app.factory('questionService',function(){
 		var questionService = {};
@@ -94,7 +96,7 @@
 
 	//Question detail controller
 	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location,$uibModal){
-
+		this.animationsEnabled = true;
 	 	$scope.showComments = [];
 	 	$scope.edit_answer_content = [];
 	 	$scope.comment_content_field = [];
@@ -133,12 +135,17 @@
 	 			 	console.log(error);
 	 		 });
 		}
-		 $scope.options = {
+		$scope.options = {
 		    language: 'vn',
 		    allowedContent: true,
 		    entities: false
 		  };
 
+		//update question when updated 
+		var updateQuestion = function(newQuestion){
+			$scope.question.title = newQuestion.title;
+			$scope.question.content =newQuestion.content;
+		}
 		//vote question
 		$scope.voteQuestion = function(){
 			$http.post('/questions/api/vote',{question_id:$scope.question.id,isVoted:$scope.isVotedQuestion})
@@ -153,22 +160,63 @@
 
 		}
 
-		$scope.showEditQuestion = function(){
-			$scope.title_edit = $scope.question.title;
-			$scope.edit_question_content = $scope.question.content;
-			
-
-		}
 		$scope.editQuestion = function(){
-			$http.post('/questions/api/edit',{id:$scope.question.id,title:$scope.title_edit,content:$scope.edit_question_content})
-	 			 .then(function(response){
-	 			 	console.log('Edit question: ',response);
-	 			 	$scope.question.title = response.data.title;
-	 			 	$scope.question.content = response.data.content;
-	 			 },function(error){
-	 			 	console.log(error);
-	 		 });
+			$uibModal.open({
+	            templateUrl: 'editQuestionModal.html', // loads the template
+	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
+	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
+	            controller: function ($scope, $uibModalInstance,question,$log) {
+	                $scope.title_edit = question.title;
+					$scope.edit_question_content = question.content;
+	                $scope.submit = function () {
+	                   	$http.post('/questions/api/edit',{id:question.id,title:$scope.title_edit,content:$scope.edit_question_content})
+				 			 .then(function(response){
+				 			 	console.log('Edit question: ',response);
+				 			 	question.content = response.data.content;
+				 			 	question.title = response.data.title;
+				 			 },function(error){
+				 			 	console.log(error);
+				 		 });
+	                    $uibModalInstance.dismiss('cancel'); // dismiss(reason) - a method that can be used to dismiss a modal, passing a reason
+	                }
+	                $scope.cancel = function () {
+	                    $uibModalInstance.dismiss('cancel'); 
+	                };
+	            },
+	            resolve: {
+	                question: function () {
+	                    return $scope.question;
+	                }
+	            }
+	        });//end of modal.open
 		}
+
+		$scope.deleteQuestion = function(){
+			$uibModal.open({
+	            templateUrl:'deleteQuestionModal.html', // loads the template
+	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
+	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
+	            controller: function ($scope, $uibModalInstance) {
+	                $scope.submit = function () {
+	       //          	$http.post('/questions/api/delete',{id:question.id})
+				 			//  .then(function(response){
+				 			//  	consolole.log('deleted question:',response);
+				 			 	
+				 			//  },function(error){
+				 			//  	console.log(error);
+				 		 // });
+	                    $uibModalInstance.dismiss('cancel');//dismiss modal
+	                }
+	                $scope.cancel = function () {
+	                    $uibModalInstance.dismiss('cancel'); 
+	                };
+	            },
+	            resolve: {
+	             	
+	            }
+	        });//end of modal.open
+		}
+		
 		//set default value when add new answer...
 		var setNewAnswerDefault = function (answer_id) {
 			$scope.answers.comments[answer_id] = {comments:[],users:[],voteCount:[],voted:[]};
@@ -217,32 +265,69 @@
 	 		 });
 		}
 
-		$scope.showEditAnswerModal = function(index){
-			$scope.edit_answer_content[index] = $scope.question.answers[index].content;
-		}
 		$scope.editAnswer = function(index) {
-			$http.post('/questions/api/answer/edit',{id:$scope.question.answers[index].id,content:$scope.edit_answer_content[index]})
-	 			 .then(
-	 			 	function(response){
-		 			 	console.log('Edit answer: ',response);
-		 			 	$scope.question.answers[index].content = response.data.content;
-	 			 	}
-	 			 	,function(error){
-	 			 		console.log(error);
-	 		});
+			$uibModal.open({
+	            templateUrl: 'editAnswerModal.html', // loads the template
+	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
+	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
+	            controller: function ($scope, $uibModalInstance,question) {
+					$scope.edit_answer_content = question.answers[index].content;
+	                $scope.submit = function () {
+	                   	$http.post('/questions/api/answer/edit',{id:question.answers[index].id,content:$scope.edit_answer_content})
+				 			 .then(
+				 			 	function(response){
+					 			 	console.log('Edit answer: ',response);
+					 			 	question.answers[index].content = response.data.content;
+				 			 	}
+				 			 	,function(error){
+				 			 		console.log(error);
+				 		});
+	                    $uibModalInstance.dismiss('cancel'); // dismiss
+	                }
+	                $scope.cancel = function () {
+	                    $uibModalInstance.dismiss('cancel'); 
+	                };
+	            },
+	            resolve: {
+	                question: function () {
+	                    return $scope.question;
+	                }
+	            }
+	        });//end of modal.open
+		}
+		var updateAnswerCount = function(){
+			$scope.answer_count --;
 		}
 		$scope.deleteAnswer = function(index){
-
-			$http.post('/questions/api/answer/delete',{id:$scope.question.answers[index].id})
-	 			 .then(
-	 			 	function(response){
-		 			 	console.log('delete answer: ',response);
-		 			 	$scope.question.answers.splice(index,1);
-		 			 	$scope.answer_count--;
-	 			 	}
-	 			 	,function(error){
-	 			 		console.log(error);
-	 		});
+			$uibModal.open({
+	            templateUrl: 'deleteAnswerModal.html', // loads the template
+	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
+	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
+	            controller: function ($scope, $uibModalInstance,question) {
+					$scope.edit_answer_content = question.answers[index].content;
+	                $scope.submit = function () {
+	                   	$http.post('/questions/api/answer/delete',{id:question.answers[index].id})
+				 			 .then(
+				 			 	function(response){
+					 			 	console.log('delete answer: ',response);
+					 			 	question.answers.splice(index,1);
+					 			 	updateAnswerCount();
+				 			 	}
+				 			 	,function(error){
+				 			 		console.log(error);
+				 		});
+	                    $uibModalInstance.dismiss('cancel'); // dismiss
+	                }
+	                $scope.cancel = function () {
+	                    $uibModalInstance.dismiss('cancel'); 
+	                };
+	            },
+	            resolve: {
+	                question: function () {
+	                    return $scope.question;
+	                }
+	            }
+	        });//end of modal.open
 		}
 
 		$scope.showComments = function(answer_id){

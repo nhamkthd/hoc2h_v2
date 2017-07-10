@@ -25,7 +25,7 @@
 								<div class="col-md-10">
 									<div class="form-group pmd-textfield">
 										<label for="Small">Câu Hỏi * :</label>
-										<input type="text" required name="content" ng-model="editTest.content" class="form-control" value="">
+										<textarea class="form-control" required ng-model="editTest.content"> </textarea>
 									</div>	
 
 
@@ -36,7 +36,7 @@
 								<div class="col-md-10">
 									<div class="form-group pmd-textfield">
 										<label for="Small">Hướng dẫn :</label>
-										<input type="text" name="explan" ng-model="editTest.explan" class="form-control" value="">
+										<textarea class="form-control" required ng-model="editTest.explan"> </textarea>
 									</div>	
 								</div>
 							</div>
@@ -58,7 +58,7 @@
 
 													<span for="is_correct">đáp án đúng</span>
 												</label>
-												<a ng-click="removeAnswer($index,'edit')" href="#nothing" style="margin-left: 20px;" ><span class="glyphicon glyphicon-remove"></span> Xóa </a>
+												<a ng-click="removeAnswer($index,'edit')" href="#nothing" style="margin-left: 20px;" ><i class="fa fa-times-circle-o" aria-hidden="true"></i> Xóa </a>
 											</div>
 										</div>
 									</div>
@@ -99,14 +99,11 @@
 	</div>
 </div>
 
-
-
 <div class="col-md-10 col-md-offset-1 main-content">
-	<h1 class="text-center" style="color:#00695c;">Tạo Đề Thi Trắc Nghiệm</h1>
-	<hr style="border: solid 1px #9e9e9e;">
-	<div class="col-md-12 box">
+	<legend class="text-center">Tạo đề trắc nghiệm</legend>
+	<div class="col-md-12">
 		@verbatim
-		<div class="col-md-10">
+		<div class="col-md-10 col-md-offset-1">
 			<h4><strong>Tiêu đề: </strong>{{test.title}} </h4>
 			<h4><strong>Danh mục/Thể loại: </strong>{{test.category_title}} </h4>
 			<h4><strong>Dạng đề: </strong>	Trắc nhiệm </h4>
@@ -116,22 +113,19 @@
 		</div>	
 		@endverbatim
 		
-		</div>
-		<hr style="border-bottom: solid 1px #9e9e9e;">
-		
-		
-		<div class="col-md-12" style="margin-top: 20px; margin-bottom: 30px; border: solid 1px #2BBBAD; padding: 10px;" id="doc">
+		<div class="col-md-12" id="doc">
 			<div class="col-md-12">
 				@verbatim
 				<div class="row" ng-repeat="x in mtests">
 					<div class="col-md-12">
-						<p style="color:green; font-size: 18px; ">Câu {{$index + 1}} : {{x.content}} <a href="#" ng-click="editQa($index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> <a href="#" ng-click="deleteQa($index)"><i class="fa fa-trash" aria-hidden="true"></i></a></p>
-
+						<p style="color:green; font-size: 18px;display:inline; ">Câu {{$index + 1}} :{{x.content}} 
+							<a href="#" ng-click="editQa($index)"><i class="fa fa-edit" aria-hidden="true"></i> Sửa</a> 
+							<a href="#" ng-click="deleteQa($index)"><i class="fa fa-trash" aria-hidden="true"></i> Xoá</a>
+						</p>
 					</div>
 					
 					<div class="col-md-12" style="margin-left: 20px;" ng-repeat="y in x.answer">
 						<label class="radio-inline pmd-radio pmd-radio-ripple-effect" style="margin-bottom: 10px;">
-							
 
 							<span for="inlineRadio1"  ng-class="{correct:y.is_correct==1}">{{$index + 1}}, {{y.title}}</span>
 
@@ -154,7 +148,7 @@
 									<div class="col-md-10">
 										<div class="form-group pmd-textfield">
 											<label for="Small">Câu Hỏi * :</label>
-											<input type="text" required name="content" ng-model="content" class="form-control" value="">
+											<textarea class="form-control" required name="content" ng-model="content"> </textarea>
 										</div>	
 										
 
@@ -165,16 +159,16 @@
 									<div class="col-md-10">
 										<div class="form-group pmd-textfield">
 											<label for="Small">Hướng dẫn :</label>
-											<input type="text" ng-init="explan=''" name="explan" ng-model="explan" class="form-control" value="">
+											<textarea class="form-control" ng-init="explan=''" name="explan" ng-model="explan"> </textarea>
 										</div>	
 									</div>
 								</div>
 
-								<div id="group_answer">			
+								<div id="group_answer" style="margin-left: 12px;">			
 									<div class="row" id="answer">
 										@verbatim
 										<div class="row" ng-repeat="x in mtestanswers">
-											<div class="col-md-7 col-md-offset-1" >
+											<div class="col-md-7" >
 												<div class="alert alert-success">
 													{{x.title}}
 												</div>
@@ -187,7 +181,7 @@
 
 														<span for="is_correct">đáp án đúng</span>
 													</label>
-													<a ng-click="removeAnswer($index,'add')" href="#nothing" style="margin-left: 20px;" ><span class="glyphicon glyphicon-remove"></span> Xóa </a>
+													<a ng-click="removeAnswer($index,'add')" href="#nothing" style="margin-left: 20px;" ><i class="fa fa-times-circle-o" aria-hidden="true"></i> Xóa </a>
 												</div>
 											</div>
 										</div>
@@ -208,7 +202,7 @@
 									</div>
 									<div class="col-md-4">
 										<a class="btn pmd-ripple-effect btn-default" ng-click="addAnswer(answer,'add')">
-											Thêm câu trả lời
+											<i class="fa fa-plus-square" aria-hidden="true"></i>
 										</a>
 									</div>
 
@@ -222,15 +216,15 @@
 
 					<div class="col-md-12">
 						<button ng-disabled="Mform.$invalid" class="btn pmd-btn-outline pmd-ripple-effect btn-info" ng-click="addQuesTion(content,explan)" >		
-							<span class="glyphicon glyphicon-plus" ></span> Lưu và Thêm câu hỏi
+							<i class="fa fa-plus" aria-hidden="true"></i> Lưu và Thêm câu hỏi
 						</button>
 
 						<button class="btn pmd-btn-outline pmd-ripple-effect btn-primary pull-right" ng-click="finish()">		
-							<span class="glyphicon glyphicon-floppy-save"></span>	Hoàn Thành
+							<i class="fa fa-save" aria-hidden="true"></i>	Hoàn Thành
 						</button>
 					</div>	
 				</form>
 			</div>
-
 		</div>			
 	</div>
+</div>

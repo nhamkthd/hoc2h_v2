@@ -103,3 +103,17 @@ label {font-weight: 700; margin-bottom: 5px;}
 .comment-box {margin-top: 20px;}
 .list-questions {padding:20px 10px;}
 
+.widget {border:none;box-shadow: none;}
+.widget .panel-body { padding:10px;}
+.widget .list-group { margin-bottom: 0; }
+.widget .panel-heading {box-shadow: none; border: none; background: #fff; padding-left: 18px; border-bottom: solid 1px #2BBBAD;}
+.widget .panel-title { display:inline }
+.widget .label-info { float: right; color:#00695c; background: #fff;}
+.widget li.list-group-item {border-radius: 0;border: 0;border-top: 1px solid #ddd;}
+.widget li.list-group-item:hover { background-color: rgba(86,61,124,.1); }
+a.list-title {font-size: 18px ;color:#0099CC; }
+.widget .mic-info { color: #666666;font-size: 12px; }
+.widget .action { margin-top:5px; }
+.widget .comment-text { font-size: 12px; }
+.widget .btn-block { border-top-left-radius:0px;border-top-right-radius:0px; }
+

@@ -55,9 +55,9 @@ class QuestionController extends Controller
 
     public function delete(Request $request)
     {
-        $question = Question::find($request->id);
+        $question = Question::find($request->question_id);
         $question->delete();
-        return 1;
+        return redirect('questions/');
     }
 
     public function apiQuestionWithID(Request $request){
