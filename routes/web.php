@@ -14,13 +14,23 @@ Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	    return view('tests.create');
 	});
 	Route::get('UserCreate','TestController@getUserCreateTest');
+	Route::post('usertest','TestController@userTest');
 	Route::post('create_write_test','WTestController@store')->name('create_write_test');
 	Route::get('show/{id}', 'TestController@show');
-
+	Route::post('/usertest/submittestchoice','UserTestController@store');
+	Route::get('usetest/result/{usertest_id}/{countIsCorrect}','UserTestController@result');
 	Route::group(['prefix' => 'api'], function(){
 		//this is group route api angular js
 		Route::get('/getCategory', 'CategoryController@show');
 		Route::post('/create_mtest', 'MTestController@store');
+		Route::post('/getTest', 'TestController@getTest');
+		Route::post('/postCmt', 'TestCommentController@postCmt');
+		Route::post('/editComment', 'TestCommentController@postEditComment');
+		Route::post('/postDeleteCmt', 'TestCommentController@postDeleteCmt');
+		Route::post('/postAddRate', 'RateTestController@postAddRate');
+		Route::post('/likeComment', 'LikeCommentTestController@postLikeComment');
+		Route::post('/dislikeComment', 'LikeCommentTestController@postDislikeComment');
+
 	});
 });
 

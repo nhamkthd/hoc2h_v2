@@ -18,6 +18,97 @@
 	 app.run(function(){
 	 	console.log('hello Test');
 	 });
+
+
+	app.controller('ShowTestController', function ($scope,$http) {
+		$scope.test=[];
+		$scope.test_id;
+		$scope.user;
+		$scope.avg_rate=0;
+		$scope.editComment=new Array()
+		$scope.initTest=function(test_id,user) {
+			$scope.test_id=test_id;
+			console.log($scope.test_id);
+			$scope.user=user;
+			$http.post('/tests/api/getTest', {test_id:test_id}).then(function (res) {
+				$scope.test=res.data.test;
+				$scope.test.cmts=res.data.test_comment;
+				$scope.test.category=res.data.test_category;
+				$scope.avg_rate=res.data.rate_avg;
+				$scope.user_rate=res.data.user_rate;
+				console.log($scope.test.cmts[1].user_like.indexOf(user.id));
+				console.log($scope.test.cmts[1]);
+			}, function(error) {
+				console.log(error)
+			})
+		}
+
+
+		$scope.addComment=function(){
+			if($scope.cmt.trim()!='')
+			{
+				$http.post('/tests/api/postCmt', {test_id:$scope.test_id,user_id:$scope.user.id,content:$scope.cmt}).then(function(res) {
+					var cmt=[];
+					cmt=res.data;
+					cmt.user=$scope.user;
+					cmt.user_like=new Array();
+					$scope.test.cmts.push(cmt);
+					console.log($scope.test.cmts);
+					$scope.cmt='';
+				}, function (error) {
+					console.log(error);
+				})
+			}
+		}
+
+		$scope.deleteCmt=function (index,cmt_id) {
+			$http.post('/tests/api/postDeleteCmt',{cmt_id:cmt_id} ).then(function (res) {
+				$scope.test.cmts.splice(index, 1);
+			}, function (error) {
+				console.log(error);
+			})
+		}
+
+		$scope.addRate=function(){
+			$http.post('/tests/api/postAddRate', {user_id:$scope.user.id,rate:$scope.rate,test_id:$scope.test.id}).then(function(res){
+				$scope.avg_rate=res.data;
+				$('#rate-dialog').modal('hide');
+			}, function (error) {
+				console.log(error);
+			})
+		}
+
+		$scope.likeComment=function(index,cmt_id)
+		{
+
+			$http.post('/tests/api/likeComment', {comment_id:cmt_id}).then(function(res) {
+				$scope.test.cmts[index].user_like.push($scope.user.id);
+			}, function (error) {
+				console.log(error);
+			})
+		}
+
+		$scope.dislikeComment=function(index,cmt_id)
+		{
+			$http.post('/tests/api/dislikeComment', {comment_id:cmt_id}).then(function(res) {
+				$scope.test.cmts[index].user_like.splice($scope.test.cmts[index].user_like.indexOf($scope.user.id),1);
+			}, function (error) {
+				console.log(error);
+			})
+		}
+
+		$scope.saveComment=function (index) {
+			$http.post('/tests/api/editComment',{comment_id:$scope.test.cmts[index].id,content:$scope.editComment[index]}).then(function (res) {
+				$scope.test.cmts[index].content=$scope.editComment[index];
+			}, function (error) {
+				console.log(error);
+			})
+			
+
+		}
+
+		
+	});
 	 
 	 app.controller('TestController',function($http, $scope){
 
@@ -61,6 +152,8 @@
 	 		is_document:0,
 	 		is_document_explan:0,
 	 	}
+	 	
+
 	 	//đối tượng mtest
 	 	function MTest(){	
 	 		this.test_id=0;
@@ -68,6 +161,7 @@
 	 		this.explan='';
 	 		this.incorrect_id='';
 	 		this.answer=[];
+
 	 		return this;
 	 	}
 	 	//đối tượng mtestanswer
@@ -303,6 +397,5 @@
 	 		}
 	 	}
 	 });
-
 })();
 

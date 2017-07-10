@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default fixed-top">
+<nav class="navbar navbar-default fixed-top"  >
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -26,7 +26,17 @@
       <ul class="nav navbar-nav navbar-right">
         @if(Route::has('login'))
             @if(Auth::check())
-              <li class="notification"><a href="#">Thông báo</a></li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"> Thông báo <span class="badge  ng-binding">{{Auth::user()->unreadNotifications->count()}}</span></span></a>
+              <ul class="dropdown-menu">
+                @foreach (Auth::user()->notifications as $notification) 
+
+                  @include('notifications.'.class_basename($notification->type))
+                  
+                  
+                @endforeach
+              </ul>
+            </li>
               <li class="dropdown">
                 <a href="#">{{Auth::user()->user_name}} <span class="caret"></span></a>
                 <ul class="dropdown-menu">

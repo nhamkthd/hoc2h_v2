@@ -1,5 +1,5 @@
 <div class="col-md-3 sidebar">
-	<button ng-click="selectTab(1)" class="btn btn-main" style="width: 100%; margin-top:20px;">Tạo Đề</button>
+	<a href="{{url('tests/create')}}"><button class="btn btn-main" style="width: 100%; margin-top:20px;">Tạo Đề</button></a>
 	<hr>
 	<p class="menu-label">Thống Kê</>
 		<section>
@@ -14,7 +14,7 @@
 
 	<script type="text/javascript">
 		var url = window.location.href;
-		$('ul li').each(function(index) {
+		$('.menu-list li').each(function(index) {
 
 			if($(this).find('a').attr('href')==url){
 				$(this).addClass('active');

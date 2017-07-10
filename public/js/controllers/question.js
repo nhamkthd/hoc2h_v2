@@ -3,6 +3,7 @@
 	var app = angular.module('hoc2h-question', []);
 
 	app.run(['$anchorScroll', function($anchorScroll) {
+		//console.log('ok');
   		$anchorScroll.yOffset = 50;   // always scroll by 50 extra pixels
 	}]);
 
@@ -90,7 +91,7 @@
 	 		$scope.user = user;
 	 		$scope.question ={};
 	 		$scope.answers = [];
-	 		$http.post('/questions/api/getQuestionInfo/',{id:question_id})
+	 		$http.post('/questions/api/getQuestionInfo',{id:question_id})
 	 			 .then(function(response){
 	 			 	console.log('Init question: ',response.data);
 	 			 	$scope.question = response.data.question;
@@ -129,7 +130,7 @@
 
 		}
 		$scope.editQuestion = function(){
-			$http.post('/questions/api/edit',{id:$scope.question.id,title:$scope.title_edit,content:$scope.edit_question_content})
+			$http.post('/public/questions/api/edit',{id:$scope.question.id,title:$scope.title_edit,content:$scope.edit_question_content})
 	 			 .then(function(response){
 	 			 	console.log('Edit question: ',response);
 	 			 	$scope.question.title = response.data.title;
@@ -202,7 +203,7 @@
 		}
 		$scope.deleteAnswer = function(index){
 
-			$http.post('/questions/api/answer/delete',{id:$scope.question.answers[index].id})
+			$http.post('questions/api/answer/delete',{id:$scope.question.answers[index].id})
 	 			 .then(
 	 			 	function(response){
 		 			 	console.log('delete answer: ',response);

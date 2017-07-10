@@ -30,14 +30,15 @@
 
         <!-- Applycation Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/controllers/notification.js') }}"></script>
         <script src="{{ asset('js/controllers/question.js') }}"></script>
         <script src="{{ asset('js/controllers/test.js') }}"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
         <script src="{{asset('js/flugin/alert/sweetalert.min.js')}}"></script>
         <link rel="stylesheet" type="text/css" href="{{asset('js/flugin/alert/sweetalert.css')}}">
         <style type="text/css">
             #loading{
-                background: url({{ asset('img/loading.gif') }}) center no-repeat #fff;
+                background: url({{ asset('images/loading.gif') }}) center no-repeat #fff;
                 position: fixed;
                 left: 0px;
                 top: 0px,;

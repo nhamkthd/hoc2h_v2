@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class WTest extends Model
+class RateTest extends Model
 {
-    
+    protected $table='rate_test';
 }

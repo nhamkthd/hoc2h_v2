@@ -5,15 +5,15 @@
 	<div class="row">
 		@include('tests/sidebar')
 		<div class="col-md-9">
-		@foreach ($Test->sortByDesc('id') as $test)
+		
 			<div class="panel panel-default widget">
 				<div class="panel-heading">
 					<span class="glyphicon glyphicon-th-list"></span>
 					<h3 class="panel-title"> Tất Cả Đề Thi</h3>
-					<span class="label label-info">{{$test->count()}}</span>
+					<span class="label label-info">{{$Test->count()}}</span>
 				</div>
 				<div class="panel-body">
-
+					@foreach ($Test->sortByDesc('id') as $test)
 					<div class="row">
 						<div class="col-xs-2 col-md-2">
 							<img class="img-avt" src="http://localhost/duanweb/laravel/public//images/users/1498055029.jpg" alt="avatar" width="100">
@@ -29,10 +29,11 @@
 
 						</div>
 					</div>
-
+					<hr>
+					@endforeach
 				</div>
 			</div>
-			@endforeach
+			
 		</div>
 	</div>
 </div>
