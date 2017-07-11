@@ -73,7 +73,6 @@
 
 	//main question controller
 	app.controller('QuestionController',function($scope, $http,$sce){
-		$scope.date = '20140313T00:00:00';
 		$scope.tab = 1;
 	 	$scope.setSelectedTab = function(sTab){
 	 		$scope.tab = sTab;
@@ -89,11 +88,21 @@
 
 	 			 });
 	 		}
-	 		
 	 	}
 	 	
-	})
+	});
 
+	app.controller('CreateQuestionController',function($scope,$http){
+		$scope.tags = [];
+		$scope.getTags = function() {
+	 		$http.get('/tags')
+	 			 .then(function(response){
+	 			 		console.log(response.data);
+	 			 		$scope.loadTags = response.data;
+	 			 	}, function(error){
+	 		});
+	 	}
+	});
 	//Question detail controller
 	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location,$uibModal){
 		this.animationsEnabled = true;

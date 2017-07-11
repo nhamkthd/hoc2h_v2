@@ -1,9 +1,10 @@
 @extends('questions.layout')
 @section('question_content')
-<div class="row box">
+<div class="row box" ng-controller = "CreateQuestionController">
 	@verbatim
 		{{setSelectedTab(0)}}	
 	@endverbatim
+	<div ng-init="getTags()"></div>
 	<form name="frmQuestion" novalidate="" method="post" action="{{route('storeQuestion')}}">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<legend class="text-center">Đăng câu hỏi</legend>
@@ -16,7 +17,7 @@
 					    <option value="1">Kiến thức THPT</option>
 					    <option value="2">Kiến thức THCS</option>
 					</select>
-					<span class="help-inline validate-text"
+					<span class="help-inline"
 						  ng-show="frmQuestion.category.$invalid && frmQuestion.category.$touched">Thể  không được để trống!</span>
 				</div>
 			</div>
@@ -46,6 +47,9 @@
 				</div>
 			</div>
 		</div>
+		<tags-input ng-model="tags" display-property="name">
+	      <auto-complete source="loadTags($query)"></auto-complete>
+	    </tags-input>
 		<div class="col-md-8 col-md-offset-1" style="margin-top: 20px;">
 			<a href="{{route('questions')}}" class="btn btn-warning" type="button" >Huỷ bỏ</a>
 			<button class="btn btn-default" type="submit" id="submit"  >Đăng lên</button>

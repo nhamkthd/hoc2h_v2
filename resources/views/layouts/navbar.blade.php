@@ -27,7 +27,7 @@
         @if(Route::has('login'))
             @if(Auth::check())
             <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"> Thông báo <span class="badge  ng-binding">{{Auth::user()->unreadNotifications->count()}}</span></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="fa fa-globe" aria-hidden="true"></i>  <span style="background:#ff4444;color:#fff;" class="badge  ng-binding">{{Auth::user()->unreadNotifications->count()}}</span></span></a>
               <ul class="dropdown-menu">
                 @foreach (Auth::user()->notifications as $notification) 
 
