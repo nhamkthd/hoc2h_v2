@@ -4,7 +4,7 @@
 	@verbatim
 		{{setSelectedTab(0)}}	
 	@endverbatim
-	<div ng-init="getTags()"></div>
+	<div ng-init="loadTags()"></div>
 	<form name="frmQuestion" novalidate="" method="post" action="{{route('storeQuestion')}}">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<legend class="text-center">Đăng câu hỏi</legend>
@@ -47,10 +47,12 @@
 				</div>
 			</div>
 		</div>
-		<tags-input ng-model="tags" display-property="name">
-	      <auto-complete source="loadTags($query)"></auto-complete>
-	    </tags-input>
-		<div class="col-md-8 col-md-offset-1" style="margin-top: 20px;">
+		<!--tags input-->
+		 <tags-input class="form-group" ng-model="tags" add-on-paste="true" display-property="name" max-tags="4" placeholder="Chèn tags">
+      		<auto-complete source="loadTags($query)"></auto-complete>
+    	</tags-input>
+
+		<div class="col-md-8 col-md-offset-1" style="margin-top: 50px;">
 			<a href="{{route('questions')}}" class="btn btn-warning" type="button" >Huỷ bỏ</a>
 			<button class="btn btn-default" type="submit" id="submit"  >Đăng lên</button>
 		</div>

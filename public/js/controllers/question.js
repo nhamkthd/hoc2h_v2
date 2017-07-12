@@ -8,7 +8,24 @@
 	app.config(['$qProvider', function ($qProvider) {
    	 $qProvider.errorOnUnhandledRejections(false);
 	}]);
+	
 	//app services
+	app.service('tags', function($q, $http) {
+		var tags = [];
+	  	
+	  	this.load = function() {
+		  	$http.get('/tags')
+		 		 .then(function(response){
+		 			tags = response.data;
+		 		}, function(error){
+	 	});
+
+	    var deferred = $q.defer();
+	    deferred.resolve(tags);
+	    return deferred.promise;
+	  };
+	});
+
 	app.factory('questionService',function(){
 		var questionService = {};
 
@@ -92,15 +109,10 @@
 	 	
 	});
 
-	app.controller('CreateQuestionController',function($scope,$http){
+	app.controller('CreateQuestionController',function($scope,$http,tags){
 		$scope.tags = [];
-		$scope.getTags = function() {
-	 		$http.get('/tags')
-	 			 .then(function(response){
-	 			 		console.log(response.data);
-	 			 		$scope.loadTags = response.data;
-	 			 	}, function(error){
-	 		});
+		$scope.loadTags = function(query) {
+	 		return tags.load();
 	 	}
 	});
 	//Question detail controller
