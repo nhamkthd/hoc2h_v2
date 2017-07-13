@@ -6,9 +6,8 @@
 @include('tests.sidebar')
 <div class="col-md-9 main-content ">
 
-		<div class="test-info">
-			<h1 style="color:green;">{{$test->title}}</h1>
-			<hr style=" border-bottom: solid 1px #007E33;">
+		<div class="box">
+			<h3 class="info-dark-text">{{$test->title}}</h3>
 			<p><strong>Thể loại/Danh mục: </strong>{{$test->category->title}}</p>
 			@if($test->test_type == 0)
 				<p><strong>Dạng đề:</strong>Trắc nghiệm</p>
@@ -29,8 +28,9 @@
 		</div>
 
 		<div class="row">
-
-			<button style="margin-top: 20px;" data-target="#list-test-options-dialog" data-toggle="modal" type="button" class="btn btn-primary col-md-2 col-md-offset-5"><span class="glyphicon glyphicon-triangle-right"></span> Vào làm bài </button>
+			<div class=" col-md-4 col-md-offset-4">
+			<button style="margin-top: 20px; width: 100%;" data-target="#list-test-options-dialog" data-toggle="modal" type="button" class="btn btn-primary"><i class="fa fa-caret-square-o-right" aria-hidden="true"></i> Vào làm bài </button>
+			</div>
 
 				<form method="POST" action="{{ url('tests/usertest') }}" id="submit_edit" novalidate="novalidate">
 					{{csrf_field()}}
@@ -58,14 +58,13 @@
 									</div>
 								</div>
 								<div class="pmd-modal-action pmd-modal-bordered text-right">
-									<button class="btn pmd-ripple-effect btn-primary pmd-btn-flat" type="submit">Vào thi</button>
-									<button data-dismiss="modal" class="btn pmd-ripple-effect btn-default pmd-btn-flat" type="button">Lúc khác</button>
+									<button data-dismiss="modal" class="btn pmd-ripple-effect btn-warning pmd-btn-flat" type="button">Lúc khác</button>
+									<button class="btn pmd-ripple-effect btn-default pmd-btn-flat" type="submit">Vào thi</button>
+									
 								</div>
 							</div>
 						</div>
 					</div>
-
-
 				</form>
 			</div>
 
@@ -91,9 +90,9 @@
 								</div>
 								<div class="pmd-modal-action pmd-modal-bordered text-right">
 
-									<button data-dismiss="modal" class="btn pmd-ripple-effect btn-default pmd-btn-flat" type="button">Lúc khác</button>
+									<button data-dismiss="modal" class="btn pmd-ripple-effect btn-warning pmd-btn-flat" type="button">Lúc khác</button>
 
-									<button ng-click="addRate()" class="btn pmd-ripple-effect btn-primary pmd-btn-flat" type="submit">Đánh giá</button>
+									<button ng-click="addRate()" class="btn pmd-ripple-effect btn-default pmd-btn-flat" type="submit">Đánh giá</button>
 
 									
 								</div>
@@ -112,19 +111,17 @@
 					</form>
 				</div>
 			</div>
-
-			<button type="button" data-target="#rate-dialog" data-toggle="modal" class="btn pmd-btn-raised pmd-ripple-effect btn-info" style="margin:20px 0 10px 10px;">Đánh giá</button>
-
+			<button data-target="#rate-dialog" data-toggle="modal" type="button" class="btn btn-dark-green">
+				<i class="fa fa-star" aria-hidden="true"></i> Đánh giá đề thi
+			</button>
 			<div class="col-md-12 answer-list">
 				<div class="row">
 					<div class="col-md-12" ng-repeat="cmt in test.cmts">
-						
 							@include('tests.directives.list_cmt')
 						
 					</div>
 					<div class="col-md-12 commet-box">
-						<label>Câu trả lời của bạn</label>
-						<textarea ng-init="cmt=''" name="cmt" ng-model='cmt'></textarea>
+						<textarea style="padding:10px 0 0 10px;" ng-init="cmt=''" name="cmt" ng-model='cmt' placeholder="Viết bình luận"></textarea>
 					</div>
 					<button class="btn btn-outline-default waves-effect pull-right" style="margin-top:20px; margin-right: 10px;" type="button" ng-click="addComment()">Gửi trả lời</button>
 				</div>

@@ -7,6 +7,7 @@ use App\Question;
 use Auth;
 use App\QuestionVote;
 use Carbon\Carbon;
+use App\QuestionTag;
 class QuestionController extends Controller
 {
     public function index()
@@ -39,9 +40,15 @@ class QuestionController extends Controller
     	$question->categories_id = $request->category;
     	$question->user_id = Auth::user()->id;
     	$question->title = $request->title;
-    	$question->content = $request->q_content;
+    	$question->content = $request->content;
     	$question->save();
-    	return redirect('questions/question/'.$question->id);
+        foreach ($request->tags as $key => $tag) {
+            $questionTag = new QuestionTag;
+            $questionTag->question_id = $question->id;
+            $questionTag->tag_id = $tag->id;
+            $questionTag->save();
+        }
+        return $question;
     }
 
     public function edit(Request $request)

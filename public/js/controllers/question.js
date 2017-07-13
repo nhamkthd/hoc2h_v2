@@ -110,9 +110,23 @@
 	});
 
 	app.controller('CreateQuestionController',function($scope,$http,tags){
-		$scope.tags = [];
+		$scope.tagsList = [];
 		$scope.loadTags = function(query) {
 	 		return tags.load();
+	 	}
+
+	 	$scope.submitQuestion = function(){
+	 		console.log($scope.category);
+	 		console.log($scope.title);
+	 		console.log($scope.content);
+	 		console.log($scope.tagsList);
+	 		$http.post('/questions/api/store',{category:1, title:$scope.title, content:$scope.content,tags:$scope.tagsList})
+	 			 .then(function(response){
+	 			 	console.log(response.data)
+	 			 	window.location.href = '/questions/question/'+response.data.id;
+	 			 },function(error){
+
+	 			 });
 	 	}
 	});
 	//Question detail controller
