@@ -8,7 +8,24 @@
 	app.config(['$qProvider', function ($qProvider) {
    	 $qProvider.errorOnUnhandledRejections(false);
 	}]);
+	
 	//app services
+	app.service('tags', function($q, $http) {
+		var tags = [];
+	  	
+	  	this.load = function() {
+		  	$http.get('/tags')
+		 		 .then(function(response){
+		 			tags = response.data;
+		 		}, function(error){
+	 	});
+
+	    var deferred = $q.defer();
+	    deferred.resolve(tags);
+	    return deferred.promise;
+	  };
+	});
+
 	app.factory('questionService',function(){
 		var questionService = {};
 
@@ -73,7 +90,6 @@
 
 	//main question controller
 	app.controller('QuestionController',function($scope, $http,$sce){
-		$scope.date = '20140313T00:00:00';
 		$scope.tab = 1;
 	 	$scope.setSelectedTab = function(sTab){
 	 		$scope.tab = sTab;
@@ -89,11 +105,30 @@
 
 	 			 });
 	 		}
-	 		
 	 	}
 	 	
-	})
+	});
 
+	app.controller('CreateQuestionController',function($scope,$http,tags){
+		$scope.tagsList = [];
+		$scope.loadTags = function(query) {
+	 		return tags.load();
+	 	}
+
+	 	$scope.submitQuestion = function(){
+	 		console.log($scope.category);
+	 		console.log($scope.title);
+	 		console.log($scope.content);
+	 		console.log($scope.tagsList);
+	 		$http.post('/questions/api/store',{category:1, title:$scope.title, content:$scope.content,tags:$scope.tagsList})
+	 			 .then(function(response){
+	 			 	console.log(response.data)
+	 			 	window.location.href = '/questions/question/'+response.data.id;
+	 			 },function(error){
+
+	 			 });
+	 	}
+	});
 	//Question detail controller
 	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location,$uibModal){
 		this.animationsEnabled = true;

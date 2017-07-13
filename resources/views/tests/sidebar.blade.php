@@ -1,5 +1,5 @@
 <div class="col-md-3 sidebar">
-	<a href="{{url('tests/create')}}"><button class="btn btn-main" style="width: 100%; margin-top:20px;">Tạo Đề</button></a>
+	<a href="{{url('tests/create')}}"><button class="btn btn-outline-default waves-effect" style="width: 100%; margin-top:20px;">Tạo Đề</button></a>
 	<hr>
 	<p class="menu-label">Thống Kê</>
 		<section>
