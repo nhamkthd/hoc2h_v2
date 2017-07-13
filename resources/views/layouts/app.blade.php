@@ -19,7 +19,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
         
          <!--scripts -->
-        
+        <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
         <script src="{{asset('js/flugin/jquery-3.2.1.min.js')}}"></script> 
         <script src="{{asset('js/flugin/angular.min.js')}}"></script> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-sanitize.min.js"></script>
@@ -50,9 +50,13 @@
         </style>
 
     </head>
+    @if(Auth::check())
+        <script type="text/javascript">
+            var user_id={{Auth::user()->id}}
+        </script>
+    @endif
     <body>
         <div class="loading" id="loading"></div>
-
         <div id="app" ng-app="Hoc2h">
             @include('layouts.navbar')
             @yield('content')

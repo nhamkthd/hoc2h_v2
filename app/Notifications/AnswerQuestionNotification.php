@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Carbon\Carbon;
 use Auth;
-class CommentTestNotification extends Notification
+class AnswerQuestionNotification extends Notification
 {
     use Queueable;
 
@@ -17,10 +17,10 @@ class CommentTestNotification extends Notification
      *
      * @return void
      */
-    public $comment;
-    public function __construct($comment)
+    public $answer;
+    public function __construct($answer)
     {
-        $this->comment=$comment;
+        $this->answer=$answer;
     }
 
     /**
@@ -45,10 +45,10 @@ class CommentTestNotification extends Notification
     {
         return [
             "user"=>Auth::user(),
-            "comment"=>$this->comment,
-            "type"=>"bình luận",
-            "model"=>"bài test",
-            "link"=>"/tests/show/".$this->comment['test_id']
+            "comment"=>$this->answer,
+            "type"=>"trả lời",
+            "model"=>"câu hỏi",
+            "link"=>"/questions/question/".$this->answer['question_id']
         ];
     }
 
@@ -63,10 +63,10 @@ class CommentTestNotification extends Notification
     {
         return new BroadcastMessage([
             "user"=>Auth::user(),
-            "comment"=>$this->comment,
-            "type"=>"bình luận",
-            "model"=>"bài test",
-            "link"=>"/tests/show/".$this->comment['test_id']
+            "answer"=>$this->answer,
+            "type"=>"trả lời",
+            "model"=>"câu hỏi",
+            "link"=>"/questions/question/".$this->answer['question_id']
             ]);
     }
 }

@@ -5,9 +5,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
-
+Route::post('pusher/auth', 'pusherController@pusherAuth');
 Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	Route::get('/','TestController@index')->name('tests');
 	Route::get('create', function() {
@@ -62,3 +61,9 @@ Route::group(['prefix' => 'questions'], function(){
 		Route::post('/answer/comment/delete','AnswerController@deleteComment');
 	});
 });
+
+
+	Route::group(['prefix' => 'notification'], function() {
+	    Route::post('getNotification','NotificationController@show');
+	    Route::post('readNotification','NotificationController@update');
+	});

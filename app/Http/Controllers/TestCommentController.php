@@ -16,7 +16,8 @@ class TestCommentController extends Controller
        $TestComment->user_id=$req->user_id;
        $TestComment->content=$req->content;
        $TestComment->save();
-       Test::find($req->test_id)->user->notify(new CommentTestNotification($req->all()));
+       if(Auth::user()->id!=Test::find($req->test_id)->user->id)
+        Test::find($req->test_id)->user->notify(new CommentTestNotification($req->all()));
        return response()->json($TestComment);
     }
     public function postDeleteCmt(Request $req)

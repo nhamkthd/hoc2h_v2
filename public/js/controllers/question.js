@@ -83,7 +83,7 @@
 	 		if (tab == 1) {
 	 			$http.get('/questions/api/')
 	 			 .then(function(response){
-	 			 		console.log(response.data);
+	 			 		// console.log(response.data);
 	 			 		$scope.questions  = response.data;
 	 			 	}, function(error){
 
