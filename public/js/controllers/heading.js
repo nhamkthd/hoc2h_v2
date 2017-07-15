@@ -13,7 +13,7 @@
 	
 	var app = angular.module('hoc2h-heading', []);
 	 app.run(function(){
-	 	
+	 	console.log("hello heading");
 	 });
 
 	 app.controller('HeadingController',function($scope, $http){
@@ -47,6 +47,7 @@
 
 	 	var channel = pusher.subscribe('private-App.User.' + user_id);
 	 	channel.bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function(data){
+	 		console.log(data);
 	 		$http.post('/notification/getNotification').then(function (res) {
 	 			$scope.notification=res.data.notifications;
 	 			$scope.unReadNotification=res.data.unreadNotifications;

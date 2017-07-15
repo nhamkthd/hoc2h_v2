@@ -9,6 +9,7 @@ use App\QuestionVote;
 use Carbon\Carbon;
 use App\QuestionTag;
 use App\Notifications\LikeQuestionNotification;
+use App\Category;
 class QuestionController extends Controller
 {
     public function index()
@@ -61,6 +62,22 @@ class QuestionController extends Controller
         return $question;
     }
 
+    public function changeResolve(Request $request)
+    {
+        $question = Question::find($request->question_id);
+        $question->is_resolved = $request->param;
+        $question->save();
+        return $question;
+    }
+
+    public function editCategory(Request $request)
+    {
+        $question = Question::find($request->id);
+        $question->categories_id = $request->category;
+        $question->save();
+        return $question;
+    }
+
     public function delete(Request $request)
     {
         $question = Question::find($request->question_id);
@@ -70,8 +87,10 @@ class QuestionController extends Controller
 
     public function apiQuestionWithID(Request $request){
         $question = Question::find($request->id);
+        $categories = Category::all();
         $question->votes;
         $question->user;
+        $question->category;
         $answer_comments = array();
         $answerUsers = array();
         $answerVoted = array();
@@ -113,7 +132,7 @@ class QuestionController extends Controller
                 $isVoted = 1;
         }
 
-        return response()->json(array('question'=>$question,'isVoted'=>$isVoted,'answers'=>$answers));
+        return response()->json(array('question'=>$question,'isVoted'=>$isVoted,'answers'=>$answers,'categories'=>$categories));
     }
 
     public function vote(Request $request){

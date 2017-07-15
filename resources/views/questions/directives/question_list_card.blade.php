@@ -25,7 +25,7 @@
 		<div class="author">
 			<img class="author-avt" src="" width="30" height="30">
 			<a href="" class="author-name">{{question.user.user_name}}</a>
-			<span ng-show="question.is_resolved == 1"><i class="fa fa-check-circle success-text" aria-hidden="true"></i></span>
+			<span ng-show="question.is_resolved == 1"><i class="fa fa-check-circle success-dark-text" aria-hidden="true"></i></span>
 			<span ng-show="question.is_resolved == 0"><i class="fa fa-question-circle danger-dark-text" aria-hidden="true"></i></span>
 		</div>
 	</div>

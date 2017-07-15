@@ -11,7 +11,7 @@
 			<div class="post-header">
 				<h3 class="unique-text">{{question.title}} </h3>
 				<p>
-					Đăng bởi <a href="#nothing" class="primary-text">{{question.user.user_name}}</a> tại <a href class="warning-dark-text">Kiến Thức Lớp 12 </a> <a> <i class="fa fa-edit" aria-hidden="true"></i></a>
+					Đăng bởi <a href="#nothing" class="primary-text">{{question.user.user_name}}</a> tại <a href class="warning-dark-text"> {{question.category.title}} </a> <a ng-click="editCategory()"> <i class="fa fa-edit" aria-hidden="true"></i></a>
 					<span class="pull-right">{{question.created_at}}</span>
 				</p>
 			</div>
@@ -29,6 +29,8 @@
 				  		</a>
 				  	</li>
 				  	<li class="action"><a><i class="fa fa-magic" aria-hidden="true"></i> Yêu cầu</a></li>
+				  	<li ng-show="question.is_resolved == 1"  ng-click="changeResolve(0)" class="action "><a><i class="fa fa-check-circle success-dark-text" aria-hidden="true"></i> Resolved</a></li>
+				  	<li ng-show="question.is_resolved == 0" ng-click="changeResolve(1)" class="action "><a><i class="fa fa-check-circle danger-dark-text" aria-hidden="true"></i> Not resolve</a></li>
 				</ul>
 				@endverbatim
 					@include('questions.directives.question_modal')
