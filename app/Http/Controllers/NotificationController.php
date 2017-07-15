@@ -46,7 +46,7 @@ class NotificationController extends Controller
     public function show()
     {
         $notify=array();
-        $notify['notifications']=Auth::user()->Notifications;
+        $notify['notifications']=Auth::user()->Notifications->unique(['type','data.link']);
         $notify['unreadNotifications']=Auth::user()->unreadNotifications;
          return response()->json($notify);
     }

@@ -8,6 +8,7 @@ use Auth;
 use App\QuestionVote;
 use Carbon\Carbon;
 use App\QuestionTag;
+use App\Notifications\LikeQuestionNotification;
 class QuestionController extends Controller
 {
     public function index()
@@ -121,6 +122,7 @@ class QuestionController extends Controller
             $questionVote->user_id = Auth::user()->id;
             $questionVote->question_id = $request->question_id;
             $questionVote->save();
+            QuesTion::find($request->question_id)->user->notify(new LikeQuestionNotification($request->question_id));
             return 1;
         } else if ($request->isVoted == 1) {
             $questionVote = QuestionVote::where('question_id',$request->question_id);
