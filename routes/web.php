@@ -49,7 +49,10 @@ Route::group(['prefix' => 'questions'], function(){
 		Route::post('/getQuestionInfo','QuestionController@apiQuestionWithID');
 		Route::post('/vote','QuestionController@vote');
 		Route::post('/edit','QuestionController@edit');
+		Route::post('/editCategory','QuestionController@editCategory');
+		Route::post('/change-resolve','QuestionController@changeResolve');
 
+		Route::get('/categories','CategoryController@show');
 
 		Route::post('/answers','AnswerController@store');
 		Route::post('/answer/vote','AnswerController@vote');

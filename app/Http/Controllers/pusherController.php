@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use pusher\Pusher;
+use Pusher\Pusher;
 class pusherController extends Controller
 {
     public function pusherAuth()

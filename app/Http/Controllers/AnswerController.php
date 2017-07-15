@@ -8,7 +8,7 @@ use App\AnswerComment;
 use App\AnswerVote;
 use App\AnswerCommentVote;
 use Auth;
-use App\QuesTion;
+use App\Question;
 use App\notifications\AnswerQuestionNotification;
 class AnswerController extends Controller
 {
@@ -19,8 +19,8 @@ class AnswerController extends Controller
     	$answer->user_id = Auth::user()->id;
     	$answer->content = $request->content;
     	$answer->save();
-        if(Auth::user()->id!=QuesTion::find($request->question_id)->user->id)
-        QuesTion::find($request->question_id)->user->notify(new AnswerQuestionNotification($request->all()));
+        if(Auth::user()->id!=Question::find($request->question_id)->user->id)
+        Question::find($request->question_id)->user->notify(new AnswerQuestionNotification($request->all()));
     	$answer->user;
     	$answer->comments;
     	return $answer;
