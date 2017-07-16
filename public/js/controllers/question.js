@@ -8,25 +8,39 @@
 	app.config(['$qProvider', function ($qProvider) {
    	 $qProvider.errorOnUnhandledRejections(false);
 	}]);
-	
-	//app services
-	app.service('tags', function($q, $http) {
-		var tags = [];
-	  	
-	  	this.load = function() {
-		  	$http.get('/tags')
-		 		 .then(function(response){
-		 			tags = response.data;
-		 		}, function(error){
-	 	});
-	  };
+	//category service
+ 	app.factory('Categories', function($http,$q) {
+ 		return {
+ 			getList:function(){
+ 				var deferred = $q.defer();
+ 				$http.get('/categories/api/')
+ 					 .then(function(response){
+ 					 	deferred.resolve(response);
+ 					 },function (error) {
+ 					 	deferred.reject();
+ 					 	console.log(error);
+ 					 });
+ 				return deferred.promise;
+ 			}
+ 		}
+	}); 
+	//tags service
+	app.factory('Tags', function($http, $q) {
+		return {
+ 			getList:function(){
+ 				var deferred = $q.defer();
+ 				$http.get('/tags')
+ 					 .then(function(response){
+ 					 	deferred.resolve(response);
+ 					 },function (error) {
+ 					 	deferred.reject();
+ 					 	console.log(error);
+ 					 });
+ 				return deferred.promise;
+ 			}
+ 		}
 	});
 
-	app.factory('questionService',function(){
-		var questionService = {};
-
-    	return questionService;
-	});
 	
 	//show limit line content filter
 	app.filter('textShortenerFilter', function() {
@@ -95,10 +109,11 @@
 	 		if (tab == 1) {
 	 			$http.get('/questions/api/')
 	 			 .then(function(response){
-	 			 		// console.log(response.data);
-	 			 		$scope.questions  = response.data;
+	 			 		console.log(response.data);
+	 			 		$scope.questions  = response.data.questions;
+	 			 		$scope.questionTags = response.data.questionTags;
 	 			 	}, function(error){
-
+	 			 		console.log(error);
 	 			 });
 	 		}
 	 	}
@@ -106,28 +121,13 @@
 	});
 
 	//create question controller
-	app.controller('CreateQuestionController',function($scope,$http){
+	app.controller('CreateQuestionController',function($scope,$http,Categories,Tags){
 		$scope.tagsList = [];
-		$scope.categories = [];
-		$scope.loadTags = function(query) {
-	 		$http.get('/tags')
-		 		 .then(function(response){
-		 			$scope.tags = response.data;
-		 		}, function(error){
-		 		});
-	 	}
-
-	 	$scope.getCategories = function() {
-	 		$http.get('/questions/api/categories')
-	 			 .then(function(response){
-	 			 	$scope.categories = response.data;
-	 			 },function(error){
-	 			 	console.log(error);
-	 			 });
-	 	}
+		Categories.getList().then(function(response){$scope.categories = response.data;});
+		Tags.getList().then(function(response){$scope.tags = response.data;});
 
 	 	$scope.submitQuestion = function(){
-
+	 		console.log($scope.tagsList);
 	 		$http.post('/questions/api/store',{category:$scope.category_id, title:$scope.title, content:$scope.content,tags:$scope.tagsList})
 	 			 .then(function(response){
 	 			 	console.log(response.data)
@@ -138,23 +138,14 @@
 	 	}
 	});
 	//Question detail controller
-	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location,$uibModal){
+	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location,$uibModal,Tags){
 		this.animationsEnabled = true;
-		$scope.categories = [];
 	 	$scope.showComments = [];
 	 	$scope.edit_answer_content = [];
 	 	$scope.comment_content_field = [];
 	 	$scope.comment_editing = [];
 	 	$scope.comment_editing_field = [];
-
-	 	var getListCategories = function (){
-	 		$http.get('/questions/api/categories')
-	 			 .then(function(response){
-	 			 	return response.data;
-	 			 },function(error){
-	 			 	console.log(error);
-	 			 });
-	 	}
+	 	Tags.getList().then(function(response){$scope.tags = response.data;});
 	 	//auto scroll
 		$scope.gotoAnchor = function(x) {
 	      	var newHash = 'anchor' + x;
@@ -169,13 +160,14 @@
 		$scope.convertHtml = function(htmlText) {
                return $sce.trustAsHtml(htmlText);
         }
-
+        
         //init question form route
 	 	$scope.initQuestion = function (question_id,user) {
 
 	 		$scope.user = user;
 	 		$scope.question ={};
 	 		$scope.answers = [];
+
 	 		$http.post('/questions/api/getQuestionInfo',{id:question_id})
 	 			 .then(function(response){
 	 			 	console.log('Init question: ',response.data);
@@ -184,7 +176,7 @@
 					$scope.isVotedQuestion = response.data.isVoted;
 					$scope.answers = response.data.answers;
 					$scope.answer_count = $scope.question.answers.length;
-					$scope.categories = response.categories;
+					$scope.tagsList = response.data.tagsList;
 	 			 },function(error){
 	 			 	console.log(error);
 	 		 });
@@ -225,15 +217,15 @@
 	 		});
 		}
 
-		//edit category
+		//change category
 		$scope.editCategory = function() {
 			$uibModal.open({
 	            templateUrl: 'deleteQuestionCategoryModal.html', // loads the template
 	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
 	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
-	            controller: function ($scope, $uibModalInstance,question,$log) {
+	            controller: function ($scope, $uibModalInstance,question,$log,Categories) {
 	                $scope.category_edit = question.category.title;
-	                $scope.categories = getListCategories();
+	              	Categories.getList().then(function(response){$scope.categories = response.data;});
 	                $scope.submit = function () {
 	                   	$http.post('/questions/api/editCategory',{id:question.id,category:$scope.category_edit})
 				 			 .then(function(response){
@@ -242,7 +234,7 @@
 				 			 },function(error){
 				 			 	console.log(error);
 				 		 });
-	                    $uibModalInstance.dismiss('cancel'); // dismiss(reason) - a method that can be used to dismiss a modal, passing a reason
+	                    $uibModalInstance.dismiss('cancel'); // dismiss(reason) 
 	                }
 	                $scope.cancel = function () {
 	                    $uibModalInstance.dismiss('cancel'); 

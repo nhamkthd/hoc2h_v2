@@ -22,4 +22,13 @@ class Question extends Model
     public function category() {
         return $this->belongsTo('App\Category','categories_id','id');
     }
+
+    public static function getTags($question_id){
+         $listQuestionTags = QuestionTag::where('question_id',$question_id)->get();
+         $listTags = array();
+        foreach ($listQuestionTags as $questionTag) {
+            $listTags[$questionTag->tag_id] = Tag::find($questionTag->tag_id);
+        }
+        return $listTags;
+    }
 }

@@ -16,6 +16,26 @@
 				</p>
 			</div>
 			<p class="post-body" ng-bind-html="question.content"></p>
+			<div ng-show="!(tagsList.length == 0)" class="card-tags" style="margin-bottom:20px;">
+				<ul>
+					<li ng-repeat="tag in tagsList"><a href="#">{{tag.name}}</a></li>
+				</ul>
+			</div>
+			<div ng-show="(tagsList.length == 0) && (user.id == question.user_id)">
+				<div class="form-group col-md-12" style="margin-left: -10px;">
+					<div class="row">
+						<div class="col-md-8 ">
+							<select selector
+									multi="true"
+									model="tagsList"
+									options="tags"
+									value-attr="id"
+									label-attr="name"
+									placeholder="Chèn tags"></select>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="post-info" ng-show="user.id == question.user_id">
 				<ul class="nav nav-pills" role="tablist">
 				  	<li class="action">

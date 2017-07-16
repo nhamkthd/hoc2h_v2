@@ -8,6 +8,14 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('pusher/auth', 'pusherController@pusherAuth');
 Route::get('/tags','TagController@getAll');
+
+Route::group(['prefix' => 'categories'],function(){
+	Route::group(['prefix'=>'api'],function(){
+		Route::get('/','CategoryController@getAll');
+		Route::get('/{id}','CategoryController@getWithID');
+	});
+});
+
 Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	Route::get('/','TestController@index')->name('tests');
 	Route::get('create', function() {
@@ -21,7 +29,7 @@ Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	Route::get('usetest/result/{usertest_id}/{countIsCorrect}','UserTestController@result');
 	Route::group(['prefix' => 'api'], function(){
 		//this is group route api angular js
-		Route::get('/getCategory', 'CategoryController@show');
+		Route::get('/getCategory', 'CategoryController@getAll');
 		Route::post('/create_mtest', 'MTestController@store');
 		Route::post('/getTest', 'TestController@getTest');
 		Route::post('/postCmt', 'TestCommentController@postCmt');

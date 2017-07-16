@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\QuestionTag;
 use App\Notifications\LikeQuestionNotification;
 use App\Category;
+use App\Tag;
 class QuestionController extends Controller
 {
     public function index()
@@ -19,12 +20,14 @@ class QuestionController extends Controller
     public function getAll () {
 
         $questions =  Question::orderby('id','desc')->get();
+        $quetionTags = array();
         foreach ($questions as $question) {
             $question->user;
             $question->answers;
             $question->votes;
+            $questionTags[$question->id] = Question::getTags($question->id);
         }
-        return $questions;
+        return response()->json(array('questions'=>$questions,'questionTags'=>$questionTags));
     }
     public function create()
     {
@@ -44,10 +47,10 @@ class QuestionController extends Controller
     	$question->title = $request->title;
     	$question->content = $request->content;
     	$question->save();
-        foreach ($request->tags as $key => $tag) {
+        foreach ($request->tags as $key => $tag_id) {
             $questionTag = new QuestionTag;
             $questionTag->question_id = $question->id;
-            $questionTag->tag_id = $tag->id;
+            $questionTag->tag_id = $tag_id;
             $questionTag->save();
         }
         return $question;
@@ -75,6 +78,7 @@ class QuestionController extends Controller
         $question = Question::find($request->id);
         $question->categories_id = $request->category;
         $question->save();
+        $question->category;
         return $question;
     }
 
@@ -91,6 +95,7 @@ class QuestionController extends Controller
         $question->votes;
         $question->user;
         $question->category;
+        $tags = Question::getTags($question->id);
         $answer_comments = array();
         $answerUsers = array();
         $answerVoted = array();
@@ -132,7 +137,7 @@ class QuestionController extends Controller
                 $isVoted = 1;
         }
 
-        return response()->json(array('question'=>$question,'isVoted'=>$isVoted,'answers'=>$answers,'categories'=>$categories));
+        return response()->json(array('question'=>$question,'isVoted'=>$isVoted,'answers'=>$answers,'categories'=>$categories,'tagsList'=>$tags));
     }
 
     public function vote(Request $request){
