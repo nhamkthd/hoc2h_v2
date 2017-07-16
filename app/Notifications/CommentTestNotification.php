@@ -46,7 +46,7 @@ class CommentTestNotification extends Notification
         return [
             "user"=>Auth::user(),
             "comment"=>$this->comment,
-            "type"=>"bình luận",
+            "kind"=>"bình luận",
             "model"=>"bài test",
             "link"=>"/tests/show/".$this->comment['test_id']
         ];
@@ -64,7 +64,7 @@ class CommentTestNotification extends Notification
         return new BroadcastMessage([
             "user"=>Auth::user(),
             "comment"=>$this->comment,
-            "type"=>"bình luận",
+            "kind"=>"bình luận",
             "model"=>"bài test",
             "link"=>"/tests/show/".$this->comment['test_id']
             ]);

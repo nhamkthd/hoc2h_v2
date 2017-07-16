@@ -37,7 +37,7 @@
 	 		else
 	 		{
 	 			$http.post('/notification/readNotification').then(function (res) {
-	 				$scope.unReadNotification=res.data;
+	 				$scope.unReadNotification=[];
 	 				
 	 			}, function (err) {
 	 				console.log(err);
@@ -47,7 +47,16 @@
 
 	 	var channel = pusher.subscribe('private-App.User.' + user_id);
 	 	channel.bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function(data){
-	 		console.log(data);
+	 		$.notify({
+    				message:data.user.name +' đã '+ data.kind +' '+ data.model +' của bạn' ,
+    				url: data.link,
+				},{
+    				mouse_over: 'pause',
+    				placement: {
+    					from: "bottom",
+    					align: "left"
+    				},
+				});
 	 		$http.post('/notification/getNotification').then(function (res) {
 	 			$scope.notification=res.data.notifications;
 	 			$scope.unReadNotification=res.data.unreadNotifications;

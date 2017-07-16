@@ -24,6 +24,8 @@
         <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
         <script src="{{asset('js/flugin/jquery-3.2.1.min.js')}}"></script> 
         <script src="{{asset('js/flugin/angular/angular.min.js')}}"></script> 
+        <script src="{{asset('js/flugin/notify/bootstrap-notify.js')}}"></script>
+        <script src="{{asset('js/flugin/notify/bootstrap-notify.min.js')}}"></script>
         <script src="{{asset('js/flugin/angular/ng-tags-input.js')}}"></script> 
          <script src="{{asset('js/flugin/angular/angular-selector.js')}}"></script> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-sanitize.min.js"></script>
@@ -51,13 +53,34 @@
                 height: 100%;
                 z-index: 9999
             }
+            .alert-minimalist {
+                background-color: rgb(241, 242, 240);
+                border-color: rgba(149, 149, 149, 0.3);
+                border-radius: 3px;
+                color: rgb(149, 149, 149);
+                padding: 10px;
+            }
+            .alert-minimalist > [data-notify="icon"] {
+                height: 50px;
+                margin-right: 12px;
+            }
+            .alert-minimalist > [data-notify="title"] {
+                color: rgb(51, 51, 51);
+                display: block;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+            .alert-minimalist > [data-notify="message"] {
+                font-size:100%;
+            }
+           
         </style>
 
     </head>
     @if(Auth::check())
-        <script type="text/javascript">
-            var user_id={{Auth::user()->id}}
-        </script>
+    <script type="text/javascript">
+        var user_id={{Auth::user()->id}}
+    </script>
     @endif
     <body>
         <div class="loading" id="loading"></div>

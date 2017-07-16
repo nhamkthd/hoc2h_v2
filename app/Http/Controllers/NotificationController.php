@@ -46,8 +46,14 @@ class NotificationController extends Controller
     public function show()
     {
         $notify=array();
-        $notify['notifications']=Auth::user()->Notifications->unique(['type','data.link']);
-        $notify['unreadNotifications']=Auth::user()->unreadNotifications;
+        $notify['notifications']=Auth::user()->Notifications->groupBy('type')->transform(function ($item, $key) {
+            return $item->unique('data.link');
+        });
+        $notify['notifications']=$notify['notifications']->flatten();
+        $notify['unreadNotifications']=Auth::user()->unreadNotifications->groupBy('type')->transform(function ($item, $key) {
+            return $item->unique('data.link');
+        });
+         $notify['unreadNotifications']=$notify['unreadNotifications']->flatten();
          return response()->json($notify);
     }
 

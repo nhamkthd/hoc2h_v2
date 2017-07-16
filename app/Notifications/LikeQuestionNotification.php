@@ -44,7 +44,7 @@ class LikeQuestionNotification extends Notification
     {
         return [
             "user"=>Auth::user(),
-            "type"=>"Thích",
+            "kind"=>"Thích",
             "model"=>"Câu hỏi",
             "link"=>"/questions/question/".$this->question_id
         ];
@@ -61,7 +61,7 @@ class LikeQuestionNotification extends Notification
     {
         return new BroadcastMessage([
             "user"=>Auth::user(),
-            "type"=>"Thích",
+            "kind"=>"Thích",
             "model"=>"Câu hỏi",
             "link"=>"/questions/question/".$this->question_id['question_id']
             ]);

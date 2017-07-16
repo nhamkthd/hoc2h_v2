@@ -46,7 +46,7 @@ class AnswerQuestionNotification extends Notification
         return [
             "user"=>Auth::user(),
             "comment"=>$this->answer,
-            "type"=>"trả lời",
+            "kind"=>"trả lời",
             "model"=>"câu hỏi",
             "link"=>"/questions/question/".$this->answer['question_id']
         ];
@@ -64,7 +64,7 @@ class AnswerQuestionNotification extends Notification
         return new BroadcastMessage([
             "user"=>Auth::user(),
             "answer"=>$this->answer,
-            "type"=>"trả lời",
+            "kind"=>"trả lời",
             "model"=>"câu hỏi",
             "link"=>"/questions/question/".$this->answer['question_id']
             ]);
