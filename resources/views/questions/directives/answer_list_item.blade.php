@@ -17,7 +17,7 @@
 	</script>
 	<script type="text/ng-template" id="deleteAnswerModal.html">
 		<div class="modal-header">
-			<h3 class="modal-title text-center" id="modal-title"><i class="fa fa-warning danger-dark-text" aria-hidden="true"></i> Bạn thật sự muốn câu trả lời này...!</h3>
+			<h4 class="modal-title text-center" id="modal-title"><i class="fa fa-warning danger-dark-text" aria-hidden="true"></i> Bạn thật sự muốn câu trả lời này...!</h4>
 		</div>
 		<div class="modal-footer">
 			<button class="btn btn-warning" type="button" ng-click="cancel()">Huỷ bỏ</button>

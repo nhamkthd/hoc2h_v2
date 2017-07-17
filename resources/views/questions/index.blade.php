@@ -1,7 +1,7 @@
 @extends('questions.layout')
 @section('question_content')
+	<div ng-init="setSelectedTab({{$tabSelected}})"></div>
 	@verbatim
-		<div ng-init="setSelectedTab(1)"></div>
 		<div ng-init="getQuestionsWithTab(tab)"></div>
 		<div class="row">
 			<div class="col-md-12 filter-action" style="background-color:#fafafa;">

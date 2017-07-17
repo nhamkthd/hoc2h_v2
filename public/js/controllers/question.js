@@ -105,17 +105,14 @@
 	 		$scope.tab = sTab;
 	 	}
 	 	$scope.getQuestionsWithTab = function(tab){
-	 		console.log(tab);
-	 		if (tab == 1) {
-	 			$http.get('/questions/api/')
+	 		$http.get('/questions/api/?filtertab='+$scope.tab)
 	 			 .then(function(response){
-	 			 		console.log(response.data);
-	 			 		$scope.questions  = response.data.questions;
-	 			 		$scope.questionTags = response.data.questionTags;
-	 			 	}, function(error){
-	 			 		console.log(error);
-	 			 });
-	 		}
+	 			 	console.log(response.data);
+	 			 	$scope.questions  = response.data.questions;
+	 			 	$scope.questionTags = response.data.questionTags;
+	 			 }, function(error){
+	 			 	console.log(error);
+	 		});
 	 	}
 	 	
 	});
@@ -140,6 +137,7 @@
 	//Question detail controller
 	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location,$uibModal,Tags){
 		this.animationsEnabled = true;
+		$scope.isQuestionNotFound = 0;
 	 	$scope.showComments = [];
 	 	$scope.edit_answer_content = [];
 	 	$scope.comment_content_field = [];
@@ -161,17 +159,21 @@
                return $sce.trustAsHtml(htmlText);
         }
         
+        $scope.questionNotFound = function(){
+        	$scope.isQuestionNotFound = 1;
+        }
         //init question form route
 	 	$scope.initQuestion = function (question_id,user) {
 
 	 		$scope.user = user;
 	 		$scope.question ={};
 	 		$scope.answers = [];
-
+	 		$scope.isResolved = 0;
 	 		$http.post('/questions/api/getQuestionInfo',{id:question_id})
 	 			 .then(function(response){
 	 			 	console.log('Init question: ',response.data);
 	 			 	$scope.question = response.data.question;
+	 			 	$scope.isResolved = $scope.question.is_resolved;
 	 			 	$scope.question_votes = $scope.question.votes.length;
 					$scope.isVotedQuestion = response.data.isVoted;
 					$scope.answers = response.data.answers;
@@ -210,8 +212,8 @@
 		$scope.changeResolve = function(param) {
 			$http.post('/questions/api/change-resolve',{question_id:$scope.question.id,param:param})
 	 			 .then(function(response){
-	 			 	console.log('Vote question: ',response);
-	 			 	$scope.question = response.data;
+	 			 	console.log('change resolve: ',response.data);
+	 			 	$scope.isResolved = response.data;	
 	 			 },function(error){
 	 			 	console.log(error);
 	 		});
@@ -224,13 +226,15 @@
 	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
 	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
 	            controller: function ($scope, $uibModalInstance,question,$log,Categories) {
-	                $scope.category_edit = question.category.title;
+	               
 	              	Categories.getList().then(function(response){$scope.categories = response.data;});
+	              	$scope.category_edit = question.categories_id - 1;
+	                console.log($scope.category_edit);
 	                $scope.submit = function () {
 	                   	$http.post('/questions/api/editCategory',{id:question.id,category:$scope.category_edit})
 				 			 .then(function(response){
 				 			 	console.log('Edit question category: ',response)
-				 			 	question = response.data;
+				 			 	question.categories = response.data;
 				 			 },function(error){
 				 			 	console.log(error);
 				 		 });
@@ -246,6 +250,15 @@
 	                }
 	            }
 	        });//end of modal.open
+		}
+		$scope.addNewTags = function (){
+			$http.post('/questions/api/add-Tags',{question_id:$scope.question.id,tags:$scope.newTagsList})
+	 			 .then(function(response){
+	 			 	console.log('add tags: ',response.data);
+	 			 	$scope.tagsList = response.data;	
+	 			 },function(error){
+	 			 	console.log(error);
+	 		});
 		}
 
 		$scope.editQuestion = function(){
@@ -280,20 +293,19 @@
 	        });//end of modal.open
 		}
 
-		$scope.deleteQuestion = function(){
+		$scope.deleteQuestion = function(id){
 			$uibModal.open({
 	            templateUrl:'deleteQuestionModal.html', // loads the template
 	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
 	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
 	            controller: function ($scope, $uibModalInstance) {
 	                $scope.submit = function () {
-	       //          	$http.post('/questions/api/delete',{id:question.id})
-				 			//  .then(function(response){
-				 			//  	consolole.log('deleted question:',response);
-				 			 	
-				 			//  },function(error){
-				 			//  	console.log(error);
-				 		 // });
+	                	$http.post('/questions/api/delete',{id:id})
+				 			 .then(function(response){
+				 			 	window.location.href = '/questions';
+				 			 },function(error){
+				 			 	console.log(error);
+				 		 });
 	                    $uibModalInstance.dismiss('cancel');//dismiss modal
 	                }
 	                $scope.cancel = function () {

@@ -593,7 +593,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-07-14T21:22:58+00:00"
+            "time": "2017-07-14 21:22:58"
         },
         {
             "name": "laravel/tinker",

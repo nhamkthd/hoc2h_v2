@@ -121,10 +121,9 @@ a.list-title {font-size: 18px ;color:#0099CC; }
 .card-list {padding:10px 0px 0px 0px; border-bottom: 1px solid #757575 ; margin-bottom: 20px;}
 .author {display: block-inline;}
 .author-avt {border-radius:50%; float: left; margin-right:10px;}
-a.author-name {font-size:16px; font-weight: 600;color: #0d47a1; margin-top:10px;}
+a.author-name {font-size:13px; font-weight: 600;color: #0d47a1; margin-top:10px;}
+a.author-name:hover {font-size:13px; font-weight: 600;color: #4285F4; margin-top:10px;}
 .author span {float: right;}
-
-.card-body {margin-top: 20px;}
 
 .card-title a {font-size:18px; color:#0099CC;}
 .card-title a:hover {color:#4285F4;text-decoration: underline;}

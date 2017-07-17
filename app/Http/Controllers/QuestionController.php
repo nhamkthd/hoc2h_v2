@@ -13,13 +13,84 @@ use App\Category;
 use App\Tag;
 class QuestionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-    	return view('questions.index');
+        $tabSelected = 1;
+        if ($request->filter) {
+            $filter = $request->filter;
+           switch ($filter) {
+               case "hot":
+                    $tabSelected = 2;
+                   break;
+               case "hotinweek":
+                    $tabSelected = 3;
+                   break;
+                case "myquestions":
+                    $tabSelected = 4;
+                    break;
+                case "following":
+                    $tabSelected = 5;
+                    break;
+                case "resolved":
+                    $tabSelected = 6;
+                    break;
+                case "notresolve":
+                    $tabSelected = 7;
+                    break;
+                case "nothaveanswer":
+                    $tabSelected = 8;
+                    break;
+                case "hotmembers":
+                    $tabSelected = 9;
+                    break;
+               default:
+                   $tabSelected = 0;
+                   break;
+           }
+        }
+    	return view('questions.index',compact('tabSelected'));
     }
-    public function getAll () {
+    public function getAll (Request $request) {
 
-        $questions =  Question::orderby('id','desc')->get();
+        if ($request->filtertab) {
+            switch ($request->filtertab) {
+                case 1:
+                    $questions =  Question::orderby('id','desc')->get();
+                    break;
+                case 2:
+                    $questions =  Question::orderby('id','desc')->get();
+                    break;
+                case 3:
+                    $questions =  Question::orderby('id','desc')->get();
+                    break;
+                case 4:
+                    $questions = Question::where('user_id',Auth::user()->id)->orderby('id','desc')->get();
+                    break;
+                case 5:
+                    $questions =  Question::orderby('id','desc')->get();
+                    break;
+                case 6:
+                    $questions = Question::where('is_resolved',1)->orderby('id','desc')->get();
+                    break;
+                case 7:
+                    $questions = Question::where('is_resolved',0)->orderby('id','desc')->get();
+                    break;
+                case 8:
+                    $allQuestions = Question::orderby('id','desc')->get();
+                    $questions = array();
+                    $index = 0;
+                    foreach ($allQuestions  as $question) {
+                       if ($question->answers->count() == 0) {
+                          $questions[$index] = $question;
+                          $index++;
+                       }
+                    }
+                    break;
+                default:
+                    
+                    break;
+            }
+        }
         $quetionTags = array();
         foreach ($questions as $question) {
             $question->user;
@@ -36,6 +107,8 @@ class QuestionController extends Controller
 
     public  function  showDetail($id){
         $question = Question::find($id);
+        $question->view_count ++;
+        $question->save();
         return view('questions.directives.question_detail',compact('question'));
     }
 
@@ -70,7 +143,7 @@ class QuestionController extends Controller
         $question = Question::find($request->question_id);
         $question->is_resolved = $request->param;
         $question->save();
-        return $question;
+        return $request->param;
     }
 
     public function editCategory(Request $request)
@@ -82,11 +155,22 @@ class QuestionController extends Controller
         return $question;
     }
 
+    public function addTags(Request $request) {
+        foreach ($request->tags as $key => $tag_id) {
+            $questionTag = new QuestionTag;
+            $questionTag->question_id = $request->question_id;
+            $questionTag->tag_id = $tag_id;
+            $questionTag->save();
+        }
+        $tags = Question::getTags($request->question_id);
+        return $tags;
+    }
+
     public function delete(Request $request)
     {
-        $question = Question::find($request->question_id);
+        $question = Question::find($request->id);
         $question->delete();
-        return redirect('questions/');
+        return 1;
     }
 
     public function apiQuestionWithID(Request $request){

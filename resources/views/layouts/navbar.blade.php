@@ -8,7 +8,7 @@
     <div >
       <ul class="nav navbar-nav">
         <li><a href="{{route('tests')}}">Đề Thi <span class="sr-only">(current)</span></a></li>
-        <li><a href="{{route('questions')}}">Hỏi Đáp </a></li>
+        <li><a href="{{url('/questions')}}">Hỏi Đáp </a></li>
         <li><a href="#">Tài liệu</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Danh Mục<span class="caret"></span></a>
