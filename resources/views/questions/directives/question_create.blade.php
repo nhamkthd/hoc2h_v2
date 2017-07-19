@@ -1,6 +1,6 @@
 @extends('questions.layout')
 @section('question_content')
-<div class="row box" ng-controller = "CreateQuestionController">
+<div class="row box" style="margin-bottom: 50px;" ng-controller = "CreateQuestionController">
 	@verbatim
 		{{setSelectedTab(0)}}	
 	@endverbatim
@@ -60,9 +60,9 @@
 			</div>
 		</div>
 
-		<div class="col-md-8 col-md-offset-1">
-			<a href="{{route('questions')}}" class="btn btn-warning" type="button" >Huỷ bỏ</a>
-			<button class="btn btn-default" type="button" ng-click="submitQuestion()"  >Đăng lên</button>
+		<div class="col-md-4 col-md-offset-4">
+			<a style="width:40%;" href="{{url('/questions')}}" class="btn btn-warning" type="button" >Huỷ bỏ</a>
+			<button style="width: 40%;" class="btn btn-default" type="button" ng-click="submitQuestion()"  >Đăng lên</button>
 		</div>
 	</form>
 </div>

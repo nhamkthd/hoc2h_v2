@@ -60,6 +60,7 @@ Route::group(['prefix' => 'questions'], function(){
 		Route::post('/editCategory','QuestionController@editCategory');
 		Route::post('/change-resolve','QuestionController@changeResolve');
 		Route::post('/add-Tags','QuestionController@addTags');
+		Route::get('/search','QuestionController@search');
 
 		Route::post('/answers','AnswerController@store');
 		Route::post('/answer/vote','AnswerController@vote');

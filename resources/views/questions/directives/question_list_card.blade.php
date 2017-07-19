@@ -21,7 +21,7 @@
 	<div class="card-footer">
 		<ul>
 			<li> 
-				Đăng bởi<a href="" class="author-name">{{question.user.user_name}}</a> ({{question.created_at}})</li>
+				<a href="" class="author-name">{{question.user.user_name}}</a> ({{question.created_at}})</li>
 			<li ><i class="fa fa-comments-o" aria-hidden="true"></i> {{question.answers.length}}</li>
 			<li ><i class="fa fa-heart" aria-hidden="true"></i> {{question.votes.length}}</li>
 			<li ><i class="fa fa-eye" aria-hidden="true"></i> {{question.view_count}}</li>

@@ -3,9 +3,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/rate.css')}}">
 <div class="container" ng-app ="hoc2h-test" ng-controller="ShowTestController">
 <div class="row" ng-init="initTest({{$test->id}},{{Auth::user()}})">
-@include('tests.sidebar')
 <div class="col-md-9 main-content ">
-
 		<div class="box">
 			<h3 class="info-dark-text">{{$test->title}}</h3>
 			<p><strong>Thể loại/Danh mục: </strong>{{$test->category->title}}</p>
@@ -68,7 +66,6 @@
 				</form>
 			</div>
 
-
 			<div class="comments-list" style="width: 100%;"> 
 			
 				<div tabindex="-1" class="modal fade" id="rate-dialog" style="display: none;" aria-hidden="true">
@@ -129,7 +126,7 @@
 			</div>
 			
 			</div>
-
-		</div>
-		</div>
-		@endsection
+		@include('tests.sidebar')
+	</div>
+</div>
+@endsection

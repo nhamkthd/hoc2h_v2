@@ -3,18 +3,17 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Đăng Nhập  
-                    <a class="pull-right" href="{{ route('register') }}">Đăng ký</a>
+        <div class=" col-md-8 col-md-offset-2">
+            <div class="box">
+                <div class="" style="border-bottom:solid 1px #4B515D; padding-bottom: 5px; margin-bottom: 20px;">
+                    <h4>Đăng Nhập  <a class="pull-right" href="{{ route('register') }}">Đăng ký</a> </h4>
+                   
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}" novalidate>
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">Email</label>
-
+                            <label for="email" class="col-md-4 control-label">Email / Tên đăng nhập</label>
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
@@ -50,10 +49,10 @@
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-main">
+                                <button type="submit" class="btn btn-default">
                                     Đăng nhập
                                 </button>
-                                <a style="margin-left: 20px;" href="{{ route('password.request') }}">
+                                <a style="margin-left: 20px; text-decoration:underline;" href="{{ route('password.request') }}">
                                     Quên mật khẩu?
                                 </a> 
                             </div>

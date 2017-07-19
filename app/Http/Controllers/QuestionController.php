@@ -11,6 +11,7 @@ use App\QuestionTag;
 use App\Notifications\LikeQuestionNotification;
 use App\Category;
 use App\Tag;
+use Search;
 class QuestionController extends Controller
 {
     public function index(Request $request)
@@ -171,6 +172,23 @@ class QuestionController extends Controller
         $question = Question::find($request->id);
         $question->delete();
         return 1;
+    }
+
+    public function search(Request $request){
+        $results = array();
+        $questionTags = array();
+        if ($request->keyword) {
+            $results = Search::search(
+                              "Question" ,
+                              ['title' , 'content'] ,
+                               $request->keyword,
+                              ['id' , 'title', 'content','is_resolved','view_count','created_at'],
+                              ['id'  , 'desc'] ,
+                              true ,
+                              30
+                        );
+        }
+        return  $results;
     }
 
     public function apiQuestionWithID(Request $request){

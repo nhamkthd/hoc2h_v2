@@ -114,6 +114,26 @@
 	 			 	console.log(error);
 	 		});
 	 	}
+	 	//questions searching....!
+	 	$scope.search = function(){
+	 		if ($scope.keywords === '' || typeof $scope.keywords === 'undefined') {
+	 			$http.get('/questions/api/?filtertab='+$scope.tab)
+	 			 .then(function(response){
+	 			 	console.log(response.data);
+	 			 	$scope.questions  = response.data.questions;
+	 			 	$scope.questionTags = response.data.questionTags;
+	 			 }, function(error){
+	 			 	console.log(error);
+	 			});
+	 		} else {
+	 			$http.get('/questions/api/search?keyword='+$scope.keywords)
+	 			 .then(function(response){
+	 			 	$scope.questions = response.data.data;
+	 			 },function(error){
+	 			 	console.log(error);
+	 			 });
+	 		}
+	 	}
 	 	
 	});
 

@@ -3,7 +3,6 @@
 
 <div class="container" ng-app ="hoc2h-test" ng-controller="TestController">
 	<div class="row">
-		@include('tests/sidebar')
 		<div class="col-md-9">
 		
 			<div class="panel panel-default widget">
@@ -33,8 +32,8 @@
 					@endforeach
 				</div>
 			</div>
-			
 		</div>
+		@include('tests/sidebar')
 	</div>
 </div>
 @endsection

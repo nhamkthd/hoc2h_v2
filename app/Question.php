@@ -31,4 +31,11 @@ class Question extends Model
         }
         return $listTags;
     }
+
+    public static function search($keyword){
+        $results = static::where('title','like','%'.$keyword)
+                            ->orWhere('content','like','%'.$keyword)
+                            ->orderBy('created_at','desc')->get();
+        return $results;
+    }
 }

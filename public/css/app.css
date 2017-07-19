@@ -43,7 +43,7 @@ body{
 .navbar-default .dropdown:hover .dropdown-menu{display: block;}
 .navbar-default .navbar-nav>li>a, a.navbar-brand {color: #37474F;}
 /*side bar style */
-.sidebar {border-right:solid 1px #e0e0e0 ;}
+.sidebar {border-left:solid 1px #e0e0e0 ; margin-left: 10px;}
 .menu-label {font-weight: 700;font-size: 15px;letter-spacing: -.5px;margin-bottom: 1em;color:#757575; text-align: center;}
 .menu-list{list-style-type:none;list-style-position: outside; padding-left: 0px;}
 .menu-list >li{    
@@ -59,7 +59,9 @@ body{
 a {color: #30b1a4;}
 a , a:hover, li.active a {text-decoration: none;}
 li > a{font-weight: 400; font-size: 15px; padding-left: 5px;}
-li.active a {color:#2bbbad; font-weight: 600; margin-left: 10px; text-decoration: blink;}
+li > a > i {padding-right: 5px;}
+li.active{background-color: #eceff1}
+li.active a {color:#2bbbad; font-weight: 600; text-decoration: blink;}
 span.help-inline .validate-text {color: red;}
 .main-content {padding-left: 20px;}
 /*list style*/
@@ -104,7 +106,7 @@ label {font-weight: 700; margin-bottom: 5px;}
 .list-questions {padding:20px 10px;}
 
 .widget {border:none;box-shadow: none;}
-.widget .panel-body { padding:10px;}
+.widget .panel-body { padding:10px;border-bottom: solid 1px #e0e0e0;}
 .widget .list-group { margin-bottom: 0; }
 .widget .panel-heading {box-shadow: none; border: none; background: #fff; padding-left: 18px; border-bottom: solid 1px #2BBBAD;}
 .widget .panel-title { display:inline }

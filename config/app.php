@@ -176,6 +176,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //fulltext search advance
+        AdvanceSearch\AdvanceSearchProvider\AdvanceSearchProvider::class,
+
     ],
 
     /*
@@ -224,7 +227,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        
+        'Search' => AdvanceSearch\AdvanceSearchProvider\Facades\SearchFacades::class,
 
     ],
 
