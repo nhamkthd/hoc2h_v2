@@ -1,4 +1,9 @@
 <nav class="navbar navbar-default fixed-top"  ng-app="hoc2h-heading" ng-controller="HeadingController">
+  @if(Route::has('login'))
+    @if(Auth::check())
+      <div ng-init="getUser({{Auth::user()}})"></div>
+    @endif
+  @endif
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header" ">
@@ -27,7 +32,7 @@
         @if(Route::has('login'))
             @if(Auth::check())
             <li class="dropdown" ng-init="initNotification()" ng-mouseover="readNotify(unReadNotification.length)">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"> Thông báo <span class="badge ng-binding"> @verbatim {{unReadNotification.length}}  @endverbatim</span></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"> Thông báo <span class="badge ng-binding"> @verbatim {{unReadNotification.length}}  @endverbatim</span></a>
               <ul style=" max-height: 300px;overflow-y:scroll; " class="dropdown-menu">
                   @include('notifications.list_notify')
               </ul>

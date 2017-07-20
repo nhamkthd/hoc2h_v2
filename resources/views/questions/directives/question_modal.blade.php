@@ -32,7 +32,7 @@
 		
 	</div>
 </script>
-<script type="text/ng-template" id="deleteQuestionCategoryModal.html">
+<script type="text/ng-template" id="editQuestionCategoryModal.html">
 	<div class="modal-header">
 		<h3 class="modal-title text-center" id="modal-title"><i class="fa fa-edit" aria-hidden="true"></i> Thay đổi chuyên mục</h3>
 	</div>
@@ -65,6 +65,7 @@
 	<div class="modal-body" id="modal-body">
 		<div class="row">
 				<div class="col-md-10  col-md-offset-1">
+					
 					<select selector
 							multi="false"
 							model="category_edit"

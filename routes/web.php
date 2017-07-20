@@ -44,7 +44,8 @@ Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 
 Route::group(['prefix' => 'questions'], function(){
 	Route::get('/','QuestionController@index');
-	Route::get('/question-create','QuestionController@create')->name('showQuestionCreateFrom');
+	Route::get('/tagged/','QuestionController@indexWithTagged');
+	Route::get('/question-create','QuestionController@create')->name('showQuestionCreateFrom')->middleware('auth');
 	Route::get('/question/{id}','QuestionController@showDetail');
 	Route::get('/question-card',function(){
 			return view('questions.directives.question_list_card');
@@ -61,6 +62,7 @@ Route::group(['prefix' => 'questions'], function(){
 		Route::post('/change-resolve','QuestionController@changeResolve');
 		Route::post('/add-Tags','QuestionController@addTags');
 		Route::get('/search','QuestionController@search');
+		Route::get('/tagged/{tag_id}','QuestionController@getQuestionsTagged');
 
 		Route::post('/answers','AnswerController@store');
 		Route::post('/answer/vote','AnswerController@vote');

@@ -101,15 +101,41 @@ class QuestionController extends Controller
         }
         return response()->json(array('questions'=>$questions,'questionTags'=>$questionTags));
     }
+
+    public function indexWithTagged(Request $request){
+        if ($request->id) {
+            $tabSelected = 0;
+            $questionTag = Tag::find($request->id);
+            return view('questions.indexTagged',compact('tabSelected','questionTag'));
+        }else {
+            $tabSelected = 1;
+            return view('questions.index',compact('tabSelected'));
+        }
+       
+    }
+    public function getQuestionsTagged($tag_id){
+        $questions =  Question::listWithTagg($tag_id);
+        $quetionTags = array();
+        foreach ($questions as $question) {
+            $question->user;
+            $question->answers;
+            $question->votes;
+            $questionTags[$question->id] = Question::getTags($question->id);
+        }
+        return response()->json(array('questions'=>$questions,'questionTags'=>$questionTags));
+    }
+
     public function create()
     {
-       return view('questions.directives.question_create');
+        return view('questions.directives.question_create');  
     }
 
     public  function  showDetail($id){
         $question = Question::find($id);
-        $question->view_count ++;
-        $question->save();
+        if ($question) {
+            $question->view_count ++;
+            $question->save();
+        }
         return view('questions.directives.question_detail',compact('question'));
     }
 
@@ -152,8 +178,8 @@ class QuestionController extends Controller
         $question = Question::find($request->id);
         $question->categories_id = $request->category;
         $question->save();
-        $question->category;
-        return $question;
+        $category = $question->category;
+        return $category;
     }
 
     public function addTags(Request $request) {

@@ -114,6 +114,16 @@
 	 			 	console.log(error);
 	 		});
 	 	}
+
+	 	$scope.getQuestionsTagged = function(tag_id){
+	 		$http.get('/questions/api/tagged/'+tag_id)
+	 			 .then(function(response){
+	 			 	$scope.questions  = response.data.questions;
+	 			 	$scope.questionTags = response.data.questionTags;
+	 			 },function(error){
+	 			 	console.log(error);
+	 			 });
+	 	}
 	 	//questions searching....!
 	 	$scope.search = function(){
 	 		if ($scope.keywords === '' || typeof $scope.keywords === 'undefined') {
@@ -242,19 +252,16 @@
 		//change category
 		$scope.editCategory = function() {
 			$uibModal.open({
-	            templateUrl: 'deleteQuestionCategoryModal.html', // loads the template
+	            templateUrl: 'editQuestionCategoryModal.html', // loads the template
 	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
 	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
-	            controller: function ($scope, $uibModalInstance,question,$log,Categories) {
-	               
+	            controller: function ($scope, $uibModalInstance,$log,Categories,question) {
 	              	Categories.getList().then(function(response){$scope.categories = response.data;});
-	              	$scope.category_edit = question.categories_id - 1;
-	                console.log($scope.category_edit);
 	                $scope.submit = function () {
 	                   	$http.post('/questions/api/editCategory',{id:question.id,category:$scope.category_edit})
 				 			 .then(function(response){
-				 			 	console.log('Edit question category: ',response)
-				 			 	question.categories = response.data;
+				 			 	console.log('Edit question category: ',response.data)
+				 			 	question.category = response.data;
 				 			 },function(error){
 				 			 	console.log(error);
 				 		 });
@@ -265,12 +272,14 @@
 	                };
 	            },
 	            resolve: {
-	                question: function () {
-	                    return $scope.question;
+	                question:function(){
+	                	return $scope.question;
 	                }
 	            }
 	        });//end of modal.open
 		}
+
+		//question add new tags
 		$scope.addNewTags = function (){
 			$http.post('/questions/api/add-Tags',{question_id:$scope.question.id,tags:$scope.newTagsList})
 	 			 .then(function(response){
@@ -281,6 +290,7 @@
 	 		});
 		}
 
+		//edit question
 		$scope.editQuestion = function(){
 
 			$uibModal.open({
@@ -313,6 +323,7 @@
 	        });//end of modal.open
 		}
 
+		//delete question
 		$scope.deleteQuestion = function(id){
 			$uibModal.open({
 	            templateUrl:'deleteQuestionModal.html', // loads the template

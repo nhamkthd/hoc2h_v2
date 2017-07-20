@@ -120,7 +120,7 @@ a.list-title {font-size: 18px ;color:#0099CC; }
 .widget .btn-block { border-top-left-radius:0px;border-top-right-radius:0px; }
 
 /*card css */
-.card-list {padding:10px 0px 0px 0px; border-bottom: 1px solid #757575 ; margin-bottom: 20px;}
+.card-list {padding:10px 0px 0px 0px; border-bottom: 1px solid #e0e0e0 ; margin-bottom: 20px;}
 .author {display: block-inline;}
 .author-avt {border-radius:50%; float: left; margin-right:10px;}
 a.author-name {font-size:13px; font-weight: 600;color: #0d47a1; margin-top:10px;}

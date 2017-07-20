@@ -19,6 +19,11 @@
 	 app.controller('HeadingController',function($scope, $http){
 	 	$scope.notification=[];
 	 	$scope.unReadNotification=[];
+	 	var user = {};
+	 	$scope.getUser = function(user) {
+	 		this.user = user;
+	 	}
+
 	 	$scope.initNotification=function()
 	 	{
 	 		$http.post('/notification/getNotification').then(function (res) {
@@ -45,6 +50,7 @@
 	 		}
 	 	}
 
+
 	 	var channel = pusher.subscribe('private-App.User.' + user_id);
 	 	channel.bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function(data){
 	 		$.notify({
@@ -64,9 +70,6 @@
 	 			console.log(err);
 	 		})
 	 	});
-
-
-
 
 	 });
 })();

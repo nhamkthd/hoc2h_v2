@@ -2,7 +2,7 @@
 <div class="card-list">
 	<div class="card-body">
 		<div class="card-title">
-			<a href="questions/question/{{question.id}}">{{question.title}} 
+			<a href="/questions/question/{{question.id}}">{{question.title}} 
 				<span ng-show="question.is_resolved == 1">
 					<i class="fa fa-check-circle success-dark-text" aria-hidden="true"></i></span>
 				<span ng-show="question.is_resolved == 0">
@@ -14,7 +14,7 @@
 		</div>
 		<div class="card-tags">
 			<ul>
-				<li ng-repeat="tag in questionTags[question.id]"><a href="#">{{tag.name}}</a></li>
+				<li ng-repeat="tag in questionTags[question.id]"><a href="/questions/tagged/?id={{tag.id}}">{{tag.name}}</a></li>
 			</ul>
 		</div>
 	</div>
