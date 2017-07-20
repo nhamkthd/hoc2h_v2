@@ -5,13 +5,42 @@
 	app.run(['$anchorScroll', function($anchorScroll) {
   		$anchorScroll.yOffset = 50;   // always scroll by 50 extra pixels
 	}]);
-
-	//app services
-	app.factory('questionService',function(){
-		var questionService = {};
-
-    	return questionService;
+	app.config(['$qProvider', function ($qProvider) {
+   	 $qProvider.errorOnUnhandledRejections(false);
+	}]);
+	//category service
+ 	app.factory('Categories', function($http,$q) {
+ 		return {
+ 			getList:function(){
+ 				var deferred = $q.defer();
+ 				$http.get('/categories/api/')
+ 					 .then(function(response){
+ 					 	deferred.resolve(response);
+ 					 },function (error) {
+ 					 	deferred.reject();
+ 					 	console.log(error);
+ 					 });
+ 				return deferred.promise;
+ 			}
+ 		}
+	}); 
+	//tags service
+	app.factory('Tags', function($http, $q) {
+		return {
+ 			getList:function(){
+ 				var deferred = $q.defer();
+ 				$http.get('/tags')
+ 					 .then(function(response){
+ 					 	deferred.resolve(response);
+ 					 },function (error) {
+ 					 	deferred.reject();
+ 					 	console.log(error);
+ 					 });
+ 				return deferred.promise;
+ 			}
+ 		}
 	});
+
 	
 	//show limit line content filter
 	app.filter('textShortenerFilter', function() {
@@ -71,35 +100,80 @@
 
 	//main question controller
 	app.controller('QuestionController',function($scope, $http,$sce){
-		$scope.date = '20140313T00:00:00';
 		$scope.tab = 1;
 	 	$scope.setSelectedTab = function(sTab){
 	 		$scope.tab = sTab;
 	 	}
 	 	$scope.getQuestionsWithTab = function(tab){
-	 		console.log(tab);
-	 		if (tab == 1) {
-	 			$http.get('/questions/api/')
+	 		$http.get('/questions/api/?filtertab='+$scope.tab)
 	 			 .then(function(response){
-	 			 		console.log(response.data);
-	 			 		$scope.questions  = response.data;
-	 			 	}, function(error){
+	 			 	console.log(response.data);
+	 			 	$scope.questions  = response.data.questions;
+	 			 	$scope.questionTags = response.data.questionTags;
+	 			 }, function(error){
+	 			 	console.log(error);
+	 		});
+	 	}
 
+	 	$scope.getQuestionsTagged = function(tag_id){
+	 		$http.get('/questions/api/tagged/'+tag_id)
+	 			 .then(function(response){
+	 			 	$scope.questions  = response.data.questions;
+	 			 	$scope.questionTags = response.data.questionTags;
+	 			 },function(error){
+	 			 	console.log(error);
+	 			 });
+	 	}
+	 	//questions searching....!
+	 	$scope.search = function(){
+	 		if ($scope.keywords === '' || typeof $scope.keywords === 'undefined') {
+	 			$http.get('/questions/api/?filtertab='+$scope.tab)
+	 			 .then(function(response){
+	 			 	console.log(response.data);
+	 			 	$scope.questions  = response.data.questions;
+	 			 	$scope.questionTags = response.data.questionTags;
+	 			 }, function(error){
+	 			 	console.log(error);
+	 			});
+	 		} else {
+	 			$http.get('/questions/api/search?keyword='+$scope.keywords)
+	 			 .then(function(response){
+	 			 	$scope.questions = response.data.data;
+	 			 },function(error){
+	 			 	console.log(error);
 	 			 });
 	 		}
-	 		
 	 	}
 	 	
-	})
+	});
 
+	//create question controller
+	app.controller('CreateQuestionController',function($scope,$http,Categories,Tags){
+		$scope.tagsList = [];
+		Categories.getList().then(function(response){$scope.categories = response.data;});
+		Tags.getList().then(function(response){$scope.tags = response.data;});
+
+	 	$scope.submitQuestion = function(){
+	 		console.log($scope.tagsList);
+	 		$http.post('/questions/api/store',{category:$scope.category_id, title:$scope.title, content:$scope.content,tags:$scope.tagsList})
+	 			 .then(function(response){
+	 			 	console.log(response.data)
+	 			 	window.location.href = '/questions/question/'+response.data.id;
+	 			 },function(error){
+	 			 	console.log(error);
+	 			 });
+	 	}
+	});
 	//Question detail controller
-	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location,$uibModal){
-
+	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location,$uibModal,Tags){
+		this.animationsEnabled = true;
+		$scope.isQuestionNotFound = 0;
 	 	$scope.showComments = [];
 	 	$scope.edit_answer_content = [];
 	 	$scope.comment_content_field = [];
 	 	$scope.comment_editing = [];
 	 	$scope.comment_editing_field = [];
+	 	Tags.getList().then(function(response){$scope.tags = response.data;});
 	 	//auto scroll
 		$scope.gotoAnchor = function(x) {
 	      	var newHash = 'anchor' + x;
@@ -114,31 +188,42 @@
 		$scope.convertHtml = function(htmlText) {
                return $sce.trustAsHtml(htmlText);
         }
-
+        
+        $scope.questionNotFound = function(){
+        	$scope.isQuestionNotFound = 1;
+        }
         //init question form route
 	 	$scope.initQuestion = function (question_id,user) {
 
 	 		$scope.user = user;
 	 		$scope.question ={};
 	 		$scope.answers = [];
-	 		$http.post('/questions/api/getQuestionInfo/',{id:question_id})
+	 		$scope.isResolved = 0;
+	 		$http.post('/questions/api/getQuestionInfo',{id:question_id})
 	 			 .then(function(response){
 	 			 	console.log('Init question: ',response.data);
 	 			 	$scope.question = response.data.question;
+	 			 	$scope.isResolved = $scope.question.is_resolved;
 	 			 	$scope.question_votes = $scope.question.votes.length;
 					$scope.isVotedQuestion = response.data.isVoted;
 					$scope.answers = response.data.answers;
 					$scope.answer_count = $scope.question.answers.length;
+					$scope.tagsList = response.data.tagsList;
 	 			 },function(error){
 	 			 	console.log(error);
 	 		 });
 		}
-		 $scope.options = {
+		$scope.options = {
 		    language: 'vn',
 		    allowedContent: true,
 		    entities: false
 		  };
 
+		//update question when updated 
+		var updateQuestion = function(newQuestion){
+			$scope.question.title = newQuestion.title;
+			$scope.question.content =newQuestion.content;
+		}
 		//vote question
 		$scope.voteQuestion = function(){
 			$http.post('/questions/api/vote',{question_id:$scope.question.id,isVoted:$scope.isVotedQuestion})
@@ -153,22 +238,117 @@
 
 		}
 
-		$scope.showEditQuestion = function(){
-			$scope.title_edit = $scope.question.title;
-			$scope.edit_question_content = $scope.question.content;
-			
-
-		}
-		$scope.editQuestion = function(){
-			$http.post('/questions/api/edit',{id:$scope.question.id,title:$scope.title_edit,content:$scope.edit_question_content})
+		//change resolve state 
+		$scope.changeResolve = function(param) {
+			$http.post('/questions/api/change-resolve',{question_id:$scope.question.id,param:param})
 	 			 .then(function(response){
-	 			 	console.log('Edit question: ',response);
-	 			 	$scope.question.title = response.data.title;
-	 			 	$scope.question.content = response.data.content;
+	 			 	console.log('change resolve: ',response.data);
+	 			 	$scope.isResolved = response.data;	
 	 			 },function(error){
 	 			 	console.log(error);
-	 		 });
+	 		});
 		}
+
+		//change category
+		$scope.editCategory = function() {
+			$uibModal.open({
+	            templateUrl: 'editQuestionCategoryModal.html', // loads the template
+	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
+	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
+	            controller: function ($scope, $uibModalInstance,$log,Categories,question) {
+	              	Categories.getList().then(function(response){$scope.categories = response.data;});
+	                $scope.submit = function () {
+	                   	$http.post('/questions/api/editCategory',{id:question.id,category:$scope.category_edit})
+				 			 .then(function(response){
+				 			 	console.log('Edit question category: ',response.data)
+				 			 	question.category = response.data;
+				 			 },function(error){
+				 			 	console.log(error);
+				 		 });
+	                    $uibModalInstance.dismiss('cancel'); // dismiss(reason) 
+	                }
+	                $scope.cancel = function () {
+	                    $uibModalInstance.dismiss('cancel'); 
+	                };
+	            },
+	            resolve: {
+	                question:function(){
+	                	return $scope.question;
+	                }
+	            }
+	        });//end of modal.open
+		}
+
+		//question add new tags
+		$scope.addNewTags = function (){
+			$http.post('/questions/api/add-Tags',{question_id:$scope.question.id,tags:$scope.newTagsList})
+	 			 .then(function(response){
+	 			 	console.log('add tags: ',response.data);
+	 			 	$scope.tagsList = response.data;	
+	 			 },function(error){
+	 			 	console.log(error);
+	 		});
+		}
+
+		//edit question
+		$scope.editQuestion = function(){
+
+			$uibModal.open({
+	            templateUrl: 'editQuestionModal.html', // loads the template
+	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
+	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
+	            controller: function ($scope, $uibModalInstance,question,$log) {
+	                $scope.title_edit = question.title;
+					$scope.edit_question_content = question.content;
+	                $scope.submit = function () {
+	                   	$http.post('/questions/api/edit',{id:question.id,title:$scope.title_edit,content:$scope.edit_question_content})
+				 			 .then(function(response){
+				 			 	console.log('Edit question: ',response);
+				 			 	question.content = response.data.content;
+				 			 	question.title = response.data.title;
+				 			 },function(error){
+				 			 	console.log(error);
+				 		 });
+	                    $uibModalInstance.dismiss('cancel'); // dismiss(reason) - a method that can be used to dismiss a modal, passing a reason
+	                }
+	                $scope.cancel = function () {
+	                    $uibModalInstance.dismiss('cancel'); 
+	                };
+	            },
+	            resolve: {
+	                question: function () {
+	                    return $scope.question;
+	                }
+	            }
+	        });//end of modal.open
+		}
+
+		//delete question
+		$scope.deleteQuestion = function(id){
+			$uibModal.open({
+	            templateUrl:'deleteQuestionModal.html', // loads the template
+	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
+	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
+	            controller: function ($scope, $uibModalInstance) {
+	                $scope.submit = function () {
+	                	$http.post('/questions/api/delete',{id:id})
+				 			 .then(function(response){
+				 			 	window.location.href = '/questions';
+				 			 },function(error){
+				 			 	console.log(error);
+				 		 });
+	                    $uibModalInstance.dismiss('cancel');//dismiss modal
+	                }
+	                $scope.cancel = function () {
+	                    $uibModalInstance.dismiss('cancel'); 
+	                };
+	            },
+	            resolve: {
+	             	
+	            }
+	        });//end of modal.open
+		}
+		
 		//set default value when add new answer...
 		var setNewAnswerDefault = function (answer_id) {
 			$scope.answers.comments[answer_id] = {comments:[],users:[],voteCount:[],voted:[]};
@@ -217,32 +397,70 @@
 	 		 });
 		}
 
-		$scope.showEditAnswerModal = function(index){
-			$scope.edit_answer_content[index] = $scope.question.answers[index].content;
-		}
 		$scope.editAnswer = function(index) {
-			$http.post('/questions/api/answer/edit',{id:$scope.question.answers[index].id,content:$scope.edit_answer_content[index]})
-	 			 .then(
-	 			 	function(response){
-		 			 	console.log('Edit answer: ',response);
-		 			 	$scope.question.answers[index].content = response.data.content;
-	 			 	}
-	 			 	,function(error){
-	 			 		console.log(error);
-	 		});
+			$uibModal.open({
+	            templateUrl: 'editAnswerModal.html', // loads the template
+	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
+	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
+	            controller: function ($scope, $uibModalInstance,question) {
+					$scope.edit_answer_content = question.answers[index].content;
+	                $scope.submit = function () {
+	                   	$http.post('/questions/api/answer/edit',{id:question.answers[index].id,content:$scope.edit_answer_content})
+				 			 .then(
+				 			 	function(response){
+					 			 	console.log('Edit answer: ',response);
+					 			 	question.answers[index].content = response.data.content;
+				 			 	}
+				 			 	,function(error){
+				 			 		console.log(error);
+				 		});
+	                    $uibModalInstance.dismiss('cancel'); // dismiss
+	                }
+	                $scope.cancel = function () {
+	                    $uibModalInstance.dismiss('cancel'); 
+	                };
+	            },
+	            resolve: {
+	                question: function () {
+	                    return $scope.question;
+	                }
+	            }
+	        });//end of modal.open
+		}
+		var updateAnswerCount = function(){
+			$scope.answer_count --;
 		}
 		$scope.deleteAnswer = function(index){
 
-			$http.post('/questions/api/answer/delete',{id:$scope.question.answers[index].id})
-	 			 .then(
-	 			 	function(response){
-		 			 	console.log('delete answer: ',response);
-		 			 	$scope.question.answers.splice(index,1);
-		 			 	$scope.answer_count--;
-	 			 	}
-	 			 	,function(error){
-	 			 		console.log(error);
-	 		});
+			$uibModal.open({
+	            templateUrl: 'deleteAnswerModal.html', // loads the template
+	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
+	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
+	            controller: function ($scope, $uibModalInstance,question) {
+					$scope.edit_answer_content = question.answers[index].content;
+	                $scope.submit = function () {
+	                   	$http.post('/questions/api/answer/delete',{id:question.answers[index].id})
+				 			 .then(
+				 			 	function(response){
+					 			 	console.log('delete answer: ',response);
+					 			 	question.answers.splice(index,1);
+					 			 	updateAnswerCount();
+				 			 	}
+				 			 	,function(error){
+				 			 		console.log(error);
+				 		});
+	                    $uibModalInstance.dismiss('cancel'); // dismiss
+	                }
+	                $scope.cancel = function () {
+	                    $uibModalInstance.dismiss('cancel'); 
+	                };
+	            },
+	            resolve: {
+	                question: function () {
+	                    return $scope.question;
+	                }
+	            }
+	        });//end of modal.open
 		}
 
 		$scope.showComments = function(answer_id){

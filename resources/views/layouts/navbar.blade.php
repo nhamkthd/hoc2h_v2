@@ -1,14 +1,19 @@
-<nav class="navbar navbar-default fixed-top">
+<nav class="navbar navbar-default fixed-top"  ng-app="hoc2h-heading" ng-controller="HeadingController">
+  @if(Route::has('login'))
+    @if(Auth::check())
+      <div ng-init="getUser({{Auth::user()}})"></div>
+    @endif
+  @endif
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
+    <div class="navbar-header" ">
       <a class="navbar-brand" href="#">Hoc2H</a>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div >
       <ul class="nav navbar-nav">
         <li><a href="{{route('tests')}}">Đề Thi <span class="sr-only">(current)</span></a></li>
-        <li><a href="{{route('questions')}}">Hỏi Đáp </a></li>
+        <li><a href="{{url('/questions')}}">Hỏi Đáp </a></li>
         <li><a href="#">Tài liệu</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Danh Mục<span class="caret"></span></a>
@@ -26,7 +31,13 @@
       <ul class="nav navbar-nav navbar-right">
         @if(Route::has('login'))
             @if(Auth::check())
-              <li class="notification"><a href="#">Thông báo</a></li>
+            <li class="dropdown" ng-init="initNotification()" ng-mouseover="readNotify(unReadNotification.length)">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"> Thông báo <span class="badge ng-binding"> @verbatim {{unReadNotification.length}}  @endverbatim</span></a>
+              <ul style=" max-height: 300px;overflow-y:scroll; " class="dropdown-menu">
+                  @include('notifications.list_notify')
+              </ul>
+            </li>
+         
               <li class="dropdown">
                 <a href="#">{{Auth::user()->user_name}} <span class="caret"></span></a>
                 <ul class="dropdown-menu">

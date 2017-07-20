@@ -18,7 +18,7 @@ class CreateMTestsTable extends Migration
             $table->increments('id');
             $table->integer('test_id')->unsigned();
             $table->foreign('test_id')->references('id')->on('tests')->onDelete('cascade');
-            $table->text('conetent');
+            $table->text('content');
             $table->text('explan')->nullable();
             $table->integer('state')->default(0);//this is attribute to check question creating 
             $table->integer('incorrect_id')->nullable();

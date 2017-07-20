@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 use App\Category;
 class CategoryController extends Controller
 {
-    public function show()
+    public function getAll()
     {
     	return Category::all();
+    }
+
+    public function getWithID($id)
+    {
+    	return Category::find($id);
     }
 }

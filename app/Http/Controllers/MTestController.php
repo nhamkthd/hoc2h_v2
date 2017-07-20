@@ -27,7 +27,7 @@ class MTestController extends Controller
 
 				$MTest=new MTest;
 				$MTest->test_id=$test->id;
-				$MTest->conetent=$reqs['content'];
+				$MTest->content=$reqs['content'];
 				$MTest->explan=$reqs['explan'];
 				$MTest->state=1;
 				$MTest->save();
