@@ -77,11 +77,15 @@
         </style>
 
     </head>
-    @if(Auth::check())
+    
     <script type="text/javascript">
+    @if(Auth::check())
         var user_id={{Auth::user()->id}}
-    </script>
+    @else
+        var user_id=0
     @endif
+    </script>
+    
     <body>
         <div class="loading" id="loading"></div>
         <div id="app" ng-app="Hoc2h">

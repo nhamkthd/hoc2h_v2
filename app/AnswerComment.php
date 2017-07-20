@@ -14,4 +14,9 @@ class AnswerComment extends Model
     public function votes() {
     	return $this->hasMany('App\AnswerCommentVote','answer_comment_id','id');
     }
+
+    public function answer()
+    {
+    	return $this->belongsTo('App\Answer','answer_id','id');
+    }
 }

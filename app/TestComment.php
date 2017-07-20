@@ -15,4 +15,9 @@ class TestComment extends Model
 	{
 		return $this->hasMany('App\LikeCommentTest','comment_id','id');
 	}
+
+	public function test()
+	{
+		return $this->belongsTo('App\Test','test_id','id');
+	}
 }

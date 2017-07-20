@@ -10,6 +10,8 @@ use App\AnswerCommentVote;
 use Auth;
 use App\Question;
 use App\notifications\AnswerQuestionNotification;
+use App\Notifications\LikeComentQuestionNotification;
+use App\Notifications\ReplyCommentQuestionNotification;
 class AnswerController extends Controller
 {
     public function store(Request $request)
@@ -46,6 +48,11 @@ class AnswerController extends Controller
            	$answer_vote->user_id = Auth::user()->id;
            	$answer_vote->answer_id = $request->answer_id;
            	$answer_vote->save();
+            $question=Answer::find($request->answer_id)->question;
+            if (Auth::user()->id!=Answer::find($request->answer_id)->user->id) {
+               $question->user->notify(new LikeComentQuestionNotification($question->user_id));
+            }
+            
             return 1;
         } else if ($request->isVoted == 1) {
             $answer_vote = AnswerVote::where('answer_id',$request->answer_id);
@@ -59,6 +66,11 @@ class AnswerController extends Controller
     	$comment->answer_id = $request->answer_id;
     	$comment->content = $request->content;
     	$comment->save();
+        $answer=Answer::find($request->answer_id);
+        if(Auth::user()->id!= $answer->user->id)
+        {
+             $answer->user->notify(new ReplyCommentQuestionNotification($answer->question->id));
+        }
     	return $comment;
     }
 
@@ -67,6 +79,10 @@ class AnswerController extends Controller
 	    	$comment_vote = new AnswerCommentVote;
 	    	$comment_vote->user_id = Auth::user()->id;
 	    	$comment_vote->answer_comment_id  = $request->comment_id;
+            $answer=AnswerComment::find($request->comment_id);
+            if (Auth::user()->id!=$answer->user->id) {
+                $answer->user->notify(new ReplyCommentQuestionNotification($answer->answer->question->id));
+            }
 	    	return 1;
     	} else if ($request->isVoted == 1) {
     		$comment_vote = AnswerCommentVote::where('answer_comment_id',$request->comment_id);
