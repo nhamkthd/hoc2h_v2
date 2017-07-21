@@ -239,7 +239,7 @@ class QuestionController extends Controller
                 $answerUsers[$answer->id] = $answer->user;
                 $answerVoteCount[$answer->id] = $answer->votes->count();
                 $answerCommentCount[$answer->id] = $answer->comments->count();
-                if (Auth::user()->answerVotes->where('answer_id',$answer->id)->count()) {
+                if (Auth::check() && Auth::user()->answerVotes->where('answer_id',$answer->id)->count()) {
                     $answerVoted[$answer->id] = 1;
                 }else
                      $answerVoted[$answer->id] = 0;
@@ -248,7 +248,7 @@ class QuestionController extends Controller
                    foreach ($answer->comments as $comment) {
                         $commentUsers[$comment->id] = $comment->user;
                         $commentVoteCount[$comment->id] = $comment->votes->count();
-                        if (Auth::user()->answerCommentVotes->where('answer_comment_id',$comment->id)->count()) {
+                        if (Auth::check() && Auth::user()->answerCommentVotes->where('answer_comment_id',$comment->id)->count()) {
                             $commentVoted[$comment->id] = 1;
                         }else
                              $commentVoted[$comment->id] = 0;
@@ -261,25 +261,30 @@ class QuestionController extends Controller
         $answers = array('users'=>$answerUsers,'comments'=>$answerComments,'voted'=>$answerVoted,'voteCount'=>$answerVoteCount,'commentCount'=>$answerCommentCount);
 
         $isVoted = 0;
-        if (Auth::user()->questionVotes->where('question_id',$question->id)->count()) {
+        if (Auth::check()) {
+            if (Auth::user()->questionVotes->where('question_id',$question->id)->count()) {
                 $isVoted = 1;
+            }
         }
-
         return response()->json(array('question'=>$question,'isVoted'=>$isVoted,'answers'=>$answers,'categories'=>$categories,'tagsList'=>$tags));
     }
 
     public function vote(Request $request){
-        if ($request->isVoted == 0) {
-            $questionVote = new QuestionVote;
-            $questionVote->user_id = Auth::user()->id;
-            $questionVote->question_id = $request->question_id;
-            $questionVote->save();
-            QuesTion::find($request->question_id)->user->notify(new LikeQuestionNotification($request->question_id));
-            return 1;
-        } else if ($request->isVoted == 1) {
-            $questionVote = QuestionVote::where('question_id',$request->question_id);
-            $questionVote->delete();
-            return 0;
-        } 
+        if (Auth::check()) {
+            if ($request->isVoted == 0) {
+                $questionVote = new QuestionVote;
+                $questionVote->user_id = Auth::user()->id;
+                $questionVote->question_id = $request->question_id;
+                $questionVote->save();
+                QuesTion::find($request->question_id)->user->notify(new LikeQuestionNotification($request->question_id));
+                return 1;
+            } else if ($request->isVoted == 1) {
+                $questionVote = QuestionVote::where('question_id',$request->question_id);
+                $questionVote->delete();
+                return 0;
+            } 
+        }else {
+            return -1;
+        }
     }
 }

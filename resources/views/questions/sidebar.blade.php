@@ -59,4 +59,10 @@
                             </ul>
                         </section>
                     </div>
+                    @verbatim
+                        <div class = "col-md-10 col-md-offset-1">
+                            <p class="menu-label">Tags</p>
+                            <p class="card-tags" ng-repeat="tag in tags"><span> {{tag.title}} </span></p>
+                        </div>
+                    @endverbatim
                 </div>

@@ -5,9 +5,12 @@
 	@endverbatim
 <div class="row" ng-controller="QuestionDetailController">
 	@if($question)
-		<div ng-init="initQuestion({{$question->id}},{{Auth::user()}})"></div>
+		<div ng-init="initQuestion({{$question->id}})"></div>
 	@else
 		<div ng-init="questionNotFound()"></div>
+	@endif
+	@if(Auth::check())
+		<div ng-init="getUser({{Auth::user()}})"></div>
 	@endif
 	<div ng-show ="isQuestionNotFound == 1" class="col-md-12">
 		<p>Câu hỏi không tồn tại...!</p>
@@ -23,7 +26,7 @@
 						<span class="pull-right">{{question.created_at}}</span>
 					</p>
 				</div>
-				<p class="post-body" ng-bind-html="question.content"></p>
+				<p class="answer-body" ng-bind-html="question.content"></p>
 				<div ng-show="!(tagsList.length == 0)" class="card-tags" style="margin-bottom:20px;">
 					<ul>
 						<li ng-repeat="tag in tagsList"><a href="#">{{tag.name}}</a></li>
@@ -91,18 +94,33 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-12 answer-list">
-			<div class="row">
-				<div class="col-md-12" ng-repeat="answer in question.answers">
+		<div class="col-md-12" ng-show="isLogged == false" style="margin-top: 20px;">
+			<a href="/login">Đăng nhập để tham gia trả lời và bình luận..!</a>
+		</div>
+		<div class="col-md-12">
+			<div class="row answer-list">
+				<p class="filter-title">Trả lời ({{question.answers.length}})</p>
+				<div  ng-hide="question.answers.length == 0" class="col-md-12" ng-repeat="answer in question.answers">
 					@endverbatim
 						@include('questions.directives.answer_list_item')
 					@verbatim
 				</div>
-				<div class="col-md-12 commet-box" id="anchor{{1}}">
-					<label>Câu trả lời của bạn</label>
-					<div ckeditor="options" ng-model="answer_content_field" ready="onReady()"></div>
+				<div ng-show="isLogged == true" style="margin-top: 20px;">
+					<div class="col-md-12 commet-box" id="anchor{{1}}">
+						<label>Câu trả lời của bạn</label>
+						<div ckeditor="options" ng-model="answer_content_field" ready="onReady()"></div>
+					</div>
+					<button class="btn btn-outline-default waves-effect pull-right" style="margin-top:20px; margin-right: 10px;" type="button" ng-click="addAnswer()">Gửi trả lời</button>
 				</div>
-				<button class="btn btn-outline-default waves-effect pull-right" style="margin-top:20px; margin-right: 10px;" type="button" ng-click="addAnswer()">Gửi trả lời</button>
+				<div class="col-md-12  related">
+					<p class="filter-title">Câu hỏi liên quan</p>
+					<div class="list-group related-list">
+						<a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+						<a href="#" class="list-group-item">Morbi leo risus</a>
+						<a href="#" class="list-group-item">Porta ac consectetur ac</a>
+						<a href="#" class="list-group-item">Vestibulum at eros</a>
+					</div>
+				</div>
 			</div>
 		</div>
 		@endverbatim

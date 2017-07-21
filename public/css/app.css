@@ -1,10 +1,11 @@
 body{
 	font-family: Arial, Helvetica, sans-serif;
-	background: #fff;
+	background: #f1f2f3 ;
 	color: #4d545d;
 	display: block;
 
 }
+.app-content {background-color: #fff; padding-top:10px; border-radius:2px;}
 /* Text color styles*/
 .danger-text{ color:#ff4444;}
 .danger-dark-text{color:#CC0000;}
@@ -44,7 +45,7 @@ body{
 .navbar-default .navbar-nav>li>a, a.navbar-brand {color: #37474F;}
 /*side bar style */
 .sidebar {border-left:solid 1px #e0e0e0 ; margin-left: 10px;}
-.menu-label {font-weight: 700;font-size: 15px;letter-spacing: -.5px;margin-bottom: 1em;color:#757575; text-align: center;}
+.menu-label {padding:10px; font-weight: 600;font-size: 15px;letter-spacing: -.5px;color:#757575; }
 .menu-list{list-style-type:none;list-style-position: outside; padding-left: 0px;}
 .menu-list >li{    
     border-bottom: 1px dotted #d7d7d7;
@@ -61,7 +62,7 @@ a , a:hover, li.active a {text-decoration: none;}
 li > a{font-weight: 400; font-size: 15px; padding-left: 5px;}
 li > a > i {padding-right: 5px;}
 li.active{background-color: #eceff1}
-li.active a {color:#2bbbad; font-weight: 600; text-decoration: blink;}
+li.active a {color:#2bbbad; text-decoration: blink;}
 span.help-inline .validate-text {color: red;}
 .main-content {padding-left: 20px;}
 /*list style*/
@@ -79,12 +80,10 @@ select.form-control:focus{ box-shadow:none; border-color:#00b09c;}
 label {font-weight: 700; margin-bottom: 5px;}
 
 .badge {margin-bottom:3px; font-size:10px;}
-.post-header { padding-bottom: 5px; border-bottom: solid 1px #e6e6e6;}
+.post-header { padding-bottom: 5px;}
 .post-header h3 {font-size: 20px; margin-top:0px;}
 .post-header p {font-size:13px; color:#757575;}
 .post-header p > a {font-weight:600;}
-
-.post-body { padding-top: 10px;border-bottom: solid 1px #e6e6e6;}
 .post-info {border-bottom: solid 1px #e6e6e6; padding-bottom:0px;float: right; margin-bottom: 10px;}
 .nav-pills >li {padding-right: 10px; font-size: 12px;}
 .nav-pills >li span {background:#e0f2f1; color:#0d47a1;}
@@ -92,9 +91,10 @@ label {font-weight: 700; margin-bottom: 5px;}
 .nav-pills  li .action:hover{color: #33b5e5;}
 .post-action {margin-top: 10px;}
 .nav-pills>li>a {position: relative; display: block; padding:5px; font-size:12px; color:#0099CC;}
-.answer-list {padding: 10px; margin:50px 10px; border-top: 0.2em solid #4B515D;}
+.answer-list {padding:10px; margin:30px 10px 20px 10px;}
+.answer-body {background-color: #fafafa ;padding:5px;border-radius: 2px;}
 
-.list-item-block{float:left; display: block; width: 100%;border-bottom: 1px solid #f6491a;padding-bottom: 10px;margin: 2em 0 !important;}
+.list-item-block{float:left; display: block; width: 100%;border-bottom: 1px solid #bdbdbd;padding-bottom: 10px;margin: 2em 0 !important;}
 .media-heading{margin:0 0 5px;}
 .media-heading a {font-weight: 600;}
 .media-heading  small {color: #4B515D;}
@@ -118,7 +118,9 @@ a.list-title {font-size: 18px ;color:#0099CC; }
 .widget .action { margin-top:5px; }
 .widget .comment-text { font-size: 12px; }
 .widget .btn-block { border-top-left-radius:0px;border-top-right-radius:0px; }
-
+.filter-title{padding: 10px; border-bottom:solid 2px #00695c; font-size: 15px;}
+.related {margin-top:20px;}
+.related-list {box-shadow: none;}
 /*card css */
 .card-list {padding:10px 0px 0px 0px; border-bottom: 1px solid #e0e0e0 ; margin-bottom: 20px;}
 .author {display: block-inline;}
@@ -132,11 +134,11 @@ a.author-name:hover {font-size:13px; font-weight: 600;color: #4285F4; margin-top
 
 .card-tags ul {display: flex; flex-direction: row; flex-wrap: wrap; list-style: none; padding-left: 0; } 
 .card-tags li + li { margin-left: .5rem;}
-.card-tags a {background:#e3f2fd; padding: 5px; color:#3F729B; font-size:12px;}
+.card-tags a {background:#e3f2fd; padding: 5px; color:#3F729B; font-size:12px; border-radius:2px;}
 .card-tags a:hover{background:#90caf9;}
 
 .card-footer { margin: 0 auto; padding-bottom:5px; } 
 .card-footer ul {list-style: none; display: flex; flex: row wrap; justify-content: flex-end; padding-left: 0; } 
 .card-footer li:first-child {margin-right: auto; } 
 .card-footer li + li {margin-left: .5rem; } 
-.card-footer li {font-size: .75rem; height: 1.5rem; letter-spacing: 1px; line-height: 1.5rem; text-align: center;  position: relative; white-space: nowrap; color:#FF8800;} 
+.card-footer li {font-size: .75rem; height: 1.5rem; letter-spacing: 1px; line-height: 1.5rem; text-align: center;  position: relative; white-space: nowrap; color:#ff4444;} 

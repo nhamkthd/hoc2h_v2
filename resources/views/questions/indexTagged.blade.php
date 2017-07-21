@@ -3,7 +3,7 @@
 	<div ng-init="setSelectedTab({{$tabSelected}})"></div>
 	<div ng-init="getQuestionsTagged({{$questionTag->id}})"></div>
 	<div class="row">
-		<div class="col-md-12 filter-action" style="padding: 10px auto 10px; border-bottom:solid 2px #00695c;">
+		<div class="col-md-12 filter-title">
 			<p>Tagged: {{$questionTag->name}} <span class="pull-right">	@verbatim  {{questions.length}}@endverbatim </span></p>
 		</div>
 		@verbatim

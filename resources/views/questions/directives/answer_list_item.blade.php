@@ -27,7 +27,7 @@
 	<div class="media-body">
 		<div class="media-heading">
 			<a href class="primary-text">{{answer.user.user_name}}</a>
-			<small class="pull-right" style="color:#aa66cc; font-size: 12px;"> {{answer.created_at}}</small>
+			<small style="color:#aa66cc; font-size: 12px;">( {{answer.created_at}})</small>
 		</div>
 		<div class="">
 			<p class="answer-body" ng-bind-html="convertHtml(answer.content)">{{answer.content}}</p>
@@ -74,7 +74,7 @@
 						<span style="color:#aa66cc; font-size: 12px;">({{comment.created_at | date : "dd-MM-yyyy"}})</span>
 					</div>
 					<div class="">
-						<div ng-show="comment_editing[$index] != 1">{{comment.content}}</div>
+						<div ng-show="comment_editing[$index] != 1"><p class="answer-body">{{comment.content}}</p></div>
 						<div ng-show="comment_editing[$index] === 1">
 							<textarea id="comment_field" class="form-control" 
 							  ng-model="comment_editing_field[$index]" 
@@ -118,7 +118,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="comment-box">
+			<div class="comment-box" ng-show="isLogged == true">
 				<span class="pull-left avt">
 					<img src="" width="40" height="40">
 				</span>

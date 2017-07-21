@@ -99,11 +99,43 @@
   	});
 
 	//main question controller
-	app.controller('QuestionController',function($scope, $http,$sce){
+	app.controller('QuestionController',function($scope, $http,$sce,Tags){
+		var tag_id = 0;
 		$scope.tab = 1;
 	 	$scope.setSelectedTab = function(sTab){
 	 		$scope.tab = sTab;
+	 		switch(sTab){
+	 			case 1:
+	 				$scope.tab_name = "Mới nhất";
+	 				break;
+	 			case 2:
+	 				$scope.tab_name = "Nổi bật";
+	 				break;
+	 			case 3:
+	 				$scope.tab_name = "Nổi bật trong tuần";
+	 				break;
+	 			case 4:
+	 				$scope.tab_name = "Câu hỏi của bạn";
+	 				break;
+	 			case 5:
+	 				$scope.tab_name = "Đang theo dõi";
+	 				break;
+	 			case 6:
+	 				$scope.tab_name = "Đã được giải quyết";
+	 				break;
+	 			case 7:
+	 				$scope.tab_name = "Chưa được giải quyết";
+	 				break;
+	 			case 8:
+	 				$scope.tab_name = "chưa có câu trả lời";
+	 				break;
+	 			case 9:
+	 				$scope.tab_name = "Thành viên tiêu biểu";
+	 				break;
+
+	 		}
 	 	}
+	 	
 	 	$scope.getQuestionsWithTab = function(tab){
 	 		$http.get('/questions/api/?filtertab='+$scope.tab)
 	 			 .then(function(response){
@@ -116,6 +148,7 @@
 	 	}
 
 	 	$scope.getQuestionsTagged = function(tag_id){
+	 		this.tag_id = tag_id;
 	 		$http.get('/questions/api/tagged/'+tag_id)
 	 			 .then(function(response){
 	 			 	$scope.questions  = response.data.questions;
@@ -127,14 +160,18 @@
 	 	//questions searching....!
 	 	$scope.search = function(){
 	 		if ($scope.keywords === '' || typeof $scope.keywords === 'undefined') {
-	 			$http.get('/questions/api/?filtertab='+$scope.tab)
-	 			 .then(function(response){
-	 			 	console.log(response.data);
-	 			 	$scope.questions  = response.data.questions;
-	 			 	$scope.questionTags = response.data.questionTags;
-	 			 }, function(error){
-	 			 	console.log(error);
-	 			});
+	 			if ($scope.tab == 0) {
+	 				this.getQuestionsTagged(this.tag_id);
+	 			} else {
+	 				$http.get('/questions/api/?filtertab='+$scope.tab)
+		 			 .then(function(response){
+		 			 	console.log(response.data);
+		 			 	$scope.questions  = response.data.questions;
+		 			 	$scope.questionTags = response.data.questionTags;
+		 			 }, function(error){
+		 			 	console.log(error);
+		 			});
+		 		}
 	 		} else {
 	 			$http.get('/questions/api/search?keyword='+$scope.keywords)
 	 			 .then(function(response){
@@ -144,7 +181,6 @@
 	 			 });
 	 		}
 	 	}
-	 	
 	});
 
 	//create question controller
@@ -168,6 +204,7 @@
 	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location,$uibModal,Tags){
 		this.animationsEnabled = true;
 		$scope.isQuestionNotFound = 0;
+		$scope.isLogged = false;
 	 	$scope.showComments = [];
 	 	$scope.edit_answer_content = [];
 	 	$scope.comment_content_field = [];
@@ -192,10 +229,13 @@
         $scope.questionNotFound = function(){
         	$scope.isQuestionNotFound = 1;
         }
-        //init question form route
-	 	$scope.initQuestion = function (question_id,user) {
 
-	 		$scope.user = user;
+        $scope.getUser = function(user) {
+        	$scope.user = user;
+        	$scope.isLogged = true;
+        }
+        //init question form route
+	 	$scope.initQuestion = function (question_id) {
 	 		$scope.question ={};
 	 		$scope.answers = [];
 	 		$scope.isResolved = 0;
@@ -229,9 +269,12 @@
 			$http.post('/questions/api/vote',{question_id:$scope.question.id,isVoted:$scope.isVotedQuestion})
 	 			 .then(function(response){
 	 			 	console.log('Vote question: ',response);
-	 			 	$scope.isVotedQuestion = response.data;
-	 			 	if (response.data == 1) { $scope.question_votes++;}
-	 			 	else if(response.data == 0) {$scope.question_votes--;}
+	 			 	var data = response.data;
+	 			 	if (data == 1) {$scope.question_votes++; $scope.isVotedQuestion = data;}
+	 			 	else if(data == 0){$scope.question_votes--; $scope.isVotedQuestion = data;}
+	 			 	else if (data == -1) {
+	 			 		window.location.href = '/login';
+	 			 	}
 	 			 },function(error){
 	 			 	console.log(error);
 	 		 });
@@ -369,12 +412,17 @@
 			$http.post('/questions/api/answers/',{question_id:$scope.question.id,content:$scope.answer_content_field})
 	 			 .then(function(response){
 	 			 	console.log('Add new answer: ',response.data);
-	 			 	var newAnswer = response.data;
-	 			 	$scope.question.answers.push(newAnswer);
-	 			 	$scope.answer_count++;
-	 			 	setNewAnswerDefault(newAnswer.id);
-	 			 	console.log($scope.answers);
-	 			 	$scope.answer_content_field = " ";
+	 			 	if (response.data == -1) {
+	 			 		window.location.href = '/login';
+	 			 	} else {
+	 			 		var newAnswer = response.data;
+		 			 	$scope.question.answers.push(newAnswer);
+		 			 	$scope.answer_count++;
+		 			 	setNewAnswerDefault(newAnswer.id);
+		 			 	console.log($scope.answers);
+		 			 	$scope.answer_content_field = " ";
+	 			 	}
+	 			 	
 	 			 },function(error){
 	 			 	console.log(error);
 	 		 });
@@ -391,6 +439,8 @@
 	 			 	} else if (response.data == 0){
 	 			 		$scope.answers.voted[answer_id] = 0;
 	 			 		$scope.answers.voteCount[answer_id]--;
+	 			 	} else if (response.data == -1) {
+	 			 		window.location.href = '/login';
 	 			 	}
 	 			 },function(error){
 	 			 	console.log(error);
@@ -474,10 +524,12 @@
 	 			 .then(
 	 			 	function(response){
 		 			 	console.log('Add new comment: ',response.data);
-		 			 	$scope.answers.commentCount[answer_id]++;
-		 			 	$scope.answers.comments[answer_id].comments.push(response.data);
-		 			 	setNewCommentDefault(response.data.id,answer_id);
-		 			 	$scope.comment_content_field[index]="";
+		 			 	if (response.data != -1) {
+		 			 		$scope.answers.commentCount[answer_id]++;
+		 			 		$scope.answers.comments[answer_id].comments.push(response.data);
+		 			 		setNewCommentDefault(response.data.id,answer_id);
+		 			 		$scope.comment_content_field[index]="";
+		 			 	}
 	 			 	}
 	 			 	,function(error){
 	 			 		console.log(error);
@@ -490,7 +542,8 @@
 	 			 	function(response){
 	 			 		console.log('Vote comment:',response);
 	 			 		$scope.answers.comments[answer_id].voted[comment_id] = response.data;
-	 			 		if (response.data == 1) {
+	 			 		if (response.data == -1) {window.location.href = '/login';}
+	 			 		else if (response.data == 1) {
 	 			 			$scope.answers.comments[answer_id].voteCount[comment_id]++;
 	 			 		} else {
 	 			 			$scope.answers.comments[answer_id].voteCount[comment_id]--;
