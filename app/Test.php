@@ -27,4 +27,8 @@ class Test extends Model
 	{
 		return $this->hasMany('App\MTest','test_id','id');
 	}
+	public function user_test()
+	{
+		return $this->hasMany('App\UserTest','test_id','id');
+	}
 }

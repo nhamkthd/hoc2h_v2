@@ -1,5 +1,24 @@
 (function(){
+
+	function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
+
 	 var app = angular.module('hoc2h-test', []);
+
+	     //test-list-card directive
+	app.directive('testCard',function(){
+		return {
+			restrict:'E',
+			templateUrl:'/tests/tests-card',
+		}	
+	});
 
 	 app.directive('ngEnter', function() {
         return function(scope, element, attrs) {
@@ -18,6 +37,39 @@
 	 app.run(function(){
 	 	console.log('hello Test');
 	 });
+
+	 app.controller('List_TestController', function ($scope,$http,$location) {
+	 	$scope.tab=getParameterByName('filter');
+	 	$scope.list_tests=[];
+	 	$scope.getTest=function () {
+	 		$http.get('/tests/gettest?filter='+$scope.tab)
+	 			 .then(function(response){
+	 			 	console.log(response.data);
+	 			 	$scope.list_tests = response.data;
+	 			 }, function(error){
+	 			 	console.log(error);
+	 		});
+	 	}
+	 	
+	 	$scope.search=function () {
+	 		if ($scope.keywords === '' || typeof $scope.keywords === 'undefined') {
+	 			$http.get('/tests/gettest?filter='+$scope.tab)
+	 			 .then(function(response){
+	 			 	console.log(response.data);
+	 			 	$scope.list_tests = response.data;
+	 			 }, function(error){
+	 			 	console.log(error);
+	 			});
+	 		} else {
+	 			$http.get('/tests/api/search?keyword='+$scope.keywords)
+	 			 .then(function(response){
+	 			 		$scope.list_tests = response.data;
+	 			 },function(error){
+	 			 	console.log(error);
+	 			 });
+	 		}
+	 	}
+	 });	
 
 
 	app.controller('ShowTestController', function ($scope,$http) {

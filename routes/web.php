@@ -21,8 +21,10 @@ Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	Route::get('create', function() {
 	    return view('tests.create');
 	});
-	Route::get('UserCreate','TestController@getUserCreateTest');
-	Route::post('usertest','TestController@userTest');
+	Route::get('/tests-card',function(){
+			return view('tests.directives.test_list_card');
+		});
+	Route::get('gettest','TestController@getListTest');
 	Route::post('create_write_test','WTestController@store')->name('create_write_test');
 	Route::get('show/{id}', 'TestController@show');
 	Route::post('/usertest/submittestchoice','UserTestController@store');
@@ -38,7 +40,7 @@ Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 		Route::post('/postAddRate', 'RateTestController@postAddRate');
 		Route::post('/likeComment', 'LikeCommentTestController@postLikeComment');
 		Route::post('/dislikeComment', 'LikeCommentTestController@postDislikeComment');
-
+		Route::get('/search','TestController@search');
 	});
 });
 
