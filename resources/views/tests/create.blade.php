@@ -5,7 +5,7 @@
  	 	return 'chưa tạo xong. bạn có muốn thoát?';
 });
 </script>
-<div class="container" ng-app ="hoc2h-test" ng-controller="createTest">
+<div class="container app-content ng-scope" ng-app ="hoc2h-test" ng-controller="createTest">
 	<div class="row">
 		<div class="col-md-12 main-content box">
 				<div ng-show="tab === 1" >
@@ -73,10 +73,6 @@
 											<label class="radio-inline" style="margin-bottom: 5px;">
 												<input type="radio"  ng-checked="true" ng-model="test_type" name="test_type" value="0">
 												<span for="inlineRadio1">Trắc Nghiệm</span>
-											</label>
-											<label class="radio-inline " style="margin-bottom: 5px;">
-												<input type="radio" ng-model="test_type" name="test_type" value="1">
-												<span for="inlineRadio2">Tự Luận</span>
 											</label>
 										</div>
 									</div>

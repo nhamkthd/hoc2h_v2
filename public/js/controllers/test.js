@@ -41,6 +41,20 @@
 	 app.controller('List_TestController', function ($scope,$http,$location) {
 	 	$scope.tab=getParameterByName('filter');
 	 	$scope.list_tests=[];
+	 	switch($scope.tab) {
+	 		case null:
+	 			$scope.tab_name='Mới nhất';
+	 			break;
+	 		case 'usercreate':
+	 			$scope.tab_name='Đề thi bạn đã tạo';
+	 			break;
+	 		case 'hot':
+	 			$scope.tab_name='Đề thi nổi bật';
+	 			break;
+	 		case 'Mytesting':
+	 			$scope.tab_name='Đề thi đã làm';
+	 			break;
+	 	}
 	 	$scope.getTest=function () {
 	 		$http.get('/tests/gettest?filter='+$scope.tab)
 	 			 .then(function(response){
@@ -246,18 +260,7 @@
 	 			level_id:$scope.level.id,
 	 		};
 	 		$scope.type_qa='Upload';
-	 		if(type_test==1)
-	 		{
-	 			//tự luận
-					$scope.tab=2;
-	 		}
-	 		else
-	 		{
-	 			//trắc nhiệm
-	 			$scope.tab=3;
-	 			
-	 			
-	 		}
+	 		$scope.tab=3;
 	 	}
 
 	 	$scope.click_upload_qa=function(state) {

@@ -24,6 +24,7 @@ Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	Route::get('/tests-card',function(){
 			return view('tests.directives.test_list_card');
 		});
+	Route::post('usertest','TestController@userTest');
 	Route::get('gettest','TestController@getListTest');
 	Route::post('create_write_test','WTestController@store')->name('create_write_test');
 	Route::get('show/{id}', 'TestController@show');

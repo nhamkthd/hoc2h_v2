@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Test;
 use App\User;
+use App\UserTest;
 use Auth;
 use DB;
 class TestController extends Controller
@@ -22,6 +23,15 @@ class TestController extends Controller
                 break;
             case 'usercreate':
                 $test=Test::where('user_id',Auth::user()->id)->get();
+                break;
+            case 'hot':
+                $test=Test::all();
+                break;
+            case 'Mytesting':
+                $userTest=UserTest::where('user_id',Auth::user()->id)->groupBy('user_id','test_id')->select('user_id','test_id')->get();
+                foreach ($userTest as $key => $value) {
+                   $test[]=Test::find($value->test_id);
+                }
                 break;
             default:
                 # code...
@@ -74,9 +84,13 @@ class TestController extends Controller
         return view('tests.user_test',compact('test','is_time_count'));
     }
      public function search(Request $request){
-        return response()->json(DB::table('tests')
-                ->where('title', 'like', '%'.$request->keyword.'%')
-                ->get());
+        $test=Test::where('title', 'like', '%'.$request->keyword.'%')->get();
+         foreach ($test as $tests) {
+            $tests->user;
+            $tests->category;
+            $tests->user_test->count();
+        }
+        return response()->json($test);
     }
 
 }

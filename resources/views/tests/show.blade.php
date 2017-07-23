@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
 <link rel="stylesheet" type="text/css" href="{{asset('css/rate.css')}}">
-<div class="container" ng-app ="hoc2h-test" ng-controller="ShowTestController">
+<div class="container app-content ng-scope" ng-app ="hoc2h-test" ng-controller="ShowTestController">
 <div class="row" ng-init="initTest({{$test->id}},{{Auth::user()}})">
-<div class="col-md-10 col-md-offset-1 main-content ">
+<div class="col-md-8 main-content ">
 		<div class="box">
 			<h3 class="info-dark-text">{{$test->title}}</h3>
 			<p><strong>Thể loại/Danh mục: </strong>{{$test->category->title}}</p>
@@ -126,6 +126,9 @@
 			</div>
 			
 			</div>
+			@include('tests.sidebar')
 	</div>
+
 </div>
+
 @endsection

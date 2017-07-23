@@ -2,7 +2,7 @@
 @extends('layouts.app')
 @section('content')
 	<script src="//cdn.ckeditor.com/4.6.2/full/ckeditor.js"></script>
-	<div class="col-md-10 col-md-offset-1 main-content">
+	<div class="col-md-10 col-md-offset-1 main-content container app-content ng-scope">
 		<div class="row">
 			<div class="col-md-12 box">
 				<h2 class="info-dark-text">{{$test->title}}</h2>
