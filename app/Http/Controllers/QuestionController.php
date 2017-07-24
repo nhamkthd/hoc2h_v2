@@ -217,6 +217,22 @@ class QuestionController extends Controller
         return  $results;
     }
 
+    public function searchWithTitle(Request $request){
+        $results = array();
+        if ($request->keyword) {
+            $results = Search::search(
+                              "Question" ,
+                              ['title'] ,
+                               $request->keyword,
+                              ['id' , 'title'],
+                              ['id'  , 'desc'] ,
+                              true ,
+                              10
+                        );
+        }
+        return  $results;
+    }
+
     public function apiQuestionWithID(Request $request){
         $question = Question::find($request->id);
         $categories = Category::all();

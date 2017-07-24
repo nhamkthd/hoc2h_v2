@@ -65,6 +65,7 @@ Route::group(['prefix' => 'questions'], function(){
 		Route::post('/change-resolve','QuestionController@changeResolve');
 		Route::post('/add-Tags','QuestionController@addTags');
 		Route::get('/search','QuestionController@search');
+		Route::get('/search-related','QuestionController@searchWithTitle');
 		Route::get('/tagged/{tag_id}','QuestionController@getQuestionsTagged');
 
 		Route::post('/answers','AnswerController@store');

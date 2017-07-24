@@ -14,7 +14,8 @@
 		</div>
 		<div class="card-tags">
 			<ul>
-				<li ng-repeat="tag in questionTags[question.id]"><a href="/questions/tagged/?id={{tag.id}}">{{tag.name}}</a></li>
+				<li  ng-repeat="tag in questionTags[question.id]">
+				<a href="/questions/tagged/?id={{tag.id}}">{{tag.name}}</a></li>
 			</ul>
 		</div>
 	</div>

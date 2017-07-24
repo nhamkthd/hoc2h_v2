@@ -29,7 +29,7 @@
 				<p class="answer-body" ng-bind-html="question.content"></p>
 				<div ng-show="!(tagsList.length == 0)" class="card-tags" style="margin-bottom:20px;">
 					<ul>
-						<li ng-repeat="tag in tagsList"><a href="#">{{tag.name}}</a></li>
+						<li ng-repeat="tag in tagsList"><a href="/questions/tagged/?id={{tag.id}}">{{tag.name}}</a></li>
 					</ul>
 				</div>
 				<div ng-show="(tagsList.length == 0) && (user.id == question.user_id)">

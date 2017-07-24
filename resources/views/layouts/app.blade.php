@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="{{asset('css/font-awesome/css/font-awesome.css') }}"> 
         <link rel="stylesheet" href="{{ asset('css/ng-tags-input/ng-tags-input.css') }}">
         <link rel="stylesheet" href="{{ asset('css/ng-selector/angular-selector.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/ng-scrollbar/ng-scrollbar.css') }}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
         <!--App style-->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
@@ -27,7 +28,8 @@
         <script src="{{asset('js/flugin/notify/bootstrap-notify.js')}}"></script>
         <script src="{{asset('js/flugin/notify/bootstrap-notify.min.js')}}"></script>
         <script src="{{asset('js/flugin/angular/ng-tags-input.js')}}"></script> 
-         <script src="{{asset('js/flugin/angular/angular-selector.js')}}"></script> 
+        <script src="{{asset('js/flugin/angular/angular-selector.js')}}"></script> 
+        <script src="{{asset('js/flugin/angular/ng-scrollbar.js')}}"></script> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-sanitize.min.js"></script>
         <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ckeditor/1.0.3/angular-ckeditor.js"></script>

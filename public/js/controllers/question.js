@@ -135,7 +135,15 @@
 
 	 		}
 	 	}
-	 	
+	 	$scope.getListTags = function (){
+	 		$http.get('/tags')
+ 				 .then(function(response){
+ 					 $scope.sidebarTags = response.data;
+ 					 console.log("sidebarTags: ",$scope.sidebarTags);
+ 				},function (error) {
+ 					console.log(error);
+ 				});
+	 	}
 	 	$scope.getQuestionsWithTab = function(tab){
 	 		$http.get('/questions/api/?filtertab='+$scope.tab)
 	 			 .then(function(response){
@@ -186,8 +194,23 @@
 	//create question controller
 	app.controller('CreateQuestionController',function($scope,$http,Categories,Tags){
 		$scope.tagsList = [];
+		$scope.questions_related = [];
 		Categories.getList().then(function(response){$scope.categories = response.data;});
 		Tags.getList().then(function(response){$scope.tags = response.data;});
+		
+		//fiding question related with title key words
+		$scope.findRelated = function(){
+			if ($scope.title === ''|| typeof $scope.title === 'undefined') {
+				$scope.questions_related = [];
+			}else {
+				$http.get('/questions/api/search-related?keyword='+$scope.title)
+	 			 .then(function(response){
+	 			 	$scope.questions_related = response.data.data;
+	 			 },function(error){
+	 			 	console.log(error);
+	 			 });
+			}
+		}
 
 	 	$scope.submitQuestion = function(){
 	 		console.log($scope.tagsList);
