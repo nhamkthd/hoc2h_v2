@@ -23,7 +23,7 @@
 					<h3 class="unique-text">{{question.title}} </h3>
 					<p>
 						Đăng bởi <a href="#nothing" class="primary-text">{{question.user.user_name}}</a> tại <a href class="warning-dark-text"> {{question.category.title}} </a> <a ng-click="editCategory()"> <i class="fa fa-edit" aria-hidden="true"></i></a>
-						<span class="pull-right">{{question.created_at}}</span>
+						<span class="pull-right"> <i class="fa fa-clock-o" aria-hidden="true"></i>  {{question.date_created}}</span>
 					</p>
 				</div>
 				<p class="answer-body" ng-bind-html="question.content"></p>

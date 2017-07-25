@@ -148,8 +148,7 @@
 	 		$http.get('/questions/api/?filtertab='+$scope.tab)
 	 			 .then(function(response){
 	 			 	console.log(response.data);
-	 			 	$scope.questions  = response.data.questions;
-	 			 	$scope.questionTags = response.data.questionTags;
+	 			 	$scope.questions  = response.data;
 	 			 }, function(error){
 	 			 	console.log(error);
 	 		});
@@ -159,8 +158,7 @@
 	 		this.tag_id = tag_id;
 	 		$http.get('/questions/api/tagged/'+tag_id)
 	 			 .then(function(response){
-	 			 	$scope.questions  = response.data.questions;
-	 			 	$scope.questionTags = response.data.questionTags;
+	 			 	$scope.questions  = response.data;
 	 			 },function(error){
 	 			 	console.log(error);
 	 			 });
@@ -174,8 +172,7 @@
 	 				$http.get('/questions/api/?filtertab='+$scope.tab)
 		 			 .then(function(response){
 		 			 	console.log(response.data);
-		 			 	$scope.questions  = response.data.questions;
-		 			 	$scope.questionTags = response.data.questionTags;
+		 			 	$scope.questions  = response.data;
 		 			 }, function(error){
 		 			 	console.log(error);
 		 			});

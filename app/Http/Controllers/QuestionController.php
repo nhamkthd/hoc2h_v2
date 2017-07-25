@@ -14,6 +14,33 @@ use App\Tag;
 use Search;
 class QuestionController extends Controller
 {
+    public function question_sort($questions){
+        $sort = array();
+        foreach($questions as $k=>$v) {
+            $sort['votes_count'][$k] = $v['votes_count'];
+            $sort['answers_count'][$k] = $v['answers_count'];
+            $sort['view_count'][$k] = $v['view_count'];
+        }
+        return $sort;
+    }
+    public function setDateFomat($question){
+       if($question->created_at->diffInWeeks(Carbon::now()) > 1){
+            $question->date_created = $question->created_at->format('d/m/Y');    
+        } else {
+            $question->date_created = $question->created_at->diffForHumans();
+        } 
+    }
+
+    public function setMoreInfo($questions){
+        foreach ($questions as $question) {
+            $this->setDateFomat($question);
+            $question->user;
+            $question->answers_count = $question->answers->count();
+            $question->votes_count = $question->votes->count();
+            $question->tags =  Question::getTags($question->id);
+        }
+    }
+
     public function index(Request $request)
     {
         $tabSelected = 1;
@@ -52,33 +79,44 @@ class QuestionController extends Controller
     	return view('questions.index',compact('tabSelected'));
     }
     public function getAll (Request $request) {
-
         if ($request->filtertab) {
             switch ($request->filtertab) {
                 case 1:
                     $questions =  Question::orderby('id','desc')->get();
-                    break;
+                    $this->setMoreInfo($questions);
+                    return $questions;
                 case 2:
                     $questions =  Question::orderby('id','desc')->get();
-                    break;
+                    $this->setMoreInfo($questions);
+                    $questions_array = $questions->toArray();
+                    $sort = $this->question_sort($questions_array);
+                    array_multisort($sort['votes_count'], SORT_DESC, $sort['answers_count'], SORT_DESC,$sort['view_count'], SORT_DESC,$questions_array);
+                   return $questions_array;
                 case 3:
-                    $questions =  Question::orderby('id','desc')->get();
-                    break;
+                    $questions =  Question::questionsInWeek();
+                    $this->setMoreInfo($questions);
+                    $questions_array = $questions->toArray();
+                    $sort = $this->question_sort($questions_array);
+                    array_multisort($sort['votes_count'], SORT_DESC, $sort['answers_count'], SORT_DESC,$sort['view_count'], SORT_DESC,$questions_array);
+                    return $questions_array;
                 case 4:
                     $questions = Question::where('user_id',Auth::user()->id)->orderby('id','desc')->get();
-                    break;
+                    $this->setMoreInfo($questions);
+                    return $questions;
                 case 5:
                     $questions =  Question::orderby('id','desc')->get();
-                    break;
+                    $this->setMoreInfo($questions);
+                    return $questions;
                 case 6:
                     $questions = Question::where('is_resolved',1)->orderby('id','desc')->get();
-                    break;
+                    $this->setMoreInfo($questions);
+                    return $questions;
                 case 7:
                     $questions = Question::where('is_resolved',0)->orderby('id','desc')->get();
-                    break;
+                    $this->setMoreInfo($questions);
+                    return $questions;
                 case 8:
                     $allQuestions = Question::orderby('id','desc')->get();
-                    $questions = array();
                     $index = 0;
                     foreach ($allQuestions  as $question) {
                        if ($question->answers->count() == 0) {
@@ -86,20 +124,12 @@ class QuestionController extends Controller
                           $index++;
                        }
                     }
-                    break;
+                    $this->setMoreInfo($questions);
+                    return $questions;
                 default:
-                    
                     break;
             }
         }
-        $quetionTags = array();
-        foreach ($questions as $question) {
-            $question->user;
-            $question->answers;
-            $question->votes;
-            $questionTags[$question->id] = Question::getTags($question->id);
-        }
-        return response()->json(array('questions'=>$questions,'questionTags'=>$questionTags));
     }
 
     public function indexWithTagged(Request $request){
@@ -162,6 +192,7 @@ class QuestionController extends Controller
         $question->title  = $request->title;
         $question->content = $request->content;
         $question->save();
+        $this->setDateFomat($question);
         return $question;
     }
 
@@ -236,6 +267,7 @@ class QuestionController extends Controller
     public function apiQuestionWithID(Request $request){
         $question = Question::find($request->id);
         $categories = Category::all();
+        $this->setDateFomat($question);
         $question->votes;
         $question->user;
         $question->category;
@@ -250,7 +282,6 @@ class QuestionController extends Controller
         $commentVoted = array();
         $commentVoteCount = array();
         if ($question->answers->count()) {
-            
            foreach ($question->answers as $answer) {
                 $answerUsers[$answer->id] = $answer->user;
                 $answerVoteCount[$answer->id] = $answer->votes->count();

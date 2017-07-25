@@ -23,6 +23,10 @@ class Question extends Model
         return $this->belongsTo('App\Category','categories_id','id');
     }
 
+    public static function questionsInWeek(){
+        return static::where('created_at', '>=', \Carbon\Carbon::now()->subWeek())->get();
+    }
+
     public static function getTags($question_id){
          $listQuestionTags = QuestionTag::where('question_id',$question_id)->get();
          $listTags = array();
