@@ -145,14 +145,10 @@ class QuestionController extends Controller
     }
     public function getQuestionsTagged($tag_id){
         $questions =  Question::listWithTagg($tag_id);
-        $quetionTags = array();
-        foreach ($questions as $question) {
-            $question->user;
-            $question->answers;
-            $question->votes;
-            $questionTags[$question->id] = Question::getTags($question->id);
-        }
-        return response()->json(array('questions'=>$questions,'questionTags'=>$questionTags));
+        $this->setMoreInfo($questions);
+        $sort = $this->question_sort($questions);
+        array_multisort($sort['votes_count'], SORT_DESC, $sort['answers_count'], SORT_DESC,$sort['view_count'], SORT_DESC,$questions);
+        return $questions;
     }
 
     public function create()
