@@ -19,6 +19,21 @@
 			templateUrl:'/tests/tests-card',
 		}	
 	});
+	app.directive('postsPagination', function(){
+		return {
+			restrict: 'E',
+			template: '<ul class="pagination">'+
+			'<li><a ng-class="{disabled:currentPage == 1}" href="javascript:void(0)" ng-click="getTest(1)">«</a></li>'+
+			'<li><a ng-class="{disabled:currentPage == 1}" href="javascript:void(0)" ng-click="getTest(currentPage-1)">‹Prev</a></li>'+
+			'<li ng-repeat="i in range" ng-class="{active : currentPage == i}">'+
+			'<a href="javascript:void(0)" ng-click="getTest(i)">{{i}}</a>'+
+			'</li>'+
+			'<li><a ng-class="{disabled:currentPage == totalPages}" href="javascript:void(0)" ng-click="getTest(currentPage+1)">Next ›</a></li>'+
+			'<li><a ng-class="{disabled:currentPage == totalPages}" href="javascript:void(0)" ng-click="getTest(totalPages)">»</a></li>'+
+			'</ul>'
+		};
+	});
+
 
 	 app.directive('ngEnter', function() {
         return function(scope, element, attrs) {
@@ -41,6 +56,9 @@
 	 app.controller('List_TestController', function ($scope,$http,$location) {
 	 	$scope.tab=getParameterByName('filter');
 	 	$scope.list_tests=[];
+	 	$scope.totalPages = 0;
+	 	$scope.currentPage = 1;
+	 	$scope.range = [];
 	 	switch($scope.tab) {
 	 		case null:
 	 			$scope.tab_name='Mới nhất';
@@ -55,13 +73,24 @@
 	 			$scope.tab_name='Đề thi đã làm';
 	 			break;
 	 	}
-	 	$scope.getTest=function () {
-	 		$http.get('/tests/gettest?filter='+$scope.tab)
-	 			 .then(function(response){
-	 			 	console.log(response.data);
-	 			 	$scope.list_tests = response.data;
-	 			 }, function(error){
-	 			 	console.log(error);
+	 	$scope.getTest=function (pageNumber) {
+	 		if (pageNumber === undefined) {
+	 			pageNumber = '1';
+	 		}
+	 		$http.get('/tests/gettest?filter='+$scope.tab+ '&page=' + pageNumber)
+	 		.then(function(response){
+	 			console.log(response.data.data);
+	 			$scope.list_tests = response.data.data;
+	 			$scope.totalPages   = response.data.last_page;
+	 			$scope.currentPage  = response.data.current_page;
+	 			var pages = [];
+
+	 			for (var i = 1; i <= response.data.last_page; i++) {
+	 				pages.push(i);
+	 			}
+	 			$scope.range = pages;
+	 		}, function(error){
+	 			console.log(error);
 	 		});
 	 	}
 	 	

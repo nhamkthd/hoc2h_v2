@@ -27,7 +27,8 @@
         <script src="{{asset('js/flugin/notify/bootstrap-notify.js')}}"></script>
         <script src="{{asset('js/flugin/notify/bootstrap-notify.min.js')}}"></script>
         <script src="{{asset('js/flugin/angular/ng-tags-input.js')}}"></script> 
-         <script src="{{asset('js/flugin/angular/angular-selector.js')}}"></script> 
+        <script src="{{asset('js/flugin/angular/angular-selector.js')}}"></script> 
+        <script src="{{asset('js/flugin/angular/ng-infinite-scroll.js')}}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-sanitize.min.js"></script>
         <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ckeditor/1.0.3/angular-ckeditor.js"></script>

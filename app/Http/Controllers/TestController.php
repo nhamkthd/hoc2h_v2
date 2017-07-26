@@ -12,23 +12,23 @@ class TestController extends Controller
 {
     public function index()
     {
-        return view('tests.index');
+        return view('tests.index',compact('test'));
     }
     public function getListTest(Request $req)
     {
         $test=[];
         switch ($req->filter) {
             case 'null':
-                $test=Test::all();           
+                $test=Test::paginate(15);           
                 break;
             case 'usercreate':
-                $test=Test::where('user_id',Auth::user()->id)->get();
+                $test=Test::where('user_id',Auth::user()->id)->paginate(15);
                 break;
             case 'hot':
-                $test=Test::all();
+                $test=Test::paginate(15);
                 break;
             case 'Mytesting':
-                $userTest=UserTest::where('user_id',Auth::user()->id)->groupBy('user_id','test_id')->select('user_id','test_id')->get();
+                $userTest=UserTest::where('user_id',Auth::user()->id)->groupBy('user_id','test_id')->select('user_id','test_id')->paginate(15);
                 foreach ($userTest as $key => $value) {
                    $test[]=Test::find($value->test_id);
                 }

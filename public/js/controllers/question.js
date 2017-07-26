@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
-	var app = angular.module('hoc2h-question', []);
-
+	var app = angular.module('hoc2h-question', ['infinite-scroll']);
+	
 	app.run(['$anchorScroll', function($anchorScroll) {
   		$anchorScroll.yOffset = 50;   // always scroll by 50 extra pixels
 	}]);
