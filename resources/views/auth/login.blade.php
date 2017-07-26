@@ -3,11 +3,11 @@
 @section('content')
 <div class="container ">
     <div class="row ">
-        <div class="app-content ng-scope col-md-8 col-md-offset-2">
-            <div class="box">
-                <div class="" style="border-bottom:solid 1px #4B515D; padding-bottom: 5px; margin-bottom: 20px;">
-                    <h4>Đăng Nhập  <a class="pull-right" href="{{ route('register') }}">Đăng ký</a> </h4>
-                   
+        <div class="ng-scope col-md-8 col-md-offset-2">
+            <div class="box" style="background-color: #fff;">
+                <div class="form-heading">
+                    <h4>Đăng Nhập  
+                        <a class="pull-right" href="{{ route('register') }}">Đăng ký</a></h4>
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}" novalidate>

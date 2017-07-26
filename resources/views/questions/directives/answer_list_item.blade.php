@@ -27,7 +27,7 @@
 	<div class="media-body">
 		<div class="media-heading">
 			<a href class="primary-text">{{answer.user.user_name}}</a>
-			<small style="color:#aa66cc; font-size: 12px;">( {{answer.created_at}})</small>
+			<span class="date-created pull-right"><i class="fa fa-clock-o" aria-hidden="true"></i> {{answer.date_created}}</span>
 		</div>
 		<div class="">
 			<p class="answer-body" ng-bind-html="convertHtml(answer.content)">{{answer.content}}</p>
@@ -71,7 +71,7 @@
 				<div class="media-body">
 					<div class="media-heading">
 						<a href class="primary-text">{{answers.comments[answer.id].users[comment.id].user_name}}</a>
-						<span style="color:#aa66cc; font-size: 12px;">({{comment.created_at | date : "dd-MM-yyyy"}})</span>
+						<span class="date-created"><i class="fa fa-clock-o" aria-hidden="true"></i> {{comment.date_created}}</span>
 					</div>
 					<div class="">
 						<div ng-show="comment_editing[$index] != 1"><p class="answer-body">{{comment.content}}</p></div>

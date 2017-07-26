@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-<div class="row">
-	<div class="col-md-10 col-md-offset-1" id="test-result-content">
-		<div class="row">
+<div class="row ">
+	<div class="col-md-8 col-md-offset-2 app-content">
+		<div class="row" style="padding:10px;">
 			<div class="col-md-12 text-center">
 				<p style="color: #00695c; font-size:25px">Chúc mừng bạn đã hoàn thành bài thi...!</p>
 				@if($test->test_type == 0)
@@ -35,7 +35,7 @@
 						<p>Thời gian làm bài:  <span>{{$test->total_time}} phút</span></p>
 					</div>
 					@if($test->test_type == 0)
-					<div style="border:solid 1px #0099CC; margin-top:30px; margin-left: 10px;">
+					<div style="border:solid 1px #0099CC; margin-top:30px; margin-left: 10px; border-radius: 2px;">
 						<table class="table pmd-table">
 							<thead>
 								<tr>
@@ -47,11 +47,11 @@
 							<tbody>
 								@foreach($mtestAnswer as $answer)
 								<tr>
-									<td style="width:90%" data-title="Name">{{$answer->mtest->content}}</td>
+									<td style="width:88%" data-title="Name">{{$answer->mtest->content}}</td>
 									@if($answer->user_test_choiced == $answer->mtest->incorrect_id)
-									<td class="text-center" data-title=""><i class="fa fa-check success-dark-text"></i></td>
+										<td class="text-center" data-title=""><i class="fa fa-check success-dark-text"></i></td>
 									@else
-									<td class="text-center" data-title=""><i class="fa fa-times danger-dark-text" aria-hidden="true"></i></td>
+										<td class="text-center" data-title=""><i class="fa fa-times danger-dark-text" aria-hidden="true"></i></td>
 									@endif
 									<td>
 										<a id="showexplan" data-answer_id={{$answer->id}} href="#nothing">

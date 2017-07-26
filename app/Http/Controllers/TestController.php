@@ -8,8 +8,16 @@ use App\User;
 use App\UserTest;
 use Auth;
 use DB;
+use Carbon\Carbon;
 class TestController extends Controller
 {
+    public function setDateFomat($object){
+       if($object->created_at->diffInDays(Carbon::now()) > 1){
+            $object->date_created = $object->created_at->format('d/m/Y');    
+        } else {
+            $object->date_created = $object->created_at->diffForHumans();
+        } 
+    }
     public function index()
     {
         return view('tests.index',compact('test'));
@@ -38,6 +46,7 @@ class TestController extends Controller
                 break;
         }
          foreach ($test as $tests) {
+            $this->setDateFomat($tests);
             $tests->user;
             $tests->category;
             $tests->user_test->count();
@@ -86,6 +95,7 @@ class TestController extends Controller
      public function search(Request $request){
         $test=Test::where('title', 'like', '%'.$request->keyword.'%')->get();
          foreach ($test as $tests) {
+
             $tests->user;
             $tests->category;
             $tests->user_test->count();

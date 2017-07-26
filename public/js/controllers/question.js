@@ -436,6 +436,7 @@
 	 			 		window.location.href = '/login';
 	 			 	} else {
 	 			 		var newAnswer = response.data;
+	 			 		newAnswer.date_created = "Vừa xong";
 		 			 	$scope.question.answers.push(newAnswer);
 		 			 	$scope.answer_count++;
 		 			 	setNewAnswerDefault(newAnswer.id);
@@ -546,6 +547,7 @@
 		 			 	console.log('Add new comment: ',response.data);
 		 			 	if (response.data != -1) {
 		 			 		$scope.answers.commentCount[answer_id]++;
+		 			 		response.data.date_created = "Vừa xong";
 		 			 		$scope.answers.comments[answer_id].comments.push(response.data);
 		 			 		setNewCommentDefault(response.data.id,answer_id);
 		 			 		$scope.comment_content_field[index]="";

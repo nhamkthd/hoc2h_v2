@@ -12,9 +12,9 @@
 		<div class="card-summary">
 		<p style="font-size: 13px;" ng-bind-html="question.content| textShortenerFilter: 260"></p>
 		</div>
-		<div class="card-tags" ng-hide="questionTags[question.id].length == 0" style="margin-left:-.5rem;" >
+		<div class="card-tags" ng-hide="question.tags.length == 0" style="margin-left:-.5rem;" >
 			<ul>
-				<li  ng-repeat="tag in question.tags">
+				<li ng-repeat="tag in question.tags">
 				<a href="/questions/tagged/?id={{tag.id}}">{{tag.name}}</a></li>
 			</ul>
 		</div>

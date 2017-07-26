@@ -3,17 +3,17 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="box">
-                <div class="" style="border-bottom:solid 1px #4B515D; padding-bottom: 5px; margin-bottom: 20px;">
+            <div class="box" style="background-color: #fff;">
+                <div class="form-heading">
                     <h4>Đăng ký tài khoản <a class="pull-right" href="{{ route('login') }}">Đăng nhập</a></h4>
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal" name="regForm" method="POST" action="{{ route('register') }}" novalidate>
                         {{ csrf_field() }}
                         <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="" class="col-md-4 control-label">Họ tên</label>
+                            <label for="name" class="col-md-4 control-label">Họ tên</label>
                             <div class="col-md-6">
-                                <input class="form-control" name="name" required>
+                                <input type="text" class="form-control" name="name" required>
                                 @if ($errors->has('name'))
                                     <span class="help-block">{{ $errors->first('name') }}</span>
                                 @endif
@@ -21,7 +21,6 @@
                         </div>
                         <div class="form-group {{ $errors->has('user_name') ? ' has-error' : '' }}">
                             <label for="user_name" class="col-md-4 control-label">Tên đăng nhập</label>
-
                             <div class="col-md-6">
                                 <input  type="text" class="form-control" name="user_name" ng-model="user_name" required >
                                 @if ($errors->has('user_name'))

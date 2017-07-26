@@ -10,7 +10,7 @@
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 	}
 
-	 var app = angular.module('hoc2h-test', []);
+	var app = angular.module('hoc2h-test', []);
 
 	     //test-list-card directive
 	app.directive('testCard',function(){
@@ -22,14 +22,14 @@
 	app.directive('postsPagination', function(){
 		return {
 			restrict: 'E',
-			template: '<ul class="pagination">'+
-			'<li><a ng-class="{disabled:currentPage == 1}" href="javascript:void(0)" ng-click="getTest(1)">«</a></li>'+
-			'<li><a ng-class="{disabled:currentPage == 1}" href="javascript:void(0)" ng-click="getTest(currentPage-1)">‹Prev</a></li>'+
-			'<li ng-repeat="i in range" ng-class="{active : currentPage == i}">'+
-			'<a href="javascript:void(0)" ng-click="getTest(i)">{{i}}</a>'+
+			template: '<ul class="pagination pg-bluegrey">'+
+			'<li class="page-item" ><a class="page-link" ng-class="{disabled:currentPage == 1}" ng-click="getTest(1)">«</a></li>'+
+			'<li class="page-item"><a class="page-link" ng-class="{disabled:currentPage == 1}" ng-click="getTest(currentPage-1)">‹ Prev</a></li>'+
+			'<li class="page-item" ng-repeat="i in range" ng-class="{active : currentPage == i}">'+
+			'<a  a class="page-link" ng-click="getTest(i)">{{i}}</a>'+
 			'</li>'+
-			'<li><a ng-class="{disabled:currentPage == totalPages}" href="javascript:void(0)" ng-click="getTest(currentPage+1)">Next ›</a></li>'+
-			'<li><a ng-class="{disabled:currentPage == totalPages}" href="javascript:void(0)" ng-click="getTest(totalPages)">»</a></li>'+
+			'<li class="page-item"><a class="page-link" ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(currentPage+1)">Next ›</a></li>'+
+			'<li class="page-item"><a class="page-link" ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(totalPages)">»</a></li>'+
 			'</ul>'
 		};
 	});

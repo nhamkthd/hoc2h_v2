@@ -13,7 +13,8 @@ use App\Category;
 use App\Tag;
 use Search;
 class QuestionController extends Controller
-{
+{   
+    //sorting questions with votes answers and views
     public function question_sort($questions){
         $sort = array();
         foreach($questions as $k=>$v) {
@@ -23,8 +24,10 @@ class QuestionController extends Controller
         }
         return $sort;
     }
+
+    //re set date fomat
     public function setDateFomat($question){
-       if($question->created_at->diffInWeeks(Carbon::now()) > 1){
+       if($question->created_at->diffInDays(Carbon::now()) > 1){
             $question->date_created = $question->created_at->format('d/m/Y');    
         } else {
             $question->date_created = $question->created_at->diffForHumans();
@@ -279,6 +282,7 @@ class QuestionController extends Controller
         $commentVoteCount = array();
         if ($question->answers->count()) {
            foreach ($question->answers as $answer) {
+                $this->setDateFomat($answer);
                 $answerUsers[$answer->id] = $answer->user;
                 $answerVoteCount[$answer->id] = $answer->votes->count();
                 $answerCommentCount[$answer->id] = $answer->comments->count();
@@ -289,6 +293,7 @@ class QuestionController extends Controller
                
                if ($answer->comments->count()) {
                    foreach ($answer->comments as $comment) {
+                        $this->setDateFomat($comment);
                         $commentUsers[$comment->id] = $comment->user;
                         $commentVoteCount[$comment->id] = $comment->votes->count();
                         if (Auth::check() && Auth::user()->answerCommentVotes->where('answer_comment_id',$comment->id)->count()) {

@@ -10,7 +10,7 @@
 					<h3 class="panel-title"> {{tab_name}} </h3>
 					<span class="label label-info">{{list_tests.length}}</span>
 				</div>
-				<div class="panel-body" ng-repeat="x in list_tests|orderBy : '-id'">
+				<div class="panel-body" ng-repeat="test in list_tests|orderBy : '-id'">
 					<test-card></test-card>
 				</div>
 				@endverbatim
