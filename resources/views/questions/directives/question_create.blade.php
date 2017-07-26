@@ -29,7 +29,7 @@
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
 					<div class="md-form">
-    				<input placeholder="Tiêu đề" id="title" name="title" type="text" ng-model="title" class="form-control" required>
+    				<input placeholder="Tiêu đề" id="title" name="title" type="text" ng-model="title" class="form-control" ng-change="findRelated()" required>
     				<span class="help-inline danger-text" 
 	                      ng-show="frmQuestion.title.$invalid && frmQuestion.title.$touched">Tiêu đề không được để trống!</span>
 					</div>
@@ -37,6 +37,14 @@
 				</div>
 			</div>
 		</div>
+		@verbatim
+		<div class ="col-md-12" ng-hide="questions_related.length == 0" style="margin-top:-10px;">
+			<div class=" row list-group"  ng-scrollbar is-bar-shown="barShown">
+			    <label class="col-md-10 col-md-offset-1">Các câu hỏi tương tự</label>
+			    <a class="col-md-10 col-md-offset-1" href="/questions/question/{{question.id}}"  ng-repeat="question in questions_related">{{question.title}}</a>
+			</div>
+		</div>
+		@endverbatim
 		<div class="form-group col-md-12">
 			<div class="row">
 				<label class="control-label col-md-10 col-md-offset-1" for="selectbasic">Nội dung</label>

@@ -1,4 +1,4 @@
-            
+                <div ng-init="getListTags()"></div>
                 <div class="row sidebar" >
                     <div class="col-md-10 col-md-offset-1">
                         <a href="{{route('showQuestionCreateFrom')}}"  class="btn btn-outline-default waves-effect" style="width: 100%;" >Đăng câu hỏi</a>
@@ -60,9 +60,13 @@
                         </section>
                     </div>
                     @verbatim
-                        <div class = "col-md-10 col-md-offset-1">
+                        <div class = "col-md-11 col-md-offset-1">
                             <p class="menu-label">Tags</p>
-                            <p class="card-tags" ng-repeat="tag in tags"><span> {{tag.title}} </span></p>
+                            <div class="card-tags">
+                                <ul>
+                                    <li ng-repeat="tag in sidebarTags"><a href="/questions/tagged/?id={{tag.id}}">{{tag.name}} <span class="badge badge-primary badge-pill">{{tag.questions_count}}</span></a></li>
+                                </ul>
+                            </div>
                         </div>
                     @endverbatim
                 </div>
