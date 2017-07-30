@@ -17,7 +17,7 @@ class QuestionController extends Controller
     //sorting questions with votes answers and views
     public function question_sort($questions){
         $sort = array();
-        foreach($questions as $k=>$v) {
+        foreach($questions['data'] as $k=>$v) {
             $sort['votes_count'][$k] = $v['votes_count'];
             $sort['answers_count'][$k] = $v['answers_count'];
             $sort['view_count'][$k] = $v['view_count'];
@@ -85,41 +85,39 @@ class QuestionController extends Controller
         if ($request->filtertab) {
             switch ($request->filtertab) {
                 case 1:
-                    $questions =  Question::orderby('id','desc')->get();
+                    $questions =  Question::orderby('id','desc')->paginate(15);
                     $this->setMoreInfo($questions);
                     return $questions;
                 case 2:
-                    $questions =  Question::orderby('id','desc')->get();
+                    $questions =  Question::orderby('id','desc')->paginate(15);
                     $this->setMoreInfo($questions);
                     $questions_array = $questions->toArray();
                     $sort = $this->question_sort($questions_array);
-                    array_multisort($sort['votes_count'], SORT_DESC, $sort['answers_count'], SORT_DESC,$sort['view_count'], SORT_DESC,$questions_array);
                    return $questions_array;
                 case 3:
-                    $questions =  Question::questionsInWeek();
+                    $questions =  Question::questionsInWeek()->paginate(15);
                     $this->setMoreInfo($questions);
                     $questions_array = $questions->toArray();
                     $sort = $this->question_sort($questions_array);
-                    array_multisort($sort['votes_count'], SORT_DESC, $sort['answers_count'], SORT_DESC,$sort['view_count'], SORT_DESC,$questions_array);
                     return $questions_array;
                 case 4:
-                    $questions = Question::where('user_id',Auth::user()->id)->orderby('id','desc')->get();
+                    $questions = Question::where('user_id',Auth::user()->id)->orderby('id','desc')->paginate(15);
                     $this->setMoreInfo($questions);
                     return $questions;
                 case 5:
-                    $questions =  Question::orderby('id','desc')->get();
+                    $questions =  Question::orderby('id','desc')->paginate(15);
                     $this->setMoreInfo($questions);
                     return $questions;
                 case 6:
-                    $questions = Question::where('is_resolved',1)->orderby('id','desc')->get();
+                    $questions = Question::where('is_resolved',1)->orderby('id','desc')->paginate(15);
                     $this->setMoreInfo($questions);
                     return $questions;
                 case 7:
-                    $questions = Question::where('is_resolved',0)->orderby('id','desc')->get();
+                    $questions = Question::where('is_resolved',0)->orderby('id','desc')->paginate(15);
                     $this->setMoreInfo($questions);
                     return $questions;
                 case 8:
-                    $allQuestions = Question::orderby('id','desc')->get();
+                    $allQuestions = Question::orderby('id','desc')->paginate(15);
                     $index = 0;
                     foreach ($allQuestions  as $question) {
                        if ($question->answers->count() == 0) {

@@ -35,6 +35,9 @@ class TestController extends Controller
             case 'hot':
                 $test=Test::paginate(15);
                 break;
+            case 'hotinweek':
+                $test=Test::hotInWeek()->paginate(15);
+                break;
             case 'Mytesting':
                 $userTest=UserTest::where('user_id',Auth::user()->id)->groupBy('user_id','test_id')->select('user_id','test_id')->paginate(15);
                 foreach ($userTest as $key => $value) {

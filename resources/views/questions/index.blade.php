@@ -13,5 +13,10 @@
 			</div>
 		</div>	
 	</div>	
+	<div class="row">
+	<div class="col-md-6">
+			<posts-paginations class="text-center"></posts-paginations>
+		</div>
+	</div>
 	@endverbatim
 @endsection

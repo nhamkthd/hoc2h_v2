@@ -24,7 +24,7 @@ class Question extends Model
     }
 
     public static function questionsInWeek(){
-        return static::where('created_at', '>=', \Carbon\Carbon::now()->subWeek())->get();
+        return static::where('created_at', '>=', \Carbon\Carbon::now()->subWeek());
     }
 
     public static function getTags($question_id){

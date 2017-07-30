@@ -31,4 +31,8 @@ class Test extends Model
 	{
 		return $this->hasMany('App\UserTest','test_id','id');
 	}
+	public static function hotInWeek()
+	{
+		  return static::where('created_at', '>=', \Carbon\Carbon::now()->subWeek());
+	}
 }

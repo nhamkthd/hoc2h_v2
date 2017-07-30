@@ -24,6 +24,20 @@
  			}
  		}
 	}); 
+ 	app.directive('postsPaginations', function(){
+ 		return {
+ 			restrict: 'E',
+ 			template: '<ul class="pagination pg-bluegrey">'+
+ 			'<li class="page-item" ><a class="page-link" ng-class="{disabled:currentPage == 1}" ng-click="getTest(1)">«</a></li>'+
+ 			'<li class="page-item"><a class="page-link" ng-class="{disabled:currentPage == 1}" ng-click="getTest(currentPage-1)">‹ Prev</a></li>'+
+ 			'<li class="page-item" ng-repeat="i in range" ng-class="{active : currentPage == i}">'+
+ 			'<a  a class="page-link" ng-click="getQuestionsWithTab(tab,i)">{{i}}</a>'+
+ 			'</li>'+
+ 			'<li class="page-item"><a class="page-link" ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(currentPage+1)">Next ›</a></li>'+
+ 			'<li class="page-item"><a class="page-link" ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(totalPages)">»</a></li>'+
+ 			'</ul>'
+ 		};
+ 	});
 	//tags service
 	app.factory('Tags', function($http, $q) {
 		return {
@@ -102,6 +116,9 @@
 	app.controller('QuestionController',function($scope, $http,$sce,Tags){
 		var tag_id = 0;
 		$scope.tab = 1;
+		$scope.totalPages = 0;
+	 	$scope.currentPage = 1;
+	 	$scope.range = [];
 	 	$scope.setSelectedTab = function(sTab){
 	 		$scope.tab = sTab;
 	 		switch(sTab){
@@ -144,13 +161,24 @@
  					console.log(error);
  				});
 	 	}
-	 	$scope.getQuestionsWithTab = function(tab){
-	 		$http.get('/questions/api/?filtertab='+$scope.tab)
-	 			 .then(function(response){
-	 			 	console.log(response.data);
-	 			 	$scope.questions  = response.data;
-	 			 }, function(error){
-	 			 	console.log(error);
+	 	$scope.getQuestionsWithTab = function(tab,pageNumber){
+	 		if (pageNumber === undefined) {
+	 			pageNumber = '1';
+	 		}
+	 		$http.get('/questions/api/?filtertab='+$scope.tab+ '&page=' + pageNumber)
+	 		.then(function(response){
+	 			console.log(response.data.data);
+	 			$scope.questions = response.data.data;
+	 			$scope.totalPages   = response.data.last_page;
+	 			$scope.currentPage  = response.data.current_page;
+	 			var pages = [];
+
+	 			for (var i = 1; i <= response.data.last_page; i++) {
+	 				pages.push(i);
+	 			}
+	 			$scope.range = pages;
+	 		}, function(error){
+	 			console.log(error);
 	 		});
 	 	}
 

@@ -72,6 +72,9 @@
 	 		case 'Mytesting':
 	 			$scope.tab_name='Đề thi đã làm';
 	 			break;
+	 		case 'hotinweek':
+	 			$scope.tab_name='Nổi bật trong tuần';
+	 			break;
 	 	}
 	 	$scope.getTest=function (pageNumber) {
 	 		if (pageNumber === undefined) {
