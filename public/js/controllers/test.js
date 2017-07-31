@@ -240,15 +240,6 @@
 	 		type_test:0,
 	 		level:0,
 	 	};
-	 	//đối tượng wtest
-	 	$scope.wtest={
-	 		test_id:0,
-	 		content:'',
-	 		explan:'',
-	 		is_document:0,
-	 		is_document_explan:0,
-	 	}
-	 	
 
 	 	//đối tượng mtest
 	 	function MTest(){	
@@ -287,38 +278,13 @@
 	 			title:$scope.title,
 	 			number_of_questions:$scope.number_of_questions,
 	 			time:$scope.time,
-	 			type_test:1,
+	 			type_test:0,
 	 			level_title:$scope.level.title,
 	 			level_id:$scope.level.id,
 	 		};
 	 		$scope.type_qa = 'Upload';
 	 		$scope.tab = 2;
-	 		console.log($scope.tab);
 	 	}
-
-	 	$scope.click_upload_qa=function(state) {
-	 		if (state=='Upload') {
-	 			$scope.type_qa='Soạn đề';
-	 			$scope.upload_qa=1;
-	 			$scope.write_qa=0;
-	 			$scope.wtest.is_document=1;
-	 			$scope.wtest.content=$scope.document;
-	 			console.log($scope.document);
-	 		}
-	 		else
-	 		{
-	 			$scope.type_qa='Upload';
-	 			$scope.upload_qa=0;
-	 			$scope.write_qa=1;
-	 			$scope.wtest.is_document=0;
-	 			$scope.wtest.content=CKEDITOR.instances.content.getData();
-	 		} 
-	 	}
-
-	 	$scope.submit_wTest=function() {
-	 		alert('ok')
-	 	}
-
 	 	$scope.addAnswer=function (answer,state) {
 	 		switch(state) {
 	 			case 'add':

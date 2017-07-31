@@ -101,9 +101,10 @@
 					</div>
 				</div>
 			</div>
+			
+			</div>
 			<div ng-show="tab === 2">
 				@include('tests.directives.create_multichoice')
-			</div>
 			</div>
 		</div>
 	</div>
