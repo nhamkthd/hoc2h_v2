@@ -52,6 +52,9 @@
                                 <button type="submit" class="btn btn-default">
                                     Đăng nhập
                                 </button>
+                                 <a href="{{ url('redirect') }}" class="btn btn-default">
+                                    Đăng nhập bằng facebook
+                                </a>
                                 <a style="margin-left: 20px; text-decoration:underline;" href="{{ route('password.request') }}">
                                     Quên mật khẩu?
                                 </a> 

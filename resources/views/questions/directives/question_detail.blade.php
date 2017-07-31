@@ -89,7 +89,11 @@
 					  		Trả lời <span class="badge ">{{answer_count}}</span> 
 					  		</a> 
 					  	</li>
-					  <li ><a href=""><i class="fa fa-share" aria-hidden="true"></i> Chia sẻ</a> </li>
+					  <li >
+					  <div class="fb-share-button" data-href="<?php echo "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>" data-layout="button_count" data-size="small" data-mobile-iframe="true">
+					  		<a class="fb-xfbml-parse-ignore" target="_blank">Chia sẻ</a>
+					  </div>
+					  </li>
 					</ul>
 				</div>
 			</div>

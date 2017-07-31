@@ -1,4 +1,5 @@
 (function(){
+	
 	var pusher = new Pusher('5ac087c889597b081cac', {
           cluster: 'ap1',
           encrypted: true,
@@ -9,7 +10,6 @@
                 }
             }
       });	
-	
 	
 	var app = angular.module('hoc2h-heading', []);
 	 app.run(function(){
@@ -32,6 +32,7 @@
 	 		}, function (err) {
 	 			console.log(err);
 	 		})
+	 	
 	 	}
 
 	 	$scope.readNotify=function (count) {

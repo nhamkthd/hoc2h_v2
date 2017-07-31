@@ -31,15 +31,15 @@
       <ul class="nav navbar-nav navbar-right">
         @if(Route::has('login'))
             @if(Auth::check())
-            <li class="dropdown" ng-init="initNotification()" ng-mouseover="readNotify(unReadNotification.length)">
+            <li class="dropdown" ng-mouseover="readNotify(unReadNotification.length)">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"> Thông báo <span class="badge ng-binding"> @verbatim {{unReadNotification.length}}  @endverbatim</span></a>
               <ul style=" max-height: 300px;overflow-y:scroll; " class="dropdown-menu">
                   @include('notifications.list_notify')
               </ul>
             </li>
          
-              <li class="dropdown">
-                <a href="#">{{Auth::user()->user_name}} <span class="caret"></span></a>
+              <li class="dropdown"  ng-init="initNotification()">
+                <a href="#">{{Auth::user()->name}} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="#">Trang cá nhân</a></li>
                   <li><a href="#">Hỏi đáp</a></li>

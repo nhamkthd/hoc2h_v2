@@ -5,6 +5,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/redirect', 'Auth\SocialAuthController@redirect');
+Route::get('/callback', 'Auth\SocialAuthController@callback');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('pusher/auth', 'pusherController@pusherAuth');
 Route::get('/tags','TagController@getAll');
