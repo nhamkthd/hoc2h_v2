@@ -228,7 +228,7 @@
 	 app.controller('createTest', function ($scope,$http) {
 	 	$scope.tab=1;
 	 	$scope.hide=0;
-	 	$scope.categorys;
+	 	$scope.categories;
 
 	 	//đối tượng test
 	 	$scope.test={
@@ -277,22 +277,23 @@
 
 
 	 	$http.get('api/getCategory').then(function(response) {
-        	$scope.categorys = response.data;
+        	$scope.categories = response.data;
     	});
 
-	 	$scope.submit_test=function(type_test) {
+	 	$scope.submit_test=function() {
 	 		$scope.test={
 	 			category_id:$scope.category.id,
 	 			category_title:$scope.category.title,
 	 			title:$scope.title,
 	 			number_of_questions:$scope.number_of_questions,
 	 			time:$scope.time,
-	 			type_test:type_test,
+	 			type_test:1,
 	 			level_title:$scope.level.title,
 	 			level_id:$scope.level.id,
 	 		};
-	 		$scope.type_qa='Upload';
-	 		$scope.tab=3;
+	 		$scope.type_qa = 'Upload';
+	 		$scope.tab = 2;
+	 		console.log($scope.tab);
 	 	}
 
 	 	$scope.click_upload_qa=function(state) {
