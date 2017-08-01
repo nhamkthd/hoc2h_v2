@@ -21,7 +21,9 @@ class CreateQuestionsTable extends Migration
             $table->text('content')->nullable();
             $table->boolean('is_resolved')->default(false);
             $table->boolean('as_anonymously')->default(false);
-            $table->integer('view_count')->default(0);
+            $table->integer('views_count')->default(0);
+            $table->integer('votes_count')->default(0);
+            $table->integer('answers_count')->default(0);
             $table->integer('state')->default(1);
             $table->timestamps();
         });

@@ -19,6 +19,7 @@ class CreateAnswerCommentsTable extends Migration
             $table->integer('answer_id')->unsigned();
             $table->foreign('answer_id')->references('id')->on('answers')->onDelete('cascade');
             $table->text('content');
+            $table->integer('votes_count')->default(0);
             $table->integer('state')->default(1);
             $table->timestamps();
         });

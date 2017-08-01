@@ -14,23 +14,12 @@ use App\Tag;
 use Search;
 class QuestionController extends Controller
 {   
-    //sorting questions with votes answers and views
-    public function question_sort($questions){
-        $sort = array();
-        foreach($questions['data'] as $k=>$v) {
-            $sort['votes_count'][$k] = $v['votes_count'];
-            $sort['answers_count'][$k] = $v['answers_count'];
-            $sort['view_count'][$k] = $v['view_count'];
-        }
-        return $sort;
-    }
-
-    //re set date fomat
-    public function setDateFomat($question){
-       if($question->created_at->diffInDays(Carbon::now()) > 1){
-            $question->date_created = $question->created_at->format('d/m/Y');    
+    //reset date fomat
+    public function setDateFomat($object){
+       if($object->created_at->diffInDays(Carbon::now()) > 1){
+            $object->date_created = $object->created_at->format('d/m/Y');    
         } else {
-            $question->date_created = $question->created_at->diffForHumans();
+            $object->date_created = $object->created_at->diffForHumans();
         } 
     }
 
@@ -89,17 +78,13 @@ class QuestionController extends Controller
                     $this->setMoreInfo($questions);
                     return $questions;
                 case 2:
-                    $questions =  Question::orderby('id','desc')->paginate(15);
+                    $questions =  Question::orderby('view_count','desc')->paginate(15);
                     $this->setMoreInfo($questions);
-                    $questions_array = $questions->toArray();
-                    $sort = $this->question_sort($questions_array);
-                   return $questions_array;
+                   return $questions;
                 case 3:
-                    $questions =  Question::questionsInWeek()->paginate(15);
+                    $questions = Question::questionsInWeek();
                     $this->setMoreInfo($questions);
-                    $questions_array = $questions->toArray();
-                    $sort = $this->question_sort($questions_array);
-                    return $questions_array;
+                    return $questions;
                 case 4:
                     $questions = Question::where('user_id',Auth::user()->id)->orderby('id','desc')->paginate(15);
                     $this->setMoreInfo($questions);
@@ -147,8 +132,6 @@ class QuestionController extends Controller
     public function getQuestionsTagged($tag_id){
         $questions =  Question::listWithTagg($tag_id);
         $this->setMoreInfo($questions);
-        $sort = $this->question_sort($questions);
-        array_multisort($sort['votes_count'], SORT_DESC, $sort['answers_count'], SORT_DESC,$sort['view_count'], SORT_DESC,$questions);
         return $questions;
     }
 
@@ -160,7 +143,7 @@ class QuestionController extends Controller
     public  function  showDetail($id){
         $question = Question::find($id);
         if ($question) {
-            $question->view_count ++;
+            $question->views_count ++;
             $question->save();
         }
         return view('questions.directives.question_detail',compact('question'));
@@ -263,48 +246,35 @@ class QuestionController extends Controller
 
     public function apiQuestionWithID(Request $request){
         $question = Question::find($request->id);
-        $categories = Category::all();
         $this->setDateFomat($question);
-        $question->votes;
         $question->user;
         $question->category;
         $tags = Question::getTags($question->id);
-        $answer_comments = array();
-        $answerUsers = array();
-        $answerVoted = array();
-        $answerVoteCount = array();
-        $answerComments = array();
-        $answerCommentCount = array();
-        $commentUsers = array();
-        $commentVoted = array();
-        $commentVoteCount = array();
-        if ($question->answers->count()) {
-           foreach ($question->answers as $answer) {
+        $categories = Category::all();
+
+        $answers = array();
+        $comments = array();
+        if ($question->answers_count > 0 && $question->answers_count <= 15) {
+            foreach ($question->answers as $answer) {
                 $this->setDateFomat($answer);
-                $answerUsers[$answer->id] = $answer->user;
-                $answerVoteCount[$answer->id] = $answer->votes->count();
-                $answerCommentCount[$answer->id] = $answer->comments->count();
+                $answer->user;
+                $answer->comments_count = $answer->comments->count();
                 if (Auth::check() && Auth::user()->answerVotes->where('answer_id',$answer->id)->count()) {
-                    $answerVoted[$answer->id] = 1;
+                    $answer->isVoted = 1;
                 }else
-                     $answerVoted[$answer->id] = 0;
-               
-               if ($answer->comments->count()) {
-                   foreach ($answer->comments as $comment) {
-                        $this->setDateFomat($comment);
-                        $commentUsers[$comment->id] = $comment->user;
-                        $commentVoteCount[$comment->id] = $comment->votes->count();
-                        if (Auth::check() && Auth::user()->answerCommentVotes->where('answer_comment_id',$comment->id)->count()) {
-                            $commentVoted[$comment->id] = 1;
-                        }else
-                             $commentVoted[$comment->id] = 0;
+                    $answer->isVoted = 0;
+
+                if ($answer->comments->count()) {
+                    foreach ($answer->comments as $comment) { 
+                        $comment->user;
+                        if (Auth::check() && Auth::user()->answerCommentVotes->where('answer_comment_id',$comment->id)->count()) 
+                            $comment->isVoted = 1;
+                        else
+                            $comment->isVoted = 0;
                     }
                 }
-                $comments = array('comments'=>$answer->comments,'users'=>$commentUsers,'voted'=>$commentVoted,'voteCount'=>$commentVoteCount);
-                $answerComments[$answer->id] = $comments;
             }
-        }  
-        $answers = array('users'=>$answerUsers,'comments'=>$answerComments,'voted'=>$answerVoted,'voteCount'=>$answerVoteCount,'commentCount'=>$answerCommentCount);
+        }
 
         $isVoted = 0;
         if (Auth::check()) {
@@ -312,21 +282,31 @@ class QuestionController extends Controller
                 $isVoted = 1;
             }
         }
-        return response()->json(array('question'=>$question,'isVoted'=>$isVoted,'answers'=>$answers,'categories'=>$categories,'tagsList'=>$tags));
+        $question->isVoted = $isVoted;
+        $question->tagsList = $tags;
+
+        return response()->json(array('question'=>$question,'categories'=>$categories));
     }
 
     public function vote(Request $request){
         if (Auth::check()) {
+            $question = Question::find($request->question_id);
             if ($request->isVoted == 0) {
                 $questionVote = new QuestionVote;
                 $questionVote->user_id = Auth::user()->id;
                 $questionVote->question_id = $request->question_id;
                 $questionVote->save();
-                QuesTion::find($request->question_id)->user->notify(new LikeQuestionNotification($request->question_id));
+                $question->votes_count++;
+                if (Auth::user()->id != $question->user->id) {
+                    $question->user->notify(new LikeQuestionNotification($request->question_id));
+                }
+                $question->save();
                 return 1;
             } else if ($request->isVoted == 1) {
                 $questionVote = QuestionVote::where('question_id',$request->question_id);
                 $questionVote->delete();
+                $question->votes_count--;
+                $question->save();
                 return 0;
             } 
         }else {

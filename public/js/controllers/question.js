@@ -29,11 +29,11 @@
  			restrict: 'E',
  			template: '<ul class="pagination pg-bluegrey">'+
  			'<li class="page-item" ><a class="page-link" ng-class="{disabled:currentPage == 1}" ng-click="getTest(1)">«</a></li>'+
- 			'<li class="page-item"><a class="page-link" ng-class="{disabled:currentPage == 1}" ng-click="getTest(currentPage-1)">‹ Prev</a></li>'+
+ 			'<li class="page-item"><a class="page-link" ng-class="{disabled:currentPage == 1}" ng-click="getTest(currentPage-1)">‹</a></li>'+
  			'<li class="page-item" ng-repeat="i in range" ng-class="{active : currentPage == i}">'+
  			'<a  a class="page-link" ng-click="getQuestionsWithTab(tab,i)">{{i}}</a>'+
  			'</li>'+
- 			'<li class="page-item"><a class="page-link" ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(currentPage+1)">Next ›</a></li>'+
+ 			'<li class="page-item"><a class="page-link" ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(currentPage+1)"> ›</a></li>'+
  			'<li class="page-item"><a class="page-link" ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(totalPages)">»</a></li>'+
  			'</ul>'
  		};
@@ -121,12 +121,17 @@
 	 	$scope.range = [];
 	 	$scope.setSelectedTab = function(sTab){
 	 		$scope.tab = sTab;
+	 		if (sTab == 3  ) {
+	 			$scope.isPaginate = false;
+	 		} else {
+	 			$scope.isPaginate = true;
+	 		}
 	 		switch(sTab){
 	 			case 1:
 	 				$scope.tab_name = "Mới nhất";
 	 				break;
 	 			case 2:
-	 				$scope.tab_name = "Nổi bật";
+	 				$scope.tab_name = "Xem nhiều";
 	 				break;
 	 			case 3:
 	 				$scope.tab_name = "Nổi bật trong tuần";
@@ -197,13 +202,7 @@
 	 			if ($scope.tab == 0) {
 	 				this.getQuestionsTagged(this.tag_id);
 	 			} else {
-	 				$http.get('/questions/api/?filtertab='+$scope.tab)
-		 			 .then(function(response){
-		 			 	console.log(response.data);
-		 			 	$scope.questions  = response.data;
-		 			 }, function(error){
-		 			 	console.log(error);
-		 			});
+	 				$scope.getQuestionsWithTab($scope.tab,1);
 		 		}
 	 		} else {
 	 			$http.get('/questions/api/search?keyword='+$scope.keywords)
@@ -282,7 +281,8 @@
         	$scope.user = user;
         	$scope.isLogged = true;
         }
-        //init question form route
+
+        //init question infomation with ID
 	 	$scope.initQuestion = function (question_id) {
 	 		$scope.question ={};
 	 		$scope.answers = [];
@@ -291,22 +291,12 @@
 	 			 .then(function(response){
 	 			 	console.log('Init question: ',response.data);
 	 			 	$scope.question = response.data.question;
-	 			 	$scope.isResolved = $scope.question.is_resolved;
-	 			 	$scope.question_votes = $scope.question.votes.length;
-					$scope.isVotedQuestion = response.data.isVoted;
-					$scope.answers = response.data.answers;
-					$scope.answer_count = $scope.question.answers.length;
-					$scope.tagsList = response.data.tagsList;
+	 			 	$scope.categories = response.data.categories;
 	 			 },function(error){
 	 			 	console.log(error);
 	 		 });
 		}
-		$scope.options = {
-		    language: 'vn',
-		    allowedContent: true,
-		    entities: false
-		  };
-
+		
 		//update question when updated 
 		var updateQuestion = function(newQuestion){
 			$scope.question.title = newQuestion.title;
@@ -314,12 +304,12 @@
 		}
 		//vote question
 		$scope.voteQuestion = function(){
-			$http.post('/questions/api/vote',{question_id:$scope.question.id,isVoted:$scope.isVotedQuestion})
+			$http.post('/questions/api/vote',{question_id:$scope.question.id,isVoted:$scope.question.isVoted})
 	 			 .then(function(response){
 	 			 	console.log('Vote question: ',response);
 	 			 	var data = response.data;
-	 			 	if (data == 1) {$scope.question_votes++; $scope.isVotedQuestion = data;}
-	 			 	else if(data == 0){$scope.question_votes--; $scope.isVotedQuestion = data;}
+	 			 	if (data == 1) {$scope.question.votes_count++; $scope.question.isVoted = data;}
+	 			 	else if(data == 0){$scope.question.votes_count--; $scope.question.isVoted = data;}
 	 			 	else if (data == -1) {
 	 			 		window.location.href = '/login';
 	 			 	}
@@ -439,21 +429,6 @@
 	            }
 	        });//end of modal.open
 		}
-		
-		//set default value when add new answer...
-		var setNewAnswerDefault = function (answer_id) {
-			$scope.answers.comments[answer_id] = {comments:[],users:[],voteCount:[],voted:[]};
-	 		$scope.answers.commentCount[answer_id] = 0;
-	 		$scope.answers.voteCount[answer_id] = 0;
-	 		$scope.answers.voted[answer_id] = 0;
-	 		$scope.answers.users[answer_id] = $scope.user;
-		}
-		//set default value when add new comment
-		var setNewCommentDefault = function (comment_id,answer_id) {
-			$scope.answers.comments[answer_id].users[comment_id] = $scope.user;
-			$scope.answers.comments[answer_id].voteCount[comment_id] = 0;
-			$scope.answers.comments[answer_id].voted[comment_id] = 0;
-		}
 
 		//ad new answer
 		$scope.addAnswer = function(){
@@ -466,8 +441,7 @@
 	 			 		var newAnswer = response.data;
 	 			 		newAnswer.date_created = "Vừa xong";
 		 			 	$scope.question.answers.push(newAnswer);
-		 			 	$scope.answer_count++;
-		 			 	setNewAnswerDefault(newAnswer.id);
+		 			 	$scope.question.answers_count++;
 		 			 	console.log($scope.answers);
 		 			 	$scope.answer_content_field = " ";
 	 			 	}
@@ -478,8 +452,8 @@
 		}
 
 		//vote answer
-		$scope.voteAnswer = function(answer_id){
-			$http.post('/questions/api/answer/vote',{answer_id:answer_id,isVoted:this.answers.voted[answer_id]})
+		$scope.voteAnswer = function(index){
+			$http.post('/questions/api/answer/vote',{answer_id:$scope.question.answers[index].id,isVoted:$scope.question.answers[index].isVoted})
 	 			 .then(function(response){
 	 			 	console.log('Vote answer: ',response);
 	 			 	if (response.data == 1) {

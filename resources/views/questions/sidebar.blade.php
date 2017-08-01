@@ -18,7 +18,7 @@
                                 </li>
                                 <li ng-class="{active:tab === 2}">
                                     <a href="{{url('/questions/?filter=hot')}}" >
-                                        <i class="fa fa-flag" aria-hidden="true"></i> Nổi bật
+                                        <i class="fa fa-flag" aria-hidden="true"></i> Xem nhiều
                                     </a>
                                 </li>
                                 <li ng-class="{active:tab === 3}">

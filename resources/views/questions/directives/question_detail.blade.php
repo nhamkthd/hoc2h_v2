@@ -27,12 +27,12 @@
 					</p>
 				</div>
 				<p class="answer-body" ng-bind-html="question.content"></p>
-				<div ng-show="!(tagsList.length == 0)" class="card-tags" style="margin-bottom:20px;">
+				<div ng-show="!(question.tagsList.length == 0)" class="card-tags" style="margin-bottom:20px;">
 					<ul>
-						<li ng-repeat="tag in tagsList"><a href="/questions/tagged/?id={{tag.id}}">{{tag.name}}</a></li>
+						<li ng-repeat="tag in question.tagsList"><a href="/questions/tagged/?id={{tag.id}}">{{tag.name}}</a></li>
 					</ul>
 				</div>
-				<div ng-show="(tagsList.length == 0) && (user.id == question.user_id)">
+				<div ng-show="(question.tagsList.length == 0) && (user.id == question.user_id)">
 					<div class="form-group col-md-12" style="margin-left: -10px;">
 						<div class="row">
 							<div class="col-md-10 ">
@@ -72,21 +72,21 @@
 				</div> 
 				<div class=" post-action">
 					<ul class="nav nav-pills " role="tablist">
-					  	<li ng-show ="isVotedQuestion == 0">
+					  	<li ng-show ="question.isVoted == 0">
 					  		<a href ng-click="voteQuestion()">
 					  			<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
-					  			Thích <span class="badge ">{{question_votes}}</span> 
+					  			Thích <span class="badge ">{{question.votes_count}}</span> 
 					  		</a>
 					  	</li>
-					  	<li ng-show ="isVotedQuestion == 1">
+					  	<li ng-show ="question.isVoted == 1">
 					  		<a href ng-click="voteQuestion()">
 					  			<i class="fa fa-thumbs-down" aria-hidden="true"></i> 
-					  			Bỏ thích <span class="badge ">{{question_votes}}</span> 
+					  			Bỏ thích <span class="badge ">{{question.votes_count}}</span> 
 					  		</a>
 					  	</li>
 					  	<li ><a href ng-click="gotoAnchor(1)">
 					  		<i class="fa fa-comment" aria-hidden="true"></i> 
-					  		Trả lời <span class="badge ">{{answer_count}}</span> 
+					  		Trả lời <span class="badge ">{{question.answers_count}}</span> 
 					  		</a> 
 					  	</li>
 					  <li >
@@ -103,8 +103,8 @@
 		</div>
 		<div class="col-md-12">
 			<div class="row answer-list">
-				<p class="filter-title">Trả lời ({{question.answers.length}})</p>
-				<div  ng-hide="question.answers.length == 0" class="col-md-12" ng-repeat="answer in question.answers">
+				<p ng-hide="question.answers_count == 0" class="filter-title">Trả lời ({{question.answers_count}})</p>
+				<div  ng-hide="question.answers_count == 0" class="col-md-12" ng-repeat="answer in question.answers">
 					@endverbatim
 						@include('questions.directives.answer_list_item')
 					@verbatim

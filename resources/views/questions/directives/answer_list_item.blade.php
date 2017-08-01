@@ -48,29 +48,29 @@
 		</div> 
 		<div class=" post-action">
 			<ul class="nav nav-pills " role="tablist">
-				<li ng-show ="answers.voted[answer.id] == 0"><a href ng-click="voteAnswer(answer.id)"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Thích <span class="badge ">{{answers.voteCount[answer.id]}}</span> </a></li>
-				<li ng-show ="answers.voted[answer.id] == 1">
-					<a href ng-click="voteAnswer(answer.id)">
+				<li ng-show ="answer.isVoted == 0"><a href ng-click="voteAnswer($index)"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Thích <span class="badge ">{{answer.votes_count}}</span> </a></li>
+				<li ng-show ="answer.isVoted == 1">
+					<a href ng-click="voteAnswer($index)">
 						<i class="fa fa-thumbs-down" aria-hidden="true"></i> 
-						Bỏ thích <span class="badge ">{{answers.voteCount[answer.id]}}</span> 
+						Bỏ thích <span class="badge ">{{answer.votes_count}}</span> 
 					</a>
 				</li>
 				<li >
 					<a href ng-click="showComments(answer.id)">
 						<i class="fa fa-comment" aria-hidden="true"></i> 
-						Bình luận <span class="badge">{{answers.commentCount[answer.id]}}</span>
+						Bình luận <span class="badge">{{answer.comments_count}}</span>
 					</a> 
 				</li>
 			</ul>
 		</div>
 		<div class="comment-block" ng-show="showComments[answer.id]">
-			<div class="comment-block-item" ng-repeat="comment in answers.comments[answer.id].comments">
+			<div class="comment-block-item" ng-repeat="comment in answers.comments">
 				<span class="pull-left avt">
 					<img src="" width="40" height="40">
 				</span>
 				<div class="media-body">
 					<div class="media-heading">
-						<a href class="primary-text">{{answers.comments[answer.id].users[comment.id].user_name}}</a>
+						<a href class="primary-text">{{comment.user.user_name}}</a>
 						<span class="date-created"><i class="fa fa-clock-o" aria-hidden="true"></i> {{comment.date_created}}</span>
 					</div>
 					<div class="">
@@ -81,7 +81,7 @@
 							  enter-submit="editComment($index,answer.id)"></textarea>
 						</div>
 					</div>
-					<div class="post-info" ng-show="user.id == answers.comments[answer.id].users[comment.id].id">
+					<div class="post-info" ng-show="user.id == comment.user.id">
 						<ul class="nav nav-pills" role="tablist">
 							<li ng-show = "comment_editing[$index] != 1" class="action"><a ng-click="editCommentMode($index,answer.id)"><i class="fa fa-edit" aria-hidden="true" ></i> Sửa </a></li>
 							<li ng-show = "comment_editing[$index] != 1" class="action">
@@ -102,16 +102,16 @@
 					</div> 
 					<div class=" post-action" style="border-bottom:solid 1px #e0e0e0;">
 						<ul class="nav nav-pills " role="tablist">
-							<li ng-show ="answers.comments[answer.id].voted[comment.id] == 0">
+							<li ng-show ="comment.isVoted == 0">
 								<a href ng-click="voteComment(comment.id,answer.id)">
 									<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
-									Thích <span class="badge ">{{answers.comments[answer.id].voteCount[comment.id]}}</span>
+									Thích <span class="badge ">{{comment.votes_count}}</span>
 								</a>
 							</li>
-							<li ng-show ="answers.comments[answer.id].voted[comment.id] == 1">
+							<li ng-show ="comment.isVoted == 1">
 								<a href ng-click="voteComment(comment.id,answer.id)">
 									<i class="fa fa-thumbs-down" aria-hidden="true"></i> 
-									Bỏ thích <span class="badge ">{{answers.comments[answer.id].voteCount[comment.id]}}</span>
+									Bỏ thích <span class="badge ">{{comment.votes_count}}</span>
 								</a>
 							</li>
 						</ul>

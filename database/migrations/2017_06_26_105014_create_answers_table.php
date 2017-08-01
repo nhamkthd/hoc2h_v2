@@ -20,7 +20,7 @@ class CreateAnswersTable extends Migration
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
             $table->string('title')->nullable();
             $table->text('content');
-            $table->integer('view_count')->default(0);
+            $table->integer('votes_count')->default(0);
             $table->boolean('is_best')->default(false);
             $table->integer('state')->default(1);
             $table->timestamps();

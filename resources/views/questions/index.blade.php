@@ -13,8 +13,8 @@
 			</div>
 		</div>	
 	</div>	
-	<div class="row">
-	<div class="col-md-6">
+	<div class="row" ng-show="isPaginate == true">
+		<div class="col-md-6">
 			<posts-paginations class="text-center"></posts-paginations>
 		</div>
 	</div>
