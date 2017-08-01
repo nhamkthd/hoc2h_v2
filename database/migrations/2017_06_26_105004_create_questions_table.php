@@ -16,7 +16,7 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('categories_id');
+            $table->integer('category_id');
             $table->string('title');
             $table->text('content')->nullable();
             $table->boolean('is_resolved')->default(false);

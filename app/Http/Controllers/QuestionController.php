@@ -169,7 +169,7 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
     	$question = new Question;
-    	$question->categories_id = $request->category;
+    	$question->category_id = $request->category;
     	$question->user_id = Auth::user()->id;
     	$question->title = $request->title;
     	$question->content = $request->content;

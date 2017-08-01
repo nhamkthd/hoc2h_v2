@@ -20,7 +20,6 @@ class CreateTestsTable extends Migration
             $table->integer('number_of_questions');
             $table->integer('total_time')->default(0);
             $table->integer('category_id');
-            $table->integer('type');
             $table->string('level')->nulable();
             $table->integer('state')->default(0);//this is attribute to check question creating or as saveing draft
             $table->timestamps();
