@@ -36,13 +36,4 @@ class Question extends Model
         return $listTags;
     }
 
-    public static function listWithTagg($tag_id) {
-        $listQuestionTags = QuestionTag::where('tag_id',$tag_id)->get();
-        $questions = array();
-        foreach ($listQuestionTags as $questionTag) {
-            $questions[$questionTag->question_id] = Question::find($questionTag->question_id);
-        }
-        return $questions;
-    }  
-
 }

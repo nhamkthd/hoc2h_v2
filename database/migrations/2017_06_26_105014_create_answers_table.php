@@ -18,7 +18,6 @@ class CreateAnswersTable extends Migration
             $table->integer('user_id');
             $table->integer('question_id')->unsigned();
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
-            $table->string('title')->nullable();
             $table->text('content');
             $table->integer('votes_count')->default(0);
             $table->boolean('is_best')->default(false);

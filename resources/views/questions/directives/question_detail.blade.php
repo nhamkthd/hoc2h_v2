@@ -63,8 +63,8 @@
 					  		</a>
 					  	</li>
 					  	<li class="action"><a><i class="fa fa-magic" aria-hidden="true"></i> Yêu cầu</a></li>
-					  	<li ng-show="isResolved == 1"  ng-click="changeResolve(0)" class="action "><a><i class="fa fa-check-circle success-dark-text" aria-hidden="true"></i> Resolved</a></li>
-					  	<li ng-show="isResolved == 0" ng-click="changeResolve(1)" class="action "><a><i class="fa fa-check-circle danger-dark-text" aria-hidden="true"></i> Not resolve</a></li>
+					  	<li ng-show="question.is_resolved == 1"  ng-click="changeResolve(0)" class="action "><a><i class="fa fa-check-circle success-dark-text" aria-hidden="true"></i> Resolved</a></li>
+					  	<li ng-show="question.is_resolved == 0" ng-click="changeResolve(1)" class="action "><a><i class="fa fa-check-circle danger-dark-text" aria-hidden="true"></i> Not resolve</a></li>
 					</ul>
 					@endverbatim
 						@include('questions.directives.question_modal')
@@ -103,7 +103,7 @@
 		</div>
 		<div class="col-md-12">
 			<div class="row answer-list">
-				<p ng-hide="question.answers_count == 0" class="filter-title">Trả lời ({{question.answers_count}})</p>
+				<p ng-hide="question.answers_count == 0" class="filter-title">{{question.answers_count}} Trả lời </p>
 				<div  ng-hide="question.answers_count == 0" class="col-md-12" ng-repeat="answer in question.answers">
 					@endverbatim
 						@include('questions.directives.answer_list_item')

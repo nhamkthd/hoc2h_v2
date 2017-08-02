@@ -10,4 +10,8 @@ class QuestionTag extends Model
 		$questions = static::where('tag_id',$tag_id)->get();
 		return $questions->count();
 	}
+
+	public function question (){
+		return $this->belongsTo('App\Question','question_id','id');
+	}
 }

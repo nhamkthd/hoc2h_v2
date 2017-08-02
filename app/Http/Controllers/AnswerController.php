@@ -21,6 +21,7 @@ class AnswerController extends Controller
             $answer->question_id = $request->question_id;
             $answer->user_id = Auth::user()->id;
             $answer->content = $request->content;
+            $answer->votes_count = 0;
             $answer->save();
 
             $question = Question::find($request->question_id);
@@ -30,6 +31,7 @@ class AnswerController extends Controller
             $question->save();
 
             $answer->user;
+            $answer->comments;
             $answer->comments_count = 0;
             $answer->isVoted = 0;
             return $answer;
@@ -49,26 +51,32 @@ class AnswerController extends Controller
 
     public function delete(Request $request)
     {
-        Answer::find($request->id)->delete();
+        $answer = Answer::find($request->id);
+        $answer->question->answers_count--;
+        $answer->question->save();
+        $answer->delete();
         return 1;
     }
 
     public function vote(Request $request) {
         if (Auth::check()) {
+            $answer = Answer::find($request->answer_id);
            if ($request->isVoted == 0) {
-            $answer_vote = new AnswerVote;
-            $answer_vote->user_id = Auth::user()->id;
-            $answer_vote->answer_id = $request->answer_id;
-            $answer_vote->save();
-            $question=Answer::find($request->answer_id)->question;
+                $answer_vote = new AnswerVote;
+                $answer_vote->user_id = Auth::user()->id;
+                $answer_vote->answer_id = $request->answer_id;
+                $answer_vote->save();
                 if (Auth::user()->id!=Answer::find($request->answer_id)->user->id) {
-                   $question->user->notify(new LikeComentQuestionNotification($question->user_id));
+                       $answer->user->notify(new LikeComentQuestionNotification($question->user_id));
                 }
-                
+                $answer->votes_count++;
+                $answer->save();
                 return 1;
             } else if ($request->isVoted == 1) {
                 $answer_vote = AnswerVote::where('answer_id',$request->answer_id);
                 $answer_vote->delete();
+                $answer->votes_count--;
+                $answer->save();
                 return 0;
             } 
         } else {
@@ -82,12 +90,15 @@ class AnswerController extends Controller
         	$comment->user_id = Auth::user()->id;
         	$comment->answer_id = $request->answer_id;
         	$comment->content = $request->content;
+            $comment->votes_count = 0;
         	$comment->save();
             $answer=Answer::find($request->answer_id);
             if(Auth::user()->id!= $answer->user->id)
             {
                  $answer->user->notify(new ReplyCommentQuestionNotification($answer->question->id));
             }
+            $comment->user;
+            $comment->isVoted = 0;
         	return $comment;
         } else {
             return -1;
@@ -96,18 +107,23 @@ class AnswerController extends Controller
 
     public function voteCommment(Request $request){
         if (Auth::check()) {
+            $comment = AnswerComment::find($request->comment_id);
             if ($request->isVoted == 0) {
                 $comment_vote = new AnswerCommentVote;
                 $comment_vote->user_id = Auth::user()->id;
                 $comment_vote->answer_comment_id  = $request->comment_id;
-                $answer=AnswerComment::find($request->comment_id);
-                if (Auth::user()->id!=$answer->user->id) {
-                    $answer->user->notify(new ReplyCommentQuestionNotification($answer->answer->question->id));
+                $comment_vote->save();
+                if (Auth::user()->id!=$comment->user->id) {
+                    $comment->user->notify(new ReplyCommentQuestionNotification($answer->answer->question->id));
                 }
+                $comment->votes_count++;
+                $comment->save();
                 return 1;
             } else if ($request->isVoted == 1) {
                 $comment_vote = AnswerCommentVote::where('answer_comment_id',$request->comment_id);
                 $comment_vote->delete();
+                $comment->votes_count--;
+                $comment->save();
                 return 0;
             }
         } else {
@@ -126,7 +142,8 @@ class AnswerController extends Controller
     
     public function deleteComment(Request $request)
     {
-        AnswerComment::find($request->id)->delete();
+        $comment = AnswerComment::find($request->id);
+        $comment->delete();
         return 1;
     }
 }

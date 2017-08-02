@@ -17,7 +17,7 @@
 	</script>
 	<script type="text/ng-template" id="deleteAnswerModal.html">
 		<div class="modal-header">
-			<h4 class="modal-title text-center" id="modal-title"><i class="fa fa-warning danger-dark-text" aria-hidden="true"></i> Bạn thật sự muốn câu trả lời này...!</h4>
+			<h4 class="modal-title text-center" id="modal-title"><i class="fa fa-warning danger-dark-text" aria-hidden="true"></i> Bạn thật sự muốn xoá câu trả lời này...!</h4>
 		</div>
 		<div class="modal-footer">
 			<button class="btn btn-warning" type="button" ng-click="cancel()">Huỷ bỏ</button>
@@ -64,7 +64,7 @@
 			</ul>
 		</div>
 		<div class="comment-block" ng-show="showComments[answer.id]">
-			<div class="comment-block-item" ng-repeat="comment in answers.comments">
+			<div class="comment-block-item" ng-repeat="comment in answer.comments">
 				<span class="pull-left avt">
 					<img src="" width="40" height="40">
 				</span>
@@ -78,19 +78,19 @@
 						<div ng-show="comment_editing[$index] === 1">
 							<textarea id="comment_field" class="form-control" 
 							  ng-model="comment_editing_field[$index]" 
-							  enter-submit="editComment($index,answer.id)"></textarea>
+							  enter-submit="editComment($index,$parent.$index)"></textarea>
 						</div>
 					</div>
 					<div class="post-info" ng-show="user.id == comment.user.id">
 						<ul class="nav nav-pills" role="tablist">
-							<li ng-show = "comment_editing[$index] != 1" class="action"><a ng-click="editCommentMode($index,answer.id)"><i class="fa fa-edit" aria-hidden="true" ></i> Sửa </a></li>
+							<li ng-show = "comment_editing[$index] != 1" class="action"><a ng-click="editCommentMode($index,$parent.$index)"><i class="fa fa-edit" aria-hidden="true" ></i> Sửa </a></li>
 							<li ng-show = "comment_editing[$index] != 1" class="action">
-								<a confirm-delete="Delete comment?" ng-click="deleteComment($index,answer.id)">
+								<a confirm-delete="Delete comment?" ng-click="deleteComment($index,$parent.$index)">
 									<i class="fa fa-trash" aria-hidden="true"></i>
 									Xoá
 								</a>
 							</li>
-							<li ng-show="comment_editing[$index] === 1" class="action"><a ng-click="editComment($index,answer.id)"><i class="fa fa-save" aria-hidden="true"></i> Lưu lại </a></li>
+							<li ng-show="comment_editing[$index] === 1" class="action"><a ng-click="editComment($index,$parent.$index)"><i class="fa fa-save" aria-hidden="true"></i> Lưu lại </a></li>
 							<li ng-show="comment_editing[$index] === 1" class="action">
 								<a  ng-click="cancelEditComment($index)">
 									<i class="fa fa-close" aria-hidden="true"></i> 
@@ -103,13 +103,13 @@
 					<div class=" post-action" style="border-bottom:solid 1px #e0e0e0;">
 						<ul class="nav nav-pills " role="tablist">
 							<li ng-show ="comment.isVoted == 0">
-								<a href ng-click="voteComment(comment.id,answer.id)">
+								<a href ng-click="voteComment($index,$parent.$index)">
 									<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
 									Thích <span class="badge ">{{comment.votes_count}}</span>
 								</a>
 							</li>
 							<li ng-show ="comment.isVoted == 1">
-								<a href ng-click="voteComment(comment.id,answer.id)">
+								<a href ng-click="voteComment($index,$parent.$index)">
 									<i class="fa fa-thumbs-down" aria-hidden="true"></i> 
 									Bỏ thích <span class="badge ">{{comment.votes_count}}</span>
 								</a>
@@ -125,12 +125,12 @@
 				<div class="media-body">
 					<textarea id="comment_field" class="form-control" placeholder="Viết bình luận..." 
 							  ng-model="comment_content_field[$index]" 
-							  enter-submit="addComment($index,answer.id)"></textarea>
+							  enter-submit="addComment($index)"></textarea>
 				</div>
-				<button style="margin-top:10px;" type="button"
+				<!--<button style="margin-top:10px;" type="button"
 						class="btn btn-outline-default waves-effect pull-right"  
-						ng-click="addComment($index,answer.id)">
-						Gửi bình luận</button>
+						ng-click="addComment($index)">
+						Gửi bình luận</button>-->
 			</div>
 		</div>
 	</div>

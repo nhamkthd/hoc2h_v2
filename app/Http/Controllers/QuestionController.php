@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Question;
-use Auth;
-use App\QuestionVote;
 use Carbon\Carbon;
-use App\QuestionTag;
+use Auth;
 use App\Notifications\LikeQuestionNotification;
+use Search;
+
+use App\Question;
+use App\QuestionVote;
+use App\QuestionTag;
 use App\Category;
 use App\Tag;
-use Search;
+
 class QuestionController extends Controller
 {   
-    //reset date fomat
+    //reset date time fomat
     public function setDateFomat($object){
        if($object->created_at->diffInDays(Carbon::now()) > 1){
             $object->date_created = $object->created_at->format('d/m/Y');    
@@ -23,16 +25,7 @@ class QuestionController extends Controller
         } 
     }
 
-    public function setMoreInfo($questions){
-        foreach ($questions as $question) {
-            $this->setDateFomat($question);
-            $question->user;
-            $question->answers_count = $question->answers->count();
-            $question->votes_count = $question->votes->count();
-            $question->tags =  Question::getTags($question->id);
-        }
-    }
-
+    //direct view with tab
     public function index(Request $request)
     {
         $tabSelected = 1;
@@ -70,52 +63,45 @@ class QuestionController extends Controller
         }
     	return view('questions.index',compact('tabSelected'));
     }
-    public function getAll (Request $request) {
+
+    //get questions with tab(sort)
+    public function apiGetAll (Request $request) {
         if ($request->filtertab) {
             switch ($request->filtertab) {
                 case 1:
                     $questions =  Question::orderby('id','desc')->paginate(15);
-                    $this->setMoreInfo($questions);
-                    return $questions;
+                    break;
                 case 2:
-                    $questions =  Question::orderby('view_count','desc')->paginate(15);
-                    $this->setMoreInfo($questions);
-                   return $questions;
+                    $questions =  Question::orderby('votes_count','desc')->orderby('answers_count','desc')->orderby('views_count','desc')->paginate(15);
+                    break;
                 case 3:
                     $questions = Question::questionsInWeek();
-                    $this->setMoreInfo($questions);
-                    return $questions;
+                    break;
                 case 4:
                     $questions = Question::where('user_id',Auth::user()->id)->orderby('id','desc')->paginate(15);
-                    $this->setMoreInfo($questions);
-                    return $questions;
+                    break;
                 case 5:
                     $questions =  Question::orderby('id','desc')->paginate(15);
-                    $this->setMoreInfo($questions);
-                    return $questions;
+                    break;
                 case 6:
                     $questions = Question::where('is_resolved',1)->orderby('id','desc')->paginate(15);
-                    $this->setMoreInfo($questions);
-                    return $questions;
+                    break;
                 case 7:
                     $questions = Question::where('is_resolved',0)->orderby('id','desc')->paginate(15);
-                    $this->setMoreInfo($questions);
-                    return $questions;
+                    break;
                 case 8:
-                    $allQuestions = Question::orderby('id','desc')->paginate(15);
-                    $index = 0;
-                    foreach ($allQuestions  as $question) {
-                       if ($question->answers->count() == 0) {
-                          $questions[$index] = $question;
-                          $index++;
-                       }
-                    }
-                    $this->setMoreInfo($questions);
-                    return $questions;
+                    $questions = Question::where('answers_count',0)->orderby('id','desc')->paginate(15);
+                    break;
                 default:
                     break;
             }
         }
+        foreach ($questions as $question) {
+            $question->user;
+            $question->tags =  Question::getTags($question->id);
+            $this->setDateFomat($question);
+        }
+        return $questions;
     }
 
     public function indexWithTagged(Request $request){
@@ -129,17 +115,30 @@ class QuestionController extends Controller
         }
        
     }
-    public function getQuestionsTagged($tag_id){
-        $questions =  Question::listWithTagg($tag_id);
-        $this->setMoreInfo($questions);
-        return $questions;
+    //get all questions with tag id
+    public function apiGetQuestionsTagged($tag_id){
+       
+        $questionTags = QuestionTag::where('tag_id',$tag_id)->get();
+        $results = array();
+        $index = 0;
+        foreach ($questionTags as $questionTag) {
+            if ($questionTag->question) {
+                $results[$index] = $questionTag->question;
+                $results[$index]->user = $questionTag->question->user;
+                $results[$index]->tags = Question::getTags($questionTag->question->id);
+                $this->setDateFomat($results[$index]);
+                $index++;
+            }
+        }
+        return $results;
     }
 
-    public function create()
-    {
+    //direct create question form
+    public function create() {
         return view('questions.directives.question_create');  
     }
 
+    //show detail 
     public  function  showDetail($id){
         $question = Question::find($id);
         if ($question) {
@@ -149,69 +148,8 @@ class QuestionController extends Controller
         return view('questions.directives.question_detail',compact('question'));
     }
 
-    public function store(Request $request)
-    {
-    	$question = new Question;
-    	$question->category_id = $request->category;
-    	$question->user_id = Auth::user()->id;
-    	$question->title = $request->title;
-    	$question->content = $request->content;
-    	$question->save();
-        foreach ($request->tags as $key => $tag_id) {
-            $questionTag = new QuestionTag;
-            $questionTag->question_id = $question->id;
-            $questionTag->tag_id = $tag_id;
-            $questionTag->save();
-        }
-        return $question;
-    }
-
-    public function edit(Request $request)
-    {
-        $question = Question::find($request->id);
-        $question->title  = $request->title;
-        $question->content = $request->content;
-        $question->save();
-        $this->setDateFomat($question);
-        return $question;
-    }
-
-    public function changeResolve(Request $request)
-    {
-        $question = Question::find($request->question_id);
-        $question->is_resolved = $request->param;
-        $question->save();
-        return $request->param;
-    }
-
-    public function editCategory(Request $request)
-    {
-        $question = Question::find($request->id);
-        $question->categories_id = $request->category;
-        $question->save();
-        $category = $question->category;
-        return $category;
-    }
-
-    public function addTags(Request $request) {
-        foreach ($request->tags as $key => $tag_id) {
-            $questionTag = new QuestionTag;
-            $questionTag->question_id = $request->question_id;
-            $questionTag->tag_id = $tag_id;
-            $questionTag->save();
-        }
-        $tags = Question::getTags($request->question_id);
-        return $tags;
-    }
-
-    public function delete(Request $request)
-    {
-        $question = Question::find($request->id);
-        $question->delete();
-        return 1;
-    }
-
-    public function search(Request $request){
+    //full text search
+    public function apiSearch(Request $request){
         $results = array();
         $questionTags = array();
         if ($request->keyword) {
@@ -228,7 +166,8 @@ class QuestionController extends Controller
         return  $results;
     }
 
-    public function searchWithTitle(Request $request){
+    //search question with title keyword
+    public function apiSearchWithTitle(Request $request){
         $results = array();
         if ($request->keyword) {
             $results = Search::search(
@@ -244,6 +183,25 @@ class QuestionController extends Controller
         return  $results;
     }
 
+    //store new question
+    public function apiStore(Request $request)
+    {
+        $question = new Question;
+        $question->category_id = $request->category;
+        $question->user_id = Auth::user()->id;
+        $question->title = $request->title;
+        $question->content = $request->content;
+        $question->save();
+        foreach ($request->tags as $key => $tag_id) {
+            $questionTag = new QuestionTag;
+            $questionTag->question_id = $question->id;
+            $questionTag->tag_id = $tag_id;
+            $questionTag->save();
+        }
+        return $question;
+    }
+
+    //show question detail with ID
     public function apiQuestionWithID(Request $request){
         $question = Question::find($request->id);
         $this->setDateFomat($question);
@@ -266,6 +224,7 @@ class QuestionController extends Controller
 
                 if ($answer->comments->count()) {
                     foreach ($answer->comments as $comment) { 
+                        $this->setDateFomat($comment);
                         $comment->user;
                         if (Auth::check() && Auth::user()->answerCommentVotes->where('answer_comment_id',$comment->id)->count()) 
                             $comment->isVoted = 1;
@@ -274,7 +233,7 @@ class QuestionController extends Controller
                     }
                 }
             }
-        }
+        } else $question->answers;
 
         $isVoted = 0;
         if (Auth::check()) {
@@ -288,7 +247,19 @@ class QuestionController extends Controller
         return response()->json(array('question'=>$question,'categories'=>$categories));
     }
 
-    public function vote(Request $request){
+    //edit question
+    public function apiEdit(Request $request)
+    {
+        $question = Question::find($request->id);
+        $question->title  = $request->title;
+        $question->content = $request->content;
+        $question->save();
+        $this->setDateFomat($question);
+        return $question;
+    }
+
+    //vote question
+    public function apiVote(Request $request){
         if (Auth::check()) {
             $question = Question::find($request->question_id);
             if ($request->isVoted == 0) {
@@ -312,5 +283,43 @@ class QuestionController extends Controller
         }else {
             return -1;
         }
+    }
+    //change questiong resolve state
+    public function apiChangeResolve(Request $request)
+    {
+        $question = Question::find($request->question_id);
+        $question->is_resolved = $request->param;
+        $question->save();
+        return $request->param;
+    }
+
+    //change question category
+    public function apiEditCategory(Request $request)
+    {
+        $question = Question::find($request->id);
+        $question->category_id = $request->category;
+        $question->save();
+        $category = $question->category;
+        return $category;
+    }
+
+    //add new tags for question
+    public function apiAddTags(Request $request) {
+        foreach ($request->tags as $key => $tag_id) {
+            $questionTag = new QuestionTag;
+            $questionTag->question_id = $request->question_id;
+            $questionTag->tag_id = $tag_id;
+            $questionTag->save();
+        }
+        $tags = Question::getTags($request->question_id);
+        return $tags;
+    }
+
+    //delete question
+    public function apiDelete(Request $request)
+    {
+        $question = Question::find($request->id);
+        $question->delete();
+        return 1;
     }
 }

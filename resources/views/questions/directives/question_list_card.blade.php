@@ -26,7 +26,7 @@
 				<span> <i class="fa fa-clock-o" aria-hidden="true"></i> {{question.date_created}}</span>
 			<li > <span>Thích </span> {{question.votes_count}}</li>
 			<li ><span>Trả lời </span> {{question.answers_count}}</li>
-			<li ><span>Xem</span> {{question.view_count}}</li>
+			<li ><span>Xem</span> {{question.views_count}}</li>
 		</ul>
 	</div>
 		

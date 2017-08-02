@@ -57,18 +57,18 @@ Route::group(['prefix' => 'questions'], function(){
 		});
 	Route::group(['prefix' => 'api'], function(){
 		//this is group route api angular js
-		Route::post('/store','QuestionController@store');
-		Route::get('/','QuestionController@getAll');
+		Route::post('/store','QuestionController@apiStore');
+		Route::get('/','QuestionController@apiGetAll');
 		Route::post('/getQuestionInfo','QuestionController@apiQuestionWithID');
-		Route::post('/vote','QuestionController@vote');
-		Route::post('/edit','QuestionController@edit');
-		Route::post('/delete','QuestionController@delete');
-		Route::post('/editCategory','QuestionController@editCategory');
-		Route::post('/change-resolve','QuestionController@changeResolve');
-		Route::post('/add-Tags','QuestionController@addTags');
-		Route::get('/search','QuestionController@search');
-		Route::get('/search-related','QuestionController@searchWithTitle');
-		Route::get('/tagged/{tag_id}','QuestionController@getQuestionsTagged');
+		Route::post('/vote','QuestionController@apiVote');
+		Route::post('/edit','QuestionController@apiEdit');
+		Route::post('/delete','QuestionController@apiDelete');
+		Route::post('/editCategory','QuestionController@apiEditCategory');
+		Route::post('/change-resolve','QuestionController@apiChangeResolve');
+		Route::post('/add-Tags','QuestionController@apiAddTags');
+		Route::get('/search','QuestionController@apiSearch');
+		Route::get('/search-related','QuestionController@apiSearchWithTitle');
+		Route::get('/tagged/{tag_id}','QuestionController@apiGetQuestionsTagged');
 
 		Route::post('/answers','AnswerController@store');
 		Route::post('/answer/vote','AnswerController@vote');
