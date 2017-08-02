@@ -22,7 +22,7 @@
 					<p><strong>Độ khó: </strong>Khó</p>
 				@endif
 			@endif
-			<p><strong>Số người đã làm: </strong></p>
+			<p><strong>Số người đã làm: {{$test->user_test->count()}}</strong></p>
 		</div>
 
 		<div class="row">

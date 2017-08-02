@@ -22,7 +22,7 @@
 	<div class="card-footer" style="margin-left:.5rem;">
 		<ul>
 			<li> 
-				<a href="" class="author-name">{{question.user.user_name}}</a>
+				<a href="" class="author-name">{{question.user.name}}</a>
 				 <span style="color:#9e9e9e; margin-left: 10px;"><i class="fa fa-clock-o" aria-hidden="true"></i> {{question.date_created}}</span>
 			<li > <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{question.votes_count}}</li>
 			<li ><i class="fa fa-comments-o" aria-hidden="true"></i> {{question.answers_count}}</li>

@@ -273,14 +273,13 @@
 
 	 	$scope.submit_test=function() {
 	 		$scope.test={
-	 			category_id:$scope.category.id,
+	 			category_id:$scope.category,
 	 			category_title:$scope.category.title,
 	 			title:$scope.title,
 	 			number_of_questions:$scope.number_of_questions,
 	 			time:$scope.time,
-	 			type_test:0,
 	 			level_title:$scope.level.title,
-	 			level_id:$scope.level.id,
+	 			level_id:$scope.level,
 	 		};
 	 		$scope.type_qa = 'Upload';
 	 		$scope.tab = 2;

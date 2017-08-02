@@ -11,14 +11,13 @@ class MTestController extends Controller
 {
 	public function store(Request $req)
 	{
-	
+		//dd($req);
 		$test=new Test;	
   		$test->user_id=Auth::user()->id;
   		$test->title=$req->test['title'];
   		$test->number_of_questions=$req->test['number_of_questions'];
   		$test->total_time=$req->test['time'];
   		$test->category_id=$req->test['category_id'];
-  		$test->type=$req->test['type_test'];
   		$test->level=$req->test['level_id'];
   		$test->state=1;
   		$test->save();
