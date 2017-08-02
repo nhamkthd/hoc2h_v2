@@ -145,8 +145,8 @@ a.author-name:hover {font-size:13px; font-weight: 600;color: #4285F4; margin-top
 .card-footer ul {list-style: none; display: flex; flex: row wrap; justify-content: flex-end; padding-left: 0; } 
 .card-footer li:first-child {margin-right: auto; } 
 .card-footer li + li {margin-left: .5rem; } 
-.card-footer li {font-size: .75rem; height: 1.5rem;line-height: 1.5rem; text-align: center;  position: relative;  color:#ff4444;} 
-.card-footer li >span {color: #9e9e9e;}
+.card-footer li {font-size: .75rem; height: 1.5rem;line-height: 1.5rem; text-align: center;  position: relative;  color:#FF8800;} 
+.card-footer li >i {color: #9e9e9e;}
 .date-created {color:#9e9e9e; font-size:12px; }
 .pagination.pg-bluegrey .active .page-link {padding:5px;}
 .pagination li>a{line-height:1}

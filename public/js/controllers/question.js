@@ -55,14 +55,14 @@
  		}
 	});
 
-	
-	//show limit line content filter
+	//show limit text filter
 	app.filter('textShortenerFilter', function() {
 	  return function(text, length) {
-	    if (text.length > length) {
-	      return text.substr(0, length) + "...";
+	  	var string = text ? String(text).replace(/<[^>]+>/gm, '') : '';//out put plain text...
+	    if (string.length > length) {
+	      return string.substr(0, length) + "...";
 	    }
-	    return text;
+	    return string;
 	  }
 	});
 

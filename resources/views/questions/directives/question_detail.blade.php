@@ -27,7 +27,7 @@
 					</p>
 				</div>
 				<p class="answer-body" ng-bind-html="question.content"></p>
-				<div ng-show="!(question.tagsList.length == 0)" class="card-tags" style="margin-bottom:20px;">
+				<div ng-show="!(question.tagsList.length == 0)" class="card-tags" style="margin-bottom:20px; margin-left: -.5rem;">
 					<ul>
 						<li ng-repeat="tag in question.tagsList"><a href="/questions/tagged/?id={{tag.id}}">{{tag.name}}</a></li>
 					</ul>

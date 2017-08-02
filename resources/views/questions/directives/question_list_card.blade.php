@@ -10,7 +10,7 @@
 					<i class="fa fa-question-circle danger-dark-text" aria-hidden="true"></i></span></a>
 		</div>
 		<div class="card-summary">
-		<p style="font-size: 13px;" ng-bind-html="question.content| textShortenerFilter: 260"></p>
+		<p style="font-size: 13px;" ng-bind-html="question.content| textShortenerFilter: 280"></p>
 		</div>
 		<div class="card-tags" ng-hide="question.tags.length == 0" style="margin-left:-.5rem;" >
 			<ul>
@@ -23,10 +23,10 @@
 		<ul>
 			<li> 
 				<a href="" class="author-name">{{question.user.user_name}}</a>
-				<span> <i class="fa fa-clock-o" aria-hidden="true"></i> {{question.date_created}}</span>
-			<li > <span>Thích </span> {{question.votes_count}}</li>
-			<li ><span>Trả lời </span> {{question.answers_count}}</li>
-			<li ><span>Xem</span> {{question.views_count}}</li>
+				 <span style="color:#9e9e9e; margin-left: 10px;"><i class="fa fa-clock-o" aria-hidden="true"></i> {{question.date_created}}</span>
+			<li > <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{question.votes_count}}</li>
+			<li ><i class="fa fa-comments-o" aria-hidden="true"></i> {{question.answers_count}}</li>
+			<li ><i class="fa fa-eye" aria-hidden="true"></i> {{question.views_count}}</li>
 		</ul>
 	</div>
 		
