@@ -18,6 +18,10 @@ Route::group(['prefix' => 'categories'],function(){
 	});
 });
 
+Route::group(['prefix'=>'user'],function(){
+	Route::get('/{user_id}','UserController@userIndex');
+});
+
 Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	Route::get('/','TestController@index')->name('tests');
 	Route::get('create', function() {

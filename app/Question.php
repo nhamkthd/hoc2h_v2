@@ -24,7 +24,7 @@ class Question extends Model
     }
 
     public static function questionsInWeek(){
-        return static::where('created_at', '>=', \Carbon\Carbon::now()->subWeek())->get();
+        return static::where('created_at', '>=', \Carbon\Carbon::now()->subWeek())->orderby('votes_count','desc')->orderby('answers_count','desc')->orderby('views_count','desc')->get();
     }
 
     public static function getTags($question_id){

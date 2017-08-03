@@ -12,7 +12,14 @@ use Hash;
 
 class UserController extends Controller
 {
+
+  //USER
+  public function userIndex($user_id){
+    return view('users.index',compact('user_id'));
+  }
     
+
+  //ADMIN   
   public function index(){
     $user = User::all();
     //dd($user);

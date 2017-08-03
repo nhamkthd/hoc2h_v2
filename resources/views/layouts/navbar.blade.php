@@ -41,14 +41,10 @@
               <li class="dropdown"  ng-init="initNotification()">
                 <a href="#">{{Auth::user()->name}} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Trang cá nhân</a></li>
-                  <li><a href="#">Hỏi đáp</a></li>
-                  <li><a href="#">Lịch sử làm đề</a></li>
+                  <li><a href="{{url('/user/'.Auth::user()->id)}}"><i class="fa fa-user-circle-o" aria-hidden="true"></i> trang cá nhân</a></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="#">Cài đặt tài khoản</a></li>
-                  <li><a href="#">Cài Đặt thông báo</a></li>
                   <li><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">Đăng xuất</a>
+                    document.getElementById('logout-form').submit();"><i class="fa fa-user-times" aria-hidden="true"></i> đăng xuất</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                      {{ csrf_field() }}
                    </form>

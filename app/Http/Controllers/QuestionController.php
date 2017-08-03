@@ -157,7 +157,7 @@ class QuestionController extends Controller
                               "Question" ,
                               ['title' , 'content'] ,
                                $request->keyword,
-                              ['id' , 'title', 'content','is_resolved','view_count','created_at'],
+                              ['id' , 'title', 'content','is_resolved','views_count','votes_count','answers_count','created_at'],
                               ['id'  , 'desc'] ,
                               true ,
                               30
