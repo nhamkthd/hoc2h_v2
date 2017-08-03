@@ -1,7 +1,7 @@
 @verbatim
 <div class="media list-item-block">
 	<span class="pull-left">
-		<img src="" width="40" height="40">
+		<img src="{{answer.user.avatar}}" width="40" height="40">
 	</span>
 	<script type="text/ng-template" id="editAnswerModal.html">
 		<div class="modal-header">
@@ -26,7 +26,7 @@
 	</script>
 	<div class="media-body">
 		<div class="media-heading">
-			<a href class="primary-text">{{answer.user.user_name}}</a>
+			<a href class="primary-text">{{answer.user.name}}</a>
 			<span class="date-created pull-right"><i class="fa fa-clock-o" aria-hidden="true"></i> {{answer.date_created}}</span>
 		</div>
 		<div class="">
@@ -70,7 +70,7 @@
 				</span>
 				<div class="media-body">
 					<div class="media-heading">
-						<a href class="primary-text">{{comment.user.user_name}}</a>
+						<a href class="primary-text">{{comment.user.name}}</a>
 						<span class="date-created"><i class="fa fa-clock-o" aria-hidden="true"></i> {{comment.date_created}}</span>
 					</div>
 					<div class="">

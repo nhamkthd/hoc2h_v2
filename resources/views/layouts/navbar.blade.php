@@ -39,7 +39,11 @@
             </li>
          
               <li class="dropdown"  ng-init="initNotification()">
-                <a href="#">{{Auth::user()->name}} <span class="caret"></span></a>
+                <a href="#">
+                  @if(Auth::user()->provider_id)
+                    <img src="{{Auth::user()->avatar}}" width="30" height="30">
+                  @endif
+                  {{Auth::user()->name}}<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="{{url('/user/'.Auth::user()->id)}}"><i class="fa fa-user-circle-o" aria-hidden="true"></i> trang cá nhân</a></li>
                   <li role="separator" class="divider"></li>
