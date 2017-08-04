@@ -15,11 +15,16 @@ Route::group(['prefix' => 'categories'],function(){
 	Route::group(['prefix'=>'api'],function(){
 		Route::get('/','CategoryController@getAll');
 		Route::get('/{id}','CategoryController@getWithID');
+
 	});
 });
 
-Route::group(['prefix'=>'user'],function(){
-	Route::get('/{user_id}','UserController@userIndex');
+Route::group(['prefix'=>'users'],function(){
+	Route::get('/{id}/{tab?}','UserController@userIndex')->where('id', '[0-9]+');
+	Route::group(['prefix'=>'api'],function(){
+		Route::get('user-profile/{id}','UserController@apiGetProfile');
+		Route::post('/edit','UserController@userEdit');
+	});
 });
 
 Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){

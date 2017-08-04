@@ -45,7 +45,7 @@
                   @endif
                   {{Auth::user()->name}}<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="{{url('/user/'.Auth::user()->id)}}"><i class="fa fa-user-circle-o" aria-hidden="true"></i> trang cá nhân</a></li>
+                  <li><a href="{{url('/users/'.Auth::user()->id.'/profile')}}"><i class="fa fa-user-circle-o" aria-hidden="true"></i> trang cá nhân</a></li>
                   <li role="separator" class="divider"></li>
                   <li><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();"><i class="fa fa-user-times" aria-hidden="true"></i> đăng xuất</a>

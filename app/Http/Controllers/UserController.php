@@ -14,10 +14,43 @@ class UserController extends Controller
 {
 
   //USER
-  public function userIndex($user_id){
-    return view('users.index',compact('user_id'));
+  public function userIndex($user_id, $tab){
+    $currentTab = 1;
+    if ($tab) {
+      switch ($tab) {
+        case'profile':
+          $currentTab = 1;
+          break;
+        case'activity':
+          $currentTab = 2;
+          break;
+        case'setting':
+          $currentTab = 3;
+          break;
+        default:
+          $currentTab = 1;
+          break;
+      }
+    }
+    return view('users.index',compact('user_id','currentTab'));
   }
-    
+  
+  public function apiGetProfile($id){
+    $user = User::find($id);
+    return $user;
+  }
+
+  public function userEdit(Request $request){
+    $user_edit = User::find($request->id);
+    $user_edit->name = $request->name;
+    $user_edit->phone = $request->phone;
+    $user_edit->class = $request->class;
+    $user_edit->birthday = $request->birthday;
+    $user_edit->gender = $request->gender;
+    $user_edit->description = $request->description;
+    $user_edit->save();
+    return $user_edit;
+  }
 
   //ADMIN   
   public function index(){

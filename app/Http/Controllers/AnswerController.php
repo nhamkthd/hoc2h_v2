@@ -67,7 +67,7 @@ class AnswerController extends Controller
                 $answer_vote->answer_id = $request->answer_id;
                 $answer_vote->save();
                 if (Auth::user()->id!=Answer::find($request->answer_id)->user->id) {
-                       $answer->user->notify(new LikeComentQuestionNotification($question->user_id));
+                       $answer->user->notify(new LikeComentQuestionNotification($answer->user_id));
                 }
                 $answer->votes_count++;
                 $answer->save();
