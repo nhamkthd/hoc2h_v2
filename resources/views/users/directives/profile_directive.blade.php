@@ -37,7 +37,7 @@
 											<li><i class="fa fa-map-marker" aria-hidden="true"></i>{{user.local}}</li>
 											<li><i class="fa fa-phone" aria-hidden="true"></i>{{user.phone}}</li>
 											<li><i class="fa fa-intersex" aria-hidden="true"></i></li>
-											<li><i class="fa fa-birthday-cake" aria-hidden="true"></i>{{user.birthday}}</li>
+											<li><i class="fa fa-birthday-cake" aria-hidden="true"></i>{{user.birthday| date:'dd/MM/yyyy'}}</li>
 											<li><i class="fa fa-graduation-cap" aria-hidden="true"></i>{{user.class}} </li>
 											<li><i class="fa fa-clock-o" aria-hidden="true"></i>tham gia ngày {{user.created_at}}</li>
 										</ul>

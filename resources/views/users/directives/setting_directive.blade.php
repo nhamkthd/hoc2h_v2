@@ -40,7 +40,7 @@
 										    ngf-max-size="10MB" 
 										    ngf-min-height="100"
 										    ngf-resize="{width:500, height:500}">
-										    Thay đổi ảnh đại diện</a>
+										    {{avatar_text}}</a>
 									</div>
 								</div>
 								<div class="col-md-8">
@@ -55,7 +55,14 @@
 										</div>
 										<div class="col-md-5 form-info">
 											<span>Ngày sinh</span>
-											<input type="text" name="birthday" ng-model="birthday_edit" class="form-control" placeholder="Cập nhật..." >
+									          <input type="text" class="form-control" 
+									          		uib-datepicker-popup="{{format}}" 
+									          		ng-model="birthday_edit" 
+									          		is-open="popup1.opened"
+									          		datepicker-options="dateOptions" 
+									          		ng-required="true" 
+									          		alt-input-formats="altInputFormats"
+									          		ng-focus="birthdayFocus()" />
 										</div>
 										<div class="col-md-6 col-md-offset-1 form-info">
 											<span>Số điện thoại</span>
@@ -91,9 +98,7 @@
 									<div ckeditor="options" ng-model="description_edit" ready="onReady()"></div>
 								</div>
 							</div>
-							<div class="col-md-12">
-								
-							</div>
+							<flash-message></flash-message>
 							<div class="col-md-4 col-md-offset-4">
 								<a style="width:40%;" href="/users/{{user.id}}/profile" class="btn btn-warning" type="button" >Huỷ bỏ</a>
 								<button style="width: 40%;" class="btn btn-default" type="button" ng-click="editProfile()">Lưu lại </button>

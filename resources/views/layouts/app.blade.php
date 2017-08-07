@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="{{ asset('css/ng-scrollbar/ng-scrollbar.css') }}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
         <!--App style-->
+        <link href="{{ asset('css/angular-flash.css') }}" rel="stylesheet"> 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
         
          <!--scripts -->
@@ -32,7 +33,8 @@
         <script src="{{asset('js/flugin/angular/ng-infinite-scroll.js')}}"></script>
         <script src="{{asset('js/flugin/angular/ng-scrollbar.js')}}"></script> 
         <script src="{{asset('js/flugin/angular/ng-file-upload-shim.js')}}"></script> 
-        <script src="{{asset('js/flugin/angular/ng-file-upload.js')}}"></script> 
+        <script src="{{asset('js/flugin/angular/ng-file-upload.js')}}"></script>
+        <script src="{{asset('js/flugin/angular/angular-flash.js')}}"></script>  
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-sanitize.min.js"></script>
         <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ckeditor/1.0.3/angular-ckeditor.js"></script>

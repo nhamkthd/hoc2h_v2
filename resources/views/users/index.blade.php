@@ -60,6 +60,7 @@
     .edit-profile {border-bottom: 1px solid #eaeaea; padding: 0 10px 20px 10px;}
 	.form-info span { font-weight: bold; font-size: 12px;}
 	.gender-radio label {margin-right: 10px;font-weight: normal;}
+	.btn.btn-default.btn-sm {font-size: 0.2rem;padding: 5px;box-shadow: none;color:#4d545d;}
 </style>
 @extends('users.layouts')
 @section('user_content')

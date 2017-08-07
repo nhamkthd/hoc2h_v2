@@ -5,10 +5,9 @@
   		$anchorScroll.yOffset = 50;   // always scroll by 50 extra pixels
   		console.log('hello user...');
 	}]);
-
 	
 	//main user controller
-	app.controller('UserController',function($scope, $http,$sce, Upload){
+	app.controller('UserController',function($scope, $http,$sce, Upload, Flash){
 		
 		$scope.locals = [
 		 	{name:"An Giang"},
@@ -81,6 +80,24 @@
 				$scope.setSettingTab(1);
 			}
 		}
+		//date picker
+		$scope.dateOptions = {
+		    formatYear: 'yy',
+		    maxDate: new Date(2020, 5, 22),
+		    minDate: new Date(1970,1,1),
+		    startingDay: 1
+		  };
+		$scope.popup1 = {
+		    opened: false
+		};
+
+		$scope.format = 'dd.MM.yyyy';
+
+		$scope.birthdayFocus = function(){
+			$scope.popup1.opened = true;
+		}
+
+		//get user infomation with user_id
 		$scope.getUser = function($id,tab){
 			$http.get('/users/api/user-profile/'+$id)
 				 .then(function(response){
@@ -90,13 +107,15 @@
 				 	console.log(error);
 			});
 		}
+		//set editing value
 		$scope.setEditingUser = function(user){
 			$scope.name_edit = user.name;
 			$scope.phone_edit = user.phone;
 			$scope.birthday_edit = user.birthday;
 			$scope.local_edit = user.local;
 			$scope.class_edit = user.class;
-			$scope.description_edit = user.description;	
+			$scope.description_edit = user.description;
+			$scope.avatar_text = "Cập nhật ảnh đại diện";
 		}
 
 		$scope.setSettingTab = function(tab){
@@ -106,6 +125,7 @@
 			}
 		}
 
+		//uploading avatar image
 		$scope.uploadAvatar = function (file) {
 	        Upload.upload({
 	        	headers: {'Authorization': 'Client-ID 5f83e114af0de78'},
@@ -115,14 +135,22 @@
 	        }).then(function (response) {
 				console.log('avtar uploaded....!')
 	           	$scope.user.avatar = response.data.data.link;
+	           	$scope.avatar_text = "Cập nhật ảnh đại diện"; 
 	        }, function (error) {
 	            console.log(error);
 	        }, function (evt) {
 	            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-	            //console.log('progress: ' + progressPercentage + '% ' + evt.config.data.image.name);
+	            $scope.avatar_text = "Đang tải lên..."
 	        });
 	    };
+
+	    //submit profile editing
 		$scope.editProfile = function(){
+			if ($scope.name_edit == "") {
+				var message = 'Thuộc tính [<strong>tên hiển thị</strong>] không được để trống...!';
+       			Flash.create('danger', message);
+       			return;
+			}
 			$http.post('/users/api/edit',{id:$scope.user.id,
 										  name:$scope.name_edit,
 										  phone:$scope.phone_edit,
@@ -135,6 +163,9 @@
 				 .then(function(response){
 				 	console.log(response.data);
 				 	$scope.user = response.data;
+				 	var message = '<strong>Thành công!</strong>Các thông tin thay đổi đã được cập nhật xong.';
+       				 Flash.create('success', message);
+				 	flash.getMessage($scope.message);
 				 },function(error){
 				 	console.log(error);
 				 });
