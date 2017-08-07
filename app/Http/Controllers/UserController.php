@@ -10,9 +10,9 @@ use App\Http\Requests\UserRequest;
 use App\Http\Requests\updateUserRequest;
 use Hash;
 
+
 class UserController extends Controller
 {
-
   //USER
   public function userIndex($user_id, $tab){
     $currentTab = 1;
@@ -47,10 +47,13 @@ class UserController extends Controller
     $user_edit->class = $request->class;
     $user_edit->birthday = $request->birthday;
     $user_edit->gender = $request->gender;
+    $user_edit->local = $request->local;
+    $user_edit->avatar = $request->avatar;
     $user_edit->description = $request->description;
     $user_edit->save();
     return $user_edit;
   }
+
 
   //ADMIN   
   public function index(){

@@ -1,4 +1,5 @@
 <style>
+	input[type=file] {position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%; font-size: 100px; text-align: right; filter: alpha(opacity=0); opacity: 0; outline: none; background: white; cursor: inherit; display: block;} 
 	.list-unstyled { list-style: none;margin-left: 0;}
 	.tab-bar {padding:0px;}
 	.tab-bar ul {list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color:#fff; border-bottom: 1px solid #e4e6e8; } 
@@ -55,6 +56,7 @@
     #side-menu ul ul li > a.active {color:#242729;font-weight:bold;}
     .edit-profile .avatar-wrapper {position: relative; width: 164px; height: 164px; overflow: hidden;}
     .avatar-wrapper #change-avtar {position: absolute; bottom: 0; left: 0; right: 0; background: rgba(12,13,14,0.6); border: 0; border-radius: 0 0 3px 3px; color: #FFF; text-align: center; padding: 8px 0; width: auto; transition: background .3s ease; }
+    
     .edit-profile {border-bottom: 1px solid #eaeaea; padding: 0 10px 20px 10px;}
 	.form-info span { font-weight: bold; font-size: 12px;}
 	.gender-radio label {margin-right: 10px;font-weight: normal;}
@@ -69,236 +71,15 @@
 		  <li ng-class="{selected:currentTab === 3}"><a href="{{url('/users/'.$user_id.'/setting')}}">Cài đặt</a></li>
 		</ul>
 	</div>
-	@verbatim
 		<div ng-show="currentTab === 1">
-			<div class="col-md-12 tab-content">
-				<div class="row">
-					<div class="col-md-3 side-info">
-						<div class="avt-card">
-							<div class="avatar">
-								<img src="{{user.avatar}}" width="164" height="164">
-							</div>
-							<div class="coin-info">
-								2679
-								<span class="label-uppercase">coin</span>
-							</div>
-							<div class="actions">
-								<span><i class="fa fa-user-plus" aria-hidden="true"></i></span>
-								<span><i class="fa fa-comment" aria-hidden="true"></i></span>
-								<span><i class="fa fa-ellipsis-h" aria-hidden="true"></i></span>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-9 main-info">
-						<div class="row">
-							<div class="col-md-8 about">
-								<h3 class="author-name">{{user.name}}</h3>
-								<div class="user-description">
-									<p>
-									Trong các cuộc họp, hội thảo, gặp mặt thượng đế, giới thiệu loại sản phẩm,… kỹ năng thuyết trình là vô cùng quan trọng đối với mỗi người. Đặc biệt, khi thuyết trình bằng tiếng Anh, bạn cần làm cho bài thuyết trình có bố cục rõ ràng, dẫn dắt hợp lý.</p>
-								</div>
-							</div>
-							<div class="col-md-4 user-contact">
-								<div class="row user-status">
-									<div class="col-md-4">
-										<span class="number">127</span>
-										theo dõi</div>
-									<div class="col-md-4"><span class="number">315</span>bài đăng</div>
-									<div class="col-md-4"><span class="number">95%</span>uy tín</div>
-								</div>
-								<div class="contact-info">
-									<ul class="contact-list">
-										<li><i class="fa fa-map-marker" aria-hidden="true"></i>Hà Nội</li>
-										<li><i class="fa fa-phone" aria-hidden="true"></i>01663723154</li>
-										<li><i class="fa fa-intersex" aria-hidden="true"></i>Nữ</li>
-										<li><i class="fa fa-birthday-cake" aria-hidden="true"></i>26/03/1992</li>
-										<li><i class="fa fa-graduation-cap" aria-hidden="true"></i>IT Engineer </li>
-										<li><i class="fa fa-clock-o" aria-hidden="true"></i>tham gia ngày 27/07/2017</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row summary">
-					<div class="col-md-9 col-md-offset-3 summary-content">
-						<h3 class="title-section">Tổng quan</h3>
-						<table id="summary-table">
-							<tbody>
-								<tr>
-									<td class="summary-wrapper ">
-										<div class="summary-number">
-											<span class="name">Hỏi Đáp</span>
-											<span class="number">156</span>
-										</div>
-										<div class="summary-detail">
-											<h5>Chi tiết</h5>
-											<ul class="detail-list list-unstyled">
-												<li>
-													<i class="fa fa-circle" aria-hidden="true"></i>Câu hỏi đã đăng
-													<span>79</span>
-												</li>
-												<li>
-													<i class="fa fa-circle" aria-hidden="true"></i>Câu hỏi trả lời
-													<span>77</span>
-												</li>
-												<li>
-													<i class="fa fa-circle" aria-hidden="true"></i>Điểm thành tích
-													<span>236</span>
-												</li>
-											</ul>
-										</div>
-									</td>
-									<td class="summary-wrapper">
-										<div class="summary-number">
-											<span class="name">Đề Thi</span>
-											<span class="number">289</span>
-										</div>
-										<div class="summary-detail">
-											<h5>Chi tiết</h5>
-											<ul class="detail-list list-unstyled">
-												<li>
-													<i class="fa fa-circle" aria-hidden="true"></i>Đề đã tạo
-													<span>0</span>
-												</li>
-												<li>
-													<i class="fa fa-circle" aria-hidden="true"></i>Đề đã làm
-													<span>289</span>
-												</li>
-												<li>
-													<i class="fa fa-circle" aria-hidden="true"></i>Điểm đánh giá
-													<span>8</span>
-												</li>
-											</ul>
-										</div>
-									</td>
-									<td class="summary-wrapper">
-										<div class="summary-number">
-											<span class="name">Tài liệu</span>
-											<span class="number">162</span>
-										</div>
-										<div class="summary-detail">
-											<h5>Chi tiết</h5>
-											<ul class="detail-list list-unstyled">
-												<li>
-													<i class="fa fa-circle" aria-hidden="true"></i>Đã tạo
-													<span>42</span>
-												</li>
-												<li>
-													<i class="fa fa-circle" aria-hidden="true"></i>Đã tải
-													<span>120</span>
-												</li>
-												<li>
-													<i class="fa fa-circle" aria-hidden="true"></i>Điểm thành tích
-													<span>120</span>
-												</li>
-											</ul>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
+			@include('users.directives.profile_directive')
 		</div>
 
 		<div ng-show="currentTab === 2">
-			Activity time line
+			@include('users.directives.activity_directive')
 		</div>
 
 		<div ng-show="currentTab === 3">
-			<div class="col-md-12 tab-content">
-				<div class="row">
-					<div class="col-md-3" id="side-menu">
-						<ul>
-							<li class="category">Thông tin cá nhân
-								<ul>
-									<li><a ng-class="{active:settingTab === 1}" href="">Sửa thông tin</a></li>
-									<li><a ng-class="{active:settingTab === 2}" href="">Quyền riêng tư</a></li>
-									<li><a ng-class="{active:settingTab === 3}" href="">Thông tin khác</a></li>
-								</ul>
-							</li>
-							<li class="category">Thông báo
-								<ul>
-									<li><a ng-class="{active:settingTab === 4}" href="">Tin nhắn</a></li>
-									<li><a ng-class="{active:settingTab === 5}" href="">Người theo dõi</a></li>
-									<li><a ng-class="{active:settingTab === 6}" href="">Email</a></li>
-								</ul>
-							</li>
-							<li class="category">Tương tác
-								<ul>
-									<li><a ng-class="{active:settingTab === 7}" href="">Danh sách theo dõi</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-					<div ng-show="settingTab === 1">
-						<div class="col-md-9">
-							<h3 class="title-section">Sửa thông tin cá nhân</h3>
-							<div class="row edit-profile">
-								<div class="col-md-3">
-									<div class="avatar-wrapper">
-										<img src="{{user.avatar}}" width="164" height="164">
-										<a id="change-avtar">Thay đổi ảnh đại diện</a>
-									</div>
-								</div>
-								<div class="col-md-8">
-									<div class="row">
-										<div class="col-md-5 form-info">
-											<span>Tên hiển thị</span>
-											<input type="text" class="form-control" ng-model="name_edit" value="{{user.name}}" placeholder="Cập nhật..." >
-										</div>
-										<div class="col-md-6 col-md-offset-1 form-info">
-											<span>Lớp/Chuyên ngành</span>
-											<input type="text" class="form-control" ng-model="class_edit" value="{{user.class}}" placeholder="Cập nhật..." >
-										</div>
-										<div class="col-md-5 form-info">
-											<span>Ngày sinh</span>
-											<input type="text" name="birthday" ng-model="birthday_edit" class="form-control" placeholder="Cập nhật..." value="{{user.birthday}}">
-										</div>
-										<div class="col-md-6 col-md-offset-1 form-info">
-											<span>Số điện thoại</span>
-											<input type="text" class="form-control" ng-model="phone_edit" value="{{user.phone}}" placeholder="Cập nhật..." >
-										</div>
-										
-										<div class="col-md-5 form-info">
-											<span>Nơi ở</span>
-											<select selector
-													multi="false"
-													model="local_edit"
-													name="local"
-													options="locals"
-													label-attr="name"
-													placeholder="Cập nhật..."></select>
-											
-										</div>
-										<div class="col-md-6 col-md-offset-1 form-info">
-											<span>Giới tính</span>
-											<div class="form-group gender-radio" ng-model="gender_edit">
-											    <input name="group2" type="radio" class="with-gap" id="radio4" value="1" checked="user.gender === 1">
-											    <label for="radio4">Nam</label>
-											    <input name="group2" type="radio" class="with-gap" id="radio4" value="0" checked="user.gender === 0">
-											    <label for="radio4">Nữ</label>
-											    <input name="group2" type="radio" class="with-gap" id="radio4" value="2" checked="user.gender === 2">
-											    <label for="radio4">Khác</label>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-11" style="padding:10px 0px 10px 10px; margin-top:20px;" >
-									<label>Giới thiệu bản thân</label>
-									<div ckeditor="options" ng-model="description_edit" ready="onReady()"></div>
-								</div>
-							</div>
-							<div class="col-md-4 col-md-offset-4">
-								<a style="width:40%;" href="" class="btn btn-warning" type="button" >Huỷ bỏ</a>
-								<button style="width: 40%;" class="btn btn-default" type="button" ng-click="editProfile()">Lưu lại </button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			@include('users.directives.setting_directive')
 		</div>
-	@endverbatim
 @endsection

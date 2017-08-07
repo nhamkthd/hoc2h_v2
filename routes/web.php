@@ -24,6 +24,8 @@ Route::group(['prefix'=>'users'],function(){
 	Route::group(['prefix'=>'api'],function(){
 		Route::get('user-profile/{id}','UserController@apiGetProfile');
 		Route::post('/edit','UserController@userEdit');
+		Route::group(['prefix'=>'directives'],function(){
+		});
 	});
 });
 
