@@ -39,7 +39,7 @@
 											<li><i class="fa fa-intersex" aria-hidden="true"></i></li>
 											<li><i class="fa fa-birthday-cake" aria-hidden="true"></i>{{user.birthday| date:'dd/MM/yyyy'}}</li>
 											<li><i class="fa fa-graduation-cap" aria-hidden="true"></i>{{user.class}} </li>
-											<li><i class="fa fa-clock-o" aria-hidden="true"></i>tham gia ngày {{user.created_at}}</li>
+											<li><i class="fa fa-clock-o" aria-hidden="true"></i>tham gia ngày {{user.join_date}}</li>
 										</ul>
 									</div>
 								</div>

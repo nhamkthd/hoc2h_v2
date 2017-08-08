@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Auth;
 use App\User;
 use App\Role;
@@ -37,6 +38,7 @@ class UserController extends Controller
   
   public function apiGetProfile($id){
     $user = User::find($id);
+    $user->join_date = $user->created_at->format('d/m/Y');
     return $user;
   }
 
