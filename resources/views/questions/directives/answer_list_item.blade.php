@@ -26,7 +26,7 @@
 	</script>
 	<div class="media-body">
 		<div class="media-heading">
-			<a href class="primary-text">{{answer.user.name}}</a>
+			<a href="/users/{{answer.user.id}}/profile" class="primary-text">{{answer.user.name}}</a>
 			<span class="date-created pull-right"><i class="fa fa-clock-o" aria-hidden="true"></i> {{answer.date_created}}</span>
 		</div>
 		<div class="">
@@ -66,11 +66,11 @@
 		<div class="comment-block" ng-show="showComments[answer.id]">
 			<div class="comment-block-item" ng-repeat="comment in answer.comments">
 				<span class="pull-left avt">
-					<img src="" width="40" height="40">
+					<img src="{{comment.user.avatar}}" width="40" height="40">
 				</span>
 				<div class="media-body">
 					<div class="media-heading">
-						<a href class="primary-text">{{comment.user.name}}</a>
+						<a href="/users/{{comment.user.id}}/profile" class="primary-text">{{comment.user.name}}</a>
 						<span class="date-created"><i class="fa fa-clock-o" aria-hidden="true"></i> {{comment.date_created}}</span>
 					</div>
 					<div class="">
@@ -120,17 +120,15 @@
 			</div>
 			<div class="comment-box" ng-show="isLogged == true">
 				<span class="pull-left avt">
-					<img src="" width="40" height="40">
+					@endverbatim
+					<img src="{{Auth::user()->avatar}}" width="40" height="40">
+					@verbatim
 				</span>
 				<div class="media-body">
 					<textarea id="comment_field" class="form-control" placeholder="Viết bình luận..." 
 							  ng-model="comment_content_field[$index]" 
 							  enter-submit="addComment($index)"></textarea>
 				</div>
-				<!--<button style="margin-top:10px;" type="button"
-						class="btn btn-outline-default waves-effect pull-right"  
-						ng-click="addComment($index)">
-						Gửi bình luận</button>-->
 			</div>
 		</div>
 	</div>

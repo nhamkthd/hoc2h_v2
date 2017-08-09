@@ -9,6 +9,36 @@
 	//main user controller
 	app.controller('UserController',function($scope, $http,$sce, Upload, Flash){
 		
+		
+		$scope.setTab = function(tab){
+			$scope.currentTab = tab;
+			if (tab == 3) {
+				$scope.setSettingTab(1);
+			}
+		}
+		
+
+		//get user infomation with user_id
+		$scope.getUser = function($id,tab){
+			$http.get('/users/api/user-profile/'+$id)
+				 .then(function(response){
+				 	$scope.user = response.data;
+				 	$scope.setTab(tab);
+				 },function(error){
+				 	console.log(error);
+			});
+		}
+
+
+		//------SETTINGS TAB ----------//
+		
+		$scope.setSettingTab = function(tab){
+			$scope.settingTab = tab;
+			if (tab == 1) {
+				$scope.setEditingUser($scope.user);
+			}
+		}
+		//create locals array
 		$scope.locals = [
 		 	{name:"An Giang"},
 			{name:"Bà Rịa - Vũng Tàu"},
@@ -73,14 +103,9 @@
 			{name:"Hải Phòng"},
 			{name:"Hà Nội"},
 			{name:"TP HCM"},
-		 ]
-		$scope.setTab = function(tab){
-			$scope.currentTab = tab;
-			if (tab == 3) {
-				$scope.setSettingTab(1);
-			}
-		}
-		//date picker
+		 ];
+		
+		//date picker setting
 		$scope.dateOptions = {
 		    formatYear: 'yy',
 		    maxDate: new Date(2020, 5, 22),
@@ -97,16 +122,6 @@
 			$scope.popup1.opened = true;
 		}
 
-		//get user infomation with user_id
-		$scope.getUser = function($id,tab){
-			$http.get('/users/api/user-profile/'+$id)
-				 .then(function(response){
-				 	$scope.user = response.data;
-				 	$scope.setTab(tab);
-				 },function(error){
-				 	console.log(error);
-			});
-		}
 		//set editing value
 		$scope.setEditingUser = function(user){
 			$scope.name_edit = user.name;
@@ -118,14 +133,7 @@
 			$scope.avatar_text = "Cập nhật ảnh đại diện";
 		}
 
-		$scope.setSettingTab = function(tab){
-			$scope.settingTab = tab;
-			if (tab == 1) {
-				$scope.setEditingUser($scope.user);
-			}
-		}
-
-		//uploading avatar image
+		//uploading avatar photo
 		$scope.uploadAvatar = function (file) {
 	        Upload.upload({
 	        	headers: {'Authorization': 'Client-ID 5f83e114af0de78'},
@@ -133,14 +141,14 @@
 	            method:'POST',
 	            data: {image:file}
 	        }).then(function (response) {
-				console.log('avtar uploaded....!')
+				console.log('avtar uploaded....!');
 	           	$scope.user.avatar = response.data.data.link;
 	           	$scope.avatar_text = "Cập nhật ảnh đại diện"; 
 	        }, function (error) {
 	            console.log(error);
 	        }, function (evt) {
 	            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-	            $scope.avatar_text = "Đang tải lên..."
+	            $scope.avatar_text = "Đang tải lên...";
 	        });
 	    };
 

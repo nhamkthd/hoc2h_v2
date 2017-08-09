@@ -118,7 +118,7 @@ class QuestionController extends Controller
     //get all questions with tag id
     public function apiGetQuestionsTagged($tag_id){
        
-        $questionTags = QuestionTag::where('tag_id',$tag_id)->get();
+        $questionTags = QuestionTag::where('tag_id',$tag_id)->orderby('id','desc')->get();
         $results = array();
         $index = 0;
         foreach ($questionTags as $questionTag) {

@@ -27,14 +27,14 @@
  	app.directive('postsPaginations', function(){
  		return {
  			restrict: 'E',
- 			template: '<ul class="pagination pg-bluegrey">'+
- 			'<li class="page-item" ><a class="page-link" ng-class="{disabled:currentPage == 1}" ng-click="getTest(1)">«</a></li>'+
- 			'<li class="page-item"><a class="page-link" ng-class="{disabled:currentPage == 1}" ng-click="getTest(currentPage-1)">‹</a></li>'+
- 			'<li class="page-item" ng-repeat="i in range" ng-class="{active : currentPage == i}">'+
- 			'<a  a class="page-link" ng-click="getQuestionsWithTab(tab,i)">{{i}}</a>'+
+ 			template: '<ul class="pagination">'+
+ 			'<li><a ng-class="{disabled:currentPage == 1}" ng-click="getTest(1)">«</a></li>'+
+ 			'<li><a ng-class="{disabled:currentPage == 1}" ng-click="getTest(currentPage-1)">‹</a></li>'+
+ 			'<li ng-repeat="i in range" ng-class="{active : currentPage == i}">'+
+ 			'<a ng-click="getQuestionsWithTab(tab,i)">{{i}}</a>'+
  			'</li>'+
- 			'<li class="page-item"><a class="page-link" ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(currentPage+1)"> ›</a></li>'+
- 			'<li class="page-item"><a class="page-link" ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(totalPages)">»</a></li>'+
+ 			'<li><a ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(currentPage+1)"> ›</a></li>'+
+ 			'<li><a ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(totalPages)">»</a></li>'+
  			'</ul>'
  		};
  	});

@@ -1,25 +1,25 @@
 		@verbatim	
-			<div class="col-md-12 tab-content">
+			<div class="col-md-12 tab-content" >
 				<div class="row">
 					<div class="col-md-3" id="side-menu">
 						<ul>
 							<li class="category">Thông tin cá nhân
 								<ul>
-									<li><a ng-class="{active:settingTab === 1}" href="">Sửa thông tin</a></li>
-									<li><a ng-class="{active:settingTab === 2}" href="">Quyền riêng tư</a></li>
-									<li><a ng-class="{active:settingTab === 3}" href="">Thông tin khác</a></li>
+									<li><a ng-click="setSettingTab(1)" ng-class="{active:settingTab === 1}" href="">Sửa thông tin</a></li>
+									<li><a ng-click="setSettingTab(2)" ng-class="{active:settingTab === 2}" href="">Quyền riêng tư</a></li>
+									<li><a ng-click="setSettingTab(3)" ng-class="{active:settingTab === 3}" href="">Email và Mật khẩu</a></li>
 								</ul>
 							</li>
 							<li class="category">Thông báo
 								<ul>
-									<li><a ng-class="{active:settingTab === 4}" href="">Tin nhắn</a></li>
-									<li><a ng-class="{active:settingTab === 5}" href="">Người theo dõi</a></li>
-									<li><a ng-class="{active:settingTab === 6}" href="">Email</a></li>
+									<li><a ng-click="setSettingTab(4)" ng-class="{active:settingTab === 4}" href="">Tin nhắn</a></li>
+									<li><a ng-click="setSettingTab(5)" ng-class="{active:settingTab === 5}" href="">Người theo dõi</a></li>
+									<li><a ng-click="setSettingTab(6)" ng-class="{active:settingTab === 6}" href="">Email</a></li>
 								</ul>
 							</li>
 							<li class="category">Tương tác
 								<ul>
-									<li><a ng-class="{active:settingTab === 7}" href="">Danh sách theo dõi</a></li>
+									<li><a ng-click="setSettingTab(7)" ng-class="{active:settingTab === 7}" href="">Danh sách theo dõi</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -102,6 +102,89 @@
 							<div class="col-md-4 col-md-offset-4">
 								<a style="width:40%;" href="/users/{{user.id}}/profile" class="btn btn-warning" type="button" >Huỷ bỏ</a>
 								<button style="width: 40%;" class="btn btn-default" type="button" ng-click="editProfile()">Lưu lại </button>
+							</div>
+						</div>
+					</div>
+					<div ng-show="settingTab === 2">
+						<div class="col-md-9">
+							<h3 class="title-section">Cài đặt quyền riêng tư</h3>
+							<div class="row private-setting" >
+								<table class="setting-table">
+									<tbody>
+										<tr class="confirm">
+											<td class="desc">
+												<strong>Hiển trạng thái online</strong>
+												<span>Cho phép mọi người thấy bạn khi đăng nhập </span>
+											</td>
+											<td class="action">
+												<div class="TriSea-technologies-Switch pull-right">
+						                            <input id="active_status-" name="TriSea1" type="checkbox"/>
+						                            <label for="active_status" class="label-info"></label>
+						                        </div>
+											</td>
+										</tr>
+										<tr class="confirm">
+											<td class="desc">
+												<strong>Hiển thị ngày tháng năm sinh</strong>
+												<span>Cho phép mọi người thấy được tuổi và sinh nhật của bạn</span>
+											</td>
+											<td class="action">
+												<div class="TriSea-technologies-Switch pull-right">
+						                            <input id="show_birthday" name="TriSea1" type="checkbox"/>
+						                            <label for="show_birthday" class="label-info"></label>
+						                        </div>
+											</td>
+										</tr>
+										<tr class="confirm">
+											<td class="desc">
+												<strong>Hiển thị số điện thoại</strong>
+												<span>Cho phép mọi người thấy được số điện thoại của bạn</span>
+											</td>
+											<td class="action">
+												<div class="TriSea-technologies-Switch pull-right">
+						                            <input id="show_phone" name="TriSea1" type="checkbox"/>
+						                            <label for="show_phone" class="label-info"></label>
+						                        </div>
+											</td>
+										</tr>
+										<tr class="confirm">
+											<td class="desc">
+												<strong>Xem chi tiết trang cá nhân</strong>
+												<span>Đối tượng có thể xem chi tiết trang cá nhân</span>
+											</td>
+											<td class="action">
+												<div ng-init="show_profile_objects = [
+																{name: 'Tất cả', id: 1},
+																{name: 'Chỉ thành viên', id: 2},
+																{name: 'Chỉ người theo dõi bạn', id: 3}]"></div>
+												<select selector
+														multi="false"
+														model="show_profile"
+														options="show_profile_objects"
+														label-attr="name"
+														value-attr="id"></select>
+											</td>
+										</tr>
+										<tr class="confirm">
+											<td class="desc">
+												<strong>Gửi tin nhắn cho bạn</strong>
+												<span>Đối tượng có thể bắt đầu nhắn tin</span>
+											</td>
+											<td class="action">
+												<div ng-init="send_message_objects = [
+																{name: 'Thành viên', id: 1},
+																{name: 'Chỉ người theo dõi bạn', id: 2},]"></div>
+												<select selector
+														multi="false"
+														model="send_message"
+														options="send_message_objects"
+														label-attr="name"
+														value-attr="id"></select>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<button style="vertical-align: middle; width: 20%;margin-left:15px; margin-top:20px;" class="btn btn-default" type="button" ng-click="updateUserPrivate()">Lưu lại </button>
 							</div>
 						</div>
 					</div>

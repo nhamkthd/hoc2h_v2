@@ -22,7 +22,7 @@
 				<div class="post-header">
 					<h3 class="unique-text">{{question.title}} </h3>
 					<p>
-						Đăng bởi <a href="#nothing" class="primary-text">{{question.user.name}}</a> tại <a href class="warning-dark-text"> {{question.category.title}} </a> <a ng-click="editCategory()"> <i class="fa fa-edit" aria-hidden="true"></i></a>
+						Đăng bởi <a href="/users/{{question.user.id}}/profile" class="primary-text">{{question.user.name}}</a> tại <a href class="warning-dark-text"> {{question.category.title}} </a> <a ng-click="editCategory()"> <i class="fa fa-edit" aria-hidden="true"></i></a>
 						<span class="pull-right"> <i class="fa fa-clock-o" aria-hidden="true"></i>  {{question.date_created}}</span>
 					</p>
 				</div>

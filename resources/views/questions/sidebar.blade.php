@@ -1,10 +1,9 @@
                 <div ng-init="getListTags()"></div>
                 <div class="row sidebar" >
-                    <div class="col-md-10 col-md-offset-1">
-                        <a href="{{route('showQuestionCreateFrom')}}"  class="btn btn-outline-default waves-effect" style="width: 100%;" >Đăng câu hỏi</a>
-                         <hr>
+                    <div class="col-md-10 col-md-offset-1" style="padding:10px;">
+                        <a href="{{route('showQuestionCreateFrom')}}"  class="btn btn-info" style="width: 100%;" >Đăng câu hỏi</a>
                     </div>
-                    <div class="col-md-10 col-md-offset-1">
+                    <div class="col-md-10 col-md-offset-1" ng-hide="tab === 0">
                         <input placeholder="Tìm kiếm" type="text" ng-model="keywords" ng-change="search()" class="form-control" required>
                     </div>
                     <div class = "col-md-10 col-md-offset-1">

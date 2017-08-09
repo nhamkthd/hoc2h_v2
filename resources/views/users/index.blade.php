@@ -61,6 +61,21 @@
 	.form-info span { font-weight: bold; font-size: 12px;}
 	.gender-radio label {margin-right: 10px;font-weight: normal;}
 	.btn.btn-default.btn-sm {font-size: 0.2rem;padding: 5px;box-shadow: none;color:#4d545d;}
+	
+	.private-setting {padding:15px;}
+	.setting-table {width: 100%;}
+	.setting-table tr:not(last-child) td {border-bottom: 1px solid #eff0f1;}
+	.setting-table td { padding:18px; vertical-align: middle; font-size: 13px;}
+	.setting-table td .desc {line-height: 1.13333333;}
+	.setting-table td strong {display: block;font-size: 14px;color: #242729;position: relative;padding-bottom:5px;}
+	.setting-table td .action {padding-right:22px; text-align:right;}
+	.TriSea-technologies-Switch > input[type="checkbox"] {display: none;}
+	.TriSea-technologies-Switch > label {cursor: pointer; height: 0px; position: relative; width: 40px; }
+	.TriSea-technologies-Switch > label::before {background: rgb(0, 0, 0); box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5); border-radius: 8px; content: ''; height: 16px; margin-top: -8px; position:absolute; opacity: 0.3; transition: all 0.4s ease-in-out; width: 40px; } 
+	.TriSea-technologies-Switch > label::after {background: rgb(255, 255, 255); border-radius: 16px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); content: ''; height: 24px; left: -4px; margin-top: -8px; position: absolute; top: -4px; transition: all 0.3s ease-in-out; width: 24px; }
+	.TriSea-technologies-Switch > input[type="checkbox"]:checked + label::before {background: inherit; opacity: 0.5; }
+	.TriSea-technologies-Switch > input[type="checkbox"]:checked + label::after {background: inherit; left: 20px; }
+
 </style>
 @extends('users.layouts')
 @section('user_content')
@@ -69,7 +84,7 @@
 		<ul>
 		  <li ng-class="{selected:currentTab === 1}"><a href="{{url('/users/'.$user_id.'/profile')}}">Thông tin chung</a></li>
 		  <li ng-class="{selected:currentTab === 2}"><a href="{{url('/users/'.$user_id.'/activity')}}">Hoạt động</a></li>
-		  <li ng-class="{selected:currentTab === 3}"><a href="{{url('/users/'.$user_id.'/setting')}}">Cài đặt</a></li>
+		  <li ng-show="{{$user_id}} == {{Auth::user()->id}}" ng-class="{selected:currentTab === 3}"><a href="{{url('/users/'.$user_id.'/setting')}}">Cài đặt</a></li>
 		</ul>
 	</div>
 		<div ng-show="currentTab === 1">
