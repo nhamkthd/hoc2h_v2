@@ -63,7 +63,7 @@
 	.btn.btn-default.btn-sm {font-size: 0.2rem;padding: 5px;box-shadow: none;color:#4d545d;}
 	
 	.private-setting {padding:15px;}
-	.setting-table {width: 100%;}
+	.setting-table {width: 100%; margin-bottom:20px;}
 	.setting-table tr:not(last-child) td {border-bottom: 1px solid #eff0f1;}
 	.setting-table td { padding:18px; vertical-align: middle; font-size: 13px;}
 	.setting-table td .desc {line-height: 1.13333333;}

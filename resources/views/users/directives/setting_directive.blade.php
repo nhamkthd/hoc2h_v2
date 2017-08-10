@@ -55,14 +55,7 @@
 										</div>
 										<div class="col-md-5 form-info">
 											<span>Ngày sinh</span>
-									          <input type="text" class="form-control" 
-									          		uib-datepicker-popup="{{format}}" 
-									          		ng-model="birthday_edit" 
-									          		is-open="popup1.opened"
-									          		datepicker-options="dateOptions" 
-									          		ng-required="true" 
-									          		alt-input-formats="altInputFormats"
-									          		ng-focus="birthdayFocus()" />
+									          <input type="text" class="form-control" ng-model="birthday_edit"/>
 										</div>
 										<div class="col-md-6 col-md-offset-1 form-info">
 											<span>Số điện thoại</span>
@@ -118,8 +111,12 @@
 											</td>
 											<td class="action">
 												<div class="TriSea-technologies-Switch pull-right">
-						                            <input id="active_status-" name="TriSea1" type="checkbox"/>
-						                            <label for="active_status" class="label-info"></label>
+						                            <input 	id="active_state" type="checkbox" 
+						                            		ng-checked="show_active == 1" 
+						                            		ng-model="show_active" 
+						                            		ng-true-value="1" 
+						                            		ng-false-value="0"/>
+						                            <label for="active_state" class="label-info"></label>
 						                        </div>
 											</td>
 										</tr>
@@ -130,7 +127,11 @@
 											</td>
 											<td class="action">
 												<div class="TriSea-technologies-Switch pull-right">
-						                            <input id="show_birthday" name="TriSea1" type="checkbox"/>
+						                            <input 	id="show_birthday"  type="checkbox" 
+						                            		ng-checked="show_birthday == 1"
+						                            		ng-model="show_birthday" 
+						                            		ng-true-value="1" 
+						                            		ng-false-value="0"/>
 						                            <label for="show_birthday" class="label-info"></label>
 						                        </div>
 											</td>
@@ -142,7 +143,11 @@
 											</td>
 											<td class="action">
 												<div class="TriSea-technologies-Switch pull-right">
-						                            <input id="show_phone" name="TriSea1" type="checkbox"/>
+						                            <input 	id="show_phone"  type="checkbox" 
+						                            		ng-checked="show_phone == 1" 
+						                            		ng-model="show_phone"
+						                            		ng-true-value="1" 
+						                            		ng-false-value="0" />
 						                            <label for="show_phone" class="label-info"></label>
 						                        </div>
 											</td>
@@ -153,10 +158,6 @@
 												<span>Đối tượng có thể xem chi tiết trang cá nhân</span>
 											</td>
 											<td class="action">
-												<div ng-init="show_profile_objects = [
-																{name: 'Tất cả', id: 1},
-																{name: 'Chỉ thành viên', id: 2},
-																{name: 'Chỉ người theo dõi bạn', id: 3}]"></div>
 												<select selector
 														multi="false"
 														model="show_profile"
@@ -171,9 +172,6 @@
 												<span>Đối tượng có thể bắt đầu nhắn tin</span>
 											</td>
 											<td class="action">
-												<div ng-init="send_message_objects = [
-																{name: 'Thành viên', id: 1},
-																{name: 'Chỉ người theo dõi bạn', id: 2},]"></div>
 												<select selector
 														multi="false"
 														model="send_message"
@@ -184,6 +182,7 @@
 										</tr>
 									</tbody>
 								</table>
+								<flash-message></flash-message>
 								<button style="vertical-align: middle; width: 20%;margin-left:15px; margin-top:20px;" class="btn btn-default" type="button" ng-click="updateUserPrivate()">Lưu lại </button>
 							</div>
 						</div>

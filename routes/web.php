@@ -23,7 +23,9 @@ Route::group(['prefix'=>'users'],function(){
 	Route::get('/{id}/{tab?}','UserController@userIndex')->where('id', '[0-9]+');
 	Route::group(['prefix'=>'api'],function(){
 		Route::get('user-profile/{id}','UserController@apiGetProfile');
+		Route::get('/user-private/{id}','UserController@getUserPrivate');
 		Route::post('/edit','UserController@userEdit');
+		Route::post('/update-user-private','UserController@updateUserPrivate');
 		Route::group(['prefix'=>'directives'],function(){
 		});
 	});

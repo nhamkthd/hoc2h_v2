@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
 use App\User;
+use App\UserPrivate;
 use App\Role;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\updateUserRequest;
@@ -42,6 +43,10 @@ class UserController extends Controller
     return $user;
   }
 
+  public function getUserPrivate($id){
+    return UserPrivate::where('user_id',$id)->get();
+  }
+
   public function userEdit(Request $request){
     $user_edit = User::find($request->id);
     $user_edit->name = $request->name;
@@ -56,7 +61,16 @@ class UserController extends Controller
     return $user_edit;
   }
 
-
+  public function updateUserPrivate(Request $request){
+    $user_private = UserPrivate::find($request->id);
+    $user_private->show_active = $request->show_active;
+    $user_private->show_birthday = $request->show_birthday;
+    $user_private->show_phone = $request->show_phone;
+    $user_private->view_detail_profile = $request->show_profile;
+    $user_private->send_message = $request->send_message;
+    $user_private->save();
+    return $user_private;
+  }
   //ADMIN   
   public function index(){
     $user = User::all();

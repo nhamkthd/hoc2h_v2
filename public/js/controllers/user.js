@@ -9,15 +9,14 @@
 	//main user controller
 	app.controller('UserController',function($scope, $http,$sce, Upload, Flash){
 		
-		
 		$scope.setTab = function(tab){
 			$scope.currentTab = tab;
 			if (tab == 3) {
 				$scope.setSettingTab(1);
+				$scope.getUserPrivate();
 			}
 		}
 		
-
 		//get user infomation with user_id
 		$scope.getUser = function($id,tab){
 			$http.get('/users/api/user-profile/'+$id)
@@ -36,9 +35,26 @@
 			$scope.settingTab = tab;
 			if (tab == 1) {
 				$scope.setEditingUser($scope.user);
+			}else if (tab == 2) {
+				console.log($scope.show_profile);
 			}
 		}
-		//create locals array
+
+		$scope.getUserPrivate = function(){
+			$http.get('/users/api/user-private/'+$scope.user.id)
+				 .then(function(response){
+				 	$scope.user_private = response.data[0];
+				 	console.log('user-private: ',$scope.user_private);
+				 	$scope.show_profile = $scope.user_private.view_detail_profile;
+					$scope.send_message = $scope.user_private.send_message;
+					$scope.show_active = $scope.user_private.show_active;
+					$scope.show_birthday = $scope.user_private.show_birthday;
+					$scope.show_phone = $scope.user_private.show_phone;
+				 },function(error){
+				 	console.log(error.data);
+				 })
+		}
+		//init arrays
 		$scope.locals = [
 		 	{name:"An Giang"},
 			{name:"Bà Rịa - Vũng Tàu"},
@@ -104,7 +120,9 @@
 			{name:"Hà Nội"},
 			{name:"TP HCM"},
 		 ];
-		
+		$scope.show_profile_objects = [{name: 'Tất cả', id: 1}, {name: 'Chỉ thành viên', id: 2}, {name: 'Chỉ người theo dõi bạn', id: 3}];
+		$scope.send_message_objects = [{name: 'Thành viên', id: 1}, {name: 'Chỉ người theo dõi bạn', id: 2},] ;
+
 		//date picker setting
 		$scope.dateOptions = {
 		    formatYear: 'yy',
@@ -172,11 +190,30 @@
 				 	console.log(response.data);
 				 	$scope.user = response.data;
 				 	var message = '<strong>Thành công!</strong>Các thông tin thay đổi đã được cập nhật xong.';
-       				 Flash.create('success', message);
+       				Flash.create('success', message);
 				 	flash.getMessage($scope.message);
 				 },function(error){
 				 	console.log(error);
 				 });
+		}
+
+		//update user private 
+		$scope.updateUserPrivate = function(){
+			$http.post('/users/api/update-user-private',{id:$scope.user_private.id,
+														 show_active:$scope.show_active,
+														 show_birthday:$scope.show_birthday,
+														 show_phone:$scope.show_phone,
+														 show_profile:$scope.show_profile,
+														 send_message:$scope.send_message})
+			     .then(function(response){
+			     	console.log(response.data);
+			     	$scope.user_private = response.data;
+			     	var message = '<strong>Thành công!</strong> Các thông tin thay đổi đã được cập nhật xong.';
+       				Flash.create('success', message);
+				 	flash.getMessage($scope.message);
+			     },function(error){
+			     	console.log(error.data);
+			    });
 		}
 	});
 })();
