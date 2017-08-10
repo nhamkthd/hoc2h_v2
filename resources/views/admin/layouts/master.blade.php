@@ -29,6 +29,7 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
   @yield('style')
+  
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">

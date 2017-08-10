@@ -26,7 +26,7 @@
           {{session('notify')}}
         </div>
         @endif
-      </div>
+      </div> 
       <div class="box-body">
         <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
           <thead>

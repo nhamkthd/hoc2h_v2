@@ -18,7 +18,7 @@ class LoginController extends Controller
     	return view('admin.business.login.login');
     }
     public function login(LoginRequest $request){
-    	$auth = Auth::attempt(['user_name'=>$request->username,'password'=>$request->password,'status'=>1]);
+    	$auth = Auth::attempt(['user_name'=>$request->username,'password'=>$request->password,'status'=>1,'role_id'=>1]);
     	if($auth){
     		return redirect()->route('homeadmin');
     	}
