@@ -7,11 +7,11 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{url('/')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Category</li>
+    <li class="active">User</li>
   </ol>
 </section>
 <!-- list account -->
-<section class="content">
+<section class="content" ng-app="hoc2h-user" ng-controller="userController">
  <div class="row">
   <div class="col-sm-12">
     <div class="box">
@@ -45,41 +45,32 @@
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
-            @foreach($user as $u)
-            <tr>
-              <td>{{$u->id}}</td>
-              <td>{{$u->role->title}}</td>
-              <td>{{$u->name}}</td>
-              <td>{{$u->email}}</td>
-              <td>{{$u->phone}}</td>
-              <td>{{$u->class}}</td>
-              <td>
-                @if($u->gender==1)
-                Nam
-                @else 
-                Nữ
-                @endif</td>
+          @verbatim
+          <tbody ng-init="list_user()">
+            <tr ng-repeat="u in list_users">
+              <td>{{u.id}}</td>
+              <td>{{u.role.title}}</td>
+              <td>{{u.name}}</td>
+              <td>{{u.email}}</td>
+              <td>{{u.phone}}</td>
+              <td>{{u.class}}</td>
+              <td ng-if="u.gender==1">Nam</td>
+              <td ng-if="u.gender!=1">Nữ</td>
+              <td ng-if="u.status==1">Kích hoạt</td>
+              <td ng-if="u.status==0">Không kích hoạt</td>
+              <td>{{u.birthday}}</td>
                 <td>
-                  @if($u->status==1)
-                  Kích hoạt
-                  @else 
-                  Không kích hoạt
-                  @endif
-                </td>
-                <td>{{$u->birthday}}</td>
-                <td>
-                  <img width="120px" height="80px" src="{{asset('images/users/'.$u->avatar)}}">
+                  <img width="50" height="50" src="{{u.avatar}}">
                 </td>
                 <td>
                   <div class="btn-group">
-                    <a href="{{ asset('admin/user/show/'.$u->id) }}"><i class="fa fa-fw fa-cog"></i></a>
-                    <a href="{{ asset('admin/user/'.$u->id) }}"><i class="fa fa-fw fa-remove"></i></a>
+                    <a href="user/show/{{u.id}}"><i class="fa fa-fw fa-cog"></i></a>
+                    <a href="user/{{u.id}}"><i class="fa fa-fw fa-remove"></i></a>
                   </div>
                 </td>
               </tr> 
-              @endforeach   
             </tbody>
+             @endverbatim
           </table>
         </div>
       </div>

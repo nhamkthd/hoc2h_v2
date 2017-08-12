@@ -94,8 +94,6 @@ Route::group(['prefix' => 'questions'], function(){
 		Route::post('/answer/comment/delete','AnswerController@deleteComment');
 	});
 });
-
-
 	Route::group(['prefix' => 'notification'], function() {
 	    Route::post('getNotification','NotificationController@show');
 	    Route::post('readNotification','NotificationController@update');
@@ -115,7 +113,11 @@ Route::group(['middleware'=>['login']],function(){
 		Route::post('category/create/{category}',array('as'=>'postcreateCategoryid','uses'=>'CategoryController@postCreateid'));
 		Route::get('category/show/{category}',array('as'=>'showCategory','uses'=>'CategoryController@Show'));
 		Route::post('category/show/{category}',array('as'=>'updateCategory','uses'=>'CategoryController@update'));
-		Route::get('category/{id}',array('as'=>'destroyCategory','uses'=>'CategoryController@destroy'));
+		// Route::get('category/{id}',array('as'=>'destroyCategory','uses'=>'CategoryController@destroy'));
+		Route::get('category/setting',function()
+		{
+			return view('admin.business.category.setting');
+		});
 
 		Route::get('user',array('as'=>'indexUser','uses'=>'UserController@index'));
 		Route::get('user/create',array('as'=>'getcreateUser','uses'=>'UserController@getCreate'));
@@ -123,12 +125,20 @@ Route::group(['middleware'=>['login']],function(){
 		Route::get('user/show/{user}',array('as'=>'showUser','uses'=>'UserController@Show'));
 		Route::post('user/show/{user}',array('as'=>'updateUser','uses'=>'UserController@update'));
 		Route::get('user/{id}',array('as'=>'destroyUser','uses'=>'UserController@destroy'));
-
 		Route::get('role',array('as'=>'indexRole','uses'=>'RoleController@index'));
-		Route::get('role/create',array('as'=>'getcreateRole','uses'=>'RoleController@getCreate'));
-		Route::post('role/create',array('as'=>'postcreateRole','uses'=>'RoleController@postCreate'));
-		Route::get('role/show/{role}',array('as'=>'showRole','uses'=>'RoleController@Show'));
-		Route::post('role/show/{role}',array('as'=>'updateRole','uses'=>'RoleController@update'));
-		Route::get('role/{id}',array('as'=>'destroyRole','uses'=>'RoleController@destroy'));
+		Route::group(['prefix' => 'api'], function() {
+		    Route::group(['prefix' => 'role'], function() {
+		        Route::get('list', 'RoleController@getList');
+		        Route::post('create', 'RoleController@create');
+		        Route::delete('delete/{id}', 'RoleController@destroy');
+		    });
+		    Route::group(['prefix' => 'user'], function() {
+		        Route::get('list', 'UserController@getList');
+		    });
+		    Route::group(['prefix' => 'category'], function() {
+		        Route::get('list', 'CategoryController@getList');
+		    });
+		});
+
 	});
 });

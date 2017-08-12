@@ -22,6 +22,21 @@ class CategoryController extends Controller
     	$category = Category::all();
     	return view('admin.business.category.index',compact('category'));
     }
+    public function getList()
+    {
+        dd($this->deQuy(Category::all(),0));
+    }
+    public function deQuy($categories, $parent_id = 0,$arr=array())
+    {
+        foreach ($categories as $key => $category) {  
+            if($category->parent_id==$parent_id)
+            { 
+                 unset($categories[$key]);
+                 $this->deQuy($categories,$category->id,$arr);
+            }
+        }
+        return $arr;
+    }
     public function getcreate(){
         $category = Category::all();
         return view('admin.business.category.create',compact('category'));

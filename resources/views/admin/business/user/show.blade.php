@@ -82,7 +82,7 @@
             <div class="form-group ">
               <label class="control-label col-lg-2">Avatar </label>
               <div class="col-lg-8">
-                <p><img width="200px" height="100px" src="{{asset('images/users/'.$user->avatar)}}"></p>
+                <p><img width="200px" height="100px" src="{{$user->avatar}}"></p>
                 <input type="file" name="avatar" class="form-control">
                 @if($errors->has('avatar'))<p style="color: red;">{{$errors->first('avatar')}}</p>@endif
               </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title>{{ config('app.name', 'Hoc2H') }}</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href='{{asset("template/bootstrap/css/bootstrap.min.css")}}'>
@@ -18,10 +18,27 @@
   <link rel="stylesheet" href='{{asset("template/dist/css/AdminLTE.min.css")}}'>
   <!-- AdminLTE Skins. Choose a skin from the css/skins
   folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href='{{asset("template/plugins/jquery-nestable/jquery.nestable.css")}}'>
   <link rel="stylesheet" href='{{asset("template/dist/css/skins/_all-skins.min.css")}}'>
   
   <link rel="stylesheet" href='{{asset("template/plugins/datatables/dataTables.bootstrap.css")}}'>
-  
+  <script src='{{asset("/template/plugins/jQuery/jquery-2.2.3.min.js")}}'></script>
+  <script src='{{asset("/template/plugins/jquery-nestable/jquery.nestable.js")}}'></script>
+  <script src="{{asset('js/flugin/angular/angular.min.js')}}"></script> 
+  <script src="{{asset('js/flugin/angular/ng-tags-input.js')}}"></script> 
+  <script src="{{asset('js/flugin/angular/ng-nestable.js')}}"></script> 
+  <script src="{{asset('js/flugin/angular/angular-selector.js')}}"></script> 
+  <script src="{{asset('js/flugin/angular/ng-infinite-scroll.js')}}"></script>
+  <script src="{{asset('js/flugin/angular/ng-scrollbar.js')}}"></script> 
+  <script src="{{asset('js/flugin/angular/ng-file-upload-shim.js')}}"></script> 
+  <script src="{{asset('js/flugin/angular/ng-file-upload.js')}}"></script>
+  <script src="{{asset('js/flugin/angular/angular-flash.js')}}"></script>  
+  <script src="{{asset('js/flugin/angular/angular-ckeditor.js')}}"></script>
+  <script src="{{asset('js/flugin/bootstrap/ui-bootstrap-tpls-2.5.0.min.js')}}"></script>
+  <script src="{{asset('js/controllers/admin/app.js')}}"></script>
+  <script src="{{asset('js/controllers/admin/role.js')}}"></script>
+  <script src="{{asset('js/controllers/admin/user.js')}}"></script>
+  <script src="{{asset('js/controllers/admin/category.js')}}"></script>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -29,9 +46,20 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
   @yield('style')
-  
+  <style type="text/css">
+    #loading{
+      background: url({{ asset('img/loading.gif') }}) center no-repeat #fff;
+      position: fixed;
+      left: 0px;
+      top: 0px,;
+      width: 100%;
+      height: 100%;
+      z-index: 9999
+    }
+  </style>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" >
+<div class="loading" id="loading"></div>
   <div class="wrapper">
     @include('admin.partials.header')
     @include('admin.partials.sidebars')
@@ -234,7 +262,7 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 2.2.3 -->
-<script src='{{asset("/template/plugins/jQuery/jquery-2.2.3.min.js")}}'></script>
+
 <!-- Bootstrap 3.3.7 -->
 <script src='{{asset("/template/bootstrap/js/bootstrap.min.js")}}'></script>
 <!-- FastClick -->
@@ -256,19 +284,20 @@
 
 <script src='{{asset("/template/plugins/datatables/jquery.dataTables.min.js")}}'></script>
 <script src='{{asset("/template/plugins/datatables/dataTables.bootstrap.min.js")}}'></script>
+
 <script type="text/javascript">
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false
+  $(document).ready(function() {
+    var url=window.location.href;
+    $('.sidebar-menu li').each(function() {
+      var href=$(this).find('a').attr('href');
+      if(href==url)
+      {
+        $(this).addClass('active');
+      }
     });
   });
 </script>
 @yield('script')
+
 </body>
 </html>

@@ -5,7 +5,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>Hoc</b>2h</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -213,17 +213,17 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src='{{asset("images/users/".Auth::user()->avatar)}}' class="user-image" alt="User Image">
+              <img src='{{Auth::user()->avatar}}' class="user-image">
               <span class="hidden-xs">{{Auth::user()->user_name}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
 
-              <img src='{{asset("images/users/".Auth::user()->avatar)}}' width="160px" height="160px" class="img-circle" alt="User Image">
+              <img src='{{Auth::user()->avatar}}' width="160px" height="160px" class="img-circle" alt="User Image">
 
                 <p>
-                  {{Auth::user()->name}}
+                  {{Auth::user()->role->title}}
                   <small>{{Auth::user()->email}}</small>
                 </p>
               </li>

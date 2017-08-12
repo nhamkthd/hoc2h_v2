@@ -73,9 +73,16 @@ class UserController extends Controller
   }
   //ADMIN   
   public function index(){
+    //$user = User::all();
+    return view('admin.business.user.index');
+  }
+  public function getList()
+  {
     $user = User::all();
-    //dd($user);
-    return view('admin.business.user.index',compact('user'));
+    foreach ($user as $key => $u) {
+      $u->role;
+    }
+    return response()->json($user);
   }
 
   public function getCreate(){

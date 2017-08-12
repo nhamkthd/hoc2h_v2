@@ -24,14 +24,14 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'permisstion'=>'required',
+            'level'=>'required',
             'title'=>'required|max:191|min:3|unique:Categories,title',
             'description'=>'required|min:3'
         ];
     }
     public function messages(){
         return [
-                'permisstion'=>'Bạn chưa chọn trường này',
+                'level'=>'Bạn chưa chọn trường này',
                 'title.required'=>'Trường này không được để trống',
                 'title.max'=>'Trường này có độ dài đến 191 ký tự',
                 'title.min'=>'Trường này có độ dài từ 3 ký tự',

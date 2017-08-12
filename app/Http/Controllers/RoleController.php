@@ -11,27 +11,25 @@ use App\Http\Requests\UpdateRoleRequest;
 class RoleController extends Controller
 {
      public function index(){
-		$role = Role::all();
-		return view('admin.business.role.index',compact('role'));
+		return view('admin.business.role.index');
 	}
-	public function getCreate(){
-		$permisstion = UserPermissions::all();
-		return view('admin.business.role.create',compact('permisstion'));
+	public function getList()
+	{
+		$role=Role::all();
+		return response()->json($role);
 	}
-	public function postCreate(RoleRequest $request,Role $role){
+	public function create(RoleRequest $request){
 		$role = new Role;
 		$role->title = $request->title;
-		$role->promissions_id = $request->permisstion;
+		$role->level = $request->level;
 		$role->discription = $request->description;
 		$role->save();
-		\Session::flash('notify','Thêm thành công');
-		return redirect()->route('indexRole');
+		return response()->json($role);
 	}
 	public function destroy($id){
 		$Role = Role::find($id);
 		$Role->delete();
-		\Session::flash('notify','Xóa thành công');
-		return redirect()->route('indexRole');
+		return 'true';
 	}
 	public function Show($id){
 		$role = Role::find($id);
