@@ -26,6 +26,9 @@ Route::group(['prefix'=>'users'],function(){
 		Route::get('/user-private/{id}','UserController@getUserPrivate');
 		Route::post('/edit','UserController@userEdit');
 		Route::post('/update-user-private','UserController@updateUserPrivate');
+		Route::post('/change-email','UserController@changeEmail');
+		Route::post('/change-password','UserController@changePassword');
+		Route::post('/update-notification-setting','UserController@updateNotificationSetiing');
 		Route::group(['prefix'=>'directives'],function(){
 		});
 	});

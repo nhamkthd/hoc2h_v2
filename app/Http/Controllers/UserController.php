@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Auth;
 use App\User;
 use App\UserPrivate;
+use App\UserNotificationSetting;
 use App\Role;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\updateUserRequest;
@@ -70,6 +71,22 @@ class UserController extends Controller
     $user_private->send_message = $request->send_message;
     $user_private->save();
     return $user_private;
+  }
+
+  public function changeEmail(Request $request){
+    $user = User::find($request->user_id);
+    $user->email = $request->email;
+    $user->save();
+    return $user;
+  }
+
+  public function changePassword(Request $request){
+
+  }
+
+  public function updateNotificationSetting(Request $request){
+    $user_noti = UserNotificationSetting::find($request->user_id);
+    
   }
   //ADMIN   
   public function index(){

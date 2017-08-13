@@ -36,7 +36,13 @@
 			if (tab == 1) {
 				$scope.setEditingUser($scope.user);
 			}else if (tab == 2) {
-				console.log($scope.show_profile);
+				$scope.show_profile = $scope.user_private.view_detail_profile;
+				$scope.send_message = $scope.user_private.send_message;
+				$scope.show_active = $scope.user_private.show_active;
+				$scope.show_birthday = $scope.user_private.show_birthday;
+				$scope.show_phone = $scope.user_private.show_phone;
+			} else if (tab == 3) {
+				$scope.email = $scope.user.email;
 			}
 		}
 
@@ -45,11 +51,6 @@
 				 .then(function(response){
 				 	$scope.user_private = response.data[0];
 				 	console.log('user-private: ',$scope.user_private);
-				 	$scope.show_profile = $scope.user_private.view_detail_profile;
-					$scope.send_message = $scope.user_private.send_message;
-					$scope.show_active = $scope.user_private.show_active;
-					$scope.show_birthday = $scope.user_private.show_birthday;
-					$scope.show_phone = $scope.user_private.show_phone;
 				 },function(error){
 				 	console.log(error.data);
 				 })
@@ -214,6 +215,25 @@
 			     },function(error){
 			     	console.log(error.data);
 			    });
+		}
+
+		//change email address
+		$scope.changeEmail = function(){
+			if ($scope.email == "") {
+				var message = '<strong>Email</strong> không được để trống...!';
+       			Flash.create('danger', message);
+       			return;
+			}
+
+			$http.post('/users/api/change-email',{user_id:$scope.user.id, email:$scope.email})
+				 .then(function (response) {
+				 	console.log("new email updated:",response.data.email);
+				 	$scope.user.email = response.data.email;
+				 	var message = 'Email đã được cập nhật thành công...!';
+       				Flash.create('success', message);
+				 },function (error) {
+				 	console.log(error.data);
+				 });
 		}
 	});
 })();

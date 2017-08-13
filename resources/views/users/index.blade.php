@@ -75,6 +75,7 @@
 	.TriSea-technologies-Switch > label::after {background: rgb(255, 255, 255); border-radius: 16px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); content: ''; height: 24px; left: -4px; margin-top: -8px; position: absolute; top: -4px; transition: all 0.3s ease-in-out; width: 24px; }
 	.TriSea-technologies-Switch > input[type="checkbox"]:checked + label::before {background: inherit; opacity: 0.5; }
 	.TriSea-technologies-Switch > input[type="checkbox"]:checked + label::after {background: inherit; left: 20px; }
+	.TriSea-technologies-Switch span {margin-right: 18px;}
 
 </style>
 @extends('users.layouts')
