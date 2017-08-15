@@ -58,12 +58,12 @@ body{
     letter-spacing: -.5px;
 }
 .menu-list >li:hover {background-color:#eceff1 ;}
-a {color: #30b1a4;}
-a , a:hover, li.active a {text-decoration: none;}
-li > a{font-weight: 400; font-size: 15px; padding-left: 5px;}
-li > a > i {padding-right: 5px;}
-li.active{background-color: #eceff1}
-li.active a {color:#2bbbad; text-decoration: blink;}
+.menu-list a {color: #30b1a4;}
+.menu-list a , a:hover, li.active a {text-decoration: none;}
+.menu-list li > a{font-weight: 400; font-size: 15px; padding-left: 5px;}
+.menu-list li > a > i {padding-right: 5px;}
+.menu-list li.active{background-color: #eceff1}
+.menu-list li.active a {color:#2bbbad; text-decoration: blink;}
 span.help-inline .validate-text {color: red;}
 .main-content {padding-left: 20px;}
 /*list style*/

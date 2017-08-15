@@ -9,6 +9,9 @@ use App\User;
 use App\UserPrivate;
 use App\UserNotificationSetting;
 use App\Role;
+use App\Question;
+use App\Answer;
+use App\Test;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\updateUserRequest;
 use Hash;
@@ -41,6 +44,8 @@ class UserController extends Controller
   public function apiGetProfile($id){
     $user = User::find($id);
     $user->join_date = $user->created_at->format('d/m/Y');
+    $user->private_setting = UserPrivate::where('user_id',$user->id)->get()[0];
+    $user->notification_setting = UserNotificationSetting::where('user_id',$user->id)->get()[0];
     return $user;
   }
 
@@ -85,8 +90,39 @@ class UserController extends Controller
   }
 
   public function updateNotificationSetting(Request $request){
-    $user_noti = UserNotificationSetting::find($request->user_id);
-    
+    $user_noti = UserNotificationSetting::find($request->id);
+    $user_noti->peoples_following = $request->peoples_following;
+    $user_noti->post_following = $request->post_following;
+    $user_noti->your_post = $request->your_post;
+    $user_noti->new_follower = $request->new_follower;
+    $user_noti->new_message = $request->new_message;
+    $user_noti->question_can_answer = $request->question_can_answer;
+    $user_noti->request_answer = $request->request_answer;
+    $user_noti->coin_change = $request->coin_change;
+
+    $user_noti->email_peoples_following = $request->email_peoples_following;
+    $user_noti->email_post_following = $request->email_post_following;
+    $user_noti->email_your_post = $request->email_your_post;
+    $user_noti->email_new_follower = $request->email_new_follower;
+    $user_noti->email_new_message = $request->email_new_message;
+    $user_noti->email_question_can_answer = $request->email_question_can_answer;
+    $user_noti->email_request_answer = $request->email_request_answer;
+    $user_noti->email_coin_change = $request->email_coin_change;
+
+    $user_noti->save();
+    return $user_noti;
+  }
+
+  public function getActivityOverview($user_id){
+    $questions = Question::where('user_id',$user_id)->orderby('votes_count','desc')->take(10)->get();
+    $answers = Answer::where('user_id',$user_id)->orderby('votes_count','desc')->take(10)->get();
+    foreach ($answers as $answer) {
+      $answer->question;
+    }
+    $tests = Test::where('user_id',$user_id)->orderby('user_test_count','desc')->take(10)->get();
+    $result  = array('questions' => $questions,'answers' => $answers, 'test_create' => $tests );
+
+    return $result;
   }
   //ADMIN   
   public function index(){

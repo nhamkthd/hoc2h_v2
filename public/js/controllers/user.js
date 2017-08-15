@@ -11,9 +11,11 @@
 		
 		$scope.setTab = function(tab){
 			$scope.currentTab = tab;
-			if (tab == 3) {
+			if (tab == 2) {
+				$scope.setActivityTab(1);
+				$scope.getActivityOverView();
+			}else if (tab == 3) {
 				$scope.setSettingTab(1);
-				$scope.getUserPrivate();
 			}
 		}
 		
@@ -21,6 +23,7 @@
 		$scope.getUser = function($id,tab){
 			$http.get('/users/api/user-profile/'+$id)
 				 .then(function(response){
+				 	console.log(response.data);
 				 	$scope.user = response.data;
 				 	$scope.setTab(tab);
 				 },function(error){
@@ -36,25 +39,34 @@
 			if (tab == 1) {
 				$scope.setEditingUser($scope.user);
 			}else if (tab == 2) {
-				$scope.show_profile = $scope.user_private.view_detail_profile;
-				$scope.send_message = $scope.user_private.send_message;
-				$scope.show_active = $scope.user_private.show_active;
-				$scope.show_birthday = $scope.user_private.show_birthday;
-				$scope.show_phone = $scope.user_private.show_phone;
+				$scope.show_profile = $scope.user.private_setting.view_detail_profile;
+				$scope.send_message = $scope.user.private_setting.send_message;
+				$scope.show_active = $scope.user.private_setting.show_active;
+				$scope.show_birthday = $scope.user.private_setting.show_birthday;
+				$scope.show_phone = $scope.user.private_setting.show_phone;
 			} else if (tab == 3) {
 				$scope.email = $scope.user.email;
+			} else if (tab == 4) {
+				$scope.peoples_following = $scope.user.notification_setting.peoples_following;
+				$scope.post_following = $scope.user.notification_setting.post_following;
+				$scope.your_post = $scope.user.notification_setting.your_post;
+				$scope.new_follower = $scope.user.notification_setting.new_follower;
+				$scope.new_message = $scope.user.notification_setting.new_message;
+				$scope.question_can_answer = $scope.user.notification_setting.question_can_answer;
+				$scope.request_answer = $scope.user.notification_setting.request_answer;
+				$scope.coin_change = $scope.user.notification_setting.coin_change;
+
+				$scope.email_peoples_following = $scope.user.notification_setting.email_peoples_following;
+				$scope.email_post_following = $scope.user.notification_setting.email_post_following;
+				$scope.email_your_post = $scope.user.notification_setting.email_your_post;
+				$scope.email_new_follower = $scope.user.notification_setting.email_new_follower;
+				$scope.email_new_message = $scope.user.notification_setting.email_new_message;
+				$scope.email_question_can_answer = $scope.user.notification_setting.email_question_can_answer;
+				$scope.email_request_answer = $scope.user.notification_setting.email_request_answer;
+				$scope.email_coin_change = $scope.user.notification_setting.email_coin_change;
 			}
 		}
 
-		$scope.getUserPrivate = function(){
-			$http.get('/users/api/user-private/'+$scope.user.id)
-				 .then(function(response){
-				 	$scope.user_private = response.data[0];
-				 	console.log('user-private: ',$scope.user_private);
-				 },function(error){
-				 	console.log(error.data);
-				 })
-		}
 		//init arrays
 		$scope.locals = [
 		 	{name:"An Giang"},
@@ -123,23 +135,6 @@
 		 ];
 		$scope.show_profile_objects = [{name: 'Tất cả', id: 1}, {name: 'Chỉ thành viên', id: 2}, {name: 'Chỉ người theo dõi bạn', id: 3}];
 		$scope.send_message_objects = [{name: 'Thành viên', id: 1}, {name: 'Chỉ người theo dõi bạn', id: 2},] ;
-
-		//date picker setting
-		$scope.dateOptions = {
-		    formatYear: 'yy',
-		    maxDate: new Date(2020, 5, 22),
-		    minDate: new Date(1970,1,1),
-		    startingDay: 1
-		  };
-		$scope.popup1 = {
-		    opened: false
-		};
-
-		$scope.format = 'dd.MM.yyyy';
-
-		$scope.birthdayFocus = function(){
-			$scope.popup1.opened = true;
-		}
 
 		//set editing value
 		$scope.setEditingUser = function(user){
@@ -234,6 +229,66 @@
 				 },function (error) {
 				 	console.log(error.data);
 				 });
+		}
+
+		//update notification settings
+		$scope.updateNotifcationSetting = function(){
+			$http.post('/users/api/update-notification-setting',{id:$scope.user.notification_setting.id,
+																peoples_following: $scope.peoples_following,
+																post_following:$scope.post_following,
+																your_post:$scope.your_post,
+																new_follower:$scope.new_follower,
+																new_message:$scope.new_message,
+																question_can_answer:$scope.question_can_answer,
+																request_answer:$scope.request_answer,
+																coin_change:$scope.coin_change,
+
+																email_peoples_following:$scope.email_peoples_following,
+																email_post_following:$scope.email_post_following,
+																email_your_post:$scope.email_your_post,
+																email_new_follower:$scope.email_new_follower,
+																email_new_message:$scope.email_new_message,
+																email_question_can_answer:$scope.email_question_can_answer,
+																email_request_answer:$scope.email_request_answer,
+																email_coin_change:$scope.email_coin_change,																
+					}).then(function(response){
+						console.log(response.data);
+						$scope.user.notification_setting = response.data;
+						var message = '<strong>Thành công!</strong> Các thông tin thay đổi đã được cập nhật.';
+	       				Flash.create('success', message);
+					 	flash.getMessage($scope.message);
+					},function(error){
+						console.log(error.data);
+					});
+		}
+
+		//--------ACTIVYTI TAB---------//
+
+		$scope.setActivityTab = function(tab){
+			$scope.activityTab = tab;
+			switch(tab){
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				default:
+					break;
+			}
+
+		}
+
+		$scope.getActivityOverView = function(){
+			$http.get('/users/api/user-activity-overview/'+$scope.user.id)
+				  .then(function(response){
+				  	console.log(response.data);
+				  	$scope.questions_overview = response.data.questions;
+				  	$scope.answers_overview = response.data.answers;
+				  	$scope.tests_created_overview =response.data.test_create;
+				  },function(error){
+				  	console.log(error.data)
+				  });
 		}
 	});
 })();

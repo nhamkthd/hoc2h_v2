@@ -33,7 +33,8 @@
 	.contact-list i {font-size: 17px; margin-right: 10px;}
 
 	.summary{margin-top: 20px;}
-	h3.title-section {font-weight: 700; margin-bottom: 16px; border-bottom: 1px solid #e4e6e8; padding-bottom: 10px; font-size: 15px; }
+	h3.title-section {font-weight: 600; margin-bottom: 16px; border-bottom: 1px solid #e4e6e8; padding-bottom: 10px; font-size: 15px; color: #008ad6;}
+	h3.title-section span {color: #999; font-weight: 300;}
 	#summary-table {border-spacing: 0;border-collapse: collapse; width: 100%;}
 	td.summary-wrapper {width: 33.3%; vertical-align: top; } 
 	.summary-wrapper:first-child {padding-left: 0;border-left: none;}
@@ -77,6 +78,15 @@
 	.TriSea-technologies-Switch > input[type="checkbox"]:checked + label::after {background: inherit; left: 20px; }
 	.TriSea-technologies-Switch span {margin-right: 18px;}
 
+	.user-panel {float: left; margin-bottom: 30px; margin-top: 20px;}
+	.user-panel .panel-content {margin-bottom: 10px; padding-top:5px;}
+	.panel-content-table {border-collapse: collapse;border-spacing: 0; width: 100%; overflow: auto;}
+	.panel-content-table td {padding: 4px 0;vertical-align: top;}
+	.panel-content-table td.count-cell {width:30px;}
+	.mini-counts {font-size: 12px; font-weight: normal; line-height: 1.3; text-align: center; color: #6a737c; min-width: 36px; height: auto; padding: 3px 6px; margin-right: 10px; display: inline-block; border: 1px solid #b9b9b9; border-radius: 2px; }
+	.title-hyperlink {font-size: 15px; font-weight: normal; line-height: 1.3; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width:95%;}
+	.active-panel-footer {margin-top: 15px;}
+	.active-panel-footer a {font-weight: 300; font-size: 13px;}
 </style>
 @extends('users.layouts')
 @section('user_content')

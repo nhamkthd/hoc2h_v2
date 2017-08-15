@@ -238,6 +238,34 @@
 											<td class="action">
 												<div class="TriSea-technologies-Switch pull-right">
 													<span>Thông báo</span>
+						                            <input 	id="peoples_following" type="checkbox" 
+						                            		ng-checked="peoples_following == 1" 
+						                            		ng-model="peoples_following" 
+						                            		ng-true-value="1" 
+						                            		ng-false-value="0"/>
+						                            <label for="peoples_following" class="label-info"></label>
+						                        </div>
+											</td>
+											<td class="action">
+												<div class="TriSea-technologies-Switch pull-right">
+													<span>Gửi email</span>
+						                            <input 	id="email_peoples_following" type="checkbox" 
+						                            		ng-checked="email_peoples_following == 1" 
+						                            		ng-model="email_peoples_following" 
+						                            		ng-true-value="1" 
+						                            		ng-false-value="0"/>
+						                            <label for="email_peoples_following" class="label-info"></label>
+						                        </div>
+											</td>
+										</tr>
+										<tr class="confirm">
+											<td class="desc">
+												<strong>Bài viết đang theo dõi</strong>
+												<span>Nhận thông báo hoặc email khi bài viết bạn đang theo dõi có cập nhật</span>
+											</td>
+											<td class="action">
+												<div class="TriSea-technologies-Switch pull-right">
+													<span>Thông báo</span>
 						                            <input 	id="post_following" type="checkbox" 
 						                            		ng-checked="post_following == 1" 
 						                            		ng-model="post_following" 
@@ -429,7 +457,7 @@
 									</tbody>
 								</table>
 								<flash-message></flash-message>
-								<button style="vertical-align: middle; width: 20%;margin-left:15px; margin-top:20px;" class="btn btn-default" type="button" ng-click="updateUserPrivate()">Lưu lại </button>
+								<button style="vertical-align: middle; width: 20%;margin-left:15px; margin-top:20px;" class="btn btn-default" type="button" ng-click="updateNotifcationSetting()">Lưu lại </button>
 							</div>
 						</div>
 					</div>
