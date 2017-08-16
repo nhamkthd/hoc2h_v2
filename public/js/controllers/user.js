@@ -12,7 +12,7 @@
 		$scope.setTab = function(tab){
 			$scope.currentTab = tab;
 			if (tab == 2) {
-				$scope.setActivityTab(1);
+				$scope.setActivityTab(2);
 				$scope.getActivityOverView();
 			}else if (tab == 3) {
 				$scope.setSettingTab(1);
@@ -289,6 +289,11 @@
 				  },function(error){
 				  	console.log(error.data)
 				  });
+		}
+
+		$scope.setQuestionSortTab = function(tab){
+			
+			console.log($scope.questionSortTab);
 		}
 	});
 })();

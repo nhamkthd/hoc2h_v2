@@ -8,6 +8,13 @@
 	.tab-bar li:hover:not(.selected) a {color: #455a64 ; border-bottom: solid 3px #3F729B; } 
 	.tab-bar li.selected a{color:#2BBBAD; border-bottom: solid 3px #2BBBAD;} 
 
+	.sub-tab-header {margin-bottom: 15px; clear: both;height: 40px; border-bottom: 1px solid #e4e6e8;}
+	.sub-tab-header h3 {float: left; margin-bottom: 0px; font-weight: normal; font-size:18px; margin-bottom: 20px;} 
+	.sub-tab-header h3 span {color: #999;}
+	.sub-tab-header .sub-tabs {float: right;}
+	.sub-tab-sort > span {margin-right: 10px; color: rgb(106, 115, 124);cursor: pointer; padding-bottom: 10px;}
+	.sub-tab-sort > span:hover {color: #212121; border-bottom: 2px solid #3F729B;}
+	.sub-tab-sort span .active {color: #1C2331; border-bottom: 2px solid #3F729B;font-weight: 600;}
 	.tab-content {padding: 30px 10px;}
 
 	.side-info {}
@@ -33,7 +40,7 @@
 	.contact-list i {font-size: 17px; margin-right: 10px;}
 
 	.summary{margin-top: 20px;}
-	h3.title-section {font-weight: 600; margin-bottom: 16px; border-bottom: 1px solid #e4e6e8; padding-bottom: 10px; font-size: 15px; color: #008ad6;}
+	h3.title-section {font-weight: 600; margin-bottom: 16px; border-bottom: 1px solid #e4e6e8; padding-bottom: 10px; font-size: 15px; color:#FF8800;}
 	h3.title-section span {color: #999; font-weight: 300;}
 	#summary-table {border-spacing: 0;border-collapse: collapse; width: 100%;}
 	td.summary-wrapper {width: 33.3%; vertical-align: top; } 
@@ -84,9 +91,9 @@
 	.panel-content-table td {padding: 4px 0;vertical-align: top;}
 	.panel-content-table td.count-cell {width:30px;}
 	.mini-counts {font-size: 12px; font-weight: normal; line-height: 1.3; text-align: center; color: #6a737c; min-width: 36px; height: auto; padding: 3px 6px; margin-right: 10px; display: inline-block; border: 1px solid #b9b9b9; border-radius: 2px; }
-	.title-hyperlink {font-size: 15px; font-weight: normal; line-height: 1.3; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width:95%;}
 	.active-panel-footer {margin-top: 15px;}
 	.active-panel-footer a {font-weight: 300; font-size: 13px;}
+
 </style>
 @extends('users.layouts')
 @section('user_content')

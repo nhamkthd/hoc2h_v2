@@ -45,15 +45,15 @@
 									<td class="count-cell">
 										<div class="mini-counts">{{question.votes_count}}</div>
 									</td>
-									<td class="title-hyperlink">
-										<a  href="">{{question.title}}</a>
+									<td >
+										<a class="title-hyperlink" href="/questions/question/{{question.id}}">{{question.title}}</a>
 									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 					<div class="active-panel-footer">
-						<a href="">Xem thêm →</a>
+						<a ng-click="setActivityTab(2)" href="">Xem thêm →</a>
 					</div>
 				</div>
 				<div class="active-panel">
@@ -69,8 +69,8 @@
 									<td class="count-cell">
 										<div class="mini-counts">{{answer.votes_count}}</div>
 									</td>
-									<td class="title-hyperlink">
-										<a  href="">{{answer.question.title}}</a>
+									<td >
+										<a class="title-hyperlink" href="">{{answer.question.title}}</a>
 									</td>
 								</tr>
 							</tbody>
@@ -97,35 +97,25 @@
 										<a  href="">C# programming on macOS</a>
 									</td>
 								</tr>
-								<tr>
-									<td class="count-cell">
-										<div class="mini-counts">12</div>
-									</td>
-									<td class="title-hyperlink">
-										<a  href="">Installing macOS Sierra on iMac 2008 new hard drive</a>
-									</td>
-								</tr>
-								<tr>
-									<td class="count-cell">
-										<div class="mini-counts">12</div>
-									</td>
-									<td class="title-hyperlink">
-										<a  href="">C# programming on macOS</a>
-									</td>
-								</tr>
-								<tr>
-									<td class="count-cell">
-										<div class="mini-counts">12</div>
-									</td>
-									<td class="title-hyperlink">
-										<a  href="">C# programming on macOS</a>
-									</td>
-								</tr>
 							</tbody>
 						</table>
 					</div>
 					<div class="active-panel-footer">
 						<a href="">Xem thêm →</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="activityTab === 2">
+			<div class="col-md-9">
+				<div class="sub-tab-header full-tab-header">
+					<h3>
+						<span>11</span> Câu hỏi
+					</h3>
+					<div class="sub-tabs sub-tab-sort">
+						<span ng-class="{active:questionSortTab === 1}" ng-click = "setQuestionSortTab(1)">Nổi bật</span>
+						<span ng-class="{active:questionSortTab === 2}" ng-click = "setQuestionSortTab(2)">Mới đăng</span>
+						<span ng-class="{active:questionSortTab === 3}" ng-click = "setQuestionSortTab(3)">Đã có trả lời</span>
 					</div>
 				</div>
 			</div>
