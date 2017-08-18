@@ -13,8 +13,8 @@
 	.sub-tab-header h3 span {color: #999;}
 	.sub-tab-header .sub-tabs {float: right;}
 	.sub-tab-sort > span {margin-right: 10px; color: rgb(106, 115, 124);cursor: pointer; padding-bottom: 10px;}
-	.sub-tab-sort > span:hover {color: #212121; border-bottom: 2px solid #3F729B;}
-	.sub-tab-sort span .active {color: #1C2331; border-bottom: 2px solid #3F729B;font-weight: 600;}
+	.sub-tab-sort > span:hover {color: #212121; border-bottom: 1px solid #3F729B;}
+	.sub-tab-sort .sortSelected {color: #1C2331; border-bottom: 1px solid #3F729B;font-weight: 600;}
 	.tab-content {padding: 30px 10px;}
 
 	.side-info {}
@@ -93,6 +93,15 @@
 	.mini-counts {font-size: 12px; font-weight: normal; line-height: 1.3; text-align: center; color: #6a737c; min-width: 36px; height: auto; padding: 3px 6px; margin-right: 10px; display: inline-block; border: 1px solid #b9b9b9; border-radius: 2px; }
 	.active-panel-footer {margin-top: 15px;}
 	.active-panel-footer a {font-weight: 300; font-size: 13px;}
+
+	.sub-tab-content {vertical-align: baseline;font: inherit; padding: 10px 0;}
+	.user-questions {overflow: auto;}
+	.question-summary {padding: 5px 0; float: none; border-bottom: 1px solid #eff0f1; width:auto;overflow: hidden;box-sizing: content-box;}
+	.question-counts .cp {float: left;vertical-align: top; margin-right: 10px; cursor: pointer;}
+	.narrow .mini-counts  {font-size: 15px; font-weight: 300; color: #6a737c; margin: 0 0 5px 0; border:none;}
+	.couts-detail {display: inline-block; min-width: 44px; height: auto; font-size: 11px; padding: 6px;text-align: center;}
+	.summary .title-hyperlink {margin-bottom: 10px;}
+	.created_date {float: right;font-size: 12px; color: #9199a1;}
 
 </style>
 @extends('users.layouts')

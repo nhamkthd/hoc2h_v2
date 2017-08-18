@@ -114,13 +114,23 @@ class UserController extends Controller
   }
 
   public function getActivityOverview($user_id){
+    $over_view_counts = array();
+
+    $questions_count = Question::where('user_id',$user_id)->get()->count();
     $questions = Question::where('user_id',$user_id)->orderby('votes_count','desc')->take(10)->get();
+
+    $answers_count =  Answer::where('user_id',$user_id)->get()->count();
     $answers = Answer::where('user_id',$user_id)->orderby('votes_count','desc')->take(10)->get();
     foreach ($answers as $answer) {
       $answer->question;
     }
+    $tests_count = Test::where('user_id',$user_id)->get()->count();
     $tests = Test::where('user_id',$user_id)->orderby('user_test_count','desc')->take(10)->get();
-    $result  = array('questions' => $questions,'answers' => $answers, 'test_create' => $tests );
+
+    $over_view_counts[0] = $questions_count;
+    $over_view_counts[1] = $answers_count;
+    $over_view_counts[2] = $tests_count;
+    $result  = array('questions' => $questions,'answers' => $answers, 'test_create' => $tests,'over_view_counts' => $over_view_counts );
 
     return $result;
   }

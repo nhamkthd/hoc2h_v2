@@ -24,13 +24,17 @@ Route::group(['prefix' => 'categories'],function(){
 Route::group(['prefix'=>'users'],function(){
 	Route::get('/{id}/{tab?}','UserController@userIndex')->where('id', '[0-9]+');
 	Route::group(['prefix'=>'api'],function(){
+		//GET METHOD
 		Route::get('user-profile/{id}','UserController@apiGetProfile');
 		Route::get('user-activity-overview/{user_id}','UserController@getActivityOverview');
+		Route::get('/user-questions/{user_id}/{sort_id}','QuestionController@apiGetUserQuestions');
+		//POST METHOD
 		Route::post('/edit','UserController@userEdit');
 		Route::post('/update-user-private','UserController@updateUserPrivate');
 		Route::post('/change-email','UserController@changeEmail');
 		Route::post('/change-password','UserController@changePassword');
 		Route::post('/update-notification-setting','UserController@updateNotificationSetting');
+
 		Route::group(['prefix'=>'directives'],function(){
 		});
 	});

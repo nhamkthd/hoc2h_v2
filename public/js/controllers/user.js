@@ -8,11 +8,11 @@
 	
 	//main user controller
 	app.controller('UserController',function($scope, $http,$sce, Upload, Flash){
-		
+
 		$scope.setTab = function(tab){
 			$scope.currentTab = tab;
 			if (tab == 2) {
-				$scope.setActivityTab(2);
+				$scope.setActivityTab(1);
 				$scope.getActivityOverView();
 			}else if (tab == 3) {
 				$scope.setSettingTab(1);
@@ -264,12 +264,15 @@
 
 		//--------ACTIVYTI TAB---------//
 
+		$scope.user_questions = '';
 		$scope.setActivityTab = function(tab){
 			$scope.activityTab = tab;
 			switch(tab){
 				case 1:
+
 					break;
 				case 2:
+					$scope.setQuestionSortTab(1);
 					break;
 				case 3:
 					break;
@@ -286,14 +289,37 @@
 				  	$scope.questions_overview = response.data.questions;
 				  	$scope.answers_overview = response.data.answers;
 				  	$scope.tests_created_overview =response.data.test_create;
+				  	$scope.over_view_counts = response.data.over_view_counts;
 				  },function(error){
 				  	console.log(error.data)
 				  });
 		}
 
+		$scope.getUserQuestions = function(sort){
+			$http.get('/users/api/user-questions/'+$scope.user.id+'/'+sort)
+				 .then(function(response){
+				 	console.log('get user questions list...!');
+				 	$scope.user_questions = response.data;
+				 },function(error){
+				 	console.log(error.data);
+				 });
+		}
+
 		$scope.setQuestionSortTab = function(tab){
-			
-			console.log($scope.questionSortTab);
+			$scope.questionSortTab = tab;
+			switch(tab){
+				case 1:
+					$scope.getUserQuestions(1);
+					break;
+				case 2:
+					$scope.getUserQuestions(2);
+					break;
+				case 3:
+					$scope.getUserQuestions(3);
+					break;
+				default:
+					break;	
+			}
 		}
 	});
 })();
