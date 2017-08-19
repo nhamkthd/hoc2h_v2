@@ -118,7 +118,7 @@ Route::get('signout',array('as'=>'signout','uses'=>'LoginController@signout'));
 
 Route::group(['middleware'=>['login']],function(){
 	Route::group(['prefix'=>'admin'],function(){
-		Route::get('',array('as'=>'homeadmin',function(){return view('admin.layouts.master');}));
+		Route::get('',array('as'=>'homeadmin',function(){return view('admin.business.admin.admin');}));
 		Route::get('category',array('as'=>'indexCategory','uses'=>'CategoryController@index'));
 		Route::get('category/create',array('as'=>'getcreateCategory','uses'=>'CategoryController@getCreate'));
 		Route::post('category/create',array('as'=>'postcreateCategory','uses'=>'CategoryController@postCreate'));
@@ -133,6 +133,9 @@ Route::group(['middleware'=>['login']],function(){
 		});
 
 		Route::get('user',array('as'=>'indexUser','uses'=>'UserController@index'));
+		Route::get('profile', function() {
+		    return view('admin.business.user.profile');
+		});
 		Route::get('user/create',array('as'=>'getcreateUser','uses'=>'UserController@getCreate'));
 		Route::post('user/create',array('as'=>'postcreateUser','uses'=>'UserController@postCreate'));
 		Route::get('user/show/{user}',array('as'=>'showUser','uses'=>'UserController@Show'));

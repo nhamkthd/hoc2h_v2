@@ -141,7 +141,14 @@ class UserController extends Controller
   }
   public function getList()
   {
-    $user = User::orderBy('id', 'desc')->paginate(50);
+    if(Auth::user()->role_id==1)
+    {
+       $user = User::where('role_id','<>',1)->orderBy('id', 'desc')->paginate(50);
+    }
+    else
+    {
+      $user = User::where('role_id','<>',1)->where('role_id','<>',2)->orderBy('id', 'desc')->paginate(50);
+    }
     foreach ($user as $key => $u) {
       $u->role;
     }
