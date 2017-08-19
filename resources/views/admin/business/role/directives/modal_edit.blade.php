@@ -6,17 +6,6 @@
   <div class="modal-body">
     <form class="form-validate form-horizontal" name='form_edit'>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <div class="form-group ">
-          <label class="control-label col-lg-2">Level *</label>
-             <div class="col-lg-8">
-               <select required class="form-control" name="level_edit" ng-model="level_edit" ng-selected="level_edit">
-               <option ng-repeat="level in levels" value="{{level.id}}">{{level.title}}</option>
-             </select>
-             <span style="color: red" ng-show="form_edit.level_edit.$touched && form_edit.level_edit.$invalid">
-               <span ng-show="form_edit.level_edit.$error.required">Vui lòng chọn permisstion.</span>
-             </span>
-            </div>
-          </div>
           <div class="form-group">
           <label class="control-label col-lg-2">Title *</label>
             <div class="col-lg-8">
@@ -29,7 +18,7 @@
           <div class="form-group ">
           <label class="control-label col-lg-2">Description*</label>
           <div class="col-lg-8">
-            <input type="text" required ng-model='description_edit' name="description_edit" class="form-control" placeholder="Miêu tả">
+          <textarea required ng-model='description_edit' name="description_edit" class="form-control"></textarea>
             <span style="color: red" ng-show="form_edit.description_edit.$touched && form_edit.description_edit.$invalid">
              <span ng-show="form_edit.description_edit.$error.required">Vui lòng chọn description.</span>
            </span>

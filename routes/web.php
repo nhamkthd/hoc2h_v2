@@ -125,18 +125,25 @@ Route::group(['middleware'=>['login']],function(){
 		Route::get('user/show/{user}',array('as'=>'showUser','uses'=>'UserController@Show'));
 		Route::post('user/show/{user}',array('as'=>'updateUser','uses'=>'UserController@update'));
 		Route::get('user/{id}',array('as'=>'destroyUser','uses'=>'UserController@destroy'));
+
 		Route::get('role',array('as'=>'indexRole','uses'=>'RoleController@index'));
+		Route::get('role/permission/{id}',array('as'=>'indexRole','uses'=>'UserPermissionsController@index'));
+		Route::post('permission/update','UserPermissionsController@update');
 		Route::group(['prefix' => 'api'], function() {
 		    Route::group(['prefix' => 'role'], function() {
 		        Route::get('list', 'RoleController@getList');
 		        Route::post('create', 'RoleController@create');
 		        Route::delete('delete/{id}', 'RoleController@destroy');
+		        Route::put('update', 'RoleController@update');
+		    });
+		    Route::group(['prefix' => 'user'], function() {
+		        Route::post('Multidelete', 'UserController@multiDelete');
 		    });
 		    Route::group(['prefix' => 'user'], function() {
 		        Route::get('list', 'UserController@getList');
 		    });
 		    Route::group(['prefix' => 'category'], function() {
-		        Route::get('list', 'CategoryController@getList');
+		        Route::get('list', 'CategoryController@getList')->name('create');
 		    });
 		});
 

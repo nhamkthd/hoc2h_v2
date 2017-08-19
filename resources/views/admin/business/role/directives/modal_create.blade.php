@@ -5,21 +5,6 @@
   <div class="modal-body">
     <form class="form-validate form-horizontal" name='form_role'>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <div class="form-group ">
-          <label class="control-label col-lg-2">Level *</label>
-             <div class="col-lg-8">
-                <select name="permisstion" required ng-model='level' class="form-control">
-                 <option value="">Chọn</option>
-                 <option value="1">Super</option>
-                 <option value="2">Admin</option>
-                 <option value="3">mode</option>
-                 <option value="4">Member</option>
-                </select>
-                <span style="color:red" ng-show="form_role.permisstion.$touched && form_role.permisstion.$invalid">
-                 <span ng-show="form_role.permisstion.$error.required">Vui lòng chọn permisstion.</span>
-                </span>
-            </div>
-          </div>
           <div class="form-group">
           <label class="control-label col-lg-2">Title *</label>
             <div class="col-lg-8">
@@ -32,7 +17,7 @@
           <div class="form-group">
           <label class="control-label col-lg-2">Description*</label>
             <div class="col-lg-8">
-              <input type="text" ng-model='description' required name="description" class="form-control" placeholder="Miêu tả">
+              <textarea ng-model='description' placeholder="Mô tả" required  name="description" class="form-control"></textarea>
               <span style="color:red" ng-show="form_role.description.$touched && form_role.description.$invalid">
                <span ng-show="form_role.description.$error.required">Vui lòng chọn description.</span>
              </span>

@@ -12,5 +12,25 @@ app.controller('userController', function ($scope,$http) {
 			console.log(err);
 		})
 	}
-
+	$scope.deleteMulti=function(list){
+		 var itemList = []; 
+		 var listIndex=[];
+        angular.forEach(list, function(value, key) {  
+            if (list[key].selected) {  
+            	//console.log(key);
+                itemList.push(list[key].selected);
+                listIndex.push(key);  
+            }  
+            });  
+            //console.log(itemList)
+           $http.post('/admin/api/user/Multidelete', {'id':itemList}).then(function(res){ 		  
+           	if (res) {
+           		angular.forEach(listIndex, function(value, key) {  
+           			$scope.list_users.splice(value, 1);
+           		});
+           	}
+           }, function(err){
+           });
+           
+		}
 })

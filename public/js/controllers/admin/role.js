@@ -7,16 +7,6 @@
 	 		list_roles:[]
 	 	};
 	 }])
-	 app.factory('levels', [function () {
-	 	return {
-	 		levels:[
-	  		{id:1,title:'Super'},
-	  		{id:2,title:'Admin'},
-	  		{id:3,title:'Mode'},
-	  		{id:4,title:'Member'},
-	  		]
-	 	};
-	 }])
 	 app.controller('role',function ($scope,$http,$uibModal,role) {
 	 	$scope.list_roles=[];
 	 	$scope.listrole=function() {
@@ -36,9 +26,10 @@
 		 	}
 		$scope.edit=function (id,index) {
 			var data={
-				level_edit:$scope.list_roles[index].level,
 				title_edit:$scope.list_roles[index].title,
-				description_edit:$scope.list_roles[index].discription
+				description_edit:$scope.list_roles[index].discription,
+				id:id,
+				index:index,
 			}
 			var modalInstance = $uibModal.open({
 	 			templateUrl: 'editModal.html',
@@ -52,6 +43,15 @@
 	 		});
 		}
 		$scope.delete=function (id,index) {
+			if(id==1||id==2||id==3||id==4){
+					var modalInstance = $uibModal.open({
+					templateUrl: 'modal_warning.html',
+					controller: 'warningModal',
+					size:'md',
+				});
+			}
+			else
+			{
 			var modalInstance = $uibModal.open({
 				templateUrl: 'modal_delete.html',
 				controller: 'deleteModal',
@@ -63,6 +63,7 @@
 					}
 				}
 			});
+			}
 		}
 	 });
 
@@ -72,7 +73,6 @@
 	 	}
 	 	$scope.ok=function () {
 	 		var data={
-	 			level:$scope.level,
 	 			title:$scope.title,
 	 			description:$scope.description,
 	 		};
@@ -85,28 +85,27 @@
 	 		})
 	 	}
 	 })
-	  app.controller('editModal',function ($scope,$http,$uibModalInstance,role,data,levels) {
-	  	$scope.level_edit=data.level_edit;
+	  app.controller('editModal',function ($scope,$http,$uibModalInstance,role,data) {
 	  	$scope.title_edit=data.title_edit;
+	  	$scope.id_edit=data.id;
 	  	$scope.description_edit=data.description_edit;
-	  	$scope.levels=levels.levels;
 	 	$scope.cancel=function () {
 	 		$uibModalInstance.dismiss('cancel');
 	 	}
-	 	// $scope.ok=function () {
-	 	// 	var data={
-	 	// 		level:$scope.level,
-	 	// 		title:$scope.title,
-	 	// 		description:$scope.description,
-	 	// 	};
-	 	// 	$http.post('/admin/api/role/create', data).then(function (res) {
-	 	// 		role.list_roles.push(res.data);
-	 	// 		console.log(role.list_roles);
-	 	// 		$uibModalInstance.dismiss('cancel');
-	 	// 	}, function (err) {
-	 	// 		console.log(err);
-	 	// 	})
-	 	// }
+	 	$scope.ok=function () {
+	 		var datas={
+	 			index:data.index,
+	 			id:$scope.id_edit,
+	 			title:$scope.title_edit,
+	 			description:$scope.description_edit,
+	 		};
+	 		$http.put('/admin/api/role/update', datas).then(function (res) {
+	 			role.list_roles[data.index]=res.data;
+	 			$uibModalInstance.dismiss('cancel');
+	 		}, function (err) {
+	 			console.log(err);
+	 		})
+	 	}
 	 })
 
 	 app.controller('deleteModal',function ($scope,$http,$uibModalInstance,role,data) {
@@ -121,5 +120,10 @@
 	 		}, function (err) {
 	 			console.log(err);
 	 		})
+	 	}
+	 })
+	  app.controller('warningModal',function ($scope,$http,$uibModalInstance) {
+	 	$scope.cancel=function () {
+	 		$uibModalInstance.dismiss('cancel');
 	 	}
 	 })

@@ -24,19 +24,26 @@ class CategoryController extends Controller
     }
     public function getList()
     {
-        dd($this->deQuy(Category::all(),0));
+        $arr=$this->deQuy(Category::all(),0);
+        return response()->json($arr);
     }
-    public function deQuy($categories, $parent_id = 0,$arr=array())
+    public function deQuy($categories, $parent_id = 0)
     {
+        $branch = array();
         foreach ($categories as $key => $category) {  
             if($category->parent_id==$parent_id)
             { 
-                 unset($categories[$key]);
-                 $this->deQuy($categories,$category->id,$arr);
-            }
+               unset($categories[$key]);
+               $children =$this->deQuy($categories,$category->id);
+               if ($children) {
+                   $category['children'] = $children;
+                }
+                $branch[] = $category;
+             }
         }
-        return $arr;
-    }
+        return $branch;
+
+}
     public function getcreate(){
         $category = Category::all();
         return view('admin.business.category.create',compact('category'));

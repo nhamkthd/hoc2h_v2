@@ -91,7 +91,6 @@ class UserController extends Controller
   }
 
   public function postCreate(UserRequest $request,User $user){
-
     $user = new User();
     $user->name=$request->name;
     $user->user_name=$request->user_name;
@@ -102,14 +101,7 @@ class UserController extends Controller
     $user->gender=$request->gender;
     $user->birthday=$request->birthday;
     if($request->hasFile('avatar')){
-      $path = 'images/user/';
-      $file = $request->file('avatar');
-      $name = $file->getClientOriginalName();
-      do{
-        $filename = str_random(4)."_".$name;
-      }while(file_exists("images/user/".$filename));
-      $file->move($path,$filename);
-      $user->avatar = $filename;    
+      $user->avatar=$this->uploadImgur($_FILES['avatar'])['data']['link'];
     }
     else {
       $user->avatar="";
@@ -137,7 +129,55 @@ class UserController extends Controller
     return view('admin.business.user.show',compact('user','role'));
   }
 
-  public function update(updateUserRequest $request,User $user){
-
+  public function update(Request $request,User $user){
+    $user->name=$request->name;
+    $user->user_name=$request->user_name;
+    $user->email=$request->email;
+    $user->role_id=$request->role;
+    $user->phone=$request->phone;
+    $user->class=$request->class;
+    $user->gender=$request->gender;
+    $user->birthday=$request->birthday;
+    if($request->hasFile('avatar')){
+      $user->avatar=$this->uploadImgur($_FILES['avatar'])['data']['link'];
+    }
+    else {
+     
+    }
+    $user->local=$request->local;
+    $user->coin=$request->coin;
+    $user->status=$request->status;
+    $user->description=$request->description;
+    $user->password=Hash::make($request->password);
+    $user->code=$request->code;
+    $user->save();
+    return redirect('admin/user');
+  }
+  public function multiDelete(Request $req)
+  {
+    foreach ($req->id as $key => $value) {
+      User::find($value)->delete();
+    }
+    return 'true';
+  }
+  public function uploadImgur($img)
+  {
+      $filename = $img['tmp_name'];
+      $client_id="5f83e114af0de78";
+      $handle = fopen($filename, "r");
+      $data = fread($handle, filesize($filename));
+      $pvars   = array('image' => base64_encode($data));
+      $timeout = 30;
+      $curl = curl_init();
+      curl_setopt($curl, CURLOPT_URL, 'https://api.imgur.com/3/image.json');
+      curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
+      curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Client-ID ' . $client_id));
+      curl_setopt($curl, CURLOPT_POST, 1);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $pvars);
+      $out = curl_exec($curl);
+      curl_close ($curl);
+      $pms = json_decode($out,true);
+      return $pms;
   }
 }

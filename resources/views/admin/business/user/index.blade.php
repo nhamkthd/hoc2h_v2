@@ -19,6 +19,9 @@
         <div class="col-sm-2">
           <a  href="{{url('admin/user/create')}}" class="btn btn-block btn-default">Tạo mới người dùng</a>
         </div>
+         <div class="col-sm-2 pull-right">
+          <input type="text" class="form-control" placeholder="search" ng-model='search'>
+        </div>
       </div>
       <div>
         @if(session('notify'))
@@ -32,12 +35,11 @@
           <thead>
             <tr></tr>
             <tr role="row">
-              <th>ID</th>
+              <th><input type="checkbox" ng-model='ischeck' ng-checked="checkall(ischeck)"></th>
               <th>Roles</th>
               <th>User Name</th>
               <th>Email</th>
-              <th>Phone</th>
-              <th>Class</th>
+              <th>login with</th>
               <th>Gender</th>
               <th>Status</th>
               <th>Birthday</th>
@@ -47,13 +49,13 @@
           </thead>
           @verbatim
           <tbody ng-init="list_user()">
-            <tr ng-repeat="u in list_users">
-              <td>{{u.id}}</td>
+            <tr ng-repeat="u in list_users|orderBy:'-id'">
+              <td><input type="checkbox" id="check1" ng-true-value="{{u.id}}" ng-false-value="''" ng-model="u.selected" /></td>
               <td>{{u.role.title}}</td>
               <td>{{u.name}}</td>
               <td>{{u.email}}</td>
-              <td>{{u.phone}}</td>
-              <td>{{u.class}}</td>
+              <td ng-if="u.provider==null">register</td>
+              <td ng-if="u.provider=='facebook'">facebook</td>
               <td ng-if="u.gender==1">Nam</td>
               <td ng-if="u.gender!=1">Nữ</td>
               <td ng-if="u.status==1">Kích hoạt</td>
@@ -71,7 +73,8 @@
               </tr> 
             </tbody>
              @endverbatim
-          </table>
+          </table> 
+          <button class="btn btn-default" ng-click="deleteMulti(list_users)">Xóa mục đã chọn</button>
         </div>
       </div>
     </div>

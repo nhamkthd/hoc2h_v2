@@ -17,7 +17,6 @@ class check_login
     {
         if(Auth::check())
         {
-           
             return $next($request);
         }
         else

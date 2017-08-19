@@ -102,13 +102,6 @@
               </div>
             </div>
             <div class="form-group ">
-              <label class="control-label col-lg-2">Password *</label>
-              <div class="col-lg-8">
-                <input type="password" name="password" class="form-control" value="{{$user->password}}" readonly="" placeholder="Mật khẩu">
-                @if($errors->has('password'))<p style="color: red;">{!!$errors->first('password')!!}</p>@endif
-              </div>
-            </div>
-            <div class="form-group ">
               <label class="control-label col-lg-2">Description </label>
               <div class="col-lg-8">
                 <input type="text" name="description" class="form-control" value="{{$user->description}}" placeholder="Mô tả">

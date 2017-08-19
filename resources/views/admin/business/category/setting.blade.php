@@ -13,7 +13,7 @@
 </section>
 <!-- list account -->
 
-<section class="content" ng-app="hoc2h-category" ng-controller="setting_itemCtrl">
+<section class="content" ng-app="hoc2h-category" ng-controller="setting_itemCtrl" ng-init="list_category()">
   @verbatim
   <div ng-nestable ng-model="items" class="cf nestable-lists">
     <div>
