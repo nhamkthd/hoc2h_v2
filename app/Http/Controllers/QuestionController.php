@@ -133,6 +133,31 @@ class QuestionController extends Controller
         return $results;
     }
 
+    //get user-questions
+    public function apiGetUserQuestions($user_id,$sort_id){
+        switch ($sort_id) {
+            case 1:
+                $user_questions  =  Question::where('user_id',$user_id)->orderby('votes_count','desc')
+                                              ->orderby('answers_count','desc')
+                                              ->orderby('views_count','desc')
+                                              ->get();
+                break;
+            case 2:
+                $user_questions  =  Question::where('user_id',$user_id)
+                                            ->orderby('created_at','desc')
+                                            ->get();
+                break;
+            case 3:
+                $user_questions  =  Question::where('user_id',$user_id)
+                                            ->where('is_resolved',1)
+                                            ->orderby('created_at','desc')
+                                            ->get();
+                break;
+        }
+       
+        return $user_questions;
+    }
+
     //direct create question form
     public function create() {
         return view('questions.directives.question_create');  

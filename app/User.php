@@ -24,6 +24,14 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function privateSetting(){
+        return $this->belongsTo('App\UserPrivate','user_id','id');
+    }
+
+    public function notifcationSetting(){
+        return $this->belongsTo('App\UserNotificationSetting','user_id','id');
+    }
+
     public function questionVotes()
     {
       return $this->hasMany('App\QuestionVote','user_id','id');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\UserPrivate;
+use App\UserNotificationSetting;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -74,6 +75,11 @@ class RegisterController extends Controller
         $user_private = new UserPrivate;
         $user_private->user_id = $new_user->id;
         $user_private->save();
+
+        $user_noti_setting = new UserNotificationSetting;
+        $user_noti_setting->user_id = $new_user->id;
+        $user_noti_setting->save();
+        
         return $new_user;
 
     }

@@ -12,7 +12,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div >
       <ul class="nav navbar-nav">
-        <li><a href="{{route('tests')}}">Đề Thi <span class="sr-only">(current)</span></a></li>
+        <li ng-class="{active:navbarSelected === 1}"><a ng-click="navBarTabClick(1)">Đề Thi <span class="sr-only">(current)</span></a></li>
         <li><a href="{{url('/questions')}}">Hỏi Đáp </a></li>
         <li><a href="#">Tài liệu</a></li>
         <li class="dropdown">

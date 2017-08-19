@@ -72,5 +72,19 @@
 	 		})
 	 	});
 
+	 	$scope.navBarTabClick = function(nav_tab){
+	 		switch (nav_tab){
+	 			case 1:
+	 				window.location.href = '/tests';
+	 				$scope.navbarSelected = 1;
+	 				console.log($scope.navbarSelected);
+	 				break;
+	 			case 2:
+	 				break;
+	 			default:
+	 				break;
+	 		}
+	 	}
+
 	 });
 })();

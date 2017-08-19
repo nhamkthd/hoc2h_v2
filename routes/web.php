@@ -4,6 +4,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//AUTH
 Auth::routes();
 Route::get('/redirect', 'Auth\SocialAuthController@redirect');
 Route::get('/callback', 'Auth\SocialAuthController@callback');
@@ -19,18 +20,27 @@ Route::group(['prefix' => 'categories'],function(){
 	});
 });
 
+//USER
 Route::group(['prefix'=>'users'],function(){
 	Route::get('/{id}/{tab?}','UserController@userIndex')->where('id', '[0-9]+');
 	Route::group(['prefix'=>'api'],function(){
+		//GET METHOD
 		Route::get('user-profile/{id}','UserController@apiGetProfile');
-		Route::get('/user-private/{id}','UserController@getUserPrivate');
+		Route::get('user-activity-overview/{user_id}','UserController@getActivityOverview');
+		Route::get('/user-questions/{user_id}/{sort_id}','QuestionController@apiGetUserQuestions');
+		//POST METHOD
 		Route::post('/edit','UserController@userEdit');
 		Route::post('/update-user-private','UserController@updateUserPrivate');
+		Route::post('/change-email','UserController@changeEmail');
+		Route::post('/change-password','UserController@changePassword');
+		Route::post('/update-notification-setting','UserController@updateNotificationSetting');
+
 		Route::group(['prefix'=>'directives'],function(){
 		});
 	});
 });
 
+//TESTS
 Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	Route::get('/','TestController@index')->name('tests');
 	Route::get('create', function() {
@@ -60,6 +70,7 @@ Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	});
 });
 
+//QUESTIONS
 Route::group(['prefix' => 'questions'], function(){
 	Route::get('/','QuestionController@index');
 	Route::get('/tagged/','QuestionController@indexWithTagged');
@@ -99,7 +110,9 @@ Route::group(['prefix' => 'questions'], function(){
 	    Route::post('readNotification','NotificationController@update');
 	});
 
-	Route::get('admin/login',array('as'=>'getlogin','uses'=>'LoginController@index'));
+
+//ADMIN
+Route::get('admin/login',array('as'=>'getlogin','uses'=>'LoginController@index'));
 Route::post('admin/login',array('as'=>'postlogin','uses'=>'LoginController@login'));
 Route::get('signout',array('as'=>'signout','uses'=>'LoginController@signout'));
 
