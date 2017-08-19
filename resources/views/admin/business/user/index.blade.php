@@ -20,7 +20,7 @@
           <a  href="{{url('admin/user/create')}}" class="btn btn-block btn-default">Tạo mới người dùng</a>
         </div>
          <div class="col-sm-2 pull-right">
-          <input type="text" class="form-control" placeholder="search" ng-model='search'>
+          <input type="text" class="form-control" ng-keyup="onsearch(search)" placeholder="search" ng-model='search'>
         </div>
       </div>
       <div>
@@ -35,7 +35,7 @@
           <thead>
             <tr></tr>
             <tr role="row">
-              <th><input type="checkbox" ng-model='ischeck' ng-checked="checkall(ischeck)"></th>
+              <th></th>
               <th>Roles</th>
               <th>User Name</th>
               <th>Email</th>
@@ -74,7 +74,14 @@
             </tbody>
              @endverbatim
           </table> 
-          <button class="btn btn-default" ng-click="deleteMulti(list_users)">Xóa mục đã chọn</button>
+          <div class="row">
+            <div class="col-md-2">
+              <button class="btn btn-default" ng-click="deleteMulti(list_users)">Xóa mục đã chọn</button>
+            </div>
+            <div class="col-md-10">
+              <posts-pagination class="pull-right"></posts-pagination>
+            </div>
+          </div>
         </div>
       </div>
     </div>

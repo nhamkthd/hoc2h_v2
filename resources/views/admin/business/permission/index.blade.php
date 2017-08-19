@@ -23,7 +23,7 @@
           <li class="pull-right"><input type="submit" class="btn btn-defaul" value="Lưu thay đổi"></li>
         </ul>
         {{csrf_field()}}
-        <input type="hidden" name="role_id" value="{{$role->id}}">
+        <input type="hidden" name="permission_id" value="{{$permission->id}}">
         <div class="tab-content">
           <div class="tab-pane active" id="tab_1">
             @include('admin.business.permission.directives.questionPermission')
@@ -49,13 +49,5 @@
    <!-- /.col -->
  </div>
 </section>
-@section('script')
-<script type="text/javascript">
-  $(document).ready(function() {
-    $("input[type=checkbox]").change(function() {
-      $(this).attr("value", $(this).prop("checked") ? 1 : 0); 
-    });
-  });
-</script>
-@endsection
+
 @stop

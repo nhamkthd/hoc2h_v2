@@ -15,6 +15,8 @@ class UserPermissionsController extends Controller
     }
     public function update(Request $req)
     {
-    	dd($req->all());
+        $arr=array_slice($req->all(),2);
+        UserPermissions::where('id',$req->permission_id)->update($arr);
+        return redirect('admin/role');
     }
 }

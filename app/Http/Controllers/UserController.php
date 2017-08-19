@@ -141,7 +141,7 @@ class UserController extends Controller
   }
   public function getList()
   {
-    $user = User::all();
+    $user = User::orderBy('id', 'desc')->paginate(50);
     foreach ($user as $key => $u) {
       $u->role;
     }
@@ -222,6 +222,14 @@ class UserController extends Controller
       User::find($value)->delete();
     }
     return 'true';
+  }
+  public function search(Request $req)
+  {
+    $user=User::where('name', 'LIKE', '%'.$req->key.'%')->get();
+    foreach ($user as $key => $u) {
+     $u->role;
+    }
+    return response()->json($user);
   }
   public function uploadImgur($img)
   {

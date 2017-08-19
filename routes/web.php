@@ -151,9 +151,8 @@ Route::group(['middleware'=>['login']],function(){
 		    });
 		    Route::group(['prefix' => 'user'], function() {
 		        Route::post('Multidelete', 'UserController@multiDelete');
-		    });
-		    Route::group(['prefix' => 'user'], function() {
 		        Route::get('list', 'UserController@getList');
+		        Route::get('search', 'UserController@search');
 		    });
 		    Route::group(['prefix' => 'category'], function() {
 		        Route::get('list', 'CategoryController@getList')->name('create');
