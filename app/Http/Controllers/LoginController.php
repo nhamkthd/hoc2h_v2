@@ -11,10 +11,6 @@ use Auth;
 class LoginController extends Controller
 {
     public function index(){
-    	if(Auth::guard('web')->check())
-    	{
-    		return redirect()->route('home');
-    	}
     	return view('admin.business.login.login');
     }
     public function login(LoginRequest $request){

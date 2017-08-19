@@ -52,9 +52,6 @@
 @section('script')
 <script type="text/javascript">
   $(document).ready(function() {
-    if ($('input').is(':checked')) {
-      $(this).attr("value", 1); 
-    }
     $("input[type=checkbox]").change(function() {
       $(this).attr("value", $(this).prop("checked") ? 1 : 0); 
     });

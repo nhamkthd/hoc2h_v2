@@ -14,11 +14,14 @@ class login
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next,$guard='web')
+    public function handle($request, Closure $next)
     {
-         if(!Auth::guard($guard)->check()){
+         if(Auth::check()&&(Auth::user()->role_id==1||Auth::user()->role_id==2)){
+              return $next($request);
+        }
+        else
+        {
             return redirect()->route('getlogin');
         }
-        return $next($request);
     }
 }
