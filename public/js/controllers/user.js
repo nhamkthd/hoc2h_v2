@@ -144,6 +144,7 @@
 			$scope.local_edit = user.local;
 			$scope.class_edit = user.class;
 			$scope.description_edit = user.description;
+			$scope.gender_edit = user.gender;
 			$scope.avatar_text = "Cập nhật ảnh đại diện";
 		}
 
@@ -265,6 +266,7 @@
 		//--------ACTIVYTI TAB---------//
 
 		$scope.user_questions = '';
+		$scope.user_answers = '';
 		$scope.setActivityTab = function(tab){
 			$scope.activityTab = tab;
 			switch(tab){
@@ -275,6 +277,7 @@
 					$scope.setQuestionSortTab(1);
 					break;
 				case 3:
+					$scope.setAnswerSortTab(1);
 					break;
 				default:
 					break;
@@ -295,16 +298,6 @@
 				  });
 		}
 
-		$scope.getUserQuestions = function(sort){
-			$http.get('/users/api/user-questions/'+$scope.user.id+'/'+sort)
-				 .then(function(response){
-				 	console.log('get user questions list...!');
-				 	$scope.user_questions = response.data;
-				 },function(error){
-				 	console.log(error.data);
-				 });
-		}
-
 		$scope.setQuestionSortTab = function(tab){
 			$scope.questionSortTab = tab;
 			switch(tab){
@@ -321,5 +314,43 @@
 					break;	
 			}
 		}
+
+		$scope.getUserQuestions = function(sort){
+			$http.get('/users/api/user-questions/'+$scope.user.id+'/'+sort)
+				 .then(function(response){
+				 	console.log('get user questions list...!',response.data);
+				 	$scope.user_questions = response.data;
+				 },function(error){
+				 	console.log(error.data);
+				 });
+		}
+
+		
+		$scope.setAnswerSortTab = function (tab) {
+			$scope.answerSortTab = tab;
+			switch(tab){
+				case 1:
+					$scope.getUserAnswers(1);
+					break;
+				case 2: 
+					$scope.getUserAnswers(2);
+					break;
+				case 3:
+					$scope.getUserAnswers(3);
+					break;
+			}
+		}
+
+		$scope.getUserAnswers = function (sort_id) {
+			console.log('get user answers list...!');
+			$http.get('/users/api/user-answers/'+$scope.user.id+'/'+sort_id)
+				 .then(function (response) {
+				 	console.log(response.data);
+				 	$scope.user_answers = response.data;
+				 },function (error) {
+				 	console.log(error.data);
+			});
+		}
+		
 	});
 })();

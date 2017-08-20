@@ -154,9 +154,12 @@ class QuestionController extends Controller
                                             ->get();
                 break;
         }
-       
+        foreach ($user_questions as $question) {
+            $question->tags = Question::getTags($question->id);
+        }
         return $user_questions;
     }
+
 
     //direct create question form
     public function create() {
@@ -164,13 +167,13 @@ class QuestionController extends Controller
     }
 
     //show detail 
-    public  function  showDetail($id){
+    public  function  showDetail($id, $answer_id = null){
         $question = Question::find($id);
         if ($question) {
             $question->views_count ++;
             $question->save();
         }
-        return view('questions.directives.question_detail',compact('question'));
+        return view('questions.directives.question_detail',compact('question','answer_id'));
     }
 
     //full text search

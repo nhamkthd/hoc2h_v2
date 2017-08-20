@@ -100,9 +100,13 @@
 	.question-counts .cp {float: left;vertical-align: top; margin-right: 10px; cursor: pointer;}
 	.narrow .mini-counts  {font-size: 15px; font-weight: 300; color: #6a737c; margin: 0 0 5px 0; border:none;}
 	.couts-detail {display: inline-block; min-width: 44px; height: auto; font-size: 11px; padding: 6px;text-align: center;}
-	.summary .title-hyperlink {margin-bottom: 10px;}
-	.created_date {float: right;font-size: 12px; color: #9199a1;}
+	.question-summary-detail {margin-bottom:0;}
+	.created_date {float:right;font-size: 12px; color: #9199a1;}
 
+	.answer-summary {padding: 5px 0; float: left; border-bottom: 1px solid #eff0f1; width: 100%;}
+	.answer-votes {font-size: 12px; font-weight: normal; line-height: 1.3; text-align: center; color: #6a737c; min-width: 36px; height: auto; padding: 3px 6px;  border: 1px solid #b9b9b9; border-radius: 2px;}
+	.answer-link {padding: 0;  padding-left: 10px; color: #535a60;}
+	.answer-link .title-hyperlink {width: auto;}
 </style>
 @extends('users.layouts')
 @section('user_content')

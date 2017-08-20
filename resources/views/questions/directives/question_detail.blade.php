@@ -5,7 +5,11 @@
 	@endverbatim
 <div class="row" ng-controller="QuestionDetailController">
 	@if($question)
-		<div ng-init="initQuestion({{$question->id}})"></div>
+		@if($answer_id)
+			<div ng-init="initQuestion({{$question->id}},{{$answer_id}})"></div>
+		@else
+			<div ng-init="initQuestion({{$question->id}},0)"></div>
+		@endif
 	@else
 		<div ng-init="questionNotFound()"></div>
 	@endif
@@ -84,7 +88,7 @@
 					  			Bỏ thích <span class="badge ">{{question.votes_count}}</span> 
 					  		</a>
 					  	</li>
-					  	<li ><a href ng-click="gotoAnchor(1)">
+					  	<li ><a href ng-click="gotoAnchor(0)">
 					  		<i class="fa fa-comment" aria-hidden="true"></i> 
 					  		Trả lời <span class="badge ">{{question.answers_count}}</span> 
 					  		</a> 
@@ -110,7 +114,7 @@
 					@verbatim
 				</div>
 				<div ng-show="isLogged == true" style="margin-top: 20px;">
-					<div class="col-md-12 commet-box" id="anchor{{1}}">
+					<div class="col-md-12 commet-box" id="anchor{{0}}">
 						<label>Câu trả lời của bạn</label>
 						<div ckeditor="options" ng-model="answer_content_field" ready="onReady()"></div>
 					</div>

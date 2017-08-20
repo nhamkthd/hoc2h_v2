@@ -28,6 +28,7 @@ Route::group(['prefix'=>'users'],function(){
 		Route::get('user-profile/{id}','UserController@apiGetProfile');
 		Route::get('user-activity-overview/{user_id}','UserController@getActivityOverview');
 		Route::get('/user-questions/{user_id}/{sort_id}','QuestionController@apiGetUserQuestions');
+		Route::get('/user-answers/{user_id}/{sort_id}','AnswerController@getUserAnswers');
 		//POST METHOD
 		Route::post('/edit','UserController@userEdit');
 		Route::post('/update-user-private','UserController@updateUserPrivate');
@@ -75,14 +76,19 @@ Route::group(['prefix' => 'questions'], function(){
 	Route::get('/','QuestionController@index');
 	Route::get('/tagged/','QuestionController@indexWithTagged');
 	Route::get('/question-create','QuestionController@create')->name('showQuestionCreateFrom')->middleware('auth');
-	Route::get('/question/{id}','QuestionController@showDetail');
+	Route::get('/question/{id}/{answer_id?}','QuestionController@showDetail');
 	Route::get('/question-card',function(){
 			return view('questions.directives.question_list_card');
 		});
 	Route::group(['prefix' => 'api'], function(){
 		//this is group route api angular js
-		Route::post('/store','QuestionController@apiStore');
+		
 		Route::get('/','QuestionController@apiGetAll');
+		Route::get('/search','QuestionController@apiSearch');
+		Route::get('/search-related','QuestionController@apiSearchWithTitle');
+		Route::get('/tagged/{tag_id}','QuestionController@apiGetQuestionsTagged');
+		
+		Route::post('/store','QuestionController@apiStore');
 		Route::post('/getQuestionInfo','QuestionController@apiQuestionWithID');
 		Route::post('/vote','QuestionController@apiVote');
 		Route::post('/edit','QuestionController@apiEdit');
@@ -90,9 +96,7 @@ Route::group(['prefix' => 'questions'], function(){
 		Route::post('/editCategory','QuestionController@apiEditCategory');
 		Route::post('/change-resolve','QuestionController@apiChangeResolve');
 		Route::post('/add-Tags','QuestionController@apiAddTags');
-		Route::get('/search','QuestionController@apiSearch');
-		Route::get('/search-related','QuestionController@apiSearchWithTitle');
-		Route::get('/tagged/{tag_id}','QuestionController@apiGetQuestionsTagged');
+		
 
 		Route::post('/answers','AnswerController@store');
 		Route::post('/answer/vote','AnswerController@vote');

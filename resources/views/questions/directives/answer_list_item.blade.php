@@ -1,5 +1,5 @@
 @verbatim
-<div class="media list-item-block">
+<div class="media list-item-block"  id="anchor{{answer.id}}" ng-class="{anchorAt:anchorAt === answer.id}">
 	<span class="pull-left">
 		<img src="{{answer.user.avatar}}" width="40" height="40">
 	</span>

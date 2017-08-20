@@ -70,7 +70,7 @@
 										<div class="mini-counts">{{answer.votes_count}}</div>
 									</td>
 									<td >
-										<a class="title-hyperlink" href="">{{answer.question.title}}</a>
+										<a class="title-hyperlink" href="/questions/question/{{answer.question.id}}/{{answer.id}}">{{answer.question.title}}</a>
 									</td>
 								</tr>
 							</tbody>
@@ -110,12 +110,12 @@
 			<div class="col-md-9">
 				<div class="sub-tab-header full-tab-header">
 					<h3>
-						<span>11</span> Câu hỏi
+						<span>{{over_view_counts[0]}}</span> Câu hỏi
 					</h3>
 					<div class="sub-tabs sub-tab-sort">
 						<span ng-class="{sortSelected:questionSortTab === 1}" ng-click = "setQuestionSortTab(1)">Nổi bật</span>
 						<span ng-class="{sortSelected:questionSortTab === 2}" ng-click = "setQuestionSortTab(2)">Mới đăng</span>
-						<span ng-class="{sortSelected:questionSortTab === 3}" ng-click = "setQuestionSortTab(3)">Giải quyểt</span>
+						<span ng-class="{sortSelected:questionSortTab === 3}" ng-click = "setQuestionSortTab(3)">Đã giải quyết</span>
 					</div>
 				</div>
 				<div class="sub-tab-content">
@@ -138,9 +138,46 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-9 summary">
+								<div class="col-md-9 question-summary-detail">
 									<a class="title-hyperlink" href="/questions/question/{{question.id}}">{{question.title}}</a>
-									<span class="created_date"><i class="fa fa-clock-o" aria-hidden="true"></i> {{question.created_at}}</span>
+									<div class="card-tags" ng-hide="question.tags.length == 0" style="margin-left:-.5rem;" >
+										<ul>
+											<li ng-repeat="tag in question.tags">
+											<a href="/questions/tagged/?id={{tag.id}}">{{tag.name}}</a></li>
+										</ul>
+									</div>
+									<span class="created_date">
+										<i class="fa fa-clock-o" aria-hidden="true"></i> 
+										{{question.created_at}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="activityTab === 3">
+			<div class="col-md-9">
+				<div class="sub-tab-header full-tab-header">
+					<h3>
+						<span>{{over_view_counts[1]}}</span> Câu trả lời
+					</h3>
+					<div class="sub-tabs sub-tab-sort">
+						<span ng-class="{sortSelected:answerSortTab === 1}" ng-click = "setAnswerSortTab(1)">Nổi bật</span>
+						<span ng-class="{sortSelected:answerSortTab === 2}" ng-click = "setAnswerSortTab(2)">Mới nhất</span>
+						<span ng-class="{sortSelected:answerSortTab === 3}" ng-click = "setAnswerSortTab(3)">Bests</span>
+					</div>
+				</div>
+				<div class="sub-tab-content">
+					<div class="user-answers">
+						<div class="row answer-summary" ng-repeat="answer in user_answers">
+							<div class="col-md-1">
+								<div class="answer-votes">{{answer.votes_count}}</div>
+							</div>
+							<div class="col-md-11" style="padding: 0;">
+								<div class="answer-link">
+									<a class="title-hyperlink pull-left"  href="/questions/question/{{answer.question.id}}/{{answer.id}}">{{answer.question.title}}</a>
+									<span class="created_date pull-right">{{answer.created_at}}</span>
 								</div>
 							</div>
 						</div>

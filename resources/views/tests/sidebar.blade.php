@@ -1,7 +1,7 @@
 <div class="col-md-4">
 	<div class ="row sidebar">
 		<div class="col-md-10 col-md-offset-1">
-			<a href="{{url('tests/create')}}"  class="btn btn-outline-default waves-effect" style="width: 100%;" >Tạo Đề</a>
+			<a href="{{url('tests/create')}}"  class="btn btn-info" style="width: 100%;" >Tạo Đề</a>
 			<hr>
 		</div>
 		<div class="col-md-10 col-md-offset-1">

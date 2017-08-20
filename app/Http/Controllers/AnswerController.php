@@ -14,6 +14,28 @@ use App\Notifications\LikeComentQuestionNotification;
 use App\Notifications\ReplyCommentQuestionNotification;
 class AnswerController extends Controller
 {
+    public function getUserAnswers($user_id,$sort_id){
+        switch ($sort_id) {
+            case 1:
+                $user_answers = Answer::where('user_id',$user_id)->orderby('votes_count','desc')->get();
+                break;
+            case 2:
+                $user_answers = Answer::where('user_id',$user_id)->orderby('created_at','desc')->get();
+                break;
+            case 3:
+                $user_answers = Answer::where('user_id',$user_id)->where('is_best',1)->orderby('votes_count','desc')->get();
+                break;
+            default:
+                
+                break;
+        }
+        foreach ($user_answers as $answer) {
+          $answer->question;
+        }
+        return $user_answers;
+    }
+
+
     public function store(Request $request)
     {
         if (Auth::check()) {

@@ -270,6 +270,7 @@
 	      	} else {
 	        	$anchorScroll();
 	      	}
+	      	$scope.anchorAt = x;
 	    };
 
 	    //escape html tags
@@ -287,7 +288,8 @@
         }
 
         //init question infomation with ID
-	 	$scope.initQuestion = function (question_id) {
+	 	$scope.initQuestion = function (question_id,answer_id) {
+
 	 		$scope.question ={};
 	 		$scope.answers = [];
 	 		$scope.isResolved = 0;
@@ -296,6 +298,10 @@
 	 			 	console.log('Init question: ',response.data);
 	 			 	$scope.question = response.data.question;
 	 			 	$scope.categories = response.data.categories;
+	 			 	if (answer_id > 0) {
+	 			 		console.log('go to answer:',answer_id);
+	 			 		$scope.gotoAnchor(answer_id);
+	 			 	}
 	 			 },function(error){
 	 			 	console.log(error);
 	 		 });

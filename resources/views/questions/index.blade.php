@@ -14,7 +14,7 @@
 			</div>	
 		</div>	
 		<div class="row" ng-show="isPaginate == true">
-			<div class="col-md-6">
+			<div class="col-md-6" ng-show="questions.length > 15">
 				<posts-paginations class="text-center"></posts-paginations>
 			</div>
 		</div>
