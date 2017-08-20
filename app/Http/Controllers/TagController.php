@@ -7,7 +7,11 @@ use App\Tag;
 use App\QuestionTag;
 class TagController extends Controller
 {
-	
+	//admin
+    public function index()
+    {
+       
+    }
 	public function build_sorter($key) {
 		return function ($a, $b) use ($key) {
 		    if ($a[$key] == $b[$key]) {

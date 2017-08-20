@@ -22,7 +22,9 @@
   <link rel="stylesheet" href='{{asset("template/dist/css/skins/_all-skins.min.css")}}'>
   
   <link rel="stylesheet" href='{{asset("template/plugins/datatables/dataTables.bootstrap.css")}}'>
-  <script src='{{asset("/template/plugins/jQuery/jquery-2.2.3.min.js")}}'></script>
+  <script src='{{asset("/template/plugins/jQuery/jquery-2.2.3.min.js")}}'></script> 
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
   <script src='{{asset("/template/plugins/jquery-nestable/jquery.nestable.js")}}'></script>
   <script src="{{asset('js/flugin/angular/angular.min.js')}}"></script> 
   <script src="{{asset('js/flugin/angular/ng-tags-input.js')}}"></script> 
@@ -39,8 +41,9 @@
   <script src="{{asset('js/controllers/admin/role.js')}}"></script>
   <script src="{{asset('js/controllers/admin/user.js')}}"></script>
   <script src="{{asset('js/controllers/admin/category.js')}}"></script>
-  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+   <script src="{{asset('js/flugin/notify/bootstrap-notify.js')}}"></script>
+  <script src="{{asset('js/flugin/notify/bootstrap-notify.min.js')}}"></script>
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -104,6 +107,25 @@
 
 <script src='{{asset("/template/plugins/datatables/jquery.dataTables.min.js")}}'></script>
 <script src='{{asset("/template/plugins/datatables/dataTables.bootstrap.min.js")}}'></script>
+
+ @if(Session::has('notify'))
+ <script type="text/javascript">
+ $(document).ready(function() {
+    $.notify({
+            message:'{{Session::get('notify')}}' ,
+        },{
+          animate: {
+            enter: 'animated fadeInDown',
+            exit: 'animated fadeOutUp'
+          },
+            placement: {
+              from: "bottom",
+              align: "left"
+            },
+        });
+    });
+  </script>
+ @endif
 
 <script type="text/javascript">
   $(document).ready(function() {

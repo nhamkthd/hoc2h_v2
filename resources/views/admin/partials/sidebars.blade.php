@@ -39,6 +39,11 @@
             <i class="fa fa-users"></i> <span>Quản lý vai trò</span>
           </a>
         </li>
+         <li class="treeview">
+          <a href="{{ url('admin/tag') }}">
+            <i class="fa fa-tag"></i> <span>Quản lý thẻ tag</span>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->

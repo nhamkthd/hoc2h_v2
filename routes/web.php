@@ -149,6 +149,8 @@ Route::group(['middleware'=>['login']],function(){
 		Route::get('role',array('as'=>'indexRole','uses'=>'RoleController@index'));
 		Route::get('role/permission/{id}',array('as'=>'indexRole','uses'=>'UserPermissionsController@index'));
 		Route::post('permission/update','UserPermissionsController@update');
+
+		Route::get('tag', 'TagController@index');
 		Route::group(['prefix' => 'api'], function() {
 		    Route::group(['prefix' => 'role'], function() {
 		        Route::get('list', 'RoleController@getList');

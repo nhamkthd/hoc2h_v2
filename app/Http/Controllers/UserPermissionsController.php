@@ -17,6 +17,7 @@ class UserPermissionsController extends Controller
     {
         $arr=array_slice($req->all(),2);
         UserPermissions::where('id',$req->permission_id)->update($arr);
+        \Session::flash('notify','đã cập nhập quyền thành công');
         return redirect('admin/role');
     }
 }
