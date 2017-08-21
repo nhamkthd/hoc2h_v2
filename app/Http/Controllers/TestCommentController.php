@@ -6,9 +6,17 @@ use Illuminate\Http\Request;
 use App\TestComment;
 use App\Notifications\CommentTestNotification;
 use Auth;
+use Carbon\Carbon;
 use App\Test;
 class TestCommentController extends Controller
 {
+    public function setDateFomat($object){
+       if($object->created_at->diffInDays(Carbon::now()) > 1){
+            $object->date_created = $object->created_at->format('d/m/Y');    
+        } else {
+            $object->date_created = $object->created_at->diffForHumans();
+        } 
+    }
       public function postCmt(Request $req)
     {
        $TestComment=new TestComment;
@@ -18,6 +26,7 @@ class TestCommentController extends Controller
        $TestComment->save();
        if(Auth::user()->id!=Test::find($req->test_id)->user->id)
         Test::find($req->test_id)->user->notify(new CommentTestNotification($req->all()));
+       $this->setDateFomat($TestComment);
        return response()->json($TestComment);
     }
     public function postDeleteCmt(Request $req)
@@ -31,7 +40,7 @@ class TestCommentController extends Controller
     	$TestComment=TestComment::find($req->comment_id);
     	$TestComment->content=$req->content;
     	$TestComment->save();
+      $this->setDateFomat($TestComment);
     	return response()->json($TestComment);
-
     }
 }

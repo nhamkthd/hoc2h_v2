@@ -65,28 +65,15 @@ class TestController extends Controller
 
     public function getTest(Request $req)
     {
-        $Test_arr=[];
         $test=Test::find($req->test_id);
-
-        $Test_arr['test']=$test;
-        $Test_arr['test_comment']=$test->comment;
-        foreach ($Test_arr['test_comment'] as $index=>$cmt) {
-           $Test_arr['test_comment'][$index]['user']=$cmt->user;
-           $Test_arr['test_comment'][$index]['user_like']=$cmt->like->pluck('user_id');
+        $test->category;
+        $test->avg_rate=$test->rate->avg('rate');
+        foreach ($test->comment as $comment) {
+            $comment->user;
+            $this->setDateFomat($comment);
+            $comment->user_like=$comment->like->pluck('user_id');
         }
-        $Test_arr['test_category']=$test->category;
-        $Test_arr['rate_avg']=round($test->rate->avg('rate'));
-        $user_rate=$test->rate->where('user_id',Auth::user()->id)->first();
-        if($user_rate)
-        {
-            $Test_arr['user_rate']=$user_rate->rate;
-        }
-        else
-        {
-            $Test_arr['user_rate']=0;
-        }
-
-       return response()->json($Test_arr);
+        return response()->json($test);
     }
 
     public function userTest(Request $req)
@@ -98,7 +85,6 @@ class TestController extends Controller
      public function search(Request $request){
         $test=Test::where('title', 'like', '%'.$request->keyword.'%')->get();
          foreach ($test as $tests) {
-
             $tests->user;
             $tests->category;
             $tests->user_test->count();

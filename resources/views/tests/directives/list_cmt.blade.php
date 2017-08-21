@@ -1,7 +1,7 @@
 @verbatim
 <div class="media list-item-block">
 	<span class="pull-left">
-		<img src="{{cmt.user.img}}" width="40" height="40">
+		<img src="{{cmt.user.avatar}}" width="40" height="40">
 	</span>
 	<div class="modal fade" id="{{cmt.id}}" role="dialog">
 		<div class="modal-dialog">
@@ -24,7 +24,7 @@
 	<div class="media-body">
 		<div class="media-heading">
 			<a href class="primary-text">{{cmt.user.name}}</a>
-			<small class="pull-right" style="color:#aa66cc; font-size: 12px;"> {{cmt.created_at| date : "dd-MM-yyyy"}}</small>
+			<small class="pull-right" style="color:#aa66cc; font-size: 12px;"> {{cmt.date_created}}</small>
 		</div>
 		<div class="">
 			<p class="answer-body">{{cmt.content}}</p>
@@ -45,7 +45,7 @@
 		</div> 
 		<div class=" post-action">
 			<ul class="nav nav-pills " role="tablist">
-				<li ng-show ="cmt.user_like.indexOf(user.id)==-1"><a href ng-click="likeComment($index,cmt.id)"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Thích <span class="badge ">{{cmt.user_like.length}}</span> </a></li>
+				<li ng-show ="cmt.user_like.indexOf(user.id)==-1||cmt.like==[]"><a href ng-click="likeComment($index,cmt.id)"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Thích <span class="badge ">{{cmt.user_like.length}}</span> </a></li>
 				<li ng-show ="cmt.user_like.indexOf(user.id)!=-1">
 					<a href ng-click="dislikeComment($index,cmt.id)">
 						<i class="fa fa-thumbs-down" aria-hidden="true"></i> 

@@ -129,11 +129,8 @@
 			console.log($scope.test_id);
 			$scope.user=user;
 			$http.post('/tests/api/getTest', {test_id:test_id}).then(function (res) {
-				$scope.test=res.data.test;
-				$scope.test.cmts=res.data.test_comment;
-				$scope.test.category=res.data.test_category;
-				$scope.avg_rate=res.data.rate_avg;
-				$scope.user_rate=res.data.user_rate;
+				$scope.avg_rate=res.data.avg_rate;
+				$scope.test=res.data;
 			}, function(error) {
 				console.log(error)
 			})
@@ -159,7 +156,7 @@
 
 		$scope.deleteCmt=function (index,cmt_id) {
 			$http.post('/tests/api/postDeleteCmt',{cmt_id:cmt_id} ).then(function (res) {
-				$scope.test.cmts.splice(index, 1);
+				$scope.test.comment.splice(index, 1);
 			}, function (error) {
 				console.log(error);
 			})
@@ -178,7 +175,7 @@
 		{
 
 			$http.post('/tests/api/likeComment', {comment_id:cmt_id}).then(function(res) {
-				$scope.test.cmts[index].user_like.push($scope.user.id);
+				$scope.test.comment[index].user_like.push(res.data.user_id);
 			}, function (error) {
 				console.log(error);
 			})
@@ -187,15 +184,15 @@
 		$scope.dislikeComment=function(index,cmt_id)
 		{
 			$http.post('/tests/api/dislikeComment', {comment_id:cmt_id}).then(function(res) {
-				$scope.test.cmts[index].user_like.splice($scope.test.cmts[index].user_like.indexOf($scope.user.id),1);
+				$scope.test.comment[index].user_like.splice(res.user_id,1);
 			}, function (error) {
 				console.log(error);
 			})
 		}
 
 		$scope.saveComment=function (index) {
-			$http.post('/tests/api/editComment',{comment_id:$scope.test.cmts[index].id,content:$scope.editComment[index]}).then(function (res) {
-				$scope.test.cmts[index].content=$scope.editComment[index];
+			$http.post('/tests/api/editComment',{comment_id:$scope.test.comment[index].id,content:$scope.editComment[index]}).then(function (res) {
+				$scope.test.comment[index].content=$scope.editComment[index];
 			}, function (error) {
 				console.log(error);
 			})

@@ -14,11 +14,8 @@
 					<test-card></test-card>
 				</div>
 				@endverbatim
-
 			</div>
 		</div>
-		
-		
 		@include('tests/sidebar')
 	</div>
 	@verbatim

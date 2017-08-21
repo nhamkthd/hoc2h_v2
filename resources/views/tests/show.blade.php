@@ -113,7 +113,7 @@
 			</button>
 			<div class="col-md-12 answer-list">
 				<div class="row">
-					<div class="col-md-12" ng-repeat="cmt in test.cmts">
+					<div class="col-md-12" ng-repeat="cmt in test.comment">
 							@include('tests.directives.list_cmt')
 						
 					</div>
