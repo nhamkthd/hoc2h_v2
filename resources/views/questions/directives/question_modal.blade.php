@@ -58,30 +58,36 @@
 	</div>
 </script>
 
+
+<script type="text/ng-template" id="selector/question/request/users">
+	<img ng-src="{{option.avatar}}" width="20" height="20"> {{option.name}}
+</script>
+
 <script type="text/ng-template" id="requestModal.html">
 	<div class="modal-header">
-		<h3 class="modal-title text-center" id="modal-title"><i class="fa fa-edit" aria-hidden="true"></i> Thay đổi chuyên mục</h3>
+		<h3 class="modal-title text-center" id="modal-title"><i class="fa fa-magic" aria-hidden="true"></i> Yêu cầu người trả lời </h3>
 	</div>
 	<div class="modal-body" id="modal-body">
 		<div class="row">
-				<div class="col-md-10  col-md-offset-1">
-					
-					<select selector
-							multi="false"
-							model="category_edit"
-							name="category"
-							options="categories"
-							value-attr="id"
-							label-attr="title"
-							placeholder="Chọn một chuyên mục" name="category"></select>
-					<span class="help-inline danger-text" 
-						  ng-show="!category_edit && frmQuestion.category.$touched">Chuyên mục không được để trống!</span>
-				</div>
+			<div class="col-md-10  col-md-offset-1">
+
+				<select selector
+						multi="false"
+						model="question_requested_user"
+						name="question_requested_user"
+						options="users"
+						value-attr="id"
+						view-item-template="'selector/question/request/users'"
+						dropdown-item-template="'selector/question/request/users'"
+						placeholder="Chọn một người có thể trả lời câu hỏi của bạn " name="category"></select>
+						<span class="help-inline danger-text" 
+						ng-show="!category_edit && frmQuestion.category.$touched">Chuyên mục không được để trống!</span>
 			</div>
+		</div>
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-warning" type="button" ng-click="cancel()">Huỷ bỏ</button>
-		<button class="btn btn-primary" type="submit" ng-click="submit()">Lưu lại</button>
+		<button class="btn btn-primary" type="submit" ng-click="submit()">Gửi</button>
 	</div>
 </script>
 @endverbatim

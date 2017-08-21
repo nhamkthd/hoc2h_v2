@@ -106,7 +106,7 @@
 	.answer-summary {padding: 5px 0; float: left; border-bottom: 1px solid #eff0f1; width: 100%;}
 	.answer-votes {font-size: 12px; font-weight: normal; line-height: 1.3; text-align: center; color: #6a737c; min-width: 36px; height: auto; padding: 3px 6px;  border: 1px solid #b9b9b9; border-radius: 2px;}
 	.answer-link {padding: 0;  padding-left: 10px; color: #535a60;}
-	.answer-link .title-hyperlink {width: auto;}
+	.answer-link .title-hyperlink {width:85%;}
 </style>
 @extends('users.layouts')
 @section('user_content')

@@ -25,8 +25,9 @@ Route::group(['prefix'=>'users'],function(){
 	Route::get('/{id}/{tab?}','UserController@userIndex')->where('id', '[0-9]+');
 	Route::group(['prefix'=>'api'],function(){
 		//GET METHOD
-		Route::get('user-profile/{id}','UserController@apiGetProfile');
-		Route::get('user-activity-overview/{user_id}','UserController@getActivityOverview');
+		Route::get('all-users','UserController@getAll');
+		Route::get('/user-profile/{id}','UserController@apiGetProfile');
+		Route::get('/user-activity-overview/{user_id}','UserController@getActivityOverview');
 		Route::get('/user-questions/{user_id}/{sort_id}','QuestionController@apiGetUserQuestions');
 		Route::get('/user-answers/{user_id}/{sort_id}','AnswerController@getUserAnswers');
 		//POST METHOD
@@ -102,6 +103,7 @@ Route::group(['prefix' => 'questions'], function(){
 		Route::post('/answer/vote','AnswerController@vote');
 		Route::post('/answer/edit','AnswerController@edit');
 		Route::post('/answer/delete','AnswerController@delete');
+		Route::post('/answer/set-best','AnswerController@setBestAnswer');
 
 		Route::post('/answer/comment-add','AnswerController@addComment');
 		Route::post('/answer/comment/vote','AnswerController@voteCommment');

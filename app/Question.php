@@ -11,7 +11,7 @@ class Question extends Model
     }
 
     public function answers(){
-    	return $this->hasMany('App\Answer','question_id','id');
+        return $this->hasMany('App\Answer','question_id','id')->orderby('is_best','desc');
     }
 
     public function votes()
@@ -34,6 +34,19 @@ class Question extends Model
             $listTags[$questionTag->tag_id] = Tag::find($questionTag->tag_id);
         }
         return $listTags;
+    }
+
+    public static function haveBestAnswer($question_id){
+        $question = Question::find($question_id);
+        $answers = $question->answers;
+        $haveBest = 0;
+        foreach ($answers as $answer){
+            if ($answer->is_best == 1) {
+                $haveBest = 1;
+                break;
+            }
+        }
+        return $haveBest;
     }
 
 }

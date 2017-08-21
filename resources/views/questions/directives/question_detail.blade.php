@@ -19,6 +19,11 @@
 	<div ng-show ="isQuestionNotFound == 1" class="col-md-12">
 		<p>Câu hỏi không tồn tại...!</p>
 	</div>
+	@if($question->user->isOnline())
+	   	<div ng-init="authorIsOnline(1)"></div>
+	@else 
+		<div ng-init="authorIsOnline(0)"></div>
+	@endif
 	<div ng-show="isQuestionNotFound == 0">
 		<div>
 			@verbatim
@@ -26,7 +31,9 @@
 				<div class="post-header">
 					<h3 class="unique-text">{{question.title}} </h3>
 					<p>
-						Đăng bởi <a href="/users/{{question.user.id}}/profile" class="primary-text">{{question.user.name}}</a> tại <a href class="warning-dark-text"> {{question.category.title}} </a> <a ng-click="editCategory()"> <i class="fa fa-edit" aria-hidden="true"></i></a>
+						Đăng bởi <a class="author-name" href="/users/{{question.user.id}}/profile" class="primary-text" >
+							<i class="fa fa-circle" aria-hidden="true" ng-class="{online:question_author_isOnline === 1}"></i>{{question.user.name}}</a> 
+						tại <a href class="warning-dark-text"> {{question.category.title}} </a> <a ng-click="editCategory()"> <i class="fa fa-edit" aria-hidden="true"></i></a>
 						<span class="pull-right"> <i class="fa fa-clock-o" aria-hidden="true"></i>  {{question.date_created}}</span>
 					</p>
 				</div>
@@ -66,7 +73,7 @@
 					  			<i class="fa fa-trash" aria-hidden="true"></i> Xoá
 					  		</a>
 					  	</li>
-					  	<li class="action"><a><i class="fa fa-magic" aria-hidden="true"></i> Yêu cầu</a></li>
+					  	<li class="action"><a ng-click="requestAnswer()"><i class="fa fa-magic" aria-hidden="true"></i> Yêu cầu</a></li>
 					  	<li ng-show="question.is_resolved == 1"  ng-click="changeResolve(0)" class="action "><a><i class="fa fa-check-circle success-dark-text" aria-hidden="true"></i> Resolved</a></li>
 					  	<li ng-show="question.is_resolved == 0" ng-click="changeResolve(1)" class="action "><a><i class="fa fa-check-circle danger-dark-text" aria-hidden="true"></i> Not resolve</a></li>
 					</ul>

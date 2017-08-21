@@ -41,6 +41,10 @@ class UserController extends Controller
     return view('users.index',compact('user_id','currentTab'));
   }
   
+  public function getAll(){
+    return User::all();
+  }
+
   public function apiGetProfile($id){
     $user = User::find($id);
     $user->join_date = $user->created_at->format('d/m/Y');

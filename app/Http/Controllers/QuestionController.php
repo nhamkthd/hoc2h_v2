@@ -98,6 +98,7 @@ class QuestionController extends Controller
         }
         foreach ($questions as $question) {
             $question->user;
+            $question->author_isOnline = $question->user->isOnline();
             $question->tags =  Question::getTags($question->id);
             $this->setDateFomat($question);
         }
@@ -235,6 +236,7 @@ class QuestionController extends Controller
         $this->setDateFomat($question);
         $question->user;
         $question->category;
+        $question->haveBestAnswer = Question::haveBestAnswer($question->id);
         $tags = Question::getTags($question->id);
         $categories = Category::all();
 

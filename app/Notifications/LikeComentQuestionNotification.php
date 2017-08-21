@@ -44,7 +44,7 @@ class LikeComentQuestionNotification extends Notification
     {
         return [
             "user"=>Auth::user(),
-            "kind"=>"Thích",
+            "kind"=>"thích",
             "model"=>"bình luận",
             "link"=>"/questions/question/".$this->question_id
         ];

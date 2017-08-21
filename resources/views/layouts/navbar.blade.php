@@ -32,7 +32,7 @@
         @if(Route::has('login'))
             @if(Auth::check())
             <li class="dropdown" ng-mouseover="readNotify(unReadNotification.length)">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"> Thông báo <span class="badge ng-binding"> @verbatim {{unReadNotification.length}}  @endverbatim</span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="fa fa-globe" aria-hidden="true"></i> Thông báo <span class="badge notify-badge" ng-hide="unReadNotification.length == 0"> @verbatim {{unReadNotification.length}}  @endverbatim</span></a>
               <ul style=" max-height: 300px;overflow-y:scroll; " class="dropdown-menu">
                   @include('notifications.list_notify')
               </ul>

@@ -30,7 +30,7 @@
 			<span class="date-created pull-right"><i class="fa fa-clock-o" aria-hidden="true"></i> {{answer.date_created}}</span>
 		</div>
 		<div class="">
-			<p class="answer-body" ng-bind-html="convertHtml(answer.content)">{{answer.content}}</p>
+			<p class="answer-body" ng-bind-html="convertHtml(answer.content)" ng-class="{best:answer.is_best == 1}">{{answer.content}}</p>
 		</div>
 		<div class="post-info" ng-show="user.id == answer.user_id">
 			<ul class="nav nav-pills" role="tablist">
@@ -59,6 +59,18 @@
 					<a href ng-click="showComments(answer.id)">
 						<i class="fa fa-comment" aria-hidden="true"></i> 
 						Bình luận <span class="badge">{{answer.comments_count}}</span>
+					</a> 
+				</li>
+				<li ng-show="user.id == question.user.id && answer.is_best == 0 && question.haveBestAnswer == 0">
+					<a ng-click="setBestAnswer($index,1)">
+						<i class="fa fa-check" aria-hidden="true" style="color: gray;"></i>
+						Best answer
+					</a> 
+				</li>
+				<li ng-show="user.id == question.user.id && answer.is_best == 1">
+					<a ng-click="setBestAnswer($index,0)">
+						<i class="fa fa-check " aria-hidden="true" style="color: green;"></i>
+						Best answer
 					</a> 
 				</li>
 			</ul>

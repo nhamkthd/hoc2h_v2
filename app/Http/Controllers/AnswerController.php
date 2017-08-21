@@ -48,7 +48,7 @@ class AnswerController extends Controller
 
             $question = Question::find($request->question_id);
             if(Auth::user()->id != $question->user->id)
-               $question->user->notify(new AnswerQuestionNotification($request->all()));
+               $question->user->notify(new AnswerQuestionNotification($answer));
             $question->answers_count++;
             $question->save();
 
@@ -106,6 +106,15 @@ class AnswerController extends Controller
         }
     	
     }
+
+    public function setBestAnswer(Request $request){
+        $answer = Answer::find($request->answer_id);
+        $answer->is_best = $request->is_best;
+        $answer->save();
+
+        return $answer->is_best;
+    }
+
     public function addComment(Request $request){
         if (Auth::check()) {
         	$comment = new AnswerComment;

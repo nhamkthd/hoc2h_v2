@@ -48,7 +48,7 @@ class AnswerQuestionNotification extends Notification
             "comment"=>$this->answer,
             "kind"=>"trả lời",
             "model"=>"câu hỏi",
-            "link"=>"/questions/question/".$this->answer['question_id']
+            "link"=>"/questions/question/".$this->answer['question_id']."/".$this->answer['id'],
         ];
     }
 
@@ -66,7 +66,7 @@ class AnswerQuestionNotification extends Notification
             "answer"=>$this->answer,
             "kind"=>"trả lời",
             "model"=>"câu hỏi",
-            "link"=>"/questions/question/".$this->answer['question_id']
+           "link"=>"/questions/question/".$this->answer['question_id']."/".$this->answer['id'],
             ]);
     }
 }

@@ -45,7 +45,7 @@ class LikeQuestionNotification extends Notification
         return [
             "user"=>Auth::user(),
             "kind"=>"Thích",
-            "model"=>"Câu hỏi",
+            "model"=>"câu hỏi",
             "link"=>"/questions/question/".$this->question_id
         ];
     }

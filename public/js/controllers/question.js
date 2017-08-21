@@ -293,6 +293,7 @@
 	 		$scope.question ={};
 	 		$scope.answers = [];
 	 		$scope.isResolved = 0;
+
 	 		$http.post('/questions/api/getQuestionInfo',{id:question_id})
 	 			 .then(function(response){
 	 			 	console.log('Init question: ',response.data);
@@ -305,6 +306,11 @@
 	 			 },function(error){
 	 			 	console.log(error);
 	 		 });
+		}
+
+		$scope.authorIsOnline = function(param){
+			$scope.question_author_isOnline = param;
+			console.log(param);
 		}
 		
 		//update question when updated 
@@ -348,6 +354,38 @@
 	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
 	            controller: function ($scope, $uibModalInstance,$log,Categories,question) {
 	              	Categories.getList().then(function(response){$scope.categories = response.data;});
+	                $scope.submit = function () {
+	                   	$http.post('/questions/api/editCategory',{id:question.id,category:$scope.category_edit})
+				 			 .then(function(response){
+				 			 	console.log('Edit question category: ',response.data)
+				 			 	question.category = response.data;
+				 			 },function(error){
+				 			 	console.log(error);
+				 		 });
+	                    $uibModalInstance.dismiss('cancel'); // dismiss(reason) 
+	                }
+	                $scope.cancel = function () {
+	                    $uibModalInstance.dismiss('cancel'); 
+	                };
+	            },
+	            resolve: {
+	                question:function(){
+	                	return $scope.question;
+	                }
+	            }
+	        });//end of modal.open
+		}
+
+		//requestion answer
+		$scope.requestAnswer = function(){
+			$uibModal.open({
+	            templateUrl: 'requestModal.html', // loads the template
+	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
+	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
+	            controller: function ($scope, $uibModalInstance,$log,Categories,question) {
+	              $http.get('/users/api/all-users')
+			 		   .then(function(response){$scope.users = response.data;console.log($scope.users);}
+			 				,function(error){console.log(error.data);});
 	                $scope.submit = function () {
 	                   	$http.post('/questions/api/editCategory',{id:question.id,category:$scope.category_edit})
 				 			 .then(function(response){
@@ -480,6 +518,19 @@
 	 			 	console.log(error);
 	 		 });
 		}
+
+		//set best answer 
+		$scope.setBestAnswer = function(index,param){
+			$http.post('/questions/api/answer/set-best',{answer_id:$scope.question.answers[index].id,is_best:param})
+				 .then(function(response){
+				 	console.log('set best answer:',response.data);
+				 	$scope.question.answers[index].is_best = response.data;
+				 	$scope.question.haveBestAnswer = response.data;
+				 },function(error){
+				 	console.log(error.data);
+				 });
+		}
+
 		//edit answer
 		$scope.editAnswer = function(index) {
 			$uibModal.open({

@@ -43,7 +43,7 @@ class LikeCommentTestNotification extends Notification
     {
         return [
             "user"=>Auth::user(),
-            "kind"=>"Thích",
+            "kind"=>"thích",
             "model"=>"bình luận",
             "link"=>"/tests/show/".$this->test_id
         ];
