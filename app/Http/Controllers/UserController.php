@@ -48,8 +48,8 @@ class UserController extends Controller
   public function apiGetProfile($id){
     $user = User::find($id);
     $user->join_date = $user->created_at->format('d/m/Y');
-    $user->private_setting = UserPrivate::where('user_id',$user->id)->get()[0];
-    $user->notification_setting = UserNotificationSetting::where('user_id',$user->id)->get()[0];
+    $user->private_setting = UserPrivate::where('user_id',$user->id)->first();
+    $user->notification_setting = UserNotificationSetting::where('user_id',$user->id)->first();
     return $user;
   }
 

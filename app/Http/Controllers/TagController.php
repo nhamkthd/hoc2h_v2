@@ -10,7 +10,7 @@ class TagController extends Controller
 	//admin
     public function index()
     {
-       
+       return view('admin.business.tag.index');
     }
 	public function build_sorter($key) {
 		return function ($a, $b) use ($key) {
