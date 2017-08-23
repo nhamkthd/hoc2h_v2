@@ -13,6 +13,7 @@ use App\QuestionVote;
 use App\QuestionTag;
 use App\Category;
 use App\Tag;
+use App\RequestAnswer;
 
 class QuestionController extends Controller
 {   
@@ -161,6 +162,30 @@ class QuestionController extends Controller
         return $user_questions;
     }
 
+    //get questions user request answer
+
+    public function apiGetUserRequestAnswer($user_id,$sort_id){
+        switch ($sort_id) {
+            case 1:
+                $user_request_answers = RequestAnswer::where('user_id',$user_id)->orderby('donate_coins','desc')->get();
+                break;
+            case 2:
+                 $user_request_answers = RequestAnswer::where('user_id',$user_id)->orderby('created_at','desc')->get();
+                break;
+            case 3:
+                $user_request_answers = RequestAnswer::where('user_id',$user_id)->where('is_confirm',1)->orderby('created_at','desc')->get();
+                break;
+            default:
+                # code...
+                break;
+        }
+
+        foreach ($user_request_answers as $user_request_answer) {
+            $user_request_answer->question;
+        }
+
+        return $user_request_answers;
+    }
 
     //direct create question form
     public function create() {
@@ -343,6 +368,17 @@ class QuestionController extends Controller
         }
         $tags = Question::getTags($request->question_id);
         return $tags;
+    }
+
+    //request answer 
+    public function requestAnswer(Request $request){
+        $request_answer = new RequestAnswer;
+        $request_answer->question_id = $request->question_id;
+        $request_answer->requester_id = $request->requester_id;
+        $request_answer->user_id = $request->user_id;
+        $request_answer->donate_coins = $request->donate_coins;
+        $request_answer->save();
+        return $request_answer;
     }
 
     //delete question

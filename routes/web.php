@@ -30,6 +30,7 @@ Route::group(['prefix'=>'users'],function(){
 		Route::get('/user-activity-overview/{user_id}','UserController@getActivityOverview');
 		Route::get('/user-questions/{user_id}/{sort_id}','QuestionController@apiGetUserQuestions');
 		Route::get('/user-answers/{user_id}/{sort_id}','AnswerController@getUserAnswers');
+		Route::get('/user-request-answer/{user_id}/{sort_id}','QuestionController@apiGetUserRequestAnswer');
 		//POST METHOD
 		Route::post('/edit','UserController@userEdit');
 		Route::post('/update-user-private','UserController@updateUserPrivate');
@@ -97,6 +98,7 @@ Route::group(['prefix' => 'questions'], function(){
 		Route::post('/editCategory','QuestionController@apiEditCategory');
 		Route::post('/change-resolve','QuestionController@apiChangeResolve');
 		Route::post('/add-Tags','QuestionController@apiAddTags');
+		Route::post('/request-answer','QuestionController@requestAnswer');
 		
 
 		Route::post('/answers','AnswerController@store');

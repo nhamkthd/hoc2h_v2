@@ -1,7 +1,7 @@
 @verbatim
 <div class="media list-item-block"  id="anchor{{answer.id}}" ng-class="{anchorAt:anchorAt === answer.id}">
 	<span class="pull-left">
-		<img src="{{answer.user.avatar}}" width="40" height="40">
+		<img class="small-avt" src="{{answer.user.avatar}}" width="40" height="40">
 	</span>
 	<script type="text/ng-template" id="editAnswerModal.html">
 		<div class="modal-header">
@@ -27,6 +27,7 @@
 	<div class="media-body">
 		<div class="media-heading">
 			<a href="/users/{{answer.user.id}}/profile" class="primary-text">{{answer.user.name}}</a>
+			<span ng-show="answer.user.class"> - học {{answer.user.class}}</span>
 			<span class="date-created pull-right"><i class="fa fa-clock-o" aria-hidden="true"></i> {{answer.date_created}}</span>
 		</div>
 		<div class="">
@@ -78,12 +79,13 @@
 		<div class="comment-block" ng-show="showComments[answer.id]">
 			<div class="comment-block-item" ng-repeat="comment in answer.comments">
 				<span class="pull-left avt">
-					<img src="{{comment.user.avatar}}" width="40" height="40">
+					<img class="small-avt" src="{{comment.user.avatar}}" width="40" height="40">
 				</span>
 				<div class="media-body">
 					<div class="media-heading">
 						<a href="/users/{{comment.user.id}}/profile" class="primary-text">{{comment.user.name}}</a>
-						<span class="date-created"><i class="fa fa-clock-o" aria-hidden="true"></i> {{comment.date_created}}</span>
+						<span ng-show="comment.user.class">- học {{comment.user.class}}</span>
+						<span class="date-created pull-right"><i class="fa fa-clock-o" aria-hidden="true"></i> {{comment.date_created}}</span>
 					</div>
 					<div class="">
 						<div ng-show="comment_editing[$index] != 1"><p class="answer-body">{{comment.content}}</p></div>
@@ -133,7 +135,7 @@
 			<div class="comment-box" ng-show="isLogged == true">
 				<span class="pull-left avt">
 					@endverbatim
-					<img src="{{Auth::user()->avatar}}" width="40" height="40">
+					<img class="small-avt" src="{{Auth::user()->avatar}}" width="40" height="40">
 					@verbatim
 				</span>
 				<div class="media-body">

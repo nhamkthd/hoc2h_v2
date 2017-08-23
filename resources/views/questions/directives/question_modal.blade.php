@@ -38,6 +38,7 @@
 	</div>
 	<div class="modal-body" id="modal-body">
 		<div class="row">
+
 				<div class="col-md-10  col-md-offset-1">
 					<select selector
 							multi="false"
@@ -70,7 +71,6 @@
 	<div class="modal-body" id="modal-body">
 		<div class="row">
 			<div class="col-md-10  col-md-offset-1">
-
 				<select selector
 						multi="false"
 						model="question_requested_user"
@@ -83,6 +83,18 @@
 						<span class="help-inline danger-text" 
 						ng-show="!category_edit && frmQuestion.category.$touched">Chuyên mục không được để trống!</span>
 			</div>
+			<div class="col-md-10 col-md-offset-1" style="margin-top: 20px;">
+				<label>Thưởng xu cho người được yêu cầu nếu họ trả lời được câu hỏi của bạn.</label>
+			</div>
+			<div class="col-md-4 col-md-offset-1">	
+				<input placeholder="nhập số xu" type="number" ng-model="donate_coins" class="form-control" ng-change="donating()" required>
+			</div>
+			<div class="col-md-6 col-md-offset-1" style="padding-top:10px;">
+				<span >Xu hiện có: <strong class="warning-dark-text">{{question.user.coin}}</strong></span>
+			</div>
+			<span class="col-md-10 col-md-offset-1" style="color: red;" ng-show="isCannotDonate === 1">
+				Số xu thưởng không thể lớn hơn số xu hiện có...!
+			</span>
 		</div>
 	</div>
 	<div class="modal-footer">

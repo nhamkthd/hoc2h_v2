@@ -18,6 +18,7 @@ class CreateRequestAnswersTable extends Migration
             $table->integer('question_id');
             $table->integer('requester_id');
             $table->integer('user_id');
+            $table->integer('donate_coins')->default(0);
             $table->integer('is_confirm')->default(0);
             $table->text('reject_reason')->nullable();
             $table->timestamps();

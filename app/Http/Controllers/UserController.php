@@ -12,6 +12,7 @@ use App\Role;
 use App\Question;
 use App\Answer;
 use App\Test;
+use App\RequestAnswer;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\updateUserRequest;
 use Hash;
@@ -131,9 +132,12 @@ class UserController extends Controller
     $tests_count = Test::where('user_id',$user_id)->get()->count();
     $tests = Test::where('user_id',$user_id)->orderby('user_test_count','desc')->take(10)->get();
 
+    $request_answer_count = RequestAnswer::where('user_id',$user_id)->get()->count();
+
     $over_view_counts[0] = $questions_count;
     $over_view_counts[1] = $answers_count;
     $over_view_counts[2] = $tests_count;
+    $over_view_counts[3] = $request_answer_count;
     $result  = array('questions' => $questions,'answers' => $answers, 'test_create' => $tests,'over_view_counts' => $over_view_counts );
 
     return $result;

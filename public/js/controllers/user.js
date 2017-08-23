@@ -279,12 +279,15 @@
 				case 3:
 					$scope.setAnswerSortTab(1);
 					break;
+				case 4:
+					$scope.setRequestAnswerSortTab(1);
+					break;
 				default:
 					break;
 			}
 
 		}
-
+		//Over view tap
 		$scope.getActivityOverView = function(){
 			$http.get('/users/api/user-activity-overview/'+$scope.user.id)
 				  .then(function(response){
@@ -298,6 +301,7 @@
 				  });
 		}
 
+		//Question tab
 		$scope.setQuestionSortTab = function(tab){
 			$scope.questionSortTab = tab;
 			switch(tab){
@@ -325,7 +329,7 @@
 				 });
 		}
 
-		
+		//answer tab
 		$scope.setAnswerSortTab = function (tab) {
 			$scope.answerSortTab = tab;
 			switch(tab){
@@ -351,6 +355,31 @@
 				 	console.log(error.data);
 			});
 		}
-		
+
+		//request answer tab
+		$scope.setRequestAnswerSortTab = function (tab) {
+			$scope.requestAnswerSortTab = tab;
+			switch(tab){
+				case 1:
+					$scope.getUserRequestAnswers(1);
+					break;
+				case 2: 
+					$scope.getUserRequestAnswers(2);
+					break;
+				case 3:
+					$scope.getUserRequestAnswers(3);
+					break;
+			}
+		}
+
+		$scope.getUserRequestAnswers = function (sort_id) {
+			$http.get('/users/api/user-request-answer/'+$scope.user.id+'/'+sort_id)
+				 .then(function (response) {
+				 	console.log(response.data);
+				 	$scope.request_answers = response.data;
+				 },function (error) {
+				 	console.log(error.data);
+			});
+		}
 	});
 })();

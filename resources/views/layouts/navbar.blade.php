@@ -31,6 +31,9 @@
       <ul class="nav navbar-nav navbar-right">
         @if(Route::has('login'))
             @if(Auth::check())
+            <li class="dropdown" id="showRight">
+              <a href="#"><i class="fa fa-comment" aria-hidden="true"></i> Tin nhắn</a>
+            </li>
             <li class="dropdown" ng-mouseover="readNotify(unReadNotification.length)">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="fa fa-globe" aria-hidden="true"></i> Thông báo <span class="badge notify-badge" ng-hide="unReadNotification.length == 0"> @verbatim {{unReadNotification.length}}  @endverbatim</span></a>
               <ul style=" max-height: 300px;overflow-y:scroll; " class="dropdown-menu">
@@ -62,3 +65,38 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
+  <h3>Tin nhắn</h3>
+</nav>
+ <script src="{{asset('js/flugin/slide-menus/classie.js')}}"></script>
+    <script>
+      var menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+        body = document.body;
+
+      showRight.onclick = function() {
+        classie.toggle( this, 'active' );
+        classie.toggle( menuRight, 'cbp-spmenu-open' );
+        disableOther( 'showRight' );
+      };
+      function disableOther( button ) {
+        if( button !== 'showLeft' ) {
+          classie.toggle( showLeft, 'disabled' );
+        }
+        if( button !== 'showRight' ) {
+          classie.toggle( showRight, 'disabled' );
+        }
+        if( button !== 'showTop' ) {
+          classie.toggle( showTop, 'disabled' );
+        }
+        if( button !== 'showBottom' ) {
+          classie.toggle( showBottom, 'disabled' );
+        }
+        if( button !== 'showLeftPush' ) {
+          classie.toggle( showLeftPush, 'disabled' );
+        }
+        if( button !== 'showRightPush' ) {
+          classie.toggle( showRightPush, 'disabled' );
+        }
+      }
+    </script>

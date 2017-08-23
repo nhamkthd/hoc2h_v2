@@ -253,6 +253,7 @@
 	});
 	//Question detail controller
 	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location,$uibModal,Tags){
+
 		this.animationsEnabled = true;
 		$scope.isQuestionNotFound = 0;
 		$scope.isLogged = false;
@@ -382,15 +383,26 @@
 	            templateUrl: 'requestModal.html', // loads the template
 	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
 	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
-	            controller: function ($scope, $uibModalInstance,$log,Categories,question) {
-	              $http.get('/users/api/all-users')
+	            controller: function ($scope, $uibModalInstance,$log,question,user) {
+
+	              	$http.get('/users/api/all-users')
 			 		   .then(function(response){$scope.users = response.data;console.log($scope.users);}
 			 				,function(error){console.log(error.data);});
+			 		$scope.question = question;
+			 		$scope.donating = function(){
+			 			if ($scope.donate_coins > $scope.question.user.coin) {
+			 				$scope.isCannotDonate = 1;
+			 			}else {
+			 				$scope.isCannotDonate = 0;
+			 			}
+			 		}
 	                $scope.submit = function () {
-	                   	$http.post('/questions/api/editCategory',{id:question.id,category:$scope.category_edit})
+	                   	$http.post('/questions/api/request-answer',{question_id:question.id,
+	                   											    requester_id:user.id,
+	                   											    user_id:$scope.question_requested_user
+	                   											    ,donate_coins:$scope.donate_coins})
 				 			 .then(function(response){
-				 			 	console.log('Edit question category: ',response.data)
-				 			 	question.category = response.data;
+				 			 	console.log('request answer: ',response.data)
 				 			 },function(error){
 				 			 	console.log(error);
 				 		 });
@@ -403,6 +415,9 @@
 	            resolve: {
 	                question:function(){
 	                	return $scope.question;
+	                },
+	                user:function(){
+	                	return $scope.user;
 	                }
 	            }
 	        });//end of modal.open
@@ -641,11 +656,13 @@
 	 			 	console.log(error);
 	 		});
 		}
+
 		$scope.editCommentMode = function(index,parentIndex) {
 			console.log('editing comment....');
 			$scope.comment_editing[index] = 1;
 			$scope.comment_editing_field[index] = $scope.question.answers[parentIndex].comments[index].content;
 		}
+
 		$scope.cancelEditComment = function(index) {
 			console.log('cancel edit comment....');
 			$scope.comment_editing[index] = 0;

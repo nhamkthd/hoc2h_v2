@@ -67,7 +67,7 @@
 							<tbody>
 								<tr ng-repeat = "answer in answers_overview">
 									<td class="count-cell">
-										<div class="mini-counts">{{answer.votes_count}}</div>
+										<div class="mini-counts" ng-class="{best:answer.is_best === 1}">{{answer.votes_count}}</div>
 									</td>
 									<td >
 										<a class="title-hyperlink" href="/questions/question/{{answer.question.id}}/{{answer.id}}">{{answer.question.title}}</a>
@@ -172,12 +172,41 @@
 					<div class="user-answers">
 						<div class="row answer-summary" ng-repeat="answer in user_answers">
 							<div class="col-md-1">
-								<div class="answer-votes">{{answer.votes_count}}</div>
+								<div class="answer-votes" ng-class="{best:answer.is_best === 1}">{{answer.votes_count}}</div>
 							</div>
 							<div class="col-md-11" style="padding: 0;">
 								<div class="answer-link">
 									<a class="title-hyperlink pull-left"  href="/questions/question/{{answer.question.id}}/{{answer.id}}">{{answer.question.title}}</a>
 									<span class="created_date pull-right">{{answer.created_at}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-show="activityTab === 4">
+			<div class="col-md-9">
+				<div class="sub-tab-header full-tab-header">
+					<h3>
+						<span>{{over_view_counts[3]}}</span> Yêu cầu
+					</h3>
+					<div class="sub-tabs sub-tab-sort">
+						<span ng-class="{sortSelected:requestAnswerSortTab === 1}" ng-click = "setRequestAnswerSortTab(1)">Nhiều xu</span>
+						<span ng-class="{sortSelected:requestAnswerSortTab === 2}" ng-click = "setRequestAnswerSortTab(2)">Mới nhất</span>
+						<span ng-class="{sortSelected:requestAnswerSortTab === 3}" ng-click = "setRequestAnswerSortTab(3)">Hoàn thành</span>
+					</div>
+				</div>
+				<div class="sub-tab-content">
+					<div class="user-answers">
+						<div class="row answer-summary" ng-repeat="request_answer in request_answers">
+							<div class="col-md-1">
+								<div class="answer-votes" ng-class="{best:request_answer.is_confirm === 1}">+ {{request_answer.donate_coins}}</div>
+							</div>
+							<div class="col-md-11" style="padding: 0;">
+								<div class="answer-link">
+									<a class="title-hyperlink pull-left"  href="/questions/question/{{answer.question.id}}/{{answer.id}}">{{request_answer.question.title}}</a>
+									<span class="created_date pull-right">{{request_answer.created_at}}</span>
 								</div>
 							</div>
 						</div>
