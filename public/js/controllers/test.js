@@ -166,7 +166,7 @@
 		}
 		$scope.extendComment=function () {
 			$scope.pageComment++;
-			$http.get('/tests/api/getCommentTest/'+$scope.test_id+'?page='+$scope.pageComment).then(function (res) {
+			$http.get('/tests/api/getCommentTest/'+$scope.test_id+'?page='+$scope.pageComment).then(function (res) {	
 				for (var i = 0; i < res.data.data.length; i++) {
 	 				$scope.comment.push(res.data.data[i]);
 	 			}
@@ -184,7 +184,7 @@
 					cmt=res.data;
 					cmt.user=$scope.user;
 					cmt.user_like=new Array();
-					$scope.test.comment.push(cmt);
+					$scope.comment.unshift(cmt);
 					console.log($scope.test.cmts);
 					$scope.cmt='';
 				}, function (error) {
@@ -195,7 +195,7 @@
 
 		$scope.deleteCmt=function (index,cmt_id) {
 			$http.post('/tests/api/postDeleteCmt',{cmt_id:cmt_id} ).then(function (res) {
-				$scope.test.comment.splice(index, 1);
+				$scope.comment.splice(index, 1);
 			}, function (error) {
 				console.log(error);
 			})

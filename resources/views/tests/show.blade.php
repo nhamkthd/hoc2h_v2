@@ -116,6 +116,10 @@
 				<i class="fa fa-star" aria-hidden="true"></i> Đánh giá đề thi
 			</button>
 			<div class="col-md-12 answer-list" ng-init='initComment({{$test->id}})'>
+			<div class="col-md-12 commet-box">
+						<textarea style="padding:10px 0 0 10px;" ng-init="cmt=''" name="cmt" ng-model='cmt' placeholder="Viết bình luận"></textarea>
+					</div>
+					<button class="btn btn-outline-default waves-effect pull-right" style="margin-top:20px; margin-right: 10px;" type="button" ng-click="addComment()">Gửi trả lời</button>
 				<div class="row">
 					<div class="col-md-12" ng-repeat="cmt in comment">
 						@include('tests.directives.list_cmt')
@@ -123,10 +127,6 @@
 					<div ng-show='pageComment!=maxPage' class="col-md-12 " style="padding-bottom: 10px">
 						<button ng-click='extendComment()' class=" btn btn-primary">Tải thêm bình luận</button>
 					</div>
-					<div class="col-md-12 commet-box">
-						<textarea style="padding:10px 0 0 10px;" ng-init="cmt=''" name="cmt" ng-model='cmt' placeholder="Viết bình luận"></textarea>
-					</div>
-					<button class="btn btn-outline-default waves-effect pull-right" style="margin-top:20px; margin-right: 10px;" type="button" ng-click="addComment()">Gửi trả lời</button>
 				</div>
 
 			</div>
