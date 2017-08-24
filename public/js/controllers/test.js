@@ -134,6 +134,9 @@
 		$scope.test=[];
 		$scope.test_id;
 		$scope.user;
+		$scope.comment=[];
+		$scope.pageComment=2;
+		$scope.maxPage;
 		$scope.avg_rate=0;
 		$scope.editComment=new Array()
 		$scope.initTest=function(test_id,user,id_comment) {
@@ -143,6 +146,7 @@
 			$http.post('/tests/api/getTest', {test_id:test_id}).then(function (res) {
 				$scope.avg_rate=res.data.avg_rate;
 				$scope.test=res.data;
+				console.log($scope.test);
 				console.log('go to answer:',id_comment);
 				if (id_comment > 0) {
 					console.log('go to answer:',id_comment);
@@ -150,6 +154,24 @@
 				}
 			}, function(error) {
 				console.log(error)
+			})
+		}
+		$scope.initComment=function (test_id) {
+			$http.get('/tests/api/getCommentTest/'+test_id).then(function (res) {
+				$scope.comment=res.data.data;
+				$scope.maxPage=res.data.last_page;
+			}, function (err) {
+				console.log(err)
+			})
+		}
+		$scope.extendComment=function () {
+			$http.get('/tests/api/getCommentTest/'+$scope.test_id+'?page='+$scope.pageComment).then(function (res) {
+				$scope.pageComment++;
+				for (var i = 0; i < res.data.data.length; i++) {
+	 				$scope.comment.push(res.data.data[i]);
+	 			}
+			}, function (err) {
+				console.log(err)
 			})
 		}
 
@@ -192,7 +214,7 @@
 		{
 
 			$http.post('/tests/api/likeComment', {comment_id:cmt_id}).then(function(res) {
-				$scope.test.comment[index].user_like.push(res.data.user_id);
+				$scope.comment[index].user_like.push(res.data.user_id);
 			}, function (error) {
 				console.log(error);
 			})
@@ -201,7 +223,7 @@
 		$scope.dislikeComment=function(index,cmt_id)
 		{
 			$http.post('/tests/api/dislikeComment', {comment_id:cmt_id}).then(function(res) {
-				$scope.test.comment[index].user_like.splice($scope.test.comment[index].user_like.indexOf($scope.user.id),1);
+				$scope.comment[index].user_like.splice($scope.test.comment[index].user_like.indexOf($scope.user.id),1);
 			}, function (error) {
 				console.log(error);
 			})
@@ -209,7 +231,7 @@
 
 		$scope.saveComment=function (index) {
 			$http.post('/tests/api/editComment',{comment_id:$scope.test.comment[index].id,content:$scope.editComment[index]}).then(function (res) {
-				$scope.test.comment[index].content=$scope.editComment[index];
+				$scope.comment[index].content=$scope.editComment[index];
 			}, function (error) {
 				console.log(error);
 			})

@@ -69,6 +69,7 @@ Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 		Route::post('/likeComment', 'LikeCommentTestController@postLikeComment');
 		Route::post('/dislikeComment', 'LikeCommentTestController@postDislikeComment');
 		Route::get('/search','TestController@search');
+		Route::get('getCommentTest/{test_id}','TestCommentController@getCommentTest');
 	});
 });
 

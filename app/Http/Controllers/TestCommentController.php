@@ -17,6 +17,16 @@ class TestCommentController extends Controller
             $object->date_created = $object->created_at->diffForHumans();
         } 
     }
+    public function getCommentTest($test_id)
+    {
+      $TestComment=TestComment::where('test_id',$test_id)->orderBy('id','DESC')->paginate(2);
+       foreach ( $TestComment as $comment) {
+            $comment->user;
+            $this->setDateFomat($comment);
+            $comment->user_like=$comment->like->pluck('user_id');
+        }
+        return $TestComment;
+    }
       public function postCmt(Request $req)
     {
        $TestComment=new TestComment;
