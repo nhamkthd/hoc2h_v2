@@ -135,7 +135,7 @@
 		$scope.test_id;
 		$scope.user;
 		$scope.comment=[];
-		$scope.pageComment=2;
+		$scope.pageComment=1;
 		$scope.maxPage;
 		$scope.avg_rate=0;
 		$scope.editComment=new Array()
@@ -165,8 +165,8 @@
 			})
 		}
 		$scope.extendComment=function () {
+			$scope.pageComment++;
 			$http.get('/tests/api/getCommentTest/'+$scope.test_id+'?page='+$scope.pageComment).then(function (res) {
-				$scope.pageComment++;
 				for (var i = 0; i < res.data.data.length; i++) {
 	 				$scope.comment.push(res.data.data[i]);
 	 			}
