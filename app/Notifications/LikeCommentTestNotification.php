@@ -16,10 +16,10 @@ class LikeCommentTestNotification extends Notification
      *
      * @return void
      */
-    public $test_id;
-    public function __construct($test_id)
+    public $likeCommentTest;
+    public function __construct($likeCommentTest)
     {
-        $this->test_id=$test_id;
+        $this->likeCommentTest=$likeCommentTest;
     }
 
     /**
@@ -45,7 +45,7 @@ class LikeCommentTestNotification extends Notification
             "user"=>Auth::user(),
             "kind"=>"thích",
             "model"=>"bình luận",
-            "link"=>"/tests/show/".$this->test_id
+            "link"=>"/tests/show/".$this->likeCommentTest->comment->test->id.'/'.$this->likeCommentTest->comment->id
         ];
     }
 
@@ -61,7 +61,7 @@ class LikeCommentTestNotification extends Notification
             "user"=>Auth::user(),
             "kind"=>"Thích",
             "model"=>"bình luận",
-            "link"=>"/tests/show/".$this->test_id
+            "link"=>"/tests/show/".$this->likeCommentTest->comment->test->id.'/'.$this->likeCommentTest->comment->id
             ]);
     }
 }

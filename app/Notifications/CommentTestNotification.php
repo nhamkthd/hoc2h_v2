@@ -48,7 +48,7 @@ class CommentTestNotification extends Notification
             "comment"=>$this->comment,
             "kind"=>"bình luận",
             "model"=>"bài test",
-            "link"=>"/tests/show/".$this->comment['test_id']
+            "link"=>"/tests/show/".$this->comment['test_id'].'/'.$this->comment['id']
         ];
     }
 
@@ -66,7 +66,7 @@ class CommentTestNotification extends Notification
             "comment"=>$this->comment,
             "kind"=>"bình luận",
             "model"=>"bài test",
-            "link"=>"/tests/show/".$this->comment['test_id']
+            "link"=>"/tests/show/".$this->comment['test_id'].'/'.$this->comment['id']
             ]);
     }
 }

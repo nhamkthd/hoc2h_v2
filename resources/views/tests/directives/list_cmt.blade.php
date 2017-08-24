@@ -21,7 +21,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="media-body">
+	<div class="media-body"  id="anchor{{cmt.id}}" ng-class="{anchorAt:anchorAt === cmt.id}">
 		<div class="media-heading">
 			<a href class="primary-text">{{cmt.user.name}}</a>
 			<small class="pull-right" style="color:#aa66cc; font-size: 12px;"> {{cmt.date_created}}</small>

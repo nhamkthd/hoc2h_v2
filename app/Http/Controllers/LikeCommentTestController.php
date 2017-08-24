@@ -14,10 +14,10 @@ class LikeCommentTestController extends Controller
     	$LikeCommentTest=new LikeCommentTest;
     	$LikeCommentTest->comment_id=$req->comment_id;
     	$LikeCommentTest->user_id=Auth::user()->id;
-    	$LikeCommentTest->save();
+        $LikeCommentTest->save();   
         $TestComment=TestComment::find($req->comment_id);
         if (Auth::user()->id!=$TestComment->user->id) {
-            $TestComment->user->notify(new LikeCommentTestNotification($TestComment->test->id));
+            $TestComment->user->notify(new LikeCommentTestNotification($LikeCommentTest));
         }
         
     	return response()->json($LikeCommentTest);

@@ -19,7 +19,6 @@ Route::group(['prefix' => 'categories'],function(){
 
 	});
 });
-
 //USER
 Route::group(['prefix'=>'users'],function(){
 	Route::get('/{id}/{tab?}','UserController@userIndex')->where('id', '[0-9]+');
@@ -55,7 +54,7 @@ Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	Route::post('usertest','TestController@userTest');
 	Route::get('gettest','TestController@getListTest');
 	Route::post('create_write_test','WTestController@store')->name('create_write_test');
-	Route::get('show/{id}', 'TestController@show');
+	Route::get('show/{id}/{id_comment?}', 'TestController@show');
 	Route::post('/usertest/submittestchoice','UserTestController@store');
 	Route::get('usetest/result/{usertest_id}/{countIsCorrect}','UserTestController@result');
 	Route::group(['prefix' => 'api'], function(){

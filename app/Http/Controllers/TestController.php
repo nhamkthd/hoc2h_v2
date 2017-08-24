@@ -57,10 +57,10 @@ class TestController extends Controller
         return response()->json($test);
     }
 
-    public function show($id)
+    public function show($id,$id_comment=null)
     {
         $test=Test::find($id);
-        return view('tests.show',compact('test'));
+        return view('tests.show',compact('test','id_comment'));
     }
 
     public function getTest(Request $req)

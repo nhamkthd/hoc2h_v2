@@ -9,9 +9,12 @@
 	    if (!results[2]) return '';
 	    return decodeURIComponent(results[2].replace(/\+/g, " "));
 	}
+	
 
-	var app = angular.module('hoc2h-test', []);
-
+	var app = angular.module('hoc2h-test', ['infinite-scroll']);
+	app.run(['$anchorScroll', function($anchorScroll) {
+		$anchorScroll.yOffset = 50;   // always scroll by 50 extra pixels
+	}]);
 	     //test-list-card directive
 	app.directive('testCard',function(){
 		return {
@@ -118,19 +121,33 @@
 	 });	
 
 
-	app.controller('ShowTestController', function ($scope,$http) {
+	app.controller('ShowTestController', function ($scope,$http,$anchorScroll,$location) {
+		$scope.gotoAnchor = function(x) {
+			var newHash = 'anchor' + x;
+			if ($location.hash() !== newHash) {
+			  $location.hash('anchor' + x);
+			} else {
+			  $anchorScroll();
+			}
+			$scope.anchorAt = x;
+	  };
 		$scope.test=[];
 		$scope.test_id;
 		$scope.user;
 		$scope.avg_rate=0;
 		$scope.editComment=new Array()
-		$scope.initTest=function(test_id,user) {
+		$scope.initTest=function(test_id,user,id_comment) {
 			$scope.test_id=test_id;
 			console.log($scope.test_id);
 			$scope.user=user;
 			$http.post('/tests/api/getTest', {test_id:test_id}).then(function (res) {
 				$scope.avg_rate=res.data.avg_rate;
 				$scope.test=res.data;
+				console.log('go to answer:',id_comment);
+				if (id_comment > 0) {
+					console.log('go to answer:',id_comment);
+					$scope.gotoAnchor(id_comment);
+				}
 			}, function(error) {
 				console.log(error)
 			})
@@ -145,7 +162,7 @@
 					cmt=res.data;
 					cmt.user=$scope.user;
 					cmt.user_like=new Array();
-					$scope.test.cmts.push(cmt);
+					$scope.test.comment.push(cmt);
 					console.log($scope.test.cmts);
 					$scope.cmt='';
 				}, function (error) {
@@ -184,7 +201,7 @@
 		$scope.dislikeComment=function(index,cmt_id)
 		{
 			$http.post('/tests/api/dislikeComment', {comment_id:cmt_id}).then(function(res) {
-				$scope.test.comment[index].user_like.splice(res.user_id,1);
+				$scope.test.comment[index].user_like.splice($scope.test.comment[index].user_like.indexOf($scope.user.id),1);
 			}, function (error) {
 				console.log(error);
 			})

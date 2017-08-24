@@ -25,7 +25,7 @@ class TestCommentController extends Controller
        $TestComment->content=$req->content;
        $TestComment->save();
        if(Auth::user()->id!=Test::find($req->test_id)->user->id)
-        Test::find($req->test_id)->user->notify(new CommentTestNotification($req->all()));
+        Test::find($req->test_id)->user->notify(new CommentTestNotification($TestComment));
        $this->setDateFomat($TestComment);
        return response()->json($TestComment);
     }
