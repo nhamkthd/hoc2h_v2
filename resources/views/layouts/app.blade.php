@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="{{ asset('css/ng-scrollbar/ng-scrollbar.css') }}">
         <link rel="stylesheet" href="{{ asset('css/slide-menus/default.css') }}">
         <link rel="stylesheet" href="{{ asset('css/slide-menus/component.css') }}">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+
         <!--App style-->
         <link href="{{ asset('css/angular-flash.css') }}" rel="stylesheet"> 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
@@ -42,17 +42,17 @@
         <script src="{{asset('js/flugin/bootstrap/bootstrap.min.js')}}"></script>
         <script src="{{asset('js/flugin/bootstrap/ui-bootstrap-tpls-2.5.0.min.js')}}"></script>
         <script src="{{asset('js/flugin/alert/sweetalert.min.js')}}"></script>
-        <script src="{{asset('js/flugin/slide-menus/modernizr.min.js')}}"></script>
+        <script src="{{asset('js/flugin/slide-menus/modernizr.custom.js')}}"></script>
+        <script src="{{asset('js/flugin/angular-chat/rltm.js')}}"></script>
+        <script src="{{asset('js/flugin/angular-chat/angular-chat.js')}}"></script>
 
         <!-- Applycation Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/controllers/heading.js') }}"></script>
+        <script src="{{ asset('js/controllers/message.js') }}"></script>
         <script src="{{ asset('js/controllers/user.js') }}"></script>
         <script src="{{ asset('js/controllers/question.js') }}"></script>
         <script src="{{ asset('js/controllers/test.js') }}"></script>
-
-      
-        <script src="js/modernizr.custom.js"></script>
         
         <script src="{{asset('js/flugin/alert/sweetalert.min.js')}}"></script>
         <link rel="stylesheet" type="text/css" href="{{asset('js/flugin/alert/sweetalert.css')}}">

@@ -23,6 +23,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    protected $table = "users";
 
     public function isOnline()
     {
@@ -53,8 +54,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'user_name','email', 'password','phone','class','local','gender','status','coin','avatar','role_id','birthday','description',
     ];
-    protected $table = "users";
+   
     public function role(){
         return $this->belongsTo('App\Role','role_id','id');
+    }
+
+    public function messages(){
+        return $this->hasMany('App\Message','user_id','id');
     }
 }

@@ -19,6 +19,7 @@ Route::group(['prefix' => 'categories'],function(){
 
 	});
 });
+
 //USER
 Route::group(['prefix'=>'users'],function(){
 	Route::get('/{id}/{tab?}','UserController@userIndex')->where('id', '[0-9]+');
@@ -40,6 +41,12 @@ Route::group(['prefix'=>'users'],function(){
 		Route::group(['prefix'=>'directives'],function(){
 		});
 	});
+});
+
+//MESSAGES
+Route::group(['prefix' => 'messages'],function(){
+	Route::get('/fetch','MessageController@fetchMessage');
+	Route::post('/send','MessageController@sendMessage');
 });
 
 //TESTS

@@ -61,7 +61,7 @@
                     @verbatim
                         <div class = "col-md-11 col-md-offset-1">
                             <p class="menu-label">Tags</p>
-                            <div class="card-tags">
+                            <div class="question-tags">
                                 <ul>
                                     <li ng-repeat="tag in sidebarTags"><a href="/questions/tagged/?id={{tag.id}}">{{tag.name}} <span class="badge badge-primary badge-pill">{{tag.questions_count}}</span></a></li>
                                 </ul>

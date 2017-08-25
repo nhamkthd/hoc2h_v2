@@ -355,6 +355,7 @@
 	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
 	            controller: function ($scope, $uibModalInstance,$log,Categories,question) {
 	              	Categories.getList().then(function(response){$scope.categories = response.data;});
+	              	$scope.category_edit = question.category.id;
 	                $scope.submit = function () {
 	                   	$http.post('/questions/api/editCategory',{id:question.id,category:$scope.category_edit})
 				 			 .then(function(response){

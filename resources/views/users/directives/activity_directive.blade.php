@@ -82,19 +82,19 @@
 				</div>
 				<div class="active-panel">
 					<div class="panel-header">
-						<h3 class="title-section">Đề đã làm 
-							<span>{{(over_view_counts[2])}}</span>
+						<h3 class="title-section">Đề đã tạo
+							<span>({{over_view_counts[2]}})</span>
 						</h3>
 					</div>
 					<div class="panel-content">
 						<table class="panel-content-table">
 							<tbody>
-								<tr>
+								<tr ng-repeat = "test in tests_created_overview">
 									<td class="count-cell">
-										<div class="mini-counts">12</div>
+										<div class="mini-counts">{{test.user_test_count}}</div>
 									</td>
-									<td class="title-hyperlink">
-										<a  href="">C# programming on macOS</a>
+									<td>
+										<a class="title-hyperlink" href="/tests/show/{{test.id}}">{{test.title}}</a>
 									</td>
 								</tr>
 							</tbody>

@@ -66,37 +66,27 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
-  <h3>Tin nhắn</h3>
-</nav>
+<div ng-app="hoc2h-message" ng-controller="MessageController">
+  <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
+    <h3>Tin nhắn
+    <i class="fa fa-times pull-right icon-close" id="close_message_slide" aria-hidden="true"></i>
+    </h3>
+  </nav>
+</div>
+
  <script src="{{asset('js/flugin/slide-menus/classie.js')}}"></script>
     <script>
       var menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+          close_message_slide =  document.getElementById( 'close_message_slide' ),
         body = document.body;
 
       showRight.onclick = function() {
         classie.toggle( this, 'active' );
         classie.toggle( menuRight, 'cbp-spmenu-open' );
-        disableOther( 'showRight' );
       };
-      function disableOther( button ) {
-        if( button !== 'showLeft' ) {
-          classie.toggle( showLeft, 'disabled' );
-        }
-        if( button !== 'showRight' ) {
-          classie.toggle( showRight, 'disabled' );
-        }
-        if( button !== 'showTop' ) {
-          classie.toggle( showTop, 'disabled' );
-        }
-        if( button !== 'showBottom' ) {
-          classie.toggle( showBottom, 'disabled' );
-        }
-        if( button !== 'showLeftPush' ) {
-          classie.toggle( showLeftPush, 'disabled' );
-        }
-        if( button !== 'showRightPush' ) {
-          classie.toggle( showRightPush, 'disabled' );
-        }
-      }
+
+      close_message_slide.onclick = function() {
+        classie.toggle( this, 'active' );
+        classie.toggle( menuRight, 'cbp-spmenu-open' );
+      };
     </script>
