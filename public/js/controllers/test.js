@@ -51,11 +51,9 @@
             });
         };
     });
-
 	 app.run(function(){
 	 	console.log('hello Test');
 	 });
-
 	 app.controller('List_TestController', function ($scope,$http,$location) {
 	 	$scope.tab=getParameterByName('filter');
 	 	$scope.list_tests=[];

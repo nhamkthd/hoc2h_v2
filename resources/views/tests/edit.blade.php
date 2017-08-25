@@ -2,21 +2,21 @@
 @section('content')
 <script type="text/javascript">
 	$(window).bind('beforeunload', function(){
-		return 'chưa tạo xong. bạn có muốn thoát?';
+		return 'chưa sửa xong. bạn có muốn thoát?';
 	});
 </script>
-<div class="container" ng-app ="hoc2h-test" ng-controller="createTest">
+<div class="container" ng-app ="hoc2h-editTest" ng-controller="editTest">
 	<div class="row app-content box">
 		<div ng-show="tab === 1" >
 			<div class="col-md-10 col-md-offset-1 ">
-				<legend class="text-center">Tạo đề thi</legend>
+				<legend class="text-center">Sửa đề thi</legend>
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-12" ng-init="initEditTest({{$id}})">
 						<form novalidate name="form" >
 							<div class="col-md-10 col-md-offset-1">
 								<div class="form-group pmd-textfield">
 									<label for="Small">Tiêu Đề <span class="danger-dark-text">*</span></label>
-									<input type="text" required name="title" ng-minlength="3" ng-maxlength="500" ng-model="title" id="Small" class="form-control" value="" autocomplete="off">
+									<input type="text" required name="title" ng-minlength="3" ng-maxlength="500" ng-model="test.title" id="Small" class="form-control" value="" autocomplete="off">
 								</div>
 
 								<div class="alert alert-danger fade in" ng-show="form.title.$touched && form.title.$invalid">
@@ -30,7 +30,8 @@
 								<div class="form-group pmd-textfield pmd-textfield-floating-label">
 									<label>Chọn thể loại <span class="danger-dark-text">*</span></label>
 									@verbatim
-									<select selector
+									<select
+											selector
 											multi="false"
 											model="category"
 											name="category"
@@ -69,7 +70,7 @@
 							<div class="col-md-4 col-md-offset-1">
 								<div class="form-group pmd-textfield">
 									<label for="Small">Số Câu Hỏi <span class="danger-dark-text">*</span></label>
-									<input type="number" name="number_of_questions" required ng-model="number_of_questions" min="1" max="500" class="form-control" value="">
+									<input type="number" name="number_of_questions" required ng-model="test.number_of_questions" min="1" max="500" class="form-control" value="">
 								</div>	
 								<div class="alert alert-danger fade in" ng-show="form.number_of_questions.$touched && form.number_of_questions.$invalid">
 									<span ng-show="form.number_of_questions.$error.required">Số câu hỏi không được để trống.</span>
@@ -80,11 +81,11 @@
 							<div class="col-md-4 col-md-offset-2">
 								<div class="form-group pmd-textfield">
 									<label for="Small">Tổng Thời Gian (Phút) <span class="danger-dark-text">*</span></label>
-									<input type="number" required ng-model="time" name="time" min="1"  class="form-control" value="">
+									<input type="number" required ng-model="test.total_time" name="total_time" min="1"  class="form-control" value="">
 								</div>
-								<div class="alert alert-danger fade in" ng-show="form.time.$touched && form.time.$invalid">
-									<span ng-show="form.time.$error.required">Thời gian không được để trống.</span>
-									<span ng-show="form.time.$error.min">Thời gian phải lớn hơn 0 .</span>
+								<div class="alert alert-danger fade in" ng-show="form.total_time.$touched && form.total_time.$invalid">
+									<span ng-show="form.total_time.$error.required">Thời gian không được để trống.</span>
+									<span ng-show="form.total_time.$error.min">Thời gian phải lớn hơn 0 .</span>
 
 								</div>	
 							</div>
@@ -104,7 +105,7 @@
 			
 			</div>
 			<div ng-show="tab === 2">
-				@include('tests.directives.create_multichoice')
+				@include('tests.directives.edit_multichoice')
 			</div>
 		</div>
 	</div>

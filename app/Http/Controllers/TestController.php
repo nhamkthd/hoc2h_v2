@@ -91,5 +91,15 @@ class TestController extends Controller
         }
         return response()->json($test);
     }
-
+    public function getEdit($id)
+    {
+        if(Test::find($id)->user->id==Auth::user()->id)
+            return view('tests.edit',compact('id'));
+        else
+            return redirect('tests');
+    }
+    public function getEditTest($id)
+    {
+        return Test::find($id);
+    }
 }

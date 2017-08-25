@@ -20,7 +20,7 @@
 	</div>
 	@verbatim
 	<div class="row">
-	<div class="col-md-6">
+		<div class="col-md-6" ng-show="totalPages!=1">
 			<posts-pagination class="text-center"></posts-pagination>
 		</div>
 	</div>

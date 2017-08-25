@@ -52,4 +52,13 @@ class MTestController extends Controller
 			}
 		}
 
+		public function getMtests($id)
+		{
+			$test=Test::find($id);
+			foreach ($test->mtest as $key => $value) {
+				$value->mTestAnswer;
+			};
+			return response()->json($test);
+		}
+
 }

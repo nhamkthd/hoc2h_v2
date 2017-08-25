@@ -5,7 +5,7 @@
 			<hr>
 		</div>
 		<div class="col-md-10 col-md-offset-1">
-			<input placeholder="Tìm kiếm" type="text" ng-model="keywords" ng-change="search()" class="form-control" required>
+			<input placeholder="Tìm kiếm" type="text" ng-model="keywords" ng-keyup="search()" class="form-control" required>
 		</div>
 		<hr>
 		<div class = "col-md-10 col-md-offset-1">
@@ -17,7 +17,6 @@
 				<li ng-class="{active:tab === 'hot'}"><a href="{{ url('tests') }}?filter=hot"> <i class="fa fa-flag" aria-hidden="true"></i> Đề Thi Nổi Bật</a></li>
 				<li ng-class="{active:tab === 'usercreate'}"><a href="{{ url('tests') }}?filter=usercreate"><i class="fa fa-list-alt" aria-hidden="true"></i> Đề Thi Bạn Tạo </a></li>
 				<li ng-class="{active:tab === 'Mytesting'}" ><a href="{{ url('tests') }}?filter=Mytesting"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Đề Thi Bạn Đã Làm </a></li>
-
 			</ul>
 		</section>
 		</div>

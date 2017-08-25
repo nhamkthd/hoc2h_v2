@@ -1,6 +1,9 @@
 @verbatim
 	<div class="row">
-		<div class="col-xs-12 col-md-12">
+		<div class="col-xs-1 col-md-1">
+			<img src="{{test.user.avatar}}" class="img-responsive">
+		</div>
+		<div class="col-xs-11 col-md-11">
 			<div>
 				<a class="title-hyperlink" href="{{'tests/show'}}/{{test.id}}">{{test.title}}</a>
 				<div class="mic-info">

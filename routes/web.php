@@ -58,6 +58,7 @@ Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	Route::get('/tests-card',function(){
 			return view('tests.directives.test_list_card');
 		});
+	Route::get('edit/{id}','TestController@getEdit');
 	Route::post('usertest','TestController@userTest');
 	Route::get('gettest','TestController@getListTest');
 	Route::post('create_write_test','WTestController@store')->name('create_write_test');
@@ -76,7 +77,9 @@ Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 		Route::post('/likeComment', 'LikeCommentTestController@postLikeComment');
 		Route::post('/dislikeComment', 'LikeCommentTestController@postDislikeComment');
 		Route::get('/search','TestController@search');
-		Route::get('getCommentTest/{test_id}','TestCommentController@getCommentTest');
+		Route::get('/getCommentTest/{test_id}','TestCommentController@getCommentTest');
+		Route::get('/getEditTest/{id}','TestController@getEditTest');
+		Route::get('/getMtests/{id}','MTestController@getMtests');
 	});
 });
 

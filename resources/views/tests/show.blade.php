@@ -9,7 +9,11 @@
 	@endif
 <div class="col-md-8 main-content ">
 		<div class="box">
-			<h3 class="info-dark-text">{{$test->title}}</h3>
+			<h3 class="info-dark-text">{{$test->title}} 
+				@if ($test->user->id==Auth::user()->id)
+					<a href="{{ url('tests/edit') }}/{{$test->id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+				@endif
+			</h3>
 			<p><strong>Thể loại/Danh mục: </strong>{{$test->category->title}}</p>
 			@if($test->test_type == 0)
 				<p><strong>Dạng đề:</strong>Trắc nghiệm</p>

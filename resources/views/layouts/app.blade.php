@@ -53,7 +53,7 @@
         <script src="{{ asset('js/controllers/user.js') }}"></script>
         <script src="{{ asset('js/controllers/question.js') }}"></script>
         <script src="{{ asset('js/controllers/test.js') }}"></script>
-        
+        <script src="{{ asset('js/controllers/editTest.js') }}"></script>
         <script src="{{asset('js/flugin/alert/sweetalert.min.js')}}"></script>
         <link rel="stylesheet" type="text/css" href="{{asset('js/flugin/alert/sweetalert.css')}}">
         <style type="text/css">
