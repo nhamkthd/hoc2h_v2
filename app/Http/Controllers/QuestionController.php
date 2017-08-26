@@ -99,6 +99,7 @@ class QuestionController extends Controller
         }
         foreach ($questions as $question) {
             $question->user;
+            $question->user->role;
             $question->author_isOnline = $question->user->isOnline();
             $question->tags =  Question::getTags($question->id);
             $this->setDateFomat($question);

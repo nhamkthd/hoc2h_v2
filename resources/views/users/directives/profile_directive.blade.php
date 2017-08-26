@@ -36,20 +36,11 @@
 									<div class="contact-info">
 										<ul class="contact-list">
 											<li><i class="fa fa-map-marker" aria-hidden="true"></i>
-												<a ng-hide="user.local" href="/users/{{user.id}}/setting">Bổ sung...</a>
-												{{user.local}}</li>
-											<li><i class="fa fa-phone" aria-hidden="true"></i>
-												<a ng-hide="user.phone" href="/users/{{user.id}}/setting">Bổ sung...</a>
-												{{user.phone}}</li>
-											<li><i class="fa fa-intersex" aria-hidden="true"></i>
-												<span ng-show="user.gender === 1">Nam</span>
-												<span ng-show="user.gender === 0">Nữ</span></li>
-											<li><i class="fa fa-birthday-cake" aria-hidden="true"></i>
-												<a ng-hide="user.birthday" href="/users/{{user.id}}/setting">Bổ sung...</a>
-												{{user.birthday| date:'dd/MM/yyyy'}}</li>
-											<li><i class="fa fa-graduation-cap" aria-hidden="true"></i>
-												<a ng-hide="user.local" href="/users/{{user.id}}/setting">Bổ sung...</a>
-												{{user.class}} </li>
+												<a ng-hide="user.local" href="/users/{{user.id}}/setting">Bổ sung...</a>{{user.local}}</li>
+											<li><i class="fa fa-phone" aria-hidden="true"></i><a ng-hide="user.phone" href="/users/{{user.id}}/setting">Bổ sung...</a>{{user.phone}}</li>
+											<li><i class="fa fa-intersex" aria-hidden="true"></i><span ng-show="user.gender === 1">Nam</span><span ng-show="user.gender === 0">Nữ</span></li>
+											<li><i class="fa fa-birthday-cake" aria-hidden="true"></i><a ng-hide="user.birthday" href="/users/{{user.id}}/setting">Bổ sung...</a>{{user.birthday| date:'dd/MM/yyyy'}}</li>
+											<li><i class="fa fa-graduation-cap" aria-hidden="true"></i><a ng-hide="user.local" href="/users/{{user.id}}/setting">Bổ sung...</a>{{user.class}}</li>
 											<li><i class="fa fa-clock-o" aria-hidden="true"></i>tham gia ngày {{user.join_date}}</li>
 										</ul>
 									</div>

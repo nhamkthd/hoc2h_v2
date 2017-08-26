@@ -286,6 +286,7 @@
         $scope.getUser = function(user) {
         	$scope.user = user;
         	$scope.isLogged = true;
+        	console.log($scope.isLogged);
         }
 
         //init question infomation with ID

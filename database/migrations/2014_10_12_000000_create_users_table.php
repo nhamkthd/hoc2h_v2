@@ -18,12 +18,12 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('user_name')->nullable();
             $table->string('email')->nullable();
-            $table->integer('role_id')->default(4);
+            $table->integer('role_id')->default(3);
             $table->integer('phone')->nullable();
             $table->string('class')->nullable();
             $table->integer('gender')->nullable();
             $table->string('birthday')->nullable();
-            $table->string('avatar')->nullable();
+            $table->string('avatar')->default('http://i.imgur.com/kHn39EY.jpg');
             $table->string('local')->nullable();
             $table->integer('coin')->default(0);
             $table->integer('status')->default(1);

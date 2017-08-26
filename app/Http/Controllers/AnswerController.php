@@ -145,7 +145,7 @@ class AnswerController extends Controller
                 $comment_vote->answer_comment_id  = $request->comment_id;
                 $comment_vote->save();
                 if (Auth::user()->id!=$comment->user->id) {
-                    $comment->user->notify(new ReplyCommentQuestionNotification($answer->answer->question->id));
+                    $comment->user->notify(new ReplyCommentQuestionNotification($comment->answer->question->id));
                 }
                 $comment->votes_count++;
                 $comment->save();

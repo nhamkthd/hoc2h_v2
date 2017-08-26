@@ -1,6 +1,10 @@
 body{
 	font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
-	background: #f1f2f3 ;
+   /* font-family: Roboto,sans-serif;*/
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.5;
+	background: #f1f2f3;
 	color: #4d545d;
 	display: block;
 
@@ -9,6 +13,7 @@ body{
 .app-content {background-color: #fff; padding-top:10px; border-radius:2px;}
 .icon-close {color: #fff; cursor: pointer;}
 .icon-close:hover{color:#bdbdbd;}
+i.online{color: green; font-size: 10px; vertical-align: 1px; margin-right: 2px;}
 label {font-weight: 700; margin-bottom: 5px;}
 /* Text color styles*/
 .danger-text{ color:#ff4444;}
