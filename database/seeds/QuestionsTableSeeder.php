@@ -3,7 +3,7 @@
 
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-
+use App\Question;
 class QuestionsTableSeeder extends Seeder
 {
     /**
@@ -15,8 +15,8 @@ class QuestionsTableSeeder extends Seeder
     {
         $faker = Faker::create();
         // following line retrieve all the user_ids from DB
-        $users = App\User::all()->lists('id');
-        $categories = App\Category::all()->lists('id');
+        $users = App\User::all()->pluck('id')->all();
+        $categories = App\Category::all()->pluck('id')->all();
 
         foreach(range(1,50) as $index){
             $company = Question::create([
