@@ -21,9 +21,13 @@ class TagController extends Controller
 		};
 	}
 
-    public function getAll()
+    public function getAll($category_id)
     {
-    	$tags =  Tag::all();
+        if ($category_id == 0) {
+            $tags =  Tag::all();
+        }else {
+            $tags = Tag::where('category_id',$category_id)->get();
+        }
     	$questions_count = array();
     	foreach ($tags as $tag) {
     		$tag->questions_count = QuestionTag::getQuestionsCountWithTag($tag->id);

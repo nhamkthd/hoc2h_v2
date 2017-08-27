@@ -20,6 +20,7 @@ app.controller('editTest',function($scope,$http){
 			$scope.test = response.data;
 			$scope.category=$scope.test.category_id;
 			$scope.level=$scope.test.level;
+
 		});
 	}
 	$scope.getMtests=function (id) {

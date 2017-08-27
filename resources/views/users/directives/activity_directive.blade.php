@@ -140,7 +140,7 @@
 								</div>
 								<div class="col-md-9 question-summary-detail">
 									<a class="title-hyperlink" href="/questions/question/{{question.id}}">{{question.title}}</a>
-									<div class="card-tags" ng-hide="question.tags.length == 0" style="margin-left:-.5rem;" >
+									<div class="sidebar-tags" ng-hide="question.tags.length == 0" style="margin-left:-.5rem;" >
 										<ul>
 											<li ng-repeat="tag in question.tags">
 											<a href="/questions/tagged/?id={{tag.id}}">{{tag.name}}</a></li>

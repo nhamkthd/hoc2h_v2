@@ -32,14 +32,14 @@
 					<h3 class="unique-text">{{question.title}} </h3>
 					<p>
 						Đăng bởi <a class="author-name" href="/users/{{question.user.id}}/profile" class="primary-text" >
-							<i class="fa fa-circle" aria-hidden="true" ng-class="{online:question_author_isOnline === 1}"></i>{{question.user.name}}</a> 
+							<i class="fa fa-circle user-status" aria-hidden="true" ng-class="{online:question_author_isOnline === 1}"></i>{{question.user.name}}</a> 
 						tại <a href class="warning-dark-text"> {{question.category.title}} </a>
 							<a ng-click="editCategory()"> <i class="fa fa-edit" aria-hidden="true" ></i></a>
 						<span class="pull-right"> <i class="fa fa-clock-o" aria-hidden="true"></i>  {{question.date_created}}</span>
 					</p>
 				</div>
 				<p class="answer-body" ng-bind-html="question.content"></p>
-				<div ng-show="!(question.tagsList.length == 0)" class="question-tags" style="margin-bottom:20px; margin-left: -.5rem;">
+				<div ng-show="!(question.tagsList.length == 0)" class="sidebar-tags" style="margin-bottom:20px; margin-left: -.5rem;">
 					<ul>
 						<li ng-repeat="tag in question.tagsList"><a href="/questions/tagged/?id={{tag.id}}">{{tag.name}}</a></li>
 					</ul>
