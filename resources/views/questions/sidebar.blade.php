@@ -1,4 +1,4 @@
-                <div ng-init="getListTags()"></div>
+                <div ng-init="getListTags(0)"></div>
                 <div class="row sidebar" >
                     <div class="col-md-10 col-md-offset-1" style="padding:10px;">
                         <a href="{{route('showQuestionCreateFrom')}}"  class="btn btn-info" style="width: 100%;" >Đăng câu hỏi</a>
@@ -61,7 +61,16 @@
                     @verbatim
                         <div class = "col-md-11 col-md-offset-1">
                             <p class="menu-label">Tags</p>
-                            <div class="question-tags">
+                            <select selector
+                                    multi="false"
+                                    model="tags_category_id"
+                                    options="categories"
+                                    value-attr="id"
+                                    label-attr="title"
+                                    placeholder="Tất cả" 
+                                    change ="changeCategory()" 
+                                    style="margin-left: 8px;max-width: 268px;"></select>
+                            <div class="sidebar-tags">
                                 <ul>
                                     <li ng-repeat="tag in sidebarTags"><a href="/questions/tagged/?id={{tag.id}}">{{tag.name}} <span class="badge badge-primary badge-pill">{{tag.questions_count}}</span></a></li>
                                 </ul>

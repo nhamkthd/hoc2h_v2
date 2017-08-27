@@ -10,7 +10,7 @@ Route::get('/redirect', 'Auth\SocialAuthController@redirect');
 Route::get('/callback', 'Auth\SocialAuthController@callback');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('pusher/auth', 'pusherController@pusherAuth');
-Route::get('/tags','TagController@getAll');
+Route::get('/tags/{category_id}','TagController@getAll');
 
 Route::group(['prefix' => 'categories'],function(){
 	Route::group(['prefix'=>'api'],function(){

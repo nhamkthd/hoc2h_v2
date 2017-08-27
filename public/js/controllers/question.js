@@ -113,12 +113,15 @@
   	});
 
 	//main question controller
-	app.controller('QuestionController',function($scope, $http,$sce,Tags){
+	app.controller('QuestionController',function($scope, $http,$sce,Tags,Categories){
 		var tag_id = 0;
 		$scope.tab = 1;
 		$scope.totalPages = 0;
 	 	$scope.currentPage = 1;
 	 	$scope.range = [];
+
+	 	Categories.getList().then(function(response){$scope.categories = response.data;});
+
 	 	$scope.setSelectedTab = function(sTab){
 	 		$scope.tab = sTab;
 	 		if (sTab == 3  ) {
@@ -157,14 +160,19 @@
 
 	 		}
 	 	}
-	 	$scope.getListTags = function (){
-	 		$http.get('/tags')
+
+	 	$scope.getListTags = function (category_id){
+	 		$http.get('/tags/'+category_id)
  				 .then(function(response){
  					 $scope.sidebarTags = response.data;
  					 console.log("sidebarTags: ",$scope.sidebarTags);
  				},function (error) {
  					console.log(error);
  				});
+	 	}
+	 	$scope.changeCategory = function () {
+	 		$scope.getListTags($scope.tags_category_id);
+	 		console.log('changeCategory.....',$scope.tags_category_id);
 	 	}
 	 	$scope.getQuestionsWithTab = function(tab,pageNumber){
 	 		if (pageNumber === undefined) {
@@ -294,6 +302,7 @@
 
 	 		$scope.question ={};
 	 		$scope.answers = [];
+	 		$scope.related_questions = {};
 	 		$scope.isResolved = 0;
 
 	 		$http.post('/questions/api/getQuestionInfo',{id:question_id})
@@ -301,6 +310,8 @@
 	 			 	console.log('Init question: ',response.data);
 	 			 	$scope.question = response.data.question;
 	 			 	$scope.categories = response.data.categories;
+	 			 	$scope.related_questions = response.data.related_questions;
+	 			 	console.log('related_questions:',$scope.related_questions);
 	 			 	if (answer_id > 0) {
 	 			 		console.log('go to answer:',answer_id);
 	 			 		$scope.gotoAnchor(answer_id);

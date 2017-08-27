@@ -299,8 +299,17 @@ class QuestionController extends Controller
         }
         $question->isVoted = $isVoted;
         $question->tagsList = $tags;
+        $related_questions = Search::search(
+                              "Question" ,
+                              ['title'] ,
+                               $question->title,
+                              ['id' , 'title'],
+                              ['id'  , 'desc'] ,
+                              true ,
+                              15
+                            );
 
-        return response()->json(array('question'=>$question,'categories'=>$categories));
+        return response()->json(array('question'=>$question,'categories'=>$categories,'related_questions' => $related_questions));
     }
 
     //edit question

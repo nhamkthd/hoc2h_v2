@@ -9,7 +9,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
 	config.language = 'vi_VN';
 
-	config.extraPlugins = 'imgur,eqneditor,emojione,colorbutton,panelbutton,floatpanel,panel';
+	config.extraPlugins = 'imgur,eqneditor,emojione,colorbutton,panelbutton,floatpanel,panel,lineutils,widgetselection,widget,codesnippet';
 	config.imgurClientID= '5f83e114af0de78';
 	
 	// The toolbar groups arrangement, optimized for a single toolbar row.
