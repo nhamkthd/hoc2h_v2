@@ -439,10 +439,8 @@
 	 	$scope.editQa=function (index) {
 	 		$('#myModal').modal('show');
 	 		$scope.editTest=$scope.mtests[index];
-
 	 	}
 	 	$scope.deleteQa=function (index) {
-
 	 		$scope.mtests.splice(index, 1);
 	 	}
 

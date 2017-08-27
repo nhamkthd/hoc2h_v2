@@ -69,6 +69,9 @@ Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 		//this is group route api angular js
 		Route::get('/getCategory', 'CategoryController@getAll');
 		Route::post('/create_mtest', 'MTestController@store');
+		Route::post('/edit_mtest', 'MTestController@edit');
+		Route::post('deleteqa', 'MTestController@delete');
+		Route::post('deleteanswer', 'MTestController@deleteanswer');
 		Route::post('/getTest', 'TestController@getTest');
 		Route::post('/postCmt', 'TestCommentController@postCmt');
 		Route::post('/editComment', 'TestCommentController@postEditComment');

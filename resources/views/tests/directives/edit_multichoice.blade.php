@@ -4,32 +4,44 @@
 		color: red;
 	}
 </style>
+  <div class="modal fade" id="deleteQa" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Xác nhận</h4>
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc muốn xóa câu hỏi này???</p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" ng-click="deleteQa(index)">Vẫn Xóa</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">Sửa câu hỏi</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
 			</div>
 			<div class="modal-body">
 				<div class="row" id="document">
 					<form action="" method="post">
-
 						<div class="col-md-12">
 							<div class="row">
-
 								<div class="col-md-10">
 									<div class="form-group pmd-textfield">
 										<label for="Small">Câu Hỏi * :</label>
 										<textarea class="form-control" required ng-model="editTest.content"> </textarea>
 									</div>	
-
-
 								</div>		
 							</div>
-
 							<div class="row">
 								<div class="col-md-10">
 									<div class="form-group pmd-textfield">
@@ -38,15 +50,12 @@
 									</div>	
 								</div>
 							</div>
-
 							<div id="group_answer">			
 								<div class="row" id="answer">
 									@verbatim
-									<div class="row" ng-repeat="x in editTest.answer">
+									<div class="row" ng-repeat="x in editTest.m_test_answer">
 										<div class="col-md-7 col-md-offset-1" >
-											<div class="alert alert-success">
-												{{x.title}}
-											</div>
+											<input type="" class="form-control" value="{{x.title}}" ng-model='x.title' name="">
 										</div>
 
 										<div class="col-md-3" style="margin-top:15px;">
@@ -80,17 +89,12 @@
 										Thêm câu trả lời
 									</a>
 								</div>
-
 							</div>	
-
 						</div>
-
 					</form>
-
 				</div>
 			</div>
 			<div class="modal-footer">
-				
 				<button type="button" class="btn btn-primary" data-dismiss="modal">close</button>
 			</div>
 		</div>
@@ -98,10 +102,10 @@
 </div>
 
 <div class="col-md-10 col-md-offset-1 main-content">
-	<legend class="text-center">Tạo đề trắc nghiệm</legend>
+	<legend class="text-center">Sửa đề trắc nghiệm</legend>
 	<div class="col-md-12">
 		@verbatim
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-12 box">
 			<h4><strong>Tiêu đề: </strong>{{test.title}} </h4>
 			<h4><strong>Danh mục/Thể loại: </strong>{{test.category_title}} </h4>
 			<h4><strong>Dạng đề: </strong>	Trắc nhiệm </h4>
@@ -118,7 +122,7 @@
 					<div class="col-md-12">
 						<p style="color:green; font-size: 18px;display:inline; ">Câu {{$index + 1}} :{{x.content}} 
 							<a href="#" ng-click="editQa($index)"><i class="fa fa-edit" aria-hidden="true"></i> Sửa</a> 
-							<a href="#" ng-click="deleteQa($index)"><i class="fa fa-trash" aria-hidden="true"></i> Xoá</a>
+							<a href="#" ng-click="deleteShow($index)"><i class="fa fa-trash" aria-hidden="true"></i> Xoá</a>
 						</p>
 					</div>
 					
@@ -167,9 +171,7 @@
 										@verbatim
 										<div class="row" ng-repeat="x in mtestanswers">
 											<div class="col-md-7" >
-												<div class="alert alert-success">
-													{{x.title}}
-												</div>
+												<input type="" class="form-control" value="{{x.title}}" ng-model='x.title' name="">
 											</div>
 
 											<div class="col-md-3" style="margin-top:15px;">
@@ -213,7 +215,7 @@
 					</div>
 
 					<div class="col-md-12">
-						<button ng-disabled="Mform.$invalid" class="btn pmd-btn-outline pmd-ripple-effect btn-info" ng-click="addQuesTion(content,explan)" >		
+						<button ng-disabled="Mform.$invalid" class="btn pmd-btn-outline pmd-ripple-effect btn-info" ng-click="addQuesTion(content,explan)" >	
 							<i class="fa fa-plus" aria-hidden="true"></i> Lưu và Thêm câu hỏi
 						</button>
 
