@@ -152,8 +152,6 @@
 											<label for="Small">Câu Hỏi * :</label>
 											<textarea class="form-control" required name="content" ng-model="content"> </textarea>
 										</div>	
-										
-
 									</div>		
 								</div>
 

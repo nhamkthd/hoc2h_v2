@@ -18,6 +18,8 @@ app.controller('editTest',function($scope,$http){
 	$scope.initEditTest=function (id) {
 		$http.get('/tests/api/getEditTest/'+id).then(function(response) {
 			$scope.test = response.data;
+			$scope.category=$scope.test.category_id;
+			$scope.level=$scope.test.level;
 		});
 	}
 	$scope.getMtests=function (id) {
