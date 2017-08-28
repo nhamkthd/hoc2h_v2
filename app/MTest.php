@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\MTestAnswer;
 class MTest extends Model
 {
     public function mTestAnswer()
@@ -13,8 +13,7 @@ class MTest extends Model
 
     public function correctAnswer()
     {
-    	return  $this->belongsTo('App\MTestAnswer','incorrect_id','id');
+    	return MTestAnswer::where('mtest_id', 746)->where('is_correct',1)->get();
+  
     }
-
-
 }

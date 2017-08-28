@@ -5,9 +5,11 @@
 	app.run(['$anchorScroll', function($anchorScroll) {
   		$anchorScroll.yOffset = 50;   // always scroll by 50 extra pixels
 	}]);
+
 	app.config(['$qProvider', function ($qProvider) {
    	 $qProvider.errorOnUnhandledRejections(false);
 	}]);
+
 	//category service
  	app.factory('Categories', function($http,$q) {
  		return {
@@ -24,26 +26,16 @@
  			}
  		}
 	}); 
- 	app.directive('postsPaginations', function(){
- 		return {
- 			restrict: 'E',
- 			template: '<ul class="pagination">'+
- 			'<li><a ng-class="{disabled:currentPage == 1}" ng-click="getTest(1)">«</a></li>'+
- 			'<li><a ng-class="{disabled:currentPage == 1}" ng-click="getTest(currentPage-1)">‹</a></li>'+
- 			'<li ng-repeat="i in range" ng-class="{active : currentPage == i}">'+
- 			'<a ng-click="getQuestionsWithTab(tab,i)">{{i}}</a>'+
- 			'</li>'+
- 			'<li><a ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(currentPage+1)"> ›</a></li>'+
- 			'<li><a ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(totalPages)">»</a></li>'+
- 			'</ul>'
- 		};
- 	});
-	//tags service
+
+	//get tags list service
 	app.factory('Tags', function($http, $q) {
 		return {
- 			getList:function(){
+ 			getList:function($category_id){
+ 				if ($category_id == null) {
+ 					$category_id = 0;
+ 				}
  				var deferred = $q.defer();
- 				$http.get('/tags')
+ 				$http.get('/tags/'+$category_id)
  					 .then(function(response){
  					 	deferred.resolve(response);
  					 },function (error) {
@@ -65,6 +57,22 @@
 	    return string;
 	  }
 	});
+
+	//Paginations deriective
+ 	app.directive('postsPaginations', function(){
+ 		return {
+ 			restrict: 'E',
+ 			template: '<ul class="pagination">'+
+ 			'<li><a ng-class="{disabled:currentPage == 1}" ng-click="getTest(1)">«</a></li>'+
+ 			'<li><a ng-class="{disabled:currentPage == 1}" ng-click="getTest(currentPage-1)">‹</a></li>'+
+ 			'<li ng-repeat="i in range" ng-class="{active : currentPage == i}">'+
+ 			'<a ng-click="getQuestionsWithTab(tab,i)">{{i}}</a>'+
+ 			'</li>'+
+ 			'<li><a ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(currentPage+1)"> ›</a></li>'+
+ 			'<li><a ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(totalPages)">»</a></li>'+
+ 			'</ul>'
+ 		};
+ 	});
 
     //question-list-card directive
 	app.directive('questionCard',function(){
@@ -112,16 +120,18 @@
 	    }
   	});
 
-	//main question controller
+	//--------------------------------------------MAIN QUESTION CONTROLLER--------------------------------------------//
 	app.controller('QuestionController',function($scope, $http,$sce,Tags,Categories){
+		//init params
 		var tag_id = 0;
 		$scope.tab = 1;
 		$scope.totalPages = 0;
 	 	$scope.currentPage = 1;
 	 	$scope.range = [];
-
+	 	//get categories list
 	 	Categories.getList().then(function(response){$scope.categories = response.data;});
 
+	 	//set tab selected
 	 	$scope.setSelectedTab = function(sTab){
 	 		$scope.tab = sTab;
 	 		if (sTab == 3  ) {
@@ -160,32 +170,34 @@
 
 	 		}
 	 	}
+	 	//get tags list with category id
+	 	$scope.getListTags = function(parm){
+	 		Tags.getList(parm).then(function(response){$scope.sidebarTags = response.data;});
+	 	}
 
-	 	$scope.getListTags = function (category_id){
-	 		$http.get('/tags/'+category_id)
- 				 .then(function(response){
- 					 $scope.sidebarTags = response.data;
- 					 console.log("sidebarTags: ",$scope.sidebarTags);
- 				},function (error) {
- 					console.log(error);
- 				});
+	 	//filter tags list with category id
+	 	$scope.changeCategory = function (newValue) {
+	 		if (newValue) {
+	 			$scope.getListTags(newValue.id);
+	 		} else {
+	 			$scope.getListTags(0);
+	 		}
 	 	}
-	 	$scope.changeCategory = function () {
-	 		$scope.getListTags($scope.tags_category_id);
-	 		console.log('changeCategory.....',$scope.tags_category_id);
-	 	}
+
+	 	//get questions list with sort tab ID
 	 	$scope.getQuestionsWithTab = function(tab,pageNumber){
 	 		if (pageNumber === undefined) {
 	 			pageNumber = '1';
 	 		}
 	 		$http.get('/questions/api/?filtertab='+$scope.tab+ '&page=' + pageNumber)
 	 		.then(function(response){
-	 			console.log(response.data.data);
+	 			console.log(response.data);
 	 			if ($scope.tab == 3) {$scope.questions = response.data;}
 	 			else {
-	 				$scope.questions = response.data.data;
-		 			$scope.totalPages   = response.data.last_page;
-		 			$scope.currentPage  = response.data.current_page;
+	 				$scope.questions_count = response.data.count_all;
+	 				$scope.questions = response.data.questions.data;
+		 			$scope.totalPages   = response.data.questions.last_page;
+		 			$scope.currentPage  = response.data.questions.current_page;
 		 			var pages = [];
 		 			for (var i = 1; i <= response.data.last_page; i++) {
 		 				pages.push(i);
@@ -197,6 +209,7 @@
 	 		});
 	 	}
 
+	 	//get questions list with tag id
 	 	$scope.getQuestionsTagged = function(tag_id){
 	 		this.tag_id = tag_id;
 	 		console.log('get questions with tag_id = ',tag_id);
@@ -208,6 +221,7 @@
 	 			 	console.log(error);
 	 			 });
 	 	}
+
 	 	//questions searching....!
 	 	$scope.search = function(){
 	 		if ($scope.keywords === '' || typeof $scope.keywords === 'undefined') {
@@ -227,13 +241,21 @@
 	 	}
 	});
 
-	//create question controller
+	//--------------------------------------------CREATE QUESTION CONTROLLER--------------------------------------------//
 	app.controller('CreateQuestionController',function($scope,$http,Categories,Tags){
 		$scope.tagsList = [];
 		$scope.questions_related = [];
+
 		Categories.getList().then(function(response){$scope.categories = response.data;});
-		Tags.getList().then(function(response){$scope.tags = response.data;});
 		
+		$scope.changeCategory = function(newValue){
+			if (newValue) {
+				Tags.getList(newValue.id).then(function(response){$scope.tags = response.data;});
+			} else {
+				$scope.tags = [];
+			}
+		}
+	
 		//fiding question related with title key words
 		$scope.findRelated = function(){
 			if ($scope.title === ''|| typeof $scope.title === 'undefined') {
@@ -259,7 +281,8 @@
 	 			 });
 	 	}
 	});
-	//Question detail controller
+	
+	//--------------------------------------------SHOW QUESTION DETAIL CONTROLLER--------------------------------------------//
 	app.controller('QuestionDetailController',function($http,$scope,$sce,$filter,$anchorScroll,$location,$uibModal,Tags){
 
 		this.animationsEnabled = true;
@@ -270,7 +293,7 @@
 	 	$scope.comment_content_field = [];
 	 	$scope.comment_editing = [];
 	 	$scope.comment_editing_field = [];
-	 	Tags.getList().then(function(response){$scope.tags = response.data;});
+	 
 	 	//auto scroll
 		$scope.gotoAnchor = function(x) {
 	      	var newHash = 'anchor' + x;
@@ -309,6 +332,7 @@
 	 			 .then(function(response){
 	 			 	console.log('Init question: ',response.data);
 	 			 	$scope.question = response.data.question;
+	 			 	Tags.getList($scope.question.category_id).then(function(response){$scope.tags = response.data;});
 	 			 	$scope.categories = response.data.categories;
 	 			 	$scope.related_questions = response.data.related_questions;
 	 			 	console.log('related_questions:',$scope.related_questions);
@@ -508,7 +532,7 @@
 
 		//ad new answer
 		$scope.addAnswer = function(){
-			$http.post('/questions/api/answers/',{question_id:$scope.question.id,content:$scope.answer_content_field})
+			$http.post('/questions/api/answers',{question_id:$scope.question.id,content:$scope.answer_content_field})
 	 			 .then(function(response){
 	 			 	console.log('Add new answer: ',response.data);
 	 			 	if (response.data == -1) {

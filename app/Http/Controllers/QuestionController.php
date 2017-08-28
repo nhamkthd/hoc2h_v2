@@ -67,44 +67,56 @@ class QuestionController extends Controller
 
     //get questions with tab(sort)
     public function apiGetAll (Request $request) {
+        $count_all = 0;
         if ($request->filtertab) {
             switch ($request->filtertab) {
                 case 1:
                     $questions =  Question::orderby('id','desc')->paginate(15);
+                    $count_all = Question::all()->count();
                     break;
                 case 2:
                     $questions =  Question::orderby('votes_count','desc')->orderby('answers_count','desc')->orderby('views_count','desc')->paginate(15);
+                    $count_all =  Question::orderby('votes_count','desc')->orderby('answers_count','desc')->orderby('views_count','desc')->count();
                     break;
                 case 3:
                     $questions = Question::questionsInWeek();
+                    $count_all = Question::questionsInWeek()->count();
                     break;
                 case 4:
                     $questions = Question::where('user_id',Auth::user()->id)->orderby('id','desc')->paginate(15);
+                    $count_all = Question::where('user_id',Auth::user()->id)->orderby('id','desc')->count();
                     break;
                 case 5:
                     $questions =  Question::orderby('id','desc')->paginate(15);
+                    $count_all =  Question::orderby('id','desc')->count();
                     break;
                 case 6:
                     $questions = Question::where('is_resolved',1)->orderby('id','desc')->paginate(15);
+                    $count_all = Question::where('is_resolved',1)->orderby('id','desc')->count();
                     break;
                 case 7:
                     $questions = Question::where('is_resolved',0)->orderby('id','desc')->paginate(15);
+                    $count_all = Question::where('is_resolved',0)->orderby('id','desc')->count();
                     break;
                 case 8:
                     $questions = Question::where('answers_count',0)->orderby('id','desc')->paginate(15);
+                    $count_all = Question::where('answers_count',0)->orderby('id','desc')->count();
+                    break;
                     break;
                 default:
                     break;
             }
         }
         foreach ($questions as $question) {
+            // $question->answers_count = $question->answers->count();
+            // $question->save();
             $question->user;
             $question->user->role;
             $question->author_isOnline = $question->user->isOnline();
             $question->tags =  Question::getTags($question->id);
             $this->setDateFomat($question);
         }
-        return $questions;
+        return response()->json(array('questions'=>$questions,'count_all'=>$count_all));
     }
 
     public function indexWithTagged(Request $request){

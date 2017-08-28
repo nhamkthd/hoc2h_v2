@@ -19,6 +19,7 @@
 							options="categories"
 							value-attr="id"
 							label-attr="title"
+							change="changeCategory(newValue)"
 							placeholder="Chọn một chuyên mục" name="category"></select>
 					<span class="help-inline danger-text" 
 						  ng-show="!category_id && frmQuestion.category.$touched">Chuyên mục không được để trống!</span>

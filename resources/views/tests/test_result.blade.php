@@ -69,7 +69,7 @@
 														<tr ">
 															<td style="border:none;" data-title="Firm Name">
 																Đáp án đúng:
-																<span class="red-text">{{$answer->mtest->correctAnswer->title}}</span>
+																<!-- <span class="red-text">{{$answer->mtest->correctAnswer()->title}}</span> -->
 															</td>
 														</tr>
 														<tr>

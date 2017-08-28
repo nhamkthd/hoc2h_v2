@@ -20,7 +20,7 @@ class UserTestController extends Controller
     	foreach ($req->all() as $key => $value) {
     		if($key!='test_id' &&  $key!='_token')
     		{
-                if(MTest::find($key)->where('incorrect_id',$value)->count())
+                if(MTest::find($key)->incorrect_id == $value)
                 {
                     $countIsCorrect++;
                 }
