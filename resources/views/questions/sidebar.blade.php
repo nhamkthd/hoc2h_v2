@@ -67,8 +67,8 @@
                                     options="categories"
                                     value-attr="id"
                                     label-attr="title"
-                                    placeholder="Tất cả" 
-                                    change ="changeCategory()" 
+                                    placeholder="Tất cả danh mục" 
+                                    change ="changeCategory(newValue)" 
                                     style="margin-left: 8px;max-width: 268px;"></select>
                             <div class="sidebar-tags">
                                 <ul>

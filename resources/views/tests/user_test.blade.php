@@ -41,7 +41,7 @@
 							@foreach($question->mTestAnswer as $answer)
 								<div class="col-md-12" style="margin-left: 20px;">
 									<label class="radio-inline pmd-radio pmd-radio-ripple-effect" style="margin-bottom: 10px;">
-										<input type="radio" name="{{$question->id}}" id="inlineRadio1" value="{{$answer->id}}">
+										<input type="radio" name="{{$question->id}}" id="inlineRadio1" value="{{$answer->order_id}}">
 										<span for="inlineRadio1">{{$answer->title}}</span>
 									</label>
 								</div>

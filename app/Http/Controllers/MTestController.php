@@ -29,17 +29,19 @@ class MTestController extends Controller
 				$MTest->explan=$reqs['explan'];
 				$MTest->state=1;
 				$MTest->save();
-
+				$order = 1;
 				foreach ($reqs['answer'] as $key => $value) {
+
 					$MTestAnswer=new MTestAnswer;
 					$MTestAnswer->mtest_id=$MTest->id;
 					$MTestAnswer->title=$value['title'];
-					$MTestAnswer->order_id=1;
+					$MTestAnswer->order_id= $order;
+					$order++;
 					if($value['is_correct'])
 					{
-						$MTestAnswer->is_correct=1;
+						$MTestAnswer->is_correct = 1;
 						$MTestAnswer->save();
-						$MTest->incorrect_id=$MTestAnswer->id;
+						$MTest->incorrect_id=$MTestAnswer->order_id;
 					}
 					else
 					{
@@ -69,18 +71,20 @@ class MTestController extends Controller
 					$MTest->content=$mtest['content'];
 					$MTest->explan=$mtest['explan'];
 					$MTest->state=1;
+					$order = 1;
 					foreach ($mtest['m_test_answer'] as $key => $value) {
 						if(!isset($value['id']))
 						{
 							$MTestAnswer=new MTestAnswer;
 							$MTestAnswer->mtest_id=$MTest->id;
 							$MTestAnswer->title=$value['title'];
-							$MTestAnswer->order_id=1;
+							$MTestAnswer->order_id= $order;
+							$order++;
 							if($value['is_correct'])
 							{
 								$MTestAnswer->is_correct=1;
 								$MTestAnswer->save();
-								$MTest->incorrect_id=$MTestAnswer->id;
+								$MTest->incorrect_id=$MTestAnswer->order_id;
 							}
 							else
 							{
@@ -88,16 +92,17 @@ class MTestController extends Controller
 							}
 						}
 						else
-						{
+						{	
 							$MTestAnswer=MTestAnswer::find($value['id']);
 							$MTestAnswer->mtest_id=$MTest->id;
 							$MTestAnswer->title=$value['title'];
-							$MTestAnswer->order_id=1;
+							$MTestAnswer->order_id=$order;
+							$order++;
 							if($value['is_correct'])
 							{
 								$MTestAnswer->is_correct=1;
 								$MTestAnswer->save();
-								$MTest->incorrect_id=$MTestAnswer->id;
+								$MTest->incorrect_id=$MTestAnswer->order_id;
 							}
 							else
 							{
@@ -116,16 +121,18 @@ class MTestController extends Controller
 					$MTest->explan=$mtest['explan'];
 					$MTest->state=1;
 					$MTest->save();
+					$order = 1;
 					foreach ($mtest['m_test_answer'] as $key => $value) {
 						$MTestAnswer=new MTestAnswer;
 						$MTestAnswer->mtest_id=$MTest->id;
 						$MTestAnswer->title=$value['title'];
-						$MTestAnswer->order_id=1;
+						$MTestAnswer->order_id=$order;
+						$order++;
 						if(isset($value['is_correct']))
 						{
 							$MTestAnswer->is_correct=1;
 							$MTestAnswer->save();
-							$MTest->incorrect_id=$MTestAnswer->id;
+							$MTest->incorrect_id=$MTestAnswer->order_id;
 						}
 						else
 						{

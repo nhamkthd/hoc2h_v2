@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('content')
 @verbatim
+<style type="text/css">
+	.img-responsive {width: 30px; height: 30px; margin-top: 10px;}
+</style>
 <div class="container app-content ng-scope" ng-app ="hoc2h-test" ng-controller="List_TestController" >
 	<div class="row">
 		<div class="col-md-8">
