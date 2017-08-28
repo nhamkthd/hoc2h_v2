@@ -13,18 +13,17 @@
 				<div class="panel-body" ng-repeat="test in list_tests|orderBy : '-id'">
 					<test-card></test-card>
 				</div>
+				<div class="col-md-12" ng-show="pageNumber!=maxPageT">
+					<div class="col-md-3 col-md-offset-5 col-xs-3 col-xs-offset-5">
+						<button class="btn btn-primary" ng-click="loadingTest()"><i class="fa fa-spinner" aria-hidden="true"></i> Tải thêm câu hỏi</button>
+					</div>
+				</div>
 				@endverbatim
 			</div>
 		</div>
 		@include('tests/sidebar')
 	</div>
-	@verbatim
-	<div class="row">
-		<div class="col-md-6" ng-show="totalPages!=1">
-			<posts-pagination class="text-center"></posts-pagination>
-		</div>
-	</div>
-	@endverbatim
+	
 </div>
 
 @endsection

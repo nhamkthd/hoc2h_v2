@@ -24,20 +24,6 @@
  			}
  		}
 	}); 
- 	app.directive('postsPaginations', function(){
- 		return {
- 			restrict: 'E',
- 			template: '<ul class="pagination">'+
- 			'<li><a ng-class="{disabled:currentPage == 1}" ng-click="getTest(1)">«</a></li>'+
- 			'<li><a ng-class="{disabled:currentPage == 1}" ng-click="getTest(currentPage-1)">‹</a></li>'+
- 			'<li ng-repeat="i in range" ng-class="{active : currentPage == i}">'+
- 			'<a ng-click="getQuestionsWithTab(tab,i)">{{i}}</a>'+
- 			'</li>'+
- 			'<li><a ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(currentPage+1)"> ›</a></li>'+
- 			'<li><a ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(totalPages)">»</a></li>'+
- 			'</ul>'
- 		};
- 	});
 	//tags service
 	app.factory('Tags', function($http, $q) {
 		return {
@@ -116,12 +102,7 @@
 	app.controller('QuestionController',function($scope, $http,$sce,Tags,Categories){
 		var tag_id = 0;
 		$scope.tab = 1;
-		$scope.totalPages = 0;
-	 	$scope.currentPage = 1;
-	 	$scope.range = [];
-
 	 	Categories.getList().then(function(response){$scope.categories = response.data;});
-
 	 	$scope.setSelectedTab = function(sTab){
 	 		$scope.tab = sTab;
 	 		if (sTab == 3  ) {
@@ -160,7 +141,6 @@
 
 	 		}
 	 	}
-
 	 	$scope.getListTags = function (category_id){
 	 		$http.get('/tags/'+category_id)
  				 .then(function(response){
@@ -174,29 +154,34 @@
 	 		$scope.getListTags($scope.tags_category_id);
 	 		console.log('changeCategory.....',$scope.tags_category_id);
 	 	}
-	 	$scope.getQuestionsWithTab = function(tab,pageNumber){
-	 		if (pageNumber === undefined) {
-	 			pageNumber = '1';
-	 		}
-	 		$http.get('/questions/api/?filtertab='+$scope.tab+ '&page=' + pageNumber)
+	 	$scope.pageNumber=1;
+	 	$scope.maxPage;
+	 	$scope.getQuestionsWithTab = function(tab){
+	 		$http.get('/questions/api/?filtertab='+$scope.tab+ '&page=' + $scope.pageNumber)
 	 		.then(function(response){
+	 			
+	 			$scope.maxPage=response.data.last_page;
 	 			console.log(response.data.data);
 	 			if ($scope.tab == 3) {$scope.questions = response.data;}
 	 			else {
 	 				$scope.questions = response.data.data;
-		 			$scope.totalPages   = response.data.last_page;
-		 			$scope.currentPage  = response.data.current_page;
-		 			var pages = [];
-		 			for (var i = 1; i <= response.data.last_page; i++) {
-		 				pages.push(i);
-		 			}
-		 			$scope.range = pages;
 	 			}
 	 		}, function(error){
 	 			console.log(error);
 	 		});
 	 	}
-
+	 	$scope.loadingQa=function () {
+	 		$scope.pageNumber++;
+	 		$http.get('/questions/api/?filtertab='+$scope.tab+ '&page=' + $scope.pageNumber)
+	 		.then(function(response){
+	 			for (var i = 0; i < response.data.data.length; i++) {
+	 				$scope.questions.push(response.data.data[i]);
+	 			}
+	 			
+	 		}, function(error){
+	 			console.log(error);
+	 		});
+	 	}
 	 	$scope.getQuestionsTagged = function(tag_id){
 	 		this.tag_id = tag_id;
 	 		console.log('get questions with tag_id = ',tag_id);

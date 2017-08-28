@@ -13,9 +13,9 @@
 				</div>
 			</div>	
 		</div>	
-		<div class="row" ng-show="isPaginate == true">
-			<div class="col-md-6" ng-show="questions.length > 15">
-				<posts-paginations class="text-center"></posts-paginations>
+		<div class="col-md-12" ng-show="pageNumber!=maxPage">
+			<div class="col-md-3 col-md-offset-5 col-xs-3 col-xs-offset-5">
+				<button class="btn btn-primary" ng-click="loadingQa()"><i class="fa fa-spinner" aria-hidden="true"></i> Tải thêm câu hỏi</button>
 			</div>
 		</div>
 	@endverbatim
