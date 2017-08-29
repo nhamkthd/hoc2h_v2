@@ -126,10 +126,12 @@ Route::group(['prefix' => 'questions'], function(){
 		Route::post('/answer/comment/delete','AnswerController@deleteComment');
 	});
 });
-	Route::group(['prefix' => 'notification'], function() {
-	    Route::post('getNotification','NotificationController@show');
-	    Route::post('readNotification','NotificationController@update');
-	});
+
+//NOTIFICATIONS
+Route::group(['prefix' => 'notification'], function() {
+	Route::post('getNotification','NotificationController@show');
+	Route::post('readNotification','NotificationController@update');
+});
 
 
 //ADMIN

@@ -61,7 +61,7 @@
 				</h4>
 				<div class="meta in-caps mb-1">
 					<span>
-						<a href="" class="is-link cl-orgin">Kien Thuc THPT</a>
+						<a href="" class="is-link cl-orgin">{{question.category.title}}</a>
 						<i class="fa fa-clock-o" aria-hidden="true"></i> {{question.date_created}}
 					</span>
 				</div>

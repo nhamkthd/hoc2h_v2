@@ -7,7 +7,7 @@
 	}]);
 	
 	//main user controller
-	app.controller('UserController',function($scope, $http,$sce, Upload, Flash){
+	app.controller('UserController',function($scope, $http,$sce, Upload, Flash,$filter){
 
 		$scope.setTab = function(tab){
 			$scope.currentTab = tab;
@@ -69,6 +69,10 @@
 
 		//init arrays
 		$scope.locals = [
+			{name:"Đà Nẵng"},
+			{name:"Hải Phòng"},
+			{name:"Hà Nội"},
+			{name:"TP HCM"},
 		 	{name:"An Giang"},
 			{name:"Bà Rịa - Vũng Tàu"},
 			{name:"Bắc Giang"},
@@ -128,19 +132,17 @@
 			{name:"Yên Bái"},
 			{name:"Phú Yên"},
 			{name:"Cần Thơ"},
-			{name:"Đà Nẵng"},
-			{name:"Hải Phòng"},
-			{name:"Hà Nội"},
-			{name:"TP HCM"},
+			
 		 ];
 		$scope.show_profile_objects = [{name: 'Tất cả', id: 1}, {name: 'Chỉ thành viên', id: 2}, {name: 'Chỉ người theo dõi bạn', id: 3}];
 		$scope.send_message_objects = [{name: 'Thành viên', id: 1}, {name: 'Chỉ người theo dõi bạn', id: 2},] ;
 
 		//set editing value
 		$scope.setEditingUser = function(user){
+			//var birthday_edit = element(by.binding('birthday_edit | date: "yyyy-MM-dd"'));
 			$scope.name_edit = user.name;
 			$scope.phone_edit = user.phone;
-			$scope.birthday_edit = user.birthday;
+			$scope.birthday_edit = new Date(user.birthday); 
 			$scope.local_edit = user.local;
 			$scope.class_edit = user.class;
 			$scope.description_edit = user.description;

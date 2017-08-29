@@ -108,10 +108,11 @@ class QuestionController extends Controller
             }
         }
         foreach ($questions as $question) {
-            // $question->answers_count = $question->answers->count();
-            // $question->save();
+           //$question->answers_count = $question->answers->count();
+          //$question->save();
             $question->user;
             $question->user->role;
+            $question->category;
             $question->author_isOnline = $question->user->isOnline();
             $question->tags =  Question::getTags($question->id);
             $this->setDateFomat($question);
@@ -140,6 +141,7 @@ class QuestionController extends Controller
             if ($questionTag->question) {
                 $results[$index] = $questionTag->question;
                 $results[$index]->user = $questionTag->question->user;
+                $results[$index]->category = $questionTag->question->category;
                 $results[$index]->tags = Question::getTags($questionTag->question->id);
                 $this->setDateFomat($results[$index]);
                 $index++;
@@ -268,6 +270,13 @@ class QuestionController extends Controller
         return $question;
     }
 
+    public function getQuestionsRelated($question_id){
+        $question = Question::find($question_id);
+        $question_tags = Question::getTags($question->id); 
+        foreach ($question_tags as $tags) {
+            
+        }
+    }
     //show question detail with ID
     public function apiQuestionWithID(Request $request){
         $question = Question::find($request->id);
@@ -309,18 +318,10 @@ class QuestionController extends Controller
                 $isVoted = 1;
             }
         }
+
         $question->isVoted = $isVoted;
         $question->tagsList = $tags;
-        $related_questions = Search::search(
-                              "Question" ,
-                              ['title'] ,
-                               $question->title,
-                              ['id' , 'title'],
-                              ['id'  , 'desc'] ,
-                              true ,
-                              15
-                            );
-
+        $related_questions = Question::where('title','like','%'.$question->title.'%')->get();
         return response()->json(array('question'=>$question,'categories'=>$categories,'related_questions' => $related_questions));
     }
 

@@ -53,7 +53,14 @@
 										</div>
 										<div class="col-md-5 form-info">
 											<span>Ngày sinh</span>
-									          <input type="text" class="form-control" ng-model="birthday_edit"/>
+									       <!--  <input type="text" class="form-control" ng-model="birthday_edit"/> -->
+									        <input type="date" 
+									        		id="birthday_edit" 
+									        		name="birthday_edit" 
+									        		ng-model="birthday_edit"
+       												placeholder="Cập nhật..."
+       												min="01-01-1970" 
+       												max="31-12-2005" style="height: 38px;margin-top: 4px" />
 										</div>
 										<div class="col-md-6 col-md-offset-1 form-info">
 											<span>Số điện thoại</span>

@@ -1,4 +1,7 @@
-                <div ng-init="getListTags(0)"></div>
+                
+                <div ng-if="tab != 0">
+                    <div ng-init="getListTags(0)"></div>
+                </div>
                 <div class="row sidebar" >
                     <div class="col-md-10 col-md-offset-1" style="padding:10px;">
                         <a href="{{route('showQuestionCreateFrom')}}"  class="btn btn-info" style="width: 100%;" >Đăng câu hỏi</a>

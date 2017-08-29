@@ -45,7 +45,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($mtestAnswer as $answer)
+								@foreach($mtestAnswers as $answer)
 								<tr>
 									<td style="width:88%" data-title="Name">{{$answer->mtest->content}}</td>
 									@if($answer->user_test_choiced == $answer->mtest->incorrect_id)
@@ -69,7 +69,7 @@
 														<tr ">
 															<td style="border:none;" data-title="Firm Name">
 																Đáp án đúng:
-																<!-- <span class="red-text">{{$answer->mtest->correctAnswer()->title}}</span> -->
+																<span class="red-text">{{App\MTest::correctAnswer($answer->mtest->id)->title}}</span>
 															</td>
 														</tr>
 														<tr>

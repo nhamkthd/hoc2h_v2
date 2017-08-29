@@ -135,7 +135,9 @@
 			<div class="comment-box" ng-show="isLogged == true">
 				<span class="pull-left avt">
 					@endverbatim
+						@if(Auth::check())
 						<img class="small-avt" src="{{Auth::user()->avatar}}" width="40" height="40">
+						@endif
 					@verbatim
 				</span>
 				<div class="media-body">

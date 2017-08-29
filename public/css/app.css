@@ -152,8 +152,9 @@ a.title-hyperlink {color: #008ad6; font-size: 15px; font-weight: normal; line-he
 a.title-hyperlink:hover {color:#4285F4;text-decoration: underline;}
 .card-title .title-hyperlink {width: 100%; white-space: normal;}
 
-.notify-item:not(:last-child) {padding:5px; border-bottom: 1px solid #e0e0e0; font-size: 11px;}
-.notify-item strong {color: #0099CC;}
+.notify-item {padding:5px;font-size: 11px;}
+.notify-item:not(:last-child) { border-bottom: 1px solid #e0e0e0;}
+.notify-item strong {color: #0099CC; font-weight:500;}
 .notify-badge {background:red; border-radius: 50%;}
 
 .question-tags ul {display: flex; flex-direction: row; flex-wrap: wrap; list-style: none;} 

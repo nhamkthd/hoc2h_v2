@@ -3,6 +3,7 @@
 	@verbatim
 		{{setSelectedTab(0)}}
 	@endverbatim
+	<div ng-init="getListTagsWithQuestionCategory({{$question->category_id}})"></div>
 <div class="row" ng-controller="QuestionDetailController">
 	@if($question)
 		@if($answer_id)

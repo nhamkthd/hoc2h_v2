@@ -11,7 +11,7 @@ class UserTest extends Model
     	return $this->belongsTo('App\Test','test_id','id');
     }
 
-    public function mtestAnswer()
+    public function mtestAnswers()
     {
     	return $this->hasMany('App\UseMTestAnswer','user_test_id','id');
     }
