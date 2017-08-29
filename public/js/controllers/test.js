@@ -22,6 +22,20 @@
 			templateUrl:'/tests/tests-card',
 		}	
 	});
+		app.directive('postsPagination', function(){
+		return {
+			restrict: 'E',
+			template: '<ul class="pagination">'+
+			'<li><a ng-class="{disabled:currentPage == 1}" ng-click="getTest(1)">«</a></li>'+
+			'<li><a class="page-link" ng-class="{disabled:currentPage == 1}" ng-click="getTest(currentPage-1)">‹ </a></li>'+
+			'<li ng-repeat="i in range" ng-class="{active : currentPage == i}">'+
+			'<a ng-click="getTest(i)">{{i}}</a>'+
+			'</li>'+
+			'<li><a ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(currentPage+1)"> ›</a></li>'+
+			'<li><a ng-class="{disabled:currentPage == totalPages}" href="nothing" ng-click="getTest(totalPages)">»</a></li>'+
+			'</ul>'
+		};
+	});
 	 app.directive('ngEnter', function() {
         return function(scope, element, attrs) {
             element.bind("keydown keypress", function(event) {
@@ -37,9 +51,12 @@
 	 app.run(function(){
 	 	console.log('hello Test');
 	 });
-	 app.controller('List_TestController', function ($scope,$http,$location) {
+	 app.controller('List_TestController', function ($scope,$http,$location,$anchorScroll) {
 	 	$scope.tab=getParameterByName('filter');
 	 	$scope.list_tests=[];
+	 	$scope.totalPages = 0;
+	 	$scope.currentPage = 1;
+	 	$scope.range = [];
 	 	switch($scope.tab) {
 	 		case null:
 	 			$scope.tab_name='Mới nhất';
@@ -60,28 +77,27 @@
 	 	$scope.pageNumber=1;
 	 	$scope.maxPageT;
 	 	$scope.getTest=function (pageNumber) {
+	 		if (pageNumber === undefined) {
+	 			pageNumber = '1';
+	 		}
 	 		$http.get('/tests/gettest?filter='+$scope.tab+ '&page=' + pageNumber)
 	 		.then(function(response){
-	 			$scope.maxPageT=response.data.last_page;
+	 			$location.hash('top');
+      			$anchorScroll();
 	 			console.log(response.data.data);
+	 			$scope.total=response.data.total;
 	 			$scope.list_tests = response.data.data;
-	 		}, function(error){
-	 			console.log(error);
-	 		});
-	 	}
-	 	$scope.loadingTest=function () {
-	 		$scope.pageNumber++;
-	 		$http.get('/tests/gettest?filter='+$scope.tab+ '&page=' + pageNumber)
-	 		.then(function(response){
-	 			console.log(response.data.data);
-	 			for (var i = 0; i < response.data.data.length; i++) {
-	 			$scope.list_tests.push(response.data.data[i]);
+	 			$scope.totalPages   = response.data.last_page;
+	 			$scope.currentPage  = response.data.current_page;
+	 			var pages = [];
+	 			for (var i = 1; i <= response.data.last_page; i++) {
+	 				pages.push(i);
 	 			}
+	 			$scope.range = pages;
 	 		}, function(error){
 	 			console.log(error);
 	 		});
 	 	}
-	 	
 	 	$scope.search=function () {
 	 		if ($scope.keywords === '' || typeof $scope.keywords === 'undefined') {
 	 			$http.get('/tests/gettest?filter='+$scope.tab)

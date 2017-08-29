@@ -67,16 +67,13 @@ class QuestionController extends Controller
 
     //get questions with tab(sort)
     public function apiGetAll (Request $request) {
-        $count_all = 0;
         if ($request->filtertab) {
             switch ($request->filtertab) {
                 case 1:
                     $questions =  Question::orderby('id','desc')->paginate(15);
-                    $count_all = Question::all()->count();
                     break;
                 case 2:
                     $questions =  Question::orderby('votes_count','desc')->orderby('answers_count','desc')->orderby('views_count','desc')->paginate(15);
-                    $count_all =  Question::orderby('votes_count','desc')->orderby('answers_count','desc')->orderby('views_count','desc')->count();
                     break;
                 case 3:
                     $questions = Question::questionsInWeek();
@@ -84,24 +81,18 @@ class QuestionController extends Controller
                     break;
                 case 4:
                     $questions = Question::where('user_id',Auth::user()->id)->orderby('id','desc')->paginate(15);
-                    $count_all = Question::where('user_id',Auth::user()->id)->orderby('id','desc')->count();
                     break;
                 case 5:
                     $questions =  Question::orderby('id','desc')->paginate(15);
-                    $count_all =  Question::orderby('id','desc')->count();
                     break;
                 case 6:
                     $questions = Question::where('is_resolved',1)->orderby('id','desc')->paginate(15);
-                    $count_all = Question::where('is_resolved',1)->orderby('id','desc')->count();
                     break;
                 case 7:
                     $questions = Question::where('is_resolved',0)->orderby('id','desc')->paginate(15);
-                    $count_all = Question::where('is_resolved',0)->orderby('id','desc')->count();
                     break;
                 case 8:
                     $questions = Question::where('answers_count',0)->orderby('id','desc')->paginate(15);
-                    $count_all = Question::where('answers_count',0)->orderby('id','desc')->count();
-                    break;
                     break;
                 default:
                     break;
@@ -117,7 +108,7 @@ class QuestionController extends Controller
             $question->tags =  Question::getTags($question->id);
             $this->setDateFomat($question);
         }
-        return response()->json(array('questions'=>$questions,'count_all'=>$count_all));
+        return response()->json($questions);
     }
 
     public function indexWithTagged(Request $request){
@@ -133,21 +124,19 @@ class QuestionController extends Controller
     }
     //get all questions with tag id
     public function apiGetQuestionsTagged($tag_id){
-       
-        $questionTags = QuestionTag::where('tag_id',$tag_id)->orderby('id','desc')->get();
-        $results = array();
-        $index = 0;
-        foreach ($questionTags as $questionTag) {
-            if ($questionTag->question) {
-                $results[$index] = $questionTag->question;
-                $results[$index]->user = $questionTag->question->user;
-                $results[$index]->category = $questionTag->question->category;
-                $results[$index]->tags = Question::getTags($questionTag->question->id);
-                $this->setDateFomat($results[$index]);
-                $index++;
-            }
+        $question_id = QuestionTag::where('tag_id',$tag_id)->pluck('question_id')->all();
+        $question=Question::orderby('id','desc')->whereIn('id',$question_id)->paginate(15);
+        foreach ($question as $questions) {
+           //$question->answers_count = $question->answers->count();
+          //$question->save();
+            $questions->user;
+            $questions->user->role;
+            $questions->category;
+            $questions->author_isOnline = $questions->user->isOnline();
+            $questions->tags =  Question::getTags($questions->id);
+            $this->setDateFomat($questions);
         }
-        return $results;
+        return response()->json($question);
     }
 
     //get user-questions
