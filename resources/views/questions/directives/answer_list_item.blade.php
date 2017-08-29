@@ -49,17 +49,16 @@
 		</div> 
 		<div class=" post-action">
 			<ul class="nav nav-pills " role="tablist">
-				<li ng-show ="answer.isVoted == 0"><a href ng-click="voteAnswer($index)"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Thích <span class="badge ">{{answer.votes_count}}</span> </a></li>
-				<li ng-show ="answer.isVoted == 1">
-					<a href ng-click="voteAnswer($index)">
-						<i class="fa fa-thumbs-down" aria-hidden="true"></i> 
-						Bỏ thích <span class="badge ">{{answer.votes_count}}</span> 
+				<li >
+					<a ng-class="{voted:answer.isVoted == 1}" ng-click="voteAnswer($index)">
+						<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
+						Thích <span>{{answer.votes_count}}</span> 
 					</a>
 				</li>
 				<li >
 					<a href ng-click="showComments(answer.id)">
 						<i class="fa fa-comment" aria-hidden="true"></i> 
-						Bình luận <span class="badge">{{answer.comments_count}}</span>
+						Bình luận <span>{{answer.comments_count}}</span>
 					</a> 
 				</li>
 				<li ng-show="user.id == question.user.id && answer.is_best == 0 && question.haveBestAnswer == 0">
@@ -116,16 +115,10 @@
 					</div> 
 					<div class=" post-action" style="border-bottom:solid 1px #e0e0e0;">
 						<ul class="nav nav-pills " role="tablist">
-							<li ng-show ="comment.isVoted == 0">
-								<a href ng-click="voteComment($index,$parent.$index)">
+							<li>
+								<a ng-class="{voted:comment.isVoted == 1}" ng-click="voteComment($index,$parent.$index)">
 									<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
-									Thích <span class="badge ">{{comment.votes_count}}</span>
-								</a>
-							</li>
-							<li ng-show ="comment.isVoted == 1">
-								<a href ng-click="voteComment($index,$parent.$index)">
-									<i class="fa fa-thumbs-down" aria-hidden="true"></i> 
-									Bỏ thích <span class="badge ">{{comment.votes_count}}</span>
+									Thích <span>{{comment.votes_count}}</span>
 								</a>
 							</li>
 						</ul>
