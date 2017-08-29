@@ -11,9 +11,8 @@ class MTest extends Model
     	return $this->hasmany('App\MTestAnswer','mtest_id','id');
     }
 
-    public function correctAnswer()
+    public static function correctAnswer($m_test_id)
     {
-    	return MTestAnswer::where('mtest_id', 746)->where('is_correct',1)->get();
-  
+    	return mTestAnswer::where('mtest_id',$m_test_id)->where('is_correct',1)->first();
     }
 }

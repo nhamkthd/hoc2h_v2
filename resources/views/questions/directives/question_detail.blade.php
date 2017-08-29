@@ -3,6 +3,7 @@
 	@verbatim
 		{{setSelectedTab(0)}}
 	@endverbatim
+	<div ng-init="getListTagsWithQuestionCategory({{$question->category_id}})"></div>
 <div class="row" ng-controller="QuestionDetailController">
 	@if($question)
 		@if($answer_id)
@@ -84,21 +85,15 @@
 				</div> 
 				<div class=" post-action">
 					<ul class="nav nav-pills " role="tablist">
-					  	<li ng-show ="question.isVoted == 0">
-					  		<a href ng-click="voteQuestion()">
+					  	<li>
+					  		<a ng-class="{voted:question.isVoted == 1}" href ng-click="voteQuestion()">
 					  			<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
-					  			Thích <span class="badge ">{{question.votes_count}}</span> 
-					  		</a>
-					  	</li>
-					  	<li ng-show ="question.isVoted == 1">
-					  		<a href ng-click="voteQuestion()">
-					  			<i class="fa fa-thumbs-down" aria-hidden="true"></i> 
-					  			Bỏ thích <span class="badge ">{{question.votes_count}}</span> 
+					  			Thích <span>{{question.votes_count}}</span> 
 					  		</a>
 					  	</li>
 					  	<li ><a href ng-click="gotoAnchor(0)">
 					  		<i class="fa fa-comment" aria-hidden="true"></i> 
-					  		Trả lời <span class="badge ">{{question.answers_count}}</span> 
+					  		Trả lời <span>{{question.answers_count}}</span> 
 					  		</a> 
 					  	</li>
 					  <li >
@@ -111,7 +106,7 @@
 			</div>
 		</div>
 		<div class="col-md-12" ng-show="isLogged == false" style="margin-top: 20px;">
-			<a href="/login">Đăng nhập để tham gia trả lời và bình luận..!</a>
+			<a href="/login">Đăng nhập để tham gia trả lời và bình luận →</a>
 		</div>
 		<div class="col-md-12">
 			<div class="row answer-list">

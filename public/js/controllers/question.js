@@ -118,6 +118,7 @@
 	 	//set tab selected
 	 	$scope.setSelectedTab = function(sTab){
 	 		$scope.tab = sTab;
+	 		
 	 		if (sTab == 3  ) {
 	 			$scope.isPaginate = false;
 	 		} else {
@@ -155,8 +156,8 @@
 	 		}
 	 	}
 	 	//get tags list with category id
-	 	$scope.getListTags = function(parm){
-	 		Tags.getList(parm).then(function(response){$scope.sidebarTags = response.data;});
+	 	$scope.getListTags = function(param){
+	 		Tags.getList(param).then(function(response){$scope.sidebarTags = response.data;});
 	 	}
 
 	 	//filter tags list with category id
@@ -168,6 +169,12 @@
 	 		}
 	 	}
 
+	 	$scope.getListTagsWithQuestionCategory = function(category_id){
+	 		$scope.getListTags(category_id);
+	 		$scope.tags_category_id = category_id;
+	 		console.log($scope.tags_category_id);
+	 	}
+
 	 	//get questions list with sort tab ID
 	 	$scope.pageNumber=1;
 	 	$scope.maxPage;
@@ -175,7 +182,10 @@
 	 		$http.get('/questions/api/?filtertab='+$scope.tab+ '&page=' + $scope.pageNumber)
 	 		.then(function(response){
 	 			console.log(response.data);
-	 			if ($scope.tab == 3) {$scope.questions = response.data;}
+	 			if ($scope.tab == 3) {
+	 				$scope.questions = response.data.questions;
+	 				$scope.questions_count = response.data.count_all;
+	 			}
 	 			else {
 	 				$scope.maxPage=response.data.last_page;
 	 				$scope.questions_count = response.data.count_all;
@@ -306,7 +316,7 @@
         $scope.getUser = function(user) {
         	$scope.user = user;
         	$scope.isLogged = true;
-        	console.log($scope.isLogged);
+        	console.log('user is logged...',$scope.isLogged);
         }
 
         //init question infomation with ID
@@ -336,7 +346,7 @@
 
 		$scope.authorIsOnline = function(param){
 			$scope.question_author_isOnline = param;
-			console.log(param);
+			console.log('author is online...',param);
 		}
 		
 		//update question when updated 

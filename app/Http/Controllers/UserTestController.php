@@ -40,14 +40,8 @@ class UserTestController extends Controller
         $userTest = UserTest::find($usertest_id);
         $user = $userTest->user;
         $test = $userTest->test;
-        if ($test->test_type == 0) {
-            $mtestAnswer = $userTest->mtestAnswer;
-            return view('tests.test_result',compact('userTest','user','test','mtestAnswer','countIsCorrect'));
-        }else {
-            $userTestAnswers = UserWritingTestAnswer::where('user_test_id',$userTest->id)->get();
-            $userTestAnswer = $userTestAnswers[0];
-            return view('tests.test_result',compact('userTest','user','test','userTestAnswer'));
-        }
+        $mtestAnswers = $userTest->mtestAnswers;
+        return view('tests.test_result',compact('userTest','user','test','mtestAnswers','countIsCorrect'));
     }
 
 }

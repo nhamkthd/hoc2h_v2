@@ -98,11 +98,14 @@ select.form-control:focus{ box-shadow:none; border-color:#00b09c;}
 .post-header p > a {font-weight:600;}
 .post-info {border-bottom: solid 1px #e6e6e6; padding-bottom:0px;float: right; margin-bottom: 10px;}
 .nav-pills >li {padding-right: 10px; font-size: 12px;}
-.nav-pills >li span {background:#e0f2f1; color:#0d47a1;}
+.nav-pills >li span {background:#fff; color:#0d47a1; box-shadow: none;}
 .nav-pills  li .action {color:#0099CC;}
 .nav-pills  li .action:hover{color: #33b5e5;}
 .post-action {margin-top: 10px;}
-.nav-pills>li>a {position: relative; display: block; padding:5px; font-size:12px; color:#0099CC;}
+.nav-pills>li>a {position: relative; display: block; padding:5px; font-size:12px; color:#3F729B;}
+.nav-pills>li>a:hover {background:#fff; color: #3E4551;}
+.nav-pills>li>a.voted {color: #4285F4;}
+.nav-pills>li>a>span{font-weight: 600;margin-left:4px;}
 .answer-list {padding:10px 0px; margin:30px 0px ;}
 .answer-body {background-color: #fafafa ;padding:5px;border-radius: 2px;border:solid 1px #eee;}
 .best {border: solid 2px green;}
@@ -152,8 +155,9 @@ a.title-hyperlink {color: #008ad6; font-size: 15px; font-weight: normal; line-he
 a.title-hyperlink:hover {color:#4285F4;text-decoration: underline;}
 .card-title .title-hyperlink {width: 100%; white-space: normal;}
 
-.notify-item:not(:last-child) {padding:5px; border-bottom: 1px solid #e0e0e0; font-size: 11px;}
-.notify-item strong {color: #0099CC;}
+.notify-item {padding:5px;font-size: 11px;}
+.notify-item:not(:last-child) { border-bottom: 1px solid #e0e0e0;}
+.notify-item strong {color: #0099CC; font-weight:500;}
 .notify-badge {background:red; border-radius: 50%;}
 
 .question-tags ul {display: flex; flex-direction: row; flex-wrap: wrap; list-style: none;} 

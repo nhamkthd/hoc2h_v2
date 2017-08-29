@@ -8,7 +8,7 @@
 	a.is-link{color: #00b1b3;}
 	a.is-link:hover{color: #4d545d;}
 	a.is-link.user-name{font-size: 12px;}
-	.cl-orgin{color:#FF8800; }
+	a.is-link.cl-orgin{color:#FF8800; }
 
 	@media screen and (min-width: 769px){
 		.question-list-item {padding: 0 0 1em;}
@@ -17,7 +17,8 @@
 	.question-list-avatar{ vertical-align:baseline; margin-top:10px; height:75px;text-align: center;}
 	.question-list-avatar img{width: 45px; height: 45px;}
 
-	span.role-title{font-size:11px;font-weight:500; color:#FF8800;}
+	span.role-title{font-size:11px;font-weight:500; color:#3F729B;}
+	span.role-title.admin{color: #ff4444;}
 	@media screen and (min-width: 769px) {
 		.question-list-summary.title {float: left;}
 	}
@@ -46,7 +47,7 @@
 					</a>
 				</div>
 				<a href="/users/{{question.user.id}}/profile" class="is-link user-name"> {{question.user.name}}</a><br>
-				<span class="role-title">{{question.user.role.title}}</span>
+				<span ng-class="{admin:question.user.role_id == 2}" class="role-title">{{question.user.role.title}}</span>
 			</div>
 		</div>
 		<div class="col-md-10" style="padding-left:5px;">
@@ -61,7 +62,7 @@
 				</h4>
 				<div class="meta in-caps mb-1">
 					<span>
-						<a href="" class="is-link cl-orgin">Kien Thuc THPT</a>
+						<a href="" class="is-link cl-orgin">{{question.category.title}}</a>
 						<i class="fa fa-clock-o" aria-hidden="true"></i> {{question.date_created}}
 					</span>
 				</div>

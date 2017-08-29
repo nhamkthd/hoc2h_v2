@@ -77,7 +77,7 @@
 						</table>
 					</div>
 					<div class="active-panel-footer" ng-hide="over_view_counts[1] <= 10">
-						<a href="">Xem thêm →</a>
+						<a ng-click="setActivityTab(3)">Xem thêm →</a>
 					</div>
 				</div>
 				<div class="active-panel">
@@ -101,7 +101,7 @@
 						</table>
 					</div>
 					<div class="active-panel-footer" ng-hide="over_view_counts[2] <= 10">
-						<a href="">Xem thêm →</a>
+						<a ng-click="setActivityTab(4)">Xem thêm →</a>
 					</div>
 				</div>
 			</div>
