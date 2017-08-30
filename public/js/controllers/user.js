@@ -158,7 +158,7 @@
 	            method:'POST',
 	            data: {image:file}
 	        }).then(function (response) {
-				console.log('avtar uploaded....!');
+				console.log('avtar uploaded....!',response.data.data);
 	           	$scope.user.avatar = response.data.data.link;
 	           	$scope.avatar_text = "Cập nhật ảnh đại diện"; 
 	        }, function (error) {

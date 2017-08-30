@@ -13,9 +13,12 @@
         <link rel="stylesheet" href="{{asset('js/flugin/alert/sweetalert.css')}}">
         <link rel="stylesheet" href="{{asset('css/mdb/css/mdb.css')}}" >
         <link rel="stylesheet" href="{{asset('css/font-awesome/css/font-awesome.css') }}"> 
+
         <link rel="stylesheet" href="{{ asset('css/ng-tags-input/ng-tags-input.css') }}">
         <link rel="stylesheet" href="{{ asset('css/ng-selector/angular-selector.css') }}">
         <link rel="stylesheet" href="{{ asset('css/ng-scrollbar/ng-scrollbar.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/ng-loading-bar/loading-bar.css') }}">
+
         <link rel="stylesheet" href="{{ asset('css/slide-menus/default.css') }}">
         <link rel="stylesheet" href="{{ asset('css/slide-menus/component.css') }}">
 
@@ -27,7 +30,8 @@
         <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
         <script src="{{asset('js/flugin/jquery-3.2.1.min.js')}}"></script> 
         <script src="{{asset('js/flugin/angular/angular.min.js')}}"></script> 
-        <script src="{{asset('js/flugin/notify/bootstrap-notify.js')}}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-sanitize.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
         <script src="{{asset('js/flugin/notify/bootstrap-notify.min.js')}}"></script>
         <script src="{{asset('js/flugin/angular/ng-tags-input.js')}}"></script> 
         <script src="{{asset('js/flugin/angular/angular-selector.js')}}"></script> 
@@ -36,7 +40,8 @@
         <script src="{{asset('js/flugin/angular/ng-file-upload-shim.js')}}"></script> 
         <script src="{{asset('js/flugin/angular/ng-file-upload.js')}}"></script>
         <script src="{{asset('js/flugin/angular/angular-flash.js')}}"></script>  
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-sanitize.min.js"></script>
+        <script src="{{asset('js/flugin/angular/loading-bar.js')}}"></script>  
+       
         <script src="{{asset('js/flugin/ckeditor/ckeditor.js')}}"></script>       
         <script src="{{asset('js/flugin/angular/angular-ckeditor.js')}}"></script>
         <script src="{{asset('js/flugin/bootstrap/bootstrap.min.js')}}"></script>

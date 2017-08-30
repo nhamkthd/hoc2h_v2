@@ -10,6 +10,10 @@ body{
 
 }
 .btn {text-transform:none; padding:8px 10px;}
+.fa.spinning {
+     animation: spin 1s infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
+}
 .app-content {background-color: #fff; padding-top:10px; border-radius:2px;}
 .icon-close {color: #fff; cursor: pointer;}
 .icon-close:hover{color:#bdbdbd;}
@@ -164,6 +168,7 @@ a.title-hyperlink:hover {color:#4285F4;text-decoration: underline;}
 .question-tags li:not(:first-child){ margin-left:.5rem;}
 .question-tags a {background:#e3f2fd; padding: 5px; color:#3F729B; font-size:12px; border-radius:2px;}
 .question-tags a:hover{background:#90caf9;}
+
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes anchorAt {
     from {background-color:#bbdefb ;}
@@ -173,4 +178,20 @@ a.title-hyperlink:hover {color:#4285F4;text-decoration: underline;}
 @keyframes anchorAt {
     from {background-color:#bbdefb ;}
     to {background-color:#fff;}
+}
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}
+@-webkit-keyframes spin2 {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
 }

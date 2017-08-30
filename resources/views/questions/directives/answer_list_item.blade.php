@@ -51,7 +51,8 @@
 			<ul class="nav nav-pills " role="tablist">
 				<li >
 					<a ng-class="{voted:answer.isVoted == 1}" ng-click="voteAnswer($index)">
-						<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
+						<i ng-show="isAnswerVoting[$index] === 1" class="fa fa-spinner spinning" aria-hidden="true"></i>
+					  	<i ng-show="isAnswerVoting[$index] === 0" class="fa fa-thumbs-up" aria-hidden="true"></i> 
 						Thích <span>{{answer.votes_count}}</span> 
 					</a>
 				</li>

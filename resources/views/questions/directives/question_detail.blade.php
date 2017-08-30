@@ -1,3 +1,4 @@
+
 @extends('questions.layout')
 @section('question_content')
 	@verbatim
@@ -25,6 +26,7 @@
 	@else 
 		<div ng-init="authorIsOnline(0)"></div>
 	@endif
+
 	<div ng-show="isQuestionNotFound == 0">
 		<div>
 			@verbatim
@@ -87,7 +89,8 @@
 					<ul class="nav nav-pills " role="tablist">
 					  	<li>
 					  		<a ng-class="{voted:question.isVoted == 1}" href ng-click="voteQuestion()">
-					  			<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
+					  			<i ng-show="isVoting === 1" class="fa fa-spinner spinning" aria-hidden="true"></i>
+					  			<i ng-show="isVoting === 0" class="fa fa-thumbs-up" aria-hidden="true"></i> 
 					  			Thích <span>{{question.votes_count}}</span> 
 					  		</a>
 					  	</li>
@@ -116,13 +119,16 @@
 						@include('questions.directives.answer_list_item')
 					@verbatim
 				</div>
-				<div class="col-md-2 col-md-offset-5" data-loading> </div>
 				<div ng-show="isLogged == true" style="margin-top: 20px;">
 					<div class="col-md-12 commet-box" id="anchor{{0}}">
 						<label>Câu trả lời của bạn</label>
 						<div ckeditor="options" ng-model="answer_content_field" ready="onReady()"></div>
 					</div>
-					<button class="btn btn-outline-default waves-effect pull-right" style="margin-top:20px; margin-right: 10px;" type="button" ng-click="addAnswer()">Gửi trả lời</button>
+					<div class="col-md-4" style="margin-top:20px; padding-left: 10px;">
+						<button class="btn btn-primary " style="width: 100%" type="button" ng-click="addAnswer()">
+					     <span ng-show="sendAnswerText === 'Sending'"><i class="fa fa-spinner spinning" aria-hidden="true"></i></span>
+						{{sendAnswerText}}</button>
+					</div>
 				</div>
 				<div class="col-md-12  related">
 					<p class="filter-title">Câu hỏi liên quan</p>

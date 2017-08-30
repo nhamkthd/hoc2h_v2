@@ -72,28 +72,6 @@
 	  }
 	});
 	
-	app.directive('loading',   ['$http' ,function ($http)
-	 {
-	     return {
-	         restrict: 'A',
-	         template: '<div class="loading-spiner"><img src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" /> </div>',
-	         link: function (scope, elm, attrs)
-	         {
-	             scope.isLoading = function () {
-	                 return $http.pendingRequests.length > 0;
-	             };
-
-	             scope.$watch(scope.isLoading, function (v)
-	             {
-	                 if(v){
-	                     elm.show();
-	                 }else{
-	                     elm.hide();
-	                 }
-	             });
-	         }
-	     };
-	 }])
     //question-list-card directive
 	app.directive('questionCard',function(){
 		return {
@@ -141,7 +119,7 @@
   	});
 
 	//--------------------------------------------MAIN QUESTION CONTROLLER--------------------------------------------//
-	app.controller('QuestionController',function($scope, $http,$anchorScroll,$location,$sce,Tags,Categories){
+	app.controller('QuestionController',function($scope, $http,$anchorScroll,$location,$sce,Tags,Categories,cfpLoadingBar){
 		//init params
 		var tag_id = 0;
 		$scope.tab = 1;
@@ -227,7 +205,6 @@
 		 				pages.push(i);
 		 			}
 		 			$scope.range = pages;
-
 	 			}
 	 			else {
 	 				$scope.total=response.data.total;
@@ -340,6 +317,9 @@
 	 	$scope.comment_content_field = [];
 	 	$scope.comment_editing = [];
 	 	$scope.comment_editing_field = [];
+	 	$scope.sendAnswerText = "Gửi đi";
+	 	$scope.isVoting = 0;
+	 	$scope.isAnswerVoting = [0];
 	 
 	 	//auto scroll
 		$scope.gotoAnchor = function(x) {
@@ -404,6 +384,7 @@
 		}
 		//vote question
 		$scope.voteQuestion = function(){
+			$scope.isVoting = 1;
 			$http.post('/questions/api/vote',{question_id:$scope.question.id,isVoted:$scope.question.isVoted})
 	 			 .then(function(response){
 	 			 	console.log('Vote question: ',response);
@@ -413,6 +394,7 @@
 	 			 	else if (data == -1) {
 	 			 		window.location.href = '/login';
 	 			 	}
+	 			 	$scope.isVoting = 0;
 	 			 },function(error){
 	 			 	console.log(error);
 	 		 });
@@ -579,6 +561,7 @@
 
 		//ad new answer
 		$scope.addAnswer = function(){
+			$scope.sendAnswerText = "Sending";
 			$http.post('/questions/api/answers',{question_id:$scope.question.id,content:$scope.answer_content_field})
 	 			 .then(function(response){
 	 			 	console.log('Add new answer: ',response.data);
@@ -592,6 +575,7 @@
 		 			 	$scope.question.answers_count++;
 		 			 	console.log($scope.answers);
 		 			 	$scope.answer_content_field = " ";
+		 			 	$scope.sendAnswerText = "Gửi đi";
 	 			 	}
 	 			 	
 	 			 },function(error){
@@ -601,6 +585,7 @@
 
 		//vote answer
 		$scope.voteAnswer = function(index){
+			$scope.isAnswerVoting[index] = 1;
 			$http.post('/questions/api/answer/vote',{answer_id:$scope.question.answers[index].id,isVoted:$scope.question.answers[index].isVoted})
 	 			 .then(function(response){
 	 			 	console.log('Vote answer: ',response);
@@ -613,6 +598,7 @@
 	 			 	} else if (response.data == -1) {
 	 			 		window.location.href = '/login';
 	 			 	}
+	 			 	$scope.isAnswerVoting[index] = 0;
 	 			 },function(error){
 	 			 	console.log(error);
 	 		 });
