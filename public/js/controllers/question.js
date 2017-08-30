@@ -320,7 +320,7 @@
 	 	$scope.sendAnswerText = "Gửi đi";
 	 	$scope.isVoting = 0;
 	 	$scope.isAnswerVoting = [0];
-	 
+	 	$scope.question_id;
 	 	//auto scroll
 		$scope.gotoAnchor = function(x) {
 	      	var newHash = 'anchor' + x;
@@ -349,12 +349,19 @@
 
         //init question infomation with ID
 	 	$scope.initQuestion = function (question_id,answer_id) {
-
+	 		$scope.question_id=question_id;
 	 		$scope.question ={};
 	 		$scope.answers = [];
+	 		$scope.total;
 	 		$scope.related_questions = {};
 	 		$scope.isResolved = 0;
-
+	 		$http.get('/questions/api/getAnswer?question_id='+question_id)
+	 			 .then(function(response){
+	 			 	console.log(response.data);
+	 			 	$scope.answers = response.data.data;
+	 			 	$scope.total= response.data.total;
+	 			 	$scope.maxpageAnswer=response.data.last_page;
+	 		});
 	 		$http.post('/questions/api/getQuestionInfo',{id:question_id})
 	 			 .then(function(response){
 	 			 	console.log('Init question: ',response.data);
@@ -371,7 +378,21 @@
 	 			 	console.log(error);
 	 		 });
 		}
-
+		$scope.pageAnswer=2;
+		$scope.loadingQa=function() {
+			$scope.isloadingQa=1;
+			$http.get('/questions/api/getAnswer?question_id='+$scope.question_id+'&page='+$scope.pageAnswer)
+	 			 .then(function(response){
+	 			 	$scope.pageAnswer++;
+					$scope.isloadingQa=0;
+	 			 	for (var i = 0; i < response.data.data.length; i++) {
+	 			 		$scope.answers.push(response.data.data[i]);
+	 			 	}
+	 			 	
+	 			 	
+	 			 	$scope.total= response.data.total;
+	 		});
+		}
 		$scope.authorIsOnline = function(param){
 			$scope.question_author_isOnline = param;
 			console.log('author is online...',param);
@@ -571,8 +592,8 @@
 	 			 		console.log("add new answer success...!");
 	 			 		var newAnswer = response.data;
 	 			 		newAnswer.date_created = "Vừa xong";
-		 			 	$scope.question.answers.push(newAnswer);
-		 			 	$scope.question.answers_count++;
+		 			 	$scope.answers.push(newAnswer);
+		 			 	$scope.total++;
 		 			 	console.log($scope.answers);
 		 			 	$scope.answer_content_field = " ";
 		 			 	$scope.sendAnswerText = "Gửi đi";
@@ -586,15 +607,16 @@
 		//vote answer
 		$scope.voteAnswer = function(index){
 			$scope.isAnswerVoting[index] = 1;
-			$http.post('/questions/api/answer/vote',{answer_id:$scope.question.answers[index].id,isVoted:$scope.question.answers[index].isVoted})
+			$http.post('/questions/api/answer/vote',{answer_id:$scope.answers[index].id,isVoted:$scope.answers[index].isVoted})
 	 			 .then(function(response){
+	 			 	console.log($scope.answers[index]);
 	 			 	console.log('Vote answer: ',response);
 	 			 	if (response.data == 1) {
-	 			 		$scope.question.answers[index].isVoted = 1;
-	 			 		$scope.question.answers[index].votes_count++;
+	 			 		$scope.answers[index].isVoted = 1;
+	 			 		$scope.answers[index].votes_count++;
 	 			 	} else if (response.data == 0){
-	 			 		$scope.question.answers[index].isVoted = 0;
-	 			 		$scope.question.answers[index].votes_count--;
+	 			 		$scope.answers[index].isVoted = 0;
+	 			 		$scope.answers[index].votes_count--;
 	 			 	} else if (response.data == -1) {
 	 			 		window.location.href = '/login';
 	 			 	}
@@ -606,10 +628,10 @@
 
 		//set best answer 
 		$scope.setBestAnswer = function(index,param){
-			$http.post('/questions/api/answer/set-best',{answer_id:$scope.question.answers[index].id,is_best:param})
+			$http.post('/questions/api/answer/set-best',{answer_id:$scope.answers[index].id,is_best:param})
 				 .then(function(response){
 				 	console.log('set best answer:',response.data);
-				 	$scope.question.answers[index].is_best = response.data;
+				 	$scope.answers[index].is_best = response.data;
 				 	$scope.question.haveBestAnswer = response.data;
 				 },function(error){
 				 	console.log(error.data);
@@ -622,14 +644,14 @@
 	            templateUrl: 'editAnswerModal.html', // loads the template
 	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
 	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
-	            controller: function ($scope, $uibModalInstance,question) {
-					$scope.edit_answer_content = question.answers[index].content;
+	            controller: function ($scope, $uibModalInstance,answers) {
+					$scope.edit_answer_content = answers[index].content;
 	                $scope.submit = function () {
-	                   	$http.post('/questions/api/answer/edit',{id:question.answers[index].id,content:$scope.edit_answer_content})
+	                   	$http.post('/questions/api/answer/edit',{id:answers[index].id,content:$scope.edit_answer_content})
 				 			 .then(
 				 			 	function(response){
 					 			 	console.log('Edit answer: ',response);
-					 			 	question.answers[index].content = response.data.content;
+					 			 	answers[index].content = response.data.content;
 				 			 	}
 				 			 	,function(error){
 				 			 		console.log(error);
@@ -641,8 +663,8 @@
 	                };
 	            },
 	            resolve: {
-	                question: function () {
-	                    return $scope.question;
+	                answers: function () {
+	                    return $scope.answers;
 	                }
 	            }
 	        });//end of modal.open
@@ -655,15 +677,14 @@
 	            templateUrl: 'deleteAnswerModal.html', // loads the template
 	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
 	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
-	            controller: function ($scope, $uibModalInstance,question) {
-					$scope.edit_answer_content = question.answers[index].content;
+	            controller: function ($scope, $uibModalInstance,answers) {
+					$scope.edit_answer_content = answers[index].content;
 	                $scope.submit = function () {
-	                   	$http.post('/questions/api/answer/delete',{id:question.answers[index].id})
+	                   	$http.post('/questions/api/answer/delete',{id:answers[index].id})
 				 			 .then(
 				 			 	function(response){
 					 			 	console.log('delete answer: ',response);
-					 			 	question.answers.splice(index,1);
-					 			 	question.answers_count--;
+					 			 	answers.splice(index,1);
 				 			 	}
 				 			 	,function(error){
 				 			 		console.log(error);
@@ -675,8 +696,8 @@
 	                };
 	            },
 	            resolve: {
-	                question: function () {
-	                    return $scope.question;
+	                answers: function () {
+	                    return $scope.answers;
 	                }
 	            }
 	        });//end of modal.open
@@ -689,14 +710,14 @@
 		//add new comment
 		$scope.addComment = function(index) {
 			var comment_content = $scope.comment_content_field[index];
-			$http.post('/questions/api/answer/comment-add',{answer_id:$scope.question.answers[index].id,content:comment_content})
+			$http.post('/questions/api/answer/comment-add',{answer_id:$scope.answers[index].id,content:comment_content})
 	 			 .then(
 	 			 	function(response){
 		 			 	console.log('Add new comment: ',response.data);
 		 			 	if (response.data != -1) {
-		 			 		$scope.question.answers[index].comments_count++;
+		 			 		$scope.answers[index].comments_count++;
 		 			 		response.data.date_created = "Vừa xong";
-		 			 		$scope.question.answers[index].comments.push(response.data);
+		 			 		$scope.answers[index].comments.push(response.data);
 		 			 		$scope.comment_content_field[index]="";
 		 			 	}
 	 			 	}
@@ -706,8 +727,9 @@
 		}
 		//vote comment
 		$scope.voteComment = function(index,parentIndex) {
-			var comment_id = $scope.question.answers[parentIndex].comments[index].id;
-			var isVoted = $scope.question.answers[parentIndex].comments[index].isVoted;
+			console.log(index,parentIndex);
+			var comment_id = $scope.answers[parentIndex].comments[index].id;
+			var isVoted = $scope.answers[parentIndex].comments[index].isVoted;
 			$http.post('/questions/api/answer/comment/vote',{comment_id:comment_id,isVoted:isVoted})
 	 			 .then(
 	 			 	function(response){
@@ -715,11 +737,11 @@
 	 	
 	 			 		if (response.data == -1) {window.location.href = '/login';}
 	 			 		else if (response.data == 1) {
-	 			 			$scope.question.answers[parentIndex].comments[index].votes_count++;
-	 			 			$scope.question.answers[parentIndex].comments[index].isVoted  = 1;
+	 			 			$scope.answers[parentIndex].comments[index].votes_count++;
+	 			 			$scope.answers[parentIndex].comments[index].isVoted  = 1;
 	 			 		} else {
-	 			 			$scope.question.answers[parentIndex].comments[index].votes_count--;
-	 			 			$scope.question.answers[parentIndex].comments[index].isVoted = 0;
+	 			 			$scope.answers[parentIndex].comments[index].votes_count--;
+	 			 			$scope.answers[parentIndex].comments[index].isVoted = 0;
 	 			 		}
 	 			 	}
 	 			 	,function(error){
@@ -730,7 +752,7 @@
 		$scope.editCommentMode = function(index,parentIndex) {
 			console.log('editing comment....');
 			$scope.comment_editing[index] = 1;
-			$scope.comment_editing_field[index] = $scope.question.answers[parentIndex].comments[index].content;
+			$scope.comment_editing_field[index] = $scope.answers[parentIndex].comments[index].content;
 		}
 
 		$scope.cancelEditComment = function(index) {
@@ -739,13 +761,13 @@
 		}
 		//submit edited comment
 		$scope.editComment = function(index, parentIndex){
-			var comment_id = $scope.question.answers[parentIndex].comments[index].id;
+			var comment_id = $scope.answers[parentIndex].comments[index].id;
 			var comment_content = $scope.comment_editing_field[index];
 			$http.post('/questions/api/answer/comment/edit',{id:comment_id,content:comment_content})
 	 			 .then(
 	 			 	function(response){
 		 			 	console.log('Edit comment: ',response);
-		 			 	$scope.question.answers[parentIndex].comments[index].content = response.data.content;
+		 			 	$scope.answers[parentIndex].comments[index].content = response.data.content;
 		 			 	$scope.comment_editing[index] = 0;
 	 			 	}
 	 			 	,function(error){
@@ -754,13 +776,13 @@
 		}
 		//delete comment
 		$scope.deleteComment = function(index,parentIndex){
-			var comment_id = $scope.question.answers[parentIndex].comments[index].id;
+			var comment_id = $scope.answers[parentIndex].comments[index].id;
 			$http.post('/questions/api/answer/comment/delete',{id:comment_id})
 	 			 .then(
 	 			 	function(response){
 	 			 		console.log('Delete comment:',response);
-	 			 		$scope.question.answers[parentIndex].comments.splice(index,1);
-	 			 		$scope.question.answers[parentIndex].comments_count--;
+	 			 		$scope.answers[parentIndex].comments.splice(index,1);
+	 			 		$scope.answers[parentIndex].comments_count--;
 	 			 	}
 	 			 	,function(error){
 	 			 	console.log(error);

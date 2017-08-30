@@ -2,7 +2,7 @@
 @section('question_content')
 	<div ng-init="setSelectedTab({{$tabSelected}})"></div>
 	@verbatim
-		<div ng-init="getQuestionsWithTab(tab)"></div>
+		<div ng-init="getQuestionsWithTab(1)"></div>
 		<div class="row" id="top">
 			<div class="col-md-12">
 				<p class="filter-title">{{tab_name}} <span class="pull-right info-dark-text">{{total}} </span></p>

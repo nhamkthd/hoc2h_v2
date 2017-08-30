@@ -105,6 +105,7 @@ Route::group(['prefix' => 'questions'], function(){
 		
 		Route::post('/store','QuestionController@apiStore');
 		Route::post('/getQuestionInfo','QuestionController@apiQuestionWithID');
+		Route::get('/getAnswer', 'AnswerController@apiGetAnswer');
 		Route::post('/vote','QuestionController@apiVote');
 		Route::post('/edit','QuestionController@apiEdit');
 		Route::post('/delete','QuestionController@apiDelete');

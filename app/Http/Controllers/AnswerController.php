@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Answer;
 use App\AnswerComment;
@@ -14,6 +14,14 @@ use App\Notifications\LikeComentQuestionNotification;
 use App\Notifications\ReplyCommentQuestionNotification;
 class AnswerController extends Controller
 {
+     //reset date time fomat
+    public function setDateFomat($object){
+       if($object->created_at->diffInDays(Carbon::now()) > 1){
+            $object->date_created = $object->created_at->format('d/m/Y');    
+        } else {
+            $object->date_created = $object->created_at->diffForHumans();
+        } 
+    }
     public function getUserAnswers($user_id,$sort_id){
         switch ($sort_id) {
             case 1:
@@ -35,7 +43,32 @@ class AnswerController extends Controller
         return $user_answers;
     }
 
+  //show answer with id_question
+    public function apiGetAnswer(Request $req)
+    {
+       $answers=Answer::where('question_id',$req->question_id)->orderby('id','desc')->paginate(5);
+       foreach ($answers as $answer) {
+                $this->setDateFomat($answer);
+                $answer->user;
+                $answer->comments_count = $answer->comments->count();
+                if (Auth::check() && Auth::user()->answerVotes->where('answer_id',$answer->id)->count()) {
+                    $answer->isVoted = 1;
+                }else
+                    $answer->isVoted = 0;
 
+                if ($answer->comments->count()) {
+                    foreach ($answer->comments as $comment) { 
+                        $this->setDateFomat($comment);
+                        $comment->user;
+                        if (Auth::check() && Auth::user()->answerCommentVotes->where('answer_comment_id',$comment->id)->count()) 
+                            $comment->isVoted = 1;
+                        else
+                            $comment->isVoted = 0;
+                    }
+                }
+            }
+       return response()->json($answers);
+    }
     public function store(Request $request)
     {
         if (Auth::check()) {

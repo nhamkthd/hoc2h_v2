@@ -96,7 +96,7 @@
 					  	</li>
 					  	<li ><a href ng-click="gotoAnchor(0)">
 					  		<i class="fa fa-comment" aria-hidden="true"></i> 
-					  		Trả lời <span>{{question.answers_count}}</span> 
+					  		Trả lời <span>{{total}}</span> 
 					  		</a> 
 					  	</li>
 					  <li >
@@ -113,8 +113,12 @@
 		</div>
 		<div class="col-md-12">
 			<div class="row answer-list">
-				<p ng-hide="question.answers_count == 0" class="filter-title">{{question.answers_count}} Trả lời </p>
-				<div  ng-hide="question.answers_count == 0" class="col-md-12" ng-repeat="answer in question.answers">
+				<p ng-hide="total == 0" class="filter-title">{{total}} Trả lời 
+				</p>
+				<div class="pull-right" ng-show="pageAnswer==maxpageAnswer">
+					<a ng-click="loadingQa()"><i ng-show="isloadingQa==1"  class="fa fa-spinner spinning" aria-hidden="true"></i>Tải thêm bình luận</a>
+				</div>
+				<div  ng-hide="total == 0" class="col-md-12" ng-repeat="answer in answers | orderBy : 'id'">
 					@endverbatim
 						@include('questions.directives.answer_list_item')
 					@verbatim

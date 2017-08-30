@@ -36,12 +36,12 @@
 		<div class="post-info" ng-show="user.id == answer.user_id">
 			<ul class="nav nav-pills" role="tablist">
 				<li class="action">
-					<a ng-click="editAnswer($index)">
+					<a ng-click="editAnswer(answers.indexOf(answer))">
 						<i class="fa fa-edit" aria-hidden="true"></i> Sửa 
 					</a>
 				</li>
 				<li class="action">
-					<a ng-click="deleteAnswer($index)">
+					<a ng-click="deleteAnswer(answers.indexOf(answer))">
 						<i class="fa fa-trash" aria-hidden="true"></i> Xoá 
 					</a>
 				</li>
@@ -50,9 +50,9 @@
 		<div class=" post-action">
 			<ul class="nav nav-pills " role="tablist">
 				<li >
-					<a ng-class="{voted:answer.isVoted == 1}" ng-click="voteAnswer($index)">
-						<i ng-show="isAnswerVoting[$index] === 1" class="fa fa-spinner spinning" aria-hidden="true"></i>
-					  	<i ng-show="isAnswerVoting[$index] === 0" class="fa fa-thumbs-up" aria-hidden="true"></i> 
+					<a ng-class="{voted:answer.isVoted == 1}" ng-click="voteAnswer(answers.indexOf(answer))">
+						<i ng-show="isAnswerVoting[answers.indexOf(answer)] === 1" class="fa fa-spinner spinning" aria-hidden="true"></i>
+					  	<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
 						Thích <span>{{answer.votes_count}}</span> 
 					</a>
 				</li>
@@ -63,13 +63,13 @@
 					</a> 
 				</li>
 				<li ng-show="user.id == question.user.id && answer.is_best == 0 && question.haveBestAnswer == 0">
-					<a ng-click="setBestAnswer($index,1)">
+					<a ng-click="setBestAnswer(answers.indexOf(answer),1)">
 						<i class="fa fa-check" aria-hidden="true" style="color: gray;"></i>
 						Best answer
 					</a> 
 				</li>
 				<li ng-show="user.id == question.user.id && answer.is_best == 1">
-					<a ng-click="setBestAnswer($index,0)">
+					<a ng-click="setBestAnswer(answers.indexOf(answer),0)">
 						<i class="fa fa-check " aria-hidden="true" style="color: green;"></i>
 						Best answer
 					</a> 
@@ -92,19 +92,19 @@
 						<div ng-show="comment_editing[$index] === 1">
 							<textarea id="comment_field" class="form-control" 
 							  ng-model="comment_editing_field[$index]" 
-							  enter-submit="editComment($index,$parent.$index)"></textarea>
+							  enter-submit="editComment($index,$parent.answers.indexOf(answer))"></textarea>
 						</div>
 					</div>
 					<div class="post-info" ng-show="user.id == comment.user.id">
 						<ul class="nav nav-pills" role="tablist">
-							<li ng-show = "comment_editing[$index] != 1" class="action"><a ng-click="editCommentMode($index,$parent.$index)"><i class="fa fa-edit" aria-hidden="true" ></i> Sửa </a></li>
+							<li ng-show = "comment_editing[$index] != 1" class="action"><a ng-click="editCommentMode($index,$parent.answers.indexOf(answer))"><i class="fa fa-edit" aria-hidden="true" ></i> Sửa </a></li>
 							<li ng-show = "comment_editing[$index] != 1" class="action">
-								<a confirm-delete="Delete comment?" ng-click="deleteComment($index,$parent.$index)">
+								<a confirm-delete="Delete comment?" ng-click="deleteComment($index,$parent.answers.indexOf(answer))">
 									<i class="fa fa-trash" aria-hidden="true"></i>
 									Xoá
 								</a>
 							</li>
-							<li ng-show="comment_editing[$index] === 1" class="action"><a ng-click="editComment($index,$parent.$index)"><i class="fa fa-save" aria-hidden="true"></i> Lưu lại </a></li>
+							<li ng-show="comment_editing[$index] === 1" class="action"><a ng-click="editComment($index,$parent.answers.indexOf(answer))"><i class="fa fa-save" aria-hidden="true"></i> Lưu lại </a></li>
 							<li ng-show="comment_editing[$index] === 1" class="action">
 								<a  ng-click="cancelEditComment($index)">
 									<i class="fa fa-close" aria-hidden="true"></i> 
@@ -117,7 +117,7 @@
 					<div class=" post-action" style="border-bottom:solid 1px #e0e0e0;">
 						<ul class="nav nav-pills " role="tablist">
 							<li>
-								<a ng-class="{voted:comment.isVoted == 1}" ng-click="voteComment($index,$parent.$index)">
+								<a ng-class="{voted:comment.isVoted == 1}" ng-click="voteComment($index,$parent.answers.indexOf(answer))">
 									<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
 									Thích <span>{{comment.votes_count}}</span>
 								</a>
@@ -136,8 +136,8 @@
 				</span>
 				<div class="media-body">
 					<textarea id="comment_field" class="form-control" placeholder="Viết bình luận..." 
-							  ng-model="comment_content_field[$index]" 
-							  enter-submit="addComment($index)"></textarea>
+							  ng-model="comment_content_field[answers.indexOf(answer)]" 
+							  enter-submit="addComment(answers.indexOf(answer))"></textarea>
 				</div>
 			</div>
 		</div>

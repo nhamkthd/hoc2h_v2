@@ -77,7 +77,6 @@ class QuestionController extends Controller
                     break;
                 case 3:
                     $questions = Question::questionsInWeek();
-                    $count_all = Question::questionsInWeek()->count();
                     break;
                 case 4:
                     $questions = Question::where('user_id',Auth::user()->id)->orderby('id','desc')->paginate(15);
@@ -313,7 +312,7 @@ class QuestionController extends Controller
         $related_questions = Question::where('title','like','%'.$question->title.'%')->get();
         return response()->json(array('question'=>$question,'categories'=>$categories,'related_questions' => $related_questions));
     }
-
+  
     //edit question
     public function apiEdit(Request $request)
     {
