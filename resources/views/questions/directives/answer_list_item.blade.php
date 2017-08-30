@@ -127,6 +127,11 @@
 				</div>
 			</div>
 			<div class="comment-box" ng-show="isLogged == true">
+				<div class="dot-spinner" ng-show="comment_adding[$index] == 1">
+				  <div class="bounce1"></div>
+				  <div class="bounce2"></div>
+				  <div class="bounce3"></div>
+				</div>
 				<span class="pull-left avt">
 					@endverbatim
 						@if(Auth::check())

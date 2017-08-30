@@ -321,6 +321,10 @@
 	 	$scope.isVoting = 0;
 	 	$scope.isAnswerVoting = [0];
 	 	$scope.question_id;
+	 	$scope.isAnswerVoting = new Array( 100 ).fill( 0 );
+	 	$scope.comment_adding = new Array( 100 ).fill( 0 );
+	 	$scope.isCommentVoting = new Array( 100 ).fill( 0 );
+
 	 	//auto scroll
 		$scope.gotoAnchor = function(x) {
 	      	var newHash = 'anchor' + x;
@@ -709,6 +713,7 @@
 
 		//add new comment
 		$scope.addComment = function(index) {
+			$scope.comment_adding[index] = 1;
 			var comment_content = $scope.comment_content_field[index];
 			$http.post('/questions/api/answer/comment-add',{answer_id:$scope.answers[index].id,content:comment_content})
 	 			 .then(
@@ -719,6 +724,7 @@
 		 			 		response.data.date_created = "Vừa xong";
 		 			 		$scope.answers[index].comments.push(response.data);
 		 			 		$scope.comment_content_field[index]="";
+		 			 		$scope.comment_adding[index] = 0;
 		 			 	}
 	 			 	}
 	 			 	,function(error){
@@ -743,6 +749,7 @@
 	 			 			$scope.answers[parentIndex].comments[index].votes_count--;
 	 			 			$scope.answers[parentIndex].comments[index].isVoted = 0;
 	 			 		}
+	 			 		$scope.isCommentVoting[index] = 0;
 	 			 	}
 	 			 	,function(error){
 	 			 	console.log(error);
