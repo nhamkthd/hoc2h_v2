@@ -118,7 +118,8 @@
 						<ul class="nav nav-pills " role="tablist">
 							<li>
 								<a ng-class="{voted:comment.isVoted == 1}" ng-click="voteComment($index,$parent.$index)">
-									<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
+									<i ng-show="isCommentVoting[$index] == 1" class="fa fa-spinner spinning" aria-hidden="true"></i>
+					  				<i ng-show="isCommentVoting[$index] == 0" class="fa fa-thumbs-up" aria-hidden="true"></i> 
 									Thích <span>{{comment.votes_count}}</span>
 								</a>
 							</li>
@@ -127,6 +128,11 @@
 				</div>
 			</div>
 			<div class="comment-box" ng-show="isLogged == true">
+				<div class="dot-spinner" ng-show="comment_adding[$index] == 1">
+				  <div class="bounce1"></div>
+				  <div class="bounce2"></div>
+				  <div class="bounce3"></div>
+				</div>
 				<span class="pull-left avt">
 					@endverbatim
 						@if(Auth::check())

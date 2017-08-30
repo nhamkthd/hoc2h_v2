@@ -89,8 +89,8 @@
 					<ul class="nav nav-pills " role="tablist">
 					  	<li>
 					  		<a ng-class="{voted:question.isVoted == 1}" href ng-click="voteQuestion()">
-					  			<i ng-show="isVoting === 1" class="fa fa-spinner spinning" aria-hidden="true"></i>
-					  			<i ng-show="isVoting === 0" class="fa fa-thumbs-up" aria-hidden="true"></i> 
+					  			<i ng-show="isVoting == 1" class="fa fa-spinner spinning" aria-hidden="true"></i>
+					  			<i ng-show="isVoting == 0" class="fa fa-thumbs-up" aria-hidden="true"></i> 
 					  			Thích <span>{{question.votes_count}}</span> 
 					  		</a>
 					  	</li>
