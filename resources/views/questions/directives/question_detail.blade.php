@@ -116,6 +116,7 @@
 						@include('questions.directives.answer_list_item')
 					@verbatim
 				</div>
+				<div class="col-md-2 col-md-offset-5" data-loading> </div>
 				<div ng-show="isLogged == true" style="margin-top: 20px;">
 					<div class="col-md-12 commet-box" id="anchor{{0}}">
 						<label>Câu trả lời của bạn</label>
