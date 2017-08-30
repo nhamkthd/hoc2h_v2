@@ -19,7 +19,7 @@ class TestCommentController extends Controller
     }
     public function getCommentTest($test_id)
     {
-      $TestComment=TestComment::where('test_id',$test_id)->orderBy('id','DESC')->paginate(10);
+      $TestComment=TestComment::where('test_id',$test_id)->orderBy('id','DESC')->paginate(5);
        foreach ( $TestComment as $comment) {
             $comment->user;
             $this->setDateFomat($comment);
