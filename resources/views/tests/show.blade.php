@@ -1,6 +1,12 @@
+
 @extends('layouts.app')
 @section('content')
 <link rel="stylesheet" type="text/css" href="{{asset('css/rate.css')}}">
+<style type="text/css">
+	.test-info h3 {font-size: 17px; font-weight: 600px; color: #0099CC; text-transform: uppercase; text-align: center;margin-bottom: 20px;}
+	.test-info a{font-size: 13px; float: right; margin-bottom: 10px; margin-left: 10px;}
+	.test-info h5 > span{color: #FF8800; float: right;}
+</style>
 <div class="container app-content ng-scope" ng-app ="hoc2h-test" ng-controller="ShowTestController">
 	@if($id_comment)
 		<div class="row" ng-init="initTest({{$test->id}},{{Auth::user()}},{{$id_comment}})">
@@ -8,34 +14,33 @@
 		<div class="row" ng-init="initTest({{$test->id}},{{Auth::user()}})">
 	@endif
 <div class="col-md-8 main-content ">
-		<div class="box">
-			<h3 class="info-dark-text">{{$test->title}} 
-				@if ($test->user->id==Auth::user()->id)
-					<a href="{{ url('tests/edit') }}/{{$test->id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-				@endif
-			</h3>
-			<p><strong>Thể loại/Danh mục: </strong>{{$test->category->title}}</p>
-			@if($test->test_type == 0)
-				<p><strong>Dạng đề:</strong>Trắc nghiệm</p>
-			@else
-				<p><strong>Dạng đề: </strong>Tự luận</p>
-			@endif
-			<p><strong>Thời gian: </strong>{{$test->total_time}} phút</p>
+		<div class="box test-info">
+			<h3>{{$test->title}}</h3>
+			<h5>Thể loại/Danh mục: <span>{{$test->category->title}}</span></h5>
+			<h5>Dạng đề:<span>Trắc nghiệm</span></h5>
+			<h5>Số câu hỏi:<span>{{$test->number_of_questions}} câu</span></h5>
+			<h5>Thời gian: <span>{{$test->total_time}} phút</span></h5>
 			@if($test->level == 1)
-				<p><strong>Độ khó: </strong>Dễ</p>
+				<h5>Độ khó: <span>Dễ</span></h5>
 			@else
 				@if($test->level == 2)
-					<p><strong>Độ khó: </strong>Trung bình</p>
+					<h5>Độ khó: <span>Trung bình</span></h5>
 				@else
-					<p><strong>Độ khó: </strong>Khó</p>
+					<h5>Độ khó: <span>Khó</span></h5>
 				@endif
 			@endif
-			<p><strong>Số người đã làm: {{$test->user_test->count()}}</strong></p>
+			<h5>Số người đã làm: <span>{{$test->user_test->count()}}</span></h5>
+			@if ($test->user->id==Auth::user()->id)
+				<a href="#">
+					<i class="fa fa-trash-o" aria-hidden="true"></i> Xoá đề</a>
+				<a href="{{ url('tests/edit') }}/{{$test->id}}">
+					<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Sửa đề</a>
+			@endif
 		</div>
 
 		<div class="row">
 			<div class=" col-md-4 col-md-offset-4">
-			<button style="margin-top: 20px; width: 100%;" data-target="#list-test-options-dialog" data-toggle="modal" type="button" class="btn btn-primary"><i class="fa fa-caret-square-o-right" aria-hidden="true"></i> Vào làm bài </button>
+			<button style="margin-top: 20px; width: 100%;" data-target="#list-test-options-dialog" data-toggle="modal" type="button" class="btn btn-success"><i class="fa fa-caret-square-o-right" aria-hidden="true"></i> Vào làm bài </button>
 			</div>
 
 				<form method="POST" action="{{ url('tests/usertest') }}" id="submit_edit" novalidate="novalidate">
@@ -66,7 +71,6 @@
 								<div class="pmd-modal-action pmd-modal-bordered text-right">
 									<button data-dismiss="modal" class="btn pmd-ripple-effect btn-warning pmd-btn-flat" type="button">Lúc khác</button>
 									<button class="btn pmd-ripple-effect btn-default pmd-btn-flat" type="submit">Vào thi</button>
-									
 								</div>
 							</div>
 						</div>
@@ -74,13 +78,12 @@
 				</form>
 			</div>
 
-			<div class="comments-list" style="width: 100%;"> 
-			
+			<div class="comments-list"> 
 				<div tabindex="-1" class="modal fade" id="rate-dialog" style="display: none;" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header pmd-modal-bordered"> 
-									<h3 class="pmd-card-title-text">Đánh giá bài thi</h3>
+									<h3>Đánh giá đề thi này</h3>
 								</div>
 								<div class="modal-body">
 									<div class="acidjs-rating-stars">
@@ -94,12 +97,9 @@
 									</div>
 								</div>
 								<div class="pmd-modal-action pmd-modal-bordered text-right">
-
 									<button data-dismiss="modal" class="btn pmd-ripple-effect btn-warning pmd-btn-flat" type="button">Lúc khác</button>
 
 									<button ng-click="addRate()" class="btn pmd-ripple-effect btn-default pmd-btn-flat" type="submit">Đánh giá</button>
-
-									
 								</div>
 							</div>
 						</div>
@@ -116,14 +116,17 @@
 					</form>
 				</div>
 			</div>
-			<button data-target="#rate-dialog" data-toggle="modal" type="button" class="btn btn-dark-green">
-				<i class="fa fa-star" aria-hidden="true"></i> Đánh giá đề thi
+			<button data-target="#rate-dialog" 
+					data-toggle="modal" 
+					type="button" 
+					class="btn btn-outline-success waves-effect">
+				 	Đánh giá
 			</button>
 			<div class="col-md-12 answer-list" ng-init='initComment({{$test->id}})'>
-			<div class="col-md-12 commet-box">
-						<textarea style="padding:10px 0 0 10px;" ng-init="cmt=''" name="cmt" ng-model='cmt' placeholder="Viết bình luận"></textarea>
-					</div>
-					<button class="btn btn-outline-default waves-effect pull-right" style="margin-top:20px; margin-right: 10px;" type="button" ng-click="addComment()">Gửi trả lời</button>
+				<div class="col-md-12 commet-box">
+					<textarea  class="form-control" ng-init="cmt=''" name="cmt" ng-model='cmt' placeholder="Viết bình luận"></textarea>
+					<button class="btn btn-primary pull-right" type="button" ng-click="addComment()">Gửi trả bình </button>
+				</div>
 				<div class="row">
 					<div class="col-md-12" ng-repeat="cmt in comment">
 						@include('tests.directives.list_cmt')

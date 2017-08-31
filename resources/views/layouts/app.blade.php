@@ -9,7 +9,7 @@
         <title>{{ config('app.name', 'Hoc2H') }}</title>
         
         <!-- Styles -->
-        <link rel="stylesheet" href="{{asset('css/bootstrap/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('css/bootstrap/bootstrap.css')}}">
         <link rel="stylesheet" href="{{asset('js/flugin/alert/sweetalert.css')}}">
         <link rel="stylesheet" href="{{asset('css/mdb/css/mdb.css')}}" >
         <link rel="stylesheet" href="{{asset('css/font-awesome/css/font-awesome.css') }}"> 

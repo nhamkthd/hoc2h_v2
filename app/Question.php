@@ -23,6 +23,10 @@ class Question extends Model
         return $this->belongsTo('App\Category','category_id','id');
     }
 
+    public function followers() {
+        return $this->hasMany('App\QuestionFollwer','question_id','id');
+    }
+
     public static function questionsInWeek(){
         return static::where('created_at', '>=', \Carbon\Carbon::now()->subWeek())->orderby('votes_count','desc')->orderby('answers_count','desc')->orderby('views_count','desc')->get();
     }

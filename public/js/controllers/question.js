@@ -409,6 +409,7 @@
 		}
 		//vote question
 		$scope.voteQuestion = function(){
+			ignoreLoadingBar: true
 			$scope.isVoting = 1;
 			$http.post('/questions/api/vote',{question_id:$scope.question.id,isVoted:$scope.question.isVoted})
 	 			 .then(function(response){
@@ -428,6 +429,7 @@
 
 		//change resolve state 
 		$scope.changeResolve = function(param) {
+			ignoreLoadingBar: true;
 			$http.post('/questions/api/change-resolve',{question_id:$scope.question.id,param:param})
 	 			 .then(function(response){
 	 			 	console.log('change resolve: ',response.data);
@@ -586,6 +588,7 @@
 
 		//ad new answer
 		$scope.addAnswer = function(){
+			ignoreLoadingBar: true;
 			$scope.sendAnswerText = "Sending";
 			$http.post('/questions/api/answers',{question_id:$scope.question.id,content:$scope.answer_content_field})
 	 			 .then(function(response){
@@ -713,6 +716,7 @@
 
 		//add new comment
 		$scope.addComment = function(index) {
+			ignoreLoadingBar: true;
 			$scope.comment_adding[index] = 1;
 			var comment_content = $scope.comment_content_field[index];
 			$http.post('/questions/api/answer/comment-add',{answer_id:$scope.answers[index].id,content:comment_content})
@@ -733,6 +737,7 @@
 		}
 		//vote comment
 		$scope.voteComment = function(index,parentIndex) {
+			ignoreLoadingBar: true;
 			console.log(index,parentIndex);
 			var comment_id = $scope.answers[parentIndex].comments[index].id;
 			var isVoted = $scope.answers[parentIndex].comments[index].isVoted;
@@ -757,6 +762,7 @@
 		}
 
 		$scope.editCommentMode = function(index,parentIndex) {
+
 			console.log('editing comment....');
 			$scope.comment_editing[index] = 1;
 			$scope.comment_editing_field[index] = $scope.answers[parentIndex].comments[index].content;
@@ -768,6 +774,7 @@
 		}
 		//submit edited comment
 		$scope.editComment = function(index, parentIndex){
+			ignoreLoadingBar: true;
 			var comment_id = $scope.answers[parentIndex].comments[index].id;
 			var comment_content = $scope.comment_editing_field[index];
 			$http.post('/questions/api/answer/comment/edit',{id:comment_id,content:comment_content})

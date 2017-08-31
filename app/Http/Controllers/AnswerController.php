@@ -9,6 +9,7 @@ use App\AnswerVote;
 use App\AnswerCommentVote;
 use Auth;
 use App\Question;
+use App\QuestionFollower;
 use App\notifications\AnswerQuestionNotification;
 use App\Notifications\LikeComentQuestionNotification;
 use App\Notifications\ReplyCommentQuestionNotification;
@@ -80,8 +81,17 @@ class AnswerController extends Controller
             $answer->save();
 
             $question = Question::find($request->question_id);
+            // if (QuestionFollower::isFollowing(Auth::user()->id,$question->id) == false){
+            //     QuestionFollower::create(['user_id' => Auth::user()->id,'question_id' => $question->id]);
+            // }
+
             if(Auth::user()->id != $question->user->id)
-               $question->user->notify(new AnswerQuestionNotification($answer));
+            {
+               // $followers = $question->followers;
+               // foreach ($followers as $follower) {
+                   $question->user->notify(new AnswerQuestionNotification($answer));
+              // }
+            }
             $question->answers_count++;
             $question->save();
 
@@ -209,5 +219,9 @@ class AnswerController extends Controller
         $comment = AnswerComment::find($request->id);
         $comment->delete();
         return 1;
+    }
+
+    public function postNotifications() {
+        
     }
 }

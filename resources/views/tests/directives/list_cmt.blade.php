@@ -1,8 +1,5 @@
 @verbatim
 <div class="media list-item-block">
-	<span class="pull-left">
-		<img src="{{cmt.user.avatar}}" width="40" height="40">
-	</span>
 	<div class="modal fade" id="{{cmt.id}}" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->
@@ -21,6 +18,9 @@
 			</div>
 		</div>
 	</div>
+	<span class="pull-left">
+		<img src="{{cmt.user.avatar}}" width="40" height="40" style="margin-top: 7px;">
+	</span>
 	<div class="media-body"  id="anchor{{cmt.id}}" ng-class="{anchorAt:anchorAt === cmt.id}">
 		<div class="media-heading">
 			<a href class="primary-text">{{cmt.user.name}}</a>

@@ -38,26 +38,28 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
+                            <div class="col-md-3 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>Ghi nhớ đăng nhập
                                     </label>
                                 </div>
                             </div>
+                            <div class="col-md-4" style="margin-top: 10px; font-size: 13px;">
+                                 <a style="text-decoration:underline;" href="{{ route('password.request') }}">
+                                    Quên mật khẩu?
+                                </a> 
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
+                            <div class="col-md-6 col-md-offset-4" style="padding:10px;">
                                 <button type="submit" class="btn btn-default">
                                     Đăng nhập
                                 </button>
-                                 <a href="{{ url('redirect') }}" class="btn btn-indigo">
+                                 <a href="{{ url('redirect') }}" class="btn btn-indigo facebook-color pull-right">
                                    <i class="fa fa-facebook-square" aria-hidden="true"></i> Đăng nhập bằng facebook
                                 </a>
-                                <a style="margin-left: 20px; text-decoration:underline;" href="{{ route('password.request') }}">
-                                    Quên mật khẩu?
-                                </a> 
                             </div>
                         </div>
                     </form>

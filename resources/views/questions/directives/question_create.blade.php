@@ -21,7 +21,7 @@
 							label-attr="title"
 							change="changeCategory(newValue)"
 							placeholder="Chọn một chuyên mục" name="category"></select>
-					<span class="help-inline danger-text" 
+					<span class="help-inline" 
 						  ng-show="!category_id && frmQuestion.category.$touched">Chuyên mục không được để trống!</span>
 				</div>
 			</div>
@@ -31,7 +31,7 @@
 				<div class="col-md-10 col-md-offset-1">
 					<div class="md-form">
     				<input placeholder="Tiêu đề" id="title" name="title" type="text" ng-model="title" class="form-control" ng-change="findRelated()" required>
-    				<span class="help-inline danger-text" 
+    				<span class="help-inline" 
 	                      ng-show="frmQuestion.title.$invalid && frmQuestion.title.$touched">Tiêu đề không được để trống!</span>
 					</div>
 					

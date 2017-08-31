@@ -115,7 +115,7 @@
 			<div class="row answer-list">
 				<p ng-hide="total == 0" class="filter-title">{{total}} Trả lời 
 				</p>
-				<div class="pull-right" ng-show="pageAnswer==maxpageAnswer">
+				<div class="text-center" ng-show="pageAnswer==maxpageAnswer">
 					<a ng-click="loadingQa()"><i ng-show="isloadingQa==1"  class="fa fa-spinner spinning" aria-hidden="true"></i>Tải thêm bình luận</a>
 				</div>
 				<div  ng-hide="total == 0" class="col-md-12" ng-repeat="answer in answers | orderBy : 'id'">

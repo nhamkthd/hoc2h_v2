@@ -14,17 +14,17 @@
 		.question-list-item {padding: 0 0 1em;}
 	}
 	.question-list-item { -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-box-align: center; -ms-flex-align: center; align-items: center; color: #818181; margin: 0 0 1em; border-bottom: 1px solid #f1f0f0; padding-bottom: 0px;}
-	.question-list-avatar{ vertical-align:baseline; margin-top:10px; height:75px;text-align: center;}
+	.question-list-avatar{ vertical-align:baseline; margin-top:8px; height:75px;text-align: center;}
 	.question-list-avatar img{width: 45px; height: 45px;}
 
-	span.role-title{font-size:11px;font-weight:500; color:#3F729B;}
-	span.role-title.admin{color: #ff4444;}
+	p.role-title{font-size:11px;font-weight:500; color:#3F729B;}
+	p.role-title.admin{color: #ff4444;}
+
+	.title a{color: #4d545d;}
+	.title a:hover{text-decoration: underline;}
 	@media screen and (min-width: 769px) {
 		.question-list-summary.title {float: left;}
 	}
-	.title a{color: #4d545d;}
-	.title a:hover{text-decoration: underline;}
-
 	.question-list-summary .meta  {font-size: 10px; font-weight: 600; color:#a7a1a1; }
 	.question-list-summary.content{font-size: 12px;}
 	.content{line-height: 1.4em;}
@@ -39,18 +39,18 @@
 @verbatim
 <div class="question-list-item">
 	<div class="row">
-		<div class="col-md-2">
+		<div class="col-md-2 col-sm-2">
 			<div class="question-list-avatar">
 				<div>
 					<a href="/users/{{question.user.id}}/profile">
 						<img src="{{question.user.avatar}}" class="is-circle is-outlined bg-white">
 					</a>
 				</div>
-				<a href="/users/{{question.user.id}}/profile" class="is-link user-name"> {{question.user.name}}</a><br>
-				<span ng-class="{admin:question.user.role_id == 2}" class="role-title">{{question.user.role.title}}</span>
+				<a href="/users/{{question.user.id}}/profile" class="is-link user-name"> {{question.user.name}}</a>
+				<p ng-class="{admin:question.user.role_id == 2}" class="role-title">{{question.user.role.title}}</p>
 			</div>
 		</div>
-		<div class="col-md-10" style="padding-left:5px;">
+		<div class="col-md-10 col-sm-10" style="padding-left:5px;">
 			<div class="question-list-summary">
 				<h4 class="title">
 					<a href="/questions/question/{{question.id}}">{{question.title}}
