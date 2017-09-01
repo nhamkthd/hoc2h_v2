@@ -76,7 +76,7 @@ class QuestionController extends Controller
                     $questions =  Question::orderby('votes_count','desc')->orderby('answers_count','desc')->orderby('views_count','desc')->paginate(15);
                     break;
                 case 3:
-                    $questions = Question::questionsInWeek();
+                    $questions = Question::questionsInWeek()->paginate(15);
                     break;
                 case 4:
                     $questions = Question::where('user_id',Auth::user()->id)->orderby('id','desc')->paginate(15);
