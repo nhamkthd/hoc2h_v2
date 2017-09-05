@@ -18,7 +18,12 @@ class CategoryController extends Controller
     {
     	return Category::find($id);
     }
-     public function index(){
+    
+    public function getParents(){
+        return Category::where('parent_id',0)->get();
+    }
+
+    public function index(){
     	$category = Category::all();
     	return view('admin.business.category.index',compact('category'));
     }

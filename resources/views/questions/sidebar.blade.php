@@ -10,7 +10,7 @@
                         <input placeholder="Tìm kiếm" type="text" ng-model="keywords" ng-change="search()" class="form-control" required>
                     </div>
                     <div class = "col-md-10 col-md-offset-1">
-                        <p class="menu-label">Thống Kê</p>
+                        <p class="menu-label">Bộ lọc</p>
                         <section>
                             <ul class="menu-list">
                                 <li ng-class="{active:tab === 1}">

@@ -5,8 +5,8 @@
 	.tab-bar ul {list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color:#fff; border-bottom: 1px solid #e4e6e8; } 
 	.tab-bar li {float: left; margin-right:5px;}
 	.tab-bar li a {display: block; color:#607d8b; text-align: center; padding: 14px 16px; text-decoration: none; }
-	.tab-bar li:hover:not(.selected) a {color: #455a64 ; border-bottom: solid 3px #3F729B; } 
-	.tab-bar li.selected a{color:#2BBBAD; border-bottom: solid 3px #2BBBAD;} 
+	.tab-bar li:hover:not(.selected) a {color: #455a64 ; border-bottom: solid 2px #3F729B; } 
+	.tab-bar li.selected a{color:#2BBBAD; border-bottom: solid 2px #2BBBAD;} 
 
 	.sub-tab-header {margin-bottom: 15px; clear: both;height: 40px; border-bottom: 1px solid #e4e6e8;}
 	.sub-tab-header h3 {float: left; margin-bottom: 0px; font-weight: normal; font-size:18px; margin-bottom: 20px;} 

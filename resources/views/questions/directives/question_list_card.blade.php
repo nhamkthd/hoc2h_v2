@@ -9,6 +9,7 @@
 	a.is-link:hover{color: #4d545d;}
 	a.is-link.user-name{font-size: 12px;}
 	a.is-link.cl-orgin{color:#FF8800; }
+	a.is-link.cl-orgin:hover{color:#3F729B; }
 
 	@media screen and (min-width: 769px){
 		.question-list-item {padding: 0 0 1em;}
@@ -29,11 +30,11 @@
 	.question-list-summary.content{font-size: 12px;}
 	.content{line-height: 1.4em;}
 
-	.footer {padding-bottom:0px; float:right; margin-top:-10px; } 
+	.footer {padding-bottom:0px; float:right; margin-top:0px; } 
 	.footer ul {list-style: none; display: flex; flex: row wrap; justify-content: flex-end; padding-left: 0; } 
-	.footer li:first-child {margin-right: auto; } 
+	.footer li:first-child {margin-right: auto; color: #4B515D; } 
 	.footer li + li {margin-left: .5rem; } 
-	.footer li {font-size: .75rem; height: 1.5rem;line-height: 1.5rem; text-align: center;  position: relative;  color:#9e9e9e;} 
+	.footer li {font-size: .75rem; height: 1.5rem;line-height: 1.5rem; text-align: center;  position: relative;  color:#3F729B;} 
 	.footer li >span {font-weight: 500;}
 </style>
 @verbatim
@@ -78,9 +79,9 @@
 				<div class="footer">
 					<ul>
 						<li><i class="fa fa-bar-chart" aria-hidden="true"></i></li>
-						<li><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><span> {{question.votes_count}}</span> </li>
-						<li><i class="fa fa-comments-o" aria-hidden="true"></i><span> {{question.answers_count}}</span></li>
-						<li><i class="fa fa-eye" aria-hidden="true"></i> <span> {{question.views_count}}</span></li>
+						<li><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><span> {{question.votes_count}} thích</span> </li>
+						<li><i class="fa fa-comments-o" aria-hidden="true"></i><span> {{question.answers_count}} trả lời</span></li>
+						<li><i class="fa fa-eye" aria-hidden="true"></i> <span> {{question.views_count}} xem </span></li>
 					</ul>
 				</div>
 			</div>
