@@ -13,7 +13,7 @@
 				</div>
 			</div>	
 		</div>	
-		<div class="row" ng-show="totalPages!=1">
+		<div class="row" ng-show="totalPages!=1 && isLoaded == 1">
 			<div class="col-md-12">
 				<posts-paginations class="text-center"></posts-paginations>
 			</div>

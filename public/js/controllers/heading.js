@@ -24,6 +24,16 @@
 	 		this.user = user;
 	 	}
 
+	 	$scope.getCategories  = function(){
+	 		$http.get('/categories/api/parents-categories')
+	 			 .then(function(res){
+	 			 	$scope.parents_categories = res.data;
+	 			 	console.log(res.data);
+	 			 },function(err){
+	 			 	console.log(err.data);
+	 			 })
+	 	}
+
 	 	$scope.initNotification=function()
 	 	{
 	 		$http.post('/notification/getNotification').then(function (res) {

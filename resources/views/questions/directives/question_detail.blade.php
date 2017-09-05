@@ -36,7 +36,7 @@
 					<p>
 						Đăng bởi <a class="author-name" href="/users/{{question.user.id}}/profile" class="primary-text" >
 							<i class="fa fa-circle user-status" aria-hidden="true" ng-class="{online:question_author_isOnline === 1}"></i>{{question.user.name}}</a> 
-						tại <a href class="warning-dark-text"> {{question.category.title}} </a>
+						tại <a href class="category-title"> {{question.category.title}} </a>
 							<a ng-click="editCategory()"> <i class="fa fa-edit" aria-hidden="true" ></i></a>
 						<span class="pull-right"> <i class="fa fa-clock-o" aria-hidden="true"></i>  {{question.date_created}}</span>
 					</p>
@@ -116,7 +116,7 @@
 				<p ng-hide="total == 0" class="filter-title">{{total}} Trả lời 
 				</p>
 				<div class="text-center" ng-show="pageAnswer==maxpageAnswer">
-					<a ng-click="loadingQa()"><i ng-show="isloadingQa==1"  class="fa fa-spinner spinning" aria-hidden="true"></i>Tải thêm bình luận</a>
+					<a ng-click="loadingQa()"><i ng-show="isloadingQa==1"  class="fa fa-spinner spinning" aria-hidden="true"></i>Xem thêm trả lời</a>
 				</div>
 				<div  ng-hide="total == 0" class="col-md-12" ng-repeat="answer in answers | orderBy : 'id'">
 					@endverbatim

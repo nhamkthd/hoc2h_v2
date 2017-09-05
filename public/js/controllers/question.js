@@ -125,6 +125,7 @@
 		$scope.tab = 1;
 		$scope.totalPages = 0;
 	 	$scope.currentPage = 1;
+	 	$scope.isLoaded = 0;
 	 	$scope.range = [];
 	 	//get categories list
 	 	Categories.getList().then(function(response){$scope.categories = response.data;});
@@ -190,20 +191,24 @@
 
 	 	//get questions list with sort tab ID
 	 	$scope.getQuestionsWithTab = function(pageNumber){
+	 		$scope.isLoaded = 0;
 	 		$http.get('/questions/api/?filtertab='+$scope.tab+ '&page=' + pageNumber)
 	 		.then(function(response){
-	 			  	$location.hash('top');
-      			 	$anchorScroll();
-	 				$scope.total=response.data.total;
-	 				$scope.maxPage=response.data.last_page;
-	 				$scope.questions = response.data.data;
-	 				$scope.currentPage  = response.data.current_page;
-	 				$scope.totalPages   = response.data.last_page;
-		 			var pages = [];
-		 			for (var i = 1; i <= response.data.last_page; i++) {
-		 				pages.push(i);
-		 			}
-		 			$scope.range = pages;
+	 			$location.hash('top');
+      			$anchorScroll();
+      			console.log(response.data);
+      			$scope.total=response.data.total;
+      			$scope.maxPage=response.data.last_page;
+      			$scope.questions = response.data.data;
+      			$scope.currentPage  = response.data.current_page;
+      			$scope.totalPages   = response.data.last_page;
+      			var pages = [];
+      			for (var i = 1; i <= response.data.last_page; i++) {
+      				pages.push(i);
+      			}
+      			$scope.range = pages;
+      			
+      			$scope.isLoaded = 1;
 	 		}, function(error){
 	 			console.log(error);
 	 		});

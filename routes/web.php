@@ -15,6 +15,7 @@ Route::get('/tags/{category_id}','TagController@getAll');
 Route::group(['prefix' => 'categories'],function(){
 	Route::group(['prefix'=>'api'],function(){
 		Route::get('/','CategoryController@getAll');
+		Route::get('/parents-categories','CategoryController@getParents');
 		Route::get('/{id}','CategoryController@getWithID');
 
 	});

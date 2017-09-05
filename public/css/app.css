@@ -7,20 +7,16 @@ body{
 	background: #f1f2f3;
 	color: #4d545d;
 	display: block;
+  padding-top: 70px;
 
 }
-.nav>li>a:hover {
-    text-decoration: none;
-     background-color:#fff;
-}
-.nav>li>a:focus {background-color: #fff;}
 
 .btn {text-transform:none; padding:8px 10px;}
 .fa.spinning {
      animation: spin 1s infinite linear;
     -webkit-animation: spin2 1s infinite linear;
 }
-.app-content {background-color: #fff; padding-top:10px; border-radius:2px;}
+.app-content {position: relative;background: #fff;border-radius: 0 3px 0 0; padding-top: 10px;}
 .icon-close {color: #fff; cursor: pointer;}
 .icon-close:hover{color:#bdbdbd;}
 i.user-status{font-size: 10px; vertical-align: 1px; margin-right: 2px; color: gray;}
@@ -28,16 +24,17 @@ i.user-status.online{color: green;}
 label {font-weight: 700; margin-bottom: 5px;}
 .help-inline {font-size: 13px; color: red;}
 a.btn-indigo.facebook-color {background: #3B5998;}
+a.category-title {color: #ff8800;}
+a.category-title:hover {color: #3F729B;}
 
-/*navber styles*/
-.navbar-default {background-color: #2BBBAD; padding: 5px;}
-.navbar-default .navbar-nav>li:hover {background-color: #fff;}
-.navbar-default .navbar-nav>li .active {background-color: #fff;}
-.navbar-default .navbar-nav>li >.notification:hover {background-color:#2BBBAD;}
-.navbar-default .dropdown:hover {background-color: #fff;}
-.navbar-default .dropdown:hover .dropdown-menu{display: block;}
-.navbar-default .navbar-nav>li>a, a.navbar-brand {color:#23252b; font-size: 15px;}
-
+/*navbar styles*/
+nav.navbar{position: fixed;top: 0;width: 100%; background-color: #3F729B; box-shadow: unset;border: unset; border-radius: unset;}
+.navbar-default .navbar-nav > li > a {color: #eceff1; font-size: 14px;}
+.navbar-default .navbar-nav > li:hover > a {color:#45526e  ; background: #fff; font-weight:600;} 
+.dropdown-menu {border: solid 1px #eee;border-top: unset;box-shadow: unset;}
+.navbar-default .dropdown:hover .dropdown-menu {display: block;} 
+.navbar-default .navbar-brand {color: #FF8800; font-size: 20px; font-weight: 700;}
+.navbar-default .navbar-brand:hover {color: #ffbb33;}
 /*side bar style */
 .sidebar {border-left:solid 1px #e0e0e0 ; margin-left: 10px;}
 .menu-label {padding:10px; font-weight: 600;font-size: 15px;letter-spacing: -.5px;color:#757575;}
@@ -84,7 +81,7 @@ select.form-control:focus{ box-shadow:none; border-color:#00b09c;}
 .nav-pills  li .action {color:#0099CC;}
 .nav-pills  li .action:hover{color: #33b5e5;}
 .post-action {margin-top: 10px;}
-.nav-pills>li>a {position: relative; display: block; padding:5px; font-size:12px; color:#3F729B;}
+.nav-pills>li>a {position: relative; display: block; padding:5px; font-size:12px; color:#777;}
 .nav-pills>li>a:hover {background:#fff; color: #3E4551;}
 .nav-pills>li>a.voted {color: #4285F4;}
 .nav-pills>li>a>span{font-weight: 600;margin-left:4px;}
