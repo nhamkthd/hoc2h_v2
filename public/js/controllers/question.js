@@ -192,21 +192,8 @@
 	 	$scope.getQuestionsWithTab = function(pageNumber){
 	 		$http.get('/questions/api/?filtertab='+$scope.tab+ '&page=' + pageNumber)
 	 		.then(function(response){
-	 			  $location.hash('top');
-      			  $anchorScroll();
-	 			console.log(response.data);
-	 			if ($scope.tab == 3) {
-	 				$scope.total=response.data.total;
-	 				$scope.questions = response.data;
-	 				$scope.currentPage  = response.data.current_page;
-	 				$scope.totalPages   = response.data.last_page;
-		 			var pages = [];
-		 			for (var i = 1; i <= response.data.last_page; i++) {
-		 				pages.push(i);
-		 			}
-		 			$scope.range = pages;
-	 			}
-	 			else {
+	 			  	$location.hash('top');
+      			 	$anchorScroll();
 	 				$scope.total=response.data.total;
 	 				$scope.maxPage=response.data.last_page;
 	 				$scope.questions = response.data.data;
@@ -217,7 +204,6 @@
 		 				pages.push(i);
 		 			}
 		 			$scope.range = pages;
-	 			}
 	 		}, function(error){
 	 			console.log(error);
 	 		});
@@ -361,14 +347,14 @@
 	 		$scope.isResolved = 0;
 	 		$http.get('/questions/api/getAnswer?question_id='+question_id)
 	 			 .then(function(response){
-	 			 	console.log(response.data);
+	 			 	console.log(response.data.data);
 	 			 	$scope.answers = response.data.data;
 	 			 	$scope.total= response.data.total;
 	 			 	$scope.maxpageAnswer=response.data.last_page;
 	 		});
 	 		$http.post('/questions/api/getQuestionInfo',{id:question_id})
 	 			 .then(function(response){
-	 			 	console.log('Init question: ',response.data);
+	 			 	console.log('Init question: ',response.data.data);
 	 			 	$scope.question = response.data.question;
 	 			 	Tags.getList($scope.question.category_id).then(function(response){$scope.tags = response.data;});
 	 			 	$scope.categories = response.data.categories;
