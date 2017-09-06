@@ -10,7 +10,7 @@
                         <input placeholder="Tìm kiếm" type="text" ng-model="keywords" ng-change="search()" class="form-control" required>
                     </div>
                     <div class = "col-md-10 col-md-offset-1">
-                        <p class="menu-label">Bộ lọc</p>
+                        <p class="menu-label"><i class="fa fa-filter" aria-hidden="true"></i> Bộ lọc</p>
                         <section>
                             <ul class="menu-list">
                                 <li ng-class="{active:tab === 1}">
@@ -63,7 +63,7 @@
                     </div>
                     @verbatim
                         <div class = "col-md-11 col-md-offset-1">
-                            <p class="menu-label">Tags</p>
+                            <p class="menu-label"><i class="fa fa-tags" aria-hidden="true"></i> Tags</p>
                             <select selector
                                     multi="false"
                                     model="tags_category_id"

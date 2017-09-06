@@ -1,5 +1,5 @@
 @verbatim
-<div class="media list-item-block"  id="anchor{{answer.id}}" ng-class="{anchorAt:anchorAt === answer.id}">
+<div class="media list-item-block"  id="anchor{{answer.id}}" >
 	<span class="pull-left">
 		<img class="small-avt" src="{{answer.user.avatar}}" width="40" height="40">
 	</span>
@@ -30,25 +30,10 @@
 			<span ng-show="answer.user.class"> - học {{answer.user.class}}</span>
 			<span class="date-created pull-right"><i class="fa fa-clock-o" aria-hidden="true"></i> {{answer.date_created}}</span>
 		</div>
-		<div class="">
-			<p class="answer-body" ng-bind-html="convertHtml(answer.content)" ng-class="{best:answer.is_best == 1}">{{answer.content}}</p>
-		</div>
-		<div class="post-info" ng-show="user.id == answer.user_id">
+		<p class="answer-body" ng-class="{best:answer.is_best == 1 , anchorAt:anchorAt === answer.id}" ng-bind-html="convertHtml(answer.content)">{{answer.content}}</p>
+
+		<div class="post-info">
 			<ul class="nav nav-pills" role="tablist">
-				<li class="action">
-					<a ng-click="editAnswer(answers.indexOf(answer))">
-						<i class="fa fa-edit" aria-hidden="true"></i> Sửa 
-					</a>
-				</li>
-				<li class="action">
-					<a ng-click="deleteAnswer(answers.indexOf(answer))">
-						<i class="fa fa-trash" aria-hidden="true"></i> Xoá 
-					</a>
-				</li>
-			</ul>
-		</div> 
-		<div class=" post-action">
-			<ul class="nav nav-pills " role="tablist">
 				<li >
 					<a ng-class="{voted:answer.isVoted == 1}" ng-click="voteAnswer(answers.indexOf(answer))">
 						<i ng-show="isAnswerVoting[answers.indexOf(answer)] === 1" class="fa fa-spinner spinning" aria-hidden="true"></i>
@@ -75,7 +60,19 @@
 					</a> 
 				</li>
 			</ul>
-		</div>
+			<ul class="nav nav-pills pull-right" role="tablist" ng-show="user.id == answer.user_id">
+				<li class="action">
+					<a ng-click="editAnswer(answers.indexOf(answer))">
+						<i class="fa fa-edit" aria-hidden="true"></i> Sửa 
+					</a>
+				</li>
+				<li class="action">
+					<a ng-click="deleteAnswer(answers.indexOf(answer))">
+						<i class="fa fa-trash" aria-hidden="true"></i> Xoá 
+					</a>
+				</li>
+			</ul>
+		</div> 
 		<div class="comment-block" ng-show="showComments[answer.id]">
 			<div class="comment-block-item" ng-repeat="comment in answer.comments">
 				<span class="pull-left avt">
@@ -95,8 +92,16 @@
 							  enter-submit="editComment($index,$parent.answers.indexOf(answer))"></textarea>
 						</div>
 					</div>
-					<div class="post-info" ng-show="user.id == comment.user.id">
-						<ul class="nav nav-pills" role="tablist">
+					<div class="post-info">
+						<ul class="nav nav-pills " role="tablist">
+							<li>
+								<a ng-class="{voted:comment.isVoted == 1}" ng-click="voteComment($index,$parent.answers.indexOf(answer))">
+									<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
+									Thích <span>{{comment.votes_count}}</span>
+								</a>
+							</li>
+						</ul>
+						<ul class="nav nav-pills pull-right" role="tablist" ng-show="user.id == comment.user.id">
 							<li ng-show = "comment_editing[$index] != 1" class="action"><a ng-click="editCommentMode($index,$parent.answers.indexOf(answer))"><i class="fa fa-edit" aria-hidden="true" ></i> Sửa </a></li>
 							<li ng-show = "comment_editing[$index] != 1" class="action">
 								<a confirm-delete="Delete comment?" ng-click="deleteComment($index,$parent.answers.indexOf(answer))">
@@ -112,16 +117,6 @@
 								</a>
 							</li>
 
-						</ul>
-					</div> 
-					<div class=" post-action" style="border-bottom:solid 1px #e0e0e0;">
-						<ul class="nav nav-pills " role="tablist">
-							<li>
-								<a ng-class="{voted:comment.isVoted == 1}" ng-click="voteComment($index,$parent.answers.indexOf(answer))">
-									<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
-									Thích <span>{{comment.votes_count}}</span>
-								</a>
-							</li>
 						</ul>
 					</div>
 				</div>

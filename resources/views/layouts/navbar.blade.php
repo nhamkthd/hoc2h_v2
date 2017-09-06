@@ -14,24 +14,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="{{url('/')}}" class="navbar-brand">Hoc2H</a>
+      <a href="{{url('/home')}}" class="navbar-brand">Hoc2H</a>
     </div>
     <!-- Collection of nav links and other content for toggling -->
     <div id="navbarCollapse" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li><a href="#" ng-click="navBarTabClick(1)">Đề Thi</a></li>
         <li><a  href="{{url('/questions')}}">Hỏi Đáp</a></li>
-        <li class="dropdown"><a href="#">Danh Mục<span class="caret"></span></a>
+        <li class="dropdown"><a href="#">Danh Mục <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li ng-repeat="category in parents_categories"><a href="#">@verbatim {{category.title}} @endverbatim</a></li>
             </ul>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li><a  href="#"><i class="fa fa-search" aria-hidden="true"></i> tìm kiếm</a></li>
         @if(Route::has('login'))
           @if(Auth::check())
             <li class="dropdown" id="showRight">
-              <a href="#"><i class="fa fa-comment" aria-hidden="true"></i> Tin nhắn</a>
+              <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> Tin nhắn</a>
             </li>
             <li class="dropdown" ng-mouseover="readNotify(unReadNotification.length)">
               <a href="#"><i class="fa fa-globe" aria-hidden="true"></i> Thông báo <span class="badge notify-badge" ng-hide="unReadNotification.length == 0"> 
@@ -44,10 +45,10 @@
             <a href="{{url('/users/'.Auth::user()->id.'/profile')}}">
               {{Auth::user()->name}}<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="{{url('/users/'.Auth::user()->id.'/profile')}}"><i class="fa fa-user-circle-o" aria-hidden="true"></i> trang cá nhân</a></li>
+                <li><a href="{{url('/users/'.Auth::user()->id.'/profile')}}"><i class="fa fa-user-o" aria-hidden="true"></i> Trang cá nhân</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                  document.getElementById('logout-form').submit();"><i class="fa fa-user-times" aria-hidden="true"></i> đăng xuất</a>
+                  document.getElementById('logout-form').submit();"><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                    {{ csrf_field() }}
                  </form>
@@ -55,8 +56,8 @@
              </ul>
            </li>
            @else
-            <li><a href="{{url('/login')}}">Đăng nhập</a></li>
-            <li><a href="{{url('/register')}}">Đăng ký</a></li>
+            <li><a href="{{url('/login')}}"><i class="fa fa-sign-in" aria-hidden="true"></i> Đăng nhập</a></li>
+            <li><a href="{{url('/register')}}"><i class="fa fa-unlock" aria-hidden="true"></i> Đăng ký</a></li>
            @endif
          @endif
        </ul>
