@@ -12,7 +12,9 @@
         <link rel="stylesheet" href="{{asset('css/bootstrap/bootstrap.css')}}">
         <link rel="stylesheet" href="{{asset('js/flugin/alert/sweetalert.css')}}">
         <link rel="stylesheet" href="{{asset('css/mdb/css/mdb.css')}}" >
-        <link rel="stylesheet" href="{{asset('css/font-awesome/css/font-awesome.css') }}"> 
+        <link rel="stylesheet" href="{{asset('css/font-awesome/css/font-awesome.css') }}">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"> 
 
         <link rel="stylesheet" href="{{ asset('css/ng-tags-input/ng-tags-input.css') }}">
         <link rel="stylesheet" href="{{ asset('css/ng-selector/angular-selector.css') }}">
@@ -115,6 +117,11 @@
         <div class="loading" id="loading"></div>
         <div id="app" ng-app="Hoc2h">
             @include('layouts.navbar')
+            <div class="container">
+                <div class="row" style="height:100px; background: #81d4fa">
+                    <p>This is place for web site notifications...!</p>
+                </div>
+            </div>
             @yield('content')
         </div>
     </body>

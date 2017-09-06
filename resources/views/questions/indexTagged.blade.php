@@ -4,7 +4,7 @@
 	<div ng-init="getQuestionsTagged({{$questionTag->id}})"></div>
 	<div class="row" id="top">
 		<div class="col-md-12 filter-title" id="top">
-			<p>Tagged: {{$questionTag->name}} <span class="pull-right">	@verbatim  {{questions.length}}@endverbatim </span></p>
+			<p>Tagged: <i>{{$questionTag->name}}</i> <span class="pull-right">	@verbatim  {{questions.length}}@endverbatim </span></p>
 		</div>
 		@verbatim
 			<div class="col-md-12 list-questions">

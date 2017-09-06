@@ -65,47 +65,38 @@
 						</div>
 					</div>
 				</div>
-				<div class="post-info" ng-show="user.id == question.user_id">
+				<div class="post-info">
 					<ul class="nav nav-pills" role="tablist">
-					  	<li class="action">
-					  		<a ng-click="editQuestion()">
-					  			<i class="fa fa-edit" aria-hidden="true"></i> Sửa
-					  		</a>
-					  	</li>
-					  	<li class="action">
-					  		<a ng-click="deleteQuestion(question.id)">
-					  			<i class="fa fa-trash" aria-hidden="true"></i> Xoá
-					  		</a>
-					  	</li>
-					  	<li class="action"><a ng-click="requestAnswer()"><i class="fa fa-magic" aria-hidden="true"></i> Yêu cầu</a></li>
-					  	<li ng-show="question.is_resolved == 1"  ng-click="changeResolve(0)" class="action "><a><i class="fa fa-check-circle success-dark-text" aria-hidden="true"></i> Resolved</a></li>
-					  	<li ng-show="question.is_resolved == 0" ng-click="changeResolve(1)" class="action "><a><i class="fa fa-check-circle danger-dark-text" aria-hidden="true"></i> Not resolve</a></li>
+						<li>
+							<a ng-class="{voted:question.isVoted == 1}" href ng-click="voteQuestion()">
+								<i ng-show="isVoting == 1" class="fa fa-spinner spinning" aria-hidden="true"></i>
+								<i ng-show="isVoting == 0" class="fa fa-thumbs-up" aria-hidden="true"></i> 
+								Thích <span>{{question.votes_count}}</span> </a></li>
+						<li ><a href ng-click="gotoAnchor(0)">
+							<i class="fa fa-comment" aria-hidden="true"></i> Trả lời <span>{{total}}</span></a> </li>
+						<li><a><i class="fa fa-eye" aria-hidden="true"></i> Xem <span>{{question.views_count}}</span></a></li>
+						<li>
+							<div class="fb-share-button" data-href="<?php echo "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>" data-layout="button_count" data-size="small" data-mobile-iframe="true">
+							<a class="fb-xfbml-parse-ignore" target="_blank">Chia sẻ</a></div></li>
+					</ul>
+					<ul class="nav nav-pills pull-right" role="tablist" ng-show="user.id == question.user_id">
+						<li class="action">
+							<a ng-click="editQuestion()">
+								<i class="fa fa-edit" aria-hidden="true"></i> Sửa</a></li>
+						<li class="action">
+							<a ng-click="deleteQuestion(question.id)">
+								<i class="fa fa-trash" aria-hidden="true"></i> Xoá</a></li>
+						<li class="action">
+							<a ng-click="requestAnswer()"><i class="fa fa-magic" aria-hidden="true"></i> Yêu cầu</a></li>
+						<li ng-show="question.is_resolved == 1" class="action ">
+							<a ng-click="changeResolve(0)" ><i class="fa fa-check-circle" aria-hidden="true" style="color: #007E33; font-size: 15px;"></i> Resolved</a></li>
+						<li ng-show="question.is_resolved == 0" class="action ">
+							<a ng-click="changeResolve(1)"><i class="fa fa-check-circle" aria-hidden="true" style="color: #ff4444; font-size: 15px;"></i> Not resolve</a></li>
 					</ul>
 					@endverbatim
 						@include('questions.directives.question_modal')
 					@verbatim
 				</div> 
-				<div class=" post-action">
-					<ul class="nav nav-pills " role="tablist">
-					  	<li>
-					  		<a ng-class="{voted:question.isVoted == 1}" href ng-click="voteQuestion()">
-					  			<i ng-show="isVoting == 1" class="fa fa-spinner spinning" aria-hidden="true"></i>
-					  			<i ng-show="isVoting == 0" class="fa fa-thumbs-up" aria-hidden="true"></i> 
-					  			Thích <span>{{question.votes_count}}</span> 
-					  		</a>
-					  	</li>
-					  	<li ><a href ng-click="gotoAnchor(0)">
-					  		<i class="fa fa-comment" aria-hidden="true"></i> 
-					  		Trả lời <span>{{total}}</span> 
-					  		</a> 
-					  	</li>
-					  <li >
-					  <div class="fb-share-button" data-href="<?php echo "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];?>" data-layout="button_count" data-size="small" data-mobile-iframe="true">
-					  		<a class="fb-xfbml-parse-ignore" target="_blank">Chia sẻ</a>
-					  </div>
-					  </li>
-					</ul>
-				</div>
 			</div>
 		</div>
 		<div class="col-md-12" ng-show="isLogged == false" style="margin-top: 20px;">
