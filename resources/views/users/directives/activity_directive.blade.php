@@ -101,7 +101,7 @@
 						</table>
 					</div>
 					<div class="active-panel-footer" ng-hide="over_view_counts[2] <= 10">
-						<a ng-click="setActivityTab(4)">Xem thêm →</a>
+						<a ng-click="setActivityTab(5)">Xem thêm →</a>
 					</div>
 				</div>
 			</div>
@@ -148,11 +148,14 @@
 									</div>
 									<span class="created_date">
 										<i class="fa fa-clock-o" aria-hidden="true"></i> 
-										{{question.created_at}}</span>
+										{{question.date_created}}</span>
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>
+				<div class="text-center" ng-show="pageQA!=maxpageQA">
+					<a ng-click="loadingQa(questionSortTab)"><i ng-show="isloadingQa==1"  class="fa fa-spinner spinning" aria-hidden="true"></i>Xem thêm</a>
 				</div>
 			</div>
 		</div>
@@ -177,12 +180,16 @@
 							<div class="col-md-11" style="padding: 0;">
 								<div class="answer-link">
 									<a class="title-hyperlink pull-left"  href="/questions/question/{{answer.question.id}}/{{answer.id}}">{{answer.question.title}}</a>
-									<span class="created_date pull-right">{{answer.created_at}}</span>
+									<span class="created_date pull-right">{{answer.date_created}}</span>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+
+			</div>
+			<div class="text-center" ng-show="pageAS!=maxpageAS">
+				<a ng-click="loadingAS(answerSortTab)"><i ng-show="isloadingAS==1" class="fa fa-spinner spinning" aria-hidden="true"></i>Xem thêm</a>
 			</div>
 		</div>
 		<div ng-show="activityTab === 4">
@@ -214,6 +221,62 @@
 				</div>
 			</div>
 		</div>
+
+		<div ng-show="activityTab === 5">
+			<div class="col-md-9">
+				<div class="sub-tab-header full-tab-header">
+					<h3>
+						<span>{{total_test}}</span> Đề thi
+					</h3>
+					<div class="sub-tabs sub-tab-sort">
+						<span ng-class="{sortSelected:TestSortTab === 1}" ng-click = "setTestSortTab(1)">Nổi bật</span>
+						<span ng-class="{sortSelected:TestSortTab === 2}" ng-click = "setTestSortTab(2)">Mới đăng</span>
+					</div>
+				</div>
+				<div class="sub-tab-content">
+					<div class="user-questions">
+						<div ng-repeat="test in user_tests" class="question-summary narrow">
+							<div class="row">
+								<div class="col-md-3 question-counts cp">
+									<div class="row">
+										<div class="col-md-4 couts-detail">
+											<div class="mini-counts">{{test.rate.length}}</div>
+											<div>Đánh giá</div>
+										</div>
+										<div class="col-md-4 couts-detail ">
+											<div class="mini-counts">{{test.comment.length}}</div>
+											<div>Bình luận</div>
+										</div>
+										<div class="col-md-4 couts-detail">
+											<div class="mini-counts">{{test.user_test.length}}</div>
+											<div>Tham gia</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-9 question-summary-detail">
+									<a class="title-hyperlink" href="/tests/show/{{test.id}}">{{test.title}}</a>
+									<div class="sidebar-tags" style="margin-left:-.5rem;" >
+										<ul>
+											<li>
+											<a href="">{{test.category.title}}</a>
+											</li>
+										</ul>
+									</div>
+									<span class="created_date">
+										<i class="fa fa-clock-o" aria-hidden="true"></i> 
+										{{test.date_created}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="text-center" ng-show="pageTest!=maxpageTest">
+					<a ng-click="loadingTest(TestSortTab)"><i ng-show="isloadingTest==1"  class="fa fa-spinner spinning" aria-hidden="true"></i>Xem thêm</a>
+				</div>
+			</div>
+		</div>
+
+
 	</div>
 </div>
 @endverbatim

@@ -26,13 +26,13 @@ class AnswerController extends Controller
     public function getUserAnswers($user_id,$sort_id){
         switch ($sort_id) {
             case 1:
-                $user_answers = Answer::where('user_id',$user_id)->orderby('votes_count','desc')->get();
+                $user_answers = Answer::where('user_id',$user_id)->orderby('votes_count','desc')->paginate(15);
                 break;
             case 2:
-                $user_answers = Answer::where('user_id',$user_id)->orderby('created_at','desc')->get();
+                $user_answers = Answer::where('user_id',$user_id)->orderby('created_at','desc')->paginate(15);
                 break;
             case 3:
-                $user_answers = Answer::where('user_id',$user_id)->where('is_best',1)->orderby('votes_count','desc')->get();
+                $user_answers = Answer::where('user_id',$user_id)->where('is_best',1)->orderby('votes_count','desc')->paginate(15);
                 break;
             default:
                 
@@ -40,6 +40,7 @@ class AnswerController extends Controller
         }
         foreach ($user_answers as $answer) {
           $answer->question;
+          $this->setDateFomat($answer);
         }
         return $user_answers;
     }

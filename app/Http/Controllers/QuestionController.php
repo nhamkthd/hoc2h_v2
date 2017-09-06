@@ -145,22 +145,23 @@ class QuestionController extends Controller
                 $user_questions  =  Question::where('user_id',$user_id)->orderby('votes_count','desc')
                                               ->orderby('answers_count','desc')
                                               ->orderby('views_count','desc')
-                                              ->get();
+                                              ->paginate(15);
                 break;
             case 2:
                 $user_questions  =  Question::where('user_id',$user_id)
                                             ->orderby('created_at','desc')
-                                            ->get();
+                                            ->paginate(15);
                 break;
             case 3:
                 $user_questions  =  Question::where('user_id',$user_id)
                                             ->where('is_resolved',1)
                                             ->orderby('created_at','desc')
-                                            ->get();
+                                            ->paginate(15);
                 break;
         }
         foreach ($user_questions as $question) {
             $question->tags = Question::getTags($question->id);
+            $this->setDateFomat($question);
         }
         return $user_questions;
     }
@@ -170,13 +171,13 @@ class QuestionController extends Controller
     public function apiGetUserRequestAnswer($user_id,$sort_id){
         switch ($sort_id) {
             case 1:
-                $user_request_answers = RequestAnswer::where('user_id',$user_id)->orderby('donate_coins','desc')->get();
+                $user_request_answers = RequestAnswer::where('user_id',$user_id)->orderby('donate_coins','desc')->paginate(15);
                 break;
             case 2:
-                 $user_request_answers = RequestAnswer::where('user_id',$user_id)->orderby('created_at','desc')->get();
+                 $user_request_answers = RequestAnswer::where('user_id',$user_id)->orderby('created_at','desc')->paginate(15);
                 break;
             case 3:
-                $user_request_answers = RequestAnswer::where('user_id',$user_id)->where('is_confirm',1)->orderby('created_at','desc')->get();
+                $user_request_answers = RequestAnswer::where('user_id',$user_id)->where('is_confirm',1)->orderby('created_at','desc')->paginate(15);
                 break;
             default:
                 # code...

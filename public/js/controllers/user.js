@@ -284,6 +284,9 @@
 				case 4:
 					$scope.setRequestAnswerSortTab(1);
 					break;
+				case 5:
+					$scope.setTestSortTab(1);
+					break;
 				default:
 					break;
 			}
@@ -306,6 +309,7 @@
 		//Question tab
 		$scope.setQuestionSortTab = function(tab){
 			$scope.questionSortTab = tab;
+			$scope.pageQA=1;
 			switch(tab){
 				case 1:
 					$scope.getUserQuestions(1);
@@ -325,14 +329,32 @@
 			$http.get('/users/api/user-questions/'+$scope.user.id+'/'+sort)
 				 .then(function(response){
 				 	console.log('get user questions list...!',response.data);
-				 	$scope.user_questions = response.data;
+				 	$scope.user_questions = response.data.data;
+				 	$scope.maxpageQA=response.data.last_page;
+				 	console.log($scope.maxpageQA);
 				 },function(error){
 				 	console.log(error.data);
 				 });
 		}
 
+		$scope.loadingQa=function (tab) {
+			$scope.pageQA++;
+			$scope.isloadingQa=1;
+			$http.get('/users/api/user-questions/'+$scope.user.id+'/'+tab+'?page='+$scope.pageQA)
+				 .then(function(response){
+				 	$scope.isloadingQa=0;
+				 	console.log('get user questions list...!',response.data);
+				 	for (var i = 0; i < response.data.data.length; i++) {
+				 		$scope.user_questions.push(response.data.data[i]);
+				 	}
+				 	
+				 },function(error){
+				 	console.log(error.data);
+				 });
+		}
 		//answer tab
 		$scope.setAnswerSortTab = function (tab) {
+			$scope.pageAS=1;
 			$scope.answerSortTab = tab;
 			switch(tab){
 				case 1:
@@ -351,11 +373,27 @@
 			console.log('get user answers list...!');
 			$http.get('/users/api/user-answers/'+$scope.user.id+'/'+sort_id)
 				 .then(function (response) {
+				 	$scope.maxpageAS=response.data.last_page;
 				 	console.log(response.data);
-				 	$scope.user_answers = response.data;
+				 	$scope.user_answers = response.data.data;
 				 },function (error) {
 				 	console.log(error.data);
 			});
+		}
+		$scope.loadingAS=function (tab) {
+			$scope.pageAS++;
+			$scope.isloadingAS=1;
+			$http.get('/users/api/user-answers/'+$scope.user.id+'/'+tab+'?page='+$scope.pageAS)
+				 .then(function(response){
+				 	$scope.isloadingAS=0;
+				 	console.log('get user questions list...!',response.data);
+				 	for (var i = 0; i < response.data.data.length; i++) {
+				 		$scope.user_answers.push(response.data.data[i]);
+				 	}
+				 	
+				 },function(error){
+				 	console.log(error.data);
+				 });
 		}
 
 		//request answer tab
@@ -371,6 +409,7 @@
 				case 3:
 					$scope.getUserRequestAnswers(3);
 					break;
+
 			}
 		}
 
@@ -379,6 +418,44 @@
 				 .then(function (response) {
 				 	console.log(response.data);
 				 	$scope.request_answers = response.data;
+				 },function (error) {
+				 	console.log(error.data);
+			});
+		}
+		//test tab
+		$scope.setTestSortTab=function (tab) {
+			$scope.TestSortTab = tab;
+			$scope.pageTest=1;
+			switch(tab){
+				case 1:
+					$scope.getUserTest(1);
+					break;
+				case 2: 
+					$scope.getUserTest(2);
+					break;
+			}
+		}
+		$scope.getUserTest = function (sort_id) {
+			$http.get('/users/api/user-Test/'+$scope.user.id+'/'+sort_id)
+				 .then(function (response) {
+				 	console.log(response.data.data);
+				 	$scope.maxpageTest=response.data.last_page;
+				 	$scope.total_test=response.data.total;
+				 	$scope.user_tests = response.data.data;
+				 },function (error) {
+				 	console.log(error.data);
+			});
+		}
+		$scope.loadingTest=function (tab) {
+			$scope.pageTest++;
+			$scope.isloadingTest=1;
+			$http.get('/users/api/user-Test/'+$scope.user.id+'/'+tab+'?page='+$scope.pageTest)
+				 .then(function (response) {
+				 	$scope.isloadingTest=0;
+				 	console.log(response.data.data);
+				 	for (var i = 0; i < response.data.data.length; i++) {
+				 		$scope.user_tests.push(response.data.data[i]);
+				 	}
 				 },function (error) {
 				 	console.log(error.data);
 			});

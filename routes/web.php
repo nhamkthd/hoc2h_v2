@@ -31,6 +31,7 @@ Route::group(['prefix'=>'users'],function(){
 		Route::get('/user-activity-overview/{user_id}','UserController@getActivityOverview');
 		Route::get('/user-questions/{user_id}/{sort_id}','QuestionController@apiGetUserQuestions');
 		Route::get('/user-answers/{user_id}/{sort_id}','AnswerController@getUserAnswers');
+		Route::get('/user-Test/{user_id}/{sort_id}','TestController@getUserTests');
 		Route::get('/user-request-answer/{user_id}/{sort_id}','QuestionController@apiGetUserRequestAnswer');
 		//POST METHOD
 		Route::post('/edit','UserController@userEdit');

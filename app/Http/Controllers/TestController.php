@@ -27,19 +27,19 @@ class TestController extends Controller
         $test=[];
         switch ($req->filter) {
             case 'null':
-                $test=Test::paginate(15);           
+                $test=Test::orderby('created_at','desc')->paginate(15);           
                 break;
             case 'usercreate':
-                $test=Test::where('user_id',Auth::user()->id)->paginate(15);
+                $test=Test::where('user_id',Auth::user()->id)->orderby('created_at','desc')->paginate(15);
                 break;
             case 'hot':
-                $test=Test::paginate(15);
+                $test=Test::orderby('created_at','desc')->paginate(15);
                 break;
             case 'hotinweek':
-                $test=Test::hotInWeek()->paginate(15);
+                $test=Test::hotInWeek()->orderby('created_at','desc')->paginate(15);
                 break;
             case 'Mytesting':
-                $userTest=UserTest::where('user_id',Auth::user()->id)->groupBy('user_id','test_id')->select('user_id','test_id')->paginate(15);
+                $userTest=UserTest::where('user_id',Auth::user()->id)->orderby('created_at','desc')->groupBy('user_id','test_id')->select('user_id','test_id')->paginate(15);
                 foreach ($userTest as $key => $value) {
                    $test[]=Test::find($value->test_id);
                 }
@@ -101,5 +101,29 @@ class TestController extends Controller
     public function getEditTest($id)
     {
         return Test::find($id);
+    }
+    public function getUserTests($user_id,$sort_id)
+    {
+        switch ($sort_id) {
+            case 1:
+                $test =  Test::where('user_id',$user_id)    
+                                              ->orderby('user_test_count','desc')
+                                              ->orderby('rating','desc')
+                                              ->paginate(15);
+                break;
+            case 2:
+                $test  =  Test::where('user_id',$user_id)
+                                            ->orderby('created_at','desc')
+                                            ->paginate(15);
+                break;
+        }
+        foreach ($test as $tests) {
+            $this->setDateFomat($tests);
+            $tests->user_test;
+            $tests->comment;
+            $tests->category;
+            $tests->rate;
+        }
+        return $test;
     }
 }
