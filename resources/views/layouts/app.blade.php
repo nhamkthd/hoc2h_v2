@@ -68,7 +68,7 @@
                 background: url({{ asset('img/loading.gif') }}) center no-repeat #fff;
                 position: fixed;
                 left: 0px;
-                top: 0px,;
+                top: 0px;
                 width: 100%;
                 height: 100%;
                 z-index: 9999
@@ -102,7 +102,7 @@
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
         js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.7&appId=1103517983003307";
+        js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.7&appId=1969453643298058";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
     <script type="text/javascript">

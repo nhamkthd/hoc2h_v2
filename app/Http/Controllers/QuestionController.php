@@ -124,7 +124,7 @@ class QuestionController extends Controller
     //get all questions with tag id
     public function apiGetQuestionsTagged($tag_id){
         $question_id = QuestionTag::where('tag_id',$tag_id)->pluck('question_id')->all();
-        $question=Question::orderby('id','desc')->whereIn('id',$question_id)->paginate(15);
+        $question=Question::whereIn('id',$question_id)->orderby('id','desc')->paginate(15);
         foreach ($question as $questions) {
            //$question->answers_count = $question->answers->count();
           //$question->save();

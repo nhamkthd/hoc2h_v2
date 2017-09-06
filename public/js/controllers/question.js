@@ -215,9 +215,10 @@
 	 	}
 	 	//get questions list with tag id
 	 	$scope.getQuestionsTagged = function(tag_id,pageNumber){
+
 	 		this.tag_id = tag_id;
 	 		console.log('get questions with tag_id = ',tag_id);
-	 		$http.get('/questions/api/tagged/'+tag_id+ '&page=' + pageNumber)
+	 		$http.get('/questions/api/tagged/'+tag_id+ '?page=' + pageNumber)
 	 			 .then(function(response){
 	 			 	$location.hash('top');
       			  	$anchorScroll();

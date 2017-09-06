@@ -39,7 +39,8 @@ class TestController extends Controller
                 $test=Test::hotInWeek()->orderby('created_at','desc')->paginate(15);
                 break;
             case 'Mytesting':
-                
+                $test_ids=Auth::user()->user_test->pluck('id')->all();
+                $test=Test::whereIn('id',$test_ids)->orderBy('id','desc')->paginate(15);
                 break;
             default:
                 # code...
