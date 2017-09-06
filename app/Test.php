@@ -27,12 +27,16 @@ class Test extends Model
 	{
 		return $this->hasMany('App\MTest','test_id','id');
 	}
-	public function user_test()
-	{
-		return $this->hasMany('App\UserTest','test_id','id');
-	}
+	// public function user_test()
+	// {
+	// 	return $this->belongsToMany('App\User', 'user_tests', 'test_id' ,'user_id')->withPivot('point');
+	// }
 	public static function hotInWeek()
 	{
 		  return static::where('created_at', '>=', \Carbon\Carbon::now()->subWeek());
+	}
+	public function user_test()
+	{
+		return $this->hasMany('App\UserTest','test_id','id');
 	}
 }

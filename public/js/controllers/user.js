@@ -287,6 +287,9 @@
 				case 5:
 					$scope.setTestSortTab(1);
 					break;
+				case 6:
+					$scope.setMyTestSortTab(1);
+					break;
 				default:
 					break;
 			}
@@ -455,6 +458,44 @@
 				 	console.log(response.data.data);
 				 	for (var i = 0; i < response.data.data.length; i++) {
 				 		$scope.user_tests.push(response.data.data[i]);
+				 	}
+				 },function (error) {
+				 	console.log(error.data);
+			});
+		}
+		//my testing
+		$scope.setMyTestSortTab=function (tab) {
+			$scope.myTestSortTab = tab;
+			$scope.pageMyTest=1;
+			switch(tab){
+				case 1:
+					$scope.getMyTest(1);
+					break;
+				case 2: 
+					$scope.getMyTest(2);
+					break;
+			}
+		}
+		$scope.getMyTest = function (sort_id) {
+			$http.get('/users/api/user-MyTest/'+$scope.user.id+'/'+sort_id)
+				 .then(function (response) {
+				 	console.log(response.data.data);
+				 	$scope.total_mytest=response.data.total;
+				 	$scope.My_tests = response.data.data;
+				 	$scope.maxpageMyTest=response.data.last_page;
+				 },function (error) {
+				 	console.log(error.data);
+			});
+		}
+		$scope.loadingMyTest=function (tab) {
+			$scope.pageMyTest++;
+			$scope.isloadingTest=1;
+			$http.get('/users/api/user-MyTest/'+$scope.user.id+'/'+tab+'?page='+$scope.pageMyTest)
+				 .then(function (response) {
+				 	$scope.isloadingTest=0;
+				 	console.log(response.data.data);
+				 	for (var i = 0; i < response.data.data.length; i++) {
+				 		$scope.My_tests.push(response.data.data[i]);
 				 	}
 				 },function (error) {
 				 	console.log(error.data);

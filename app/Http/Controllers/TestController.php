@@ -39,10 +39,7 @@ class TestController extends Controller
                 $test=Test::hotInWeek()->orderby('created_at','desc')->paginate(15);
                 break;
             case 'Mytesting':
-                $userTest=UserTest::where('user_id',Auth::user()->id)->orderby('created_at','desc')->groupBy('user_id','test_id')->select('user_id','test_id')->paginate(15);
-                foreach ($userTest as $key => $value) {
-                   $test[]=Test::find($value->test_id);
-                }
+                
                 break;
             default:
                 # code...

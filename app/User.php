@@ -62,4 +62,10 @@ class User extends Authenticatable
     public function messages(){
         return $this->hasMany('App\Message','user_id','id');
     }
+
+    public function user_test()
+    {
+      return $this->belongsToMany('App\test', 'user_tests','user_id','test_id')
+      ->withPivot('point');
+    }
 }

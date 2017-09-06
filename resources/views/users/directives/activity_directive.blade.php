@@ -276,6 +276,51 @@
 			</div>
 		</div>
 
+		<div ng-show="activityTab === 6">
+			<div class="col-md-9">
+				<div class="sub-tab-header full-tab-header">
+					<h3>
+						<span>{{total_mytest}}</span> Đề thi đã làm
+					</h3>
+				</div>
+				<div class="sub-tab-content">
+					<div class="user-questions">
+						<div ng-repeat="test in My_tests" class="question-summary narrow">
+							<div class="row">
+								<div class="col-md-3 question-counts cp">
+									<div class="row">
+										<div class="col-md-4 couts-detail">
+											<div class="mini-counts">{{test.user_test.length}}</div>
+											<div>Lượt làm</div>
+										</div>
+										<div class="col-md-4 couts-detail ">
+											<div class="mini-counts">{{test.maxpoint}}</div>
+											<div>Điểm cao nhất</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-9 question-summary-detail">
+									<a class="title-hyperlink" href="/tests/show/{{test.id}}">{{test.title}}</a>
+									<div class="sidebar-tags" style="margin-left:-.5rem;" >
+										<ul>
+											<li>
+											<a href="">{{test.category.title}}</a>
+											</li>
+										</ul>
+									</div>
+									<span class="created_date">
+										<i class="fa fa-clock-o" aria-hidden="true"></i> 
+										{{test.date_created}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="text-center" ng-show="pageMyTest!=maxpageMyTest">
+					<a ng-click="loadingMyTest(myTestSortTab)"><i ng-show="isloadingTest==1"  class="fa fa-spinner spinning" aria-hidden="true"></i>Xem thêm</a>
+				</div>
+			</div>
+		</div>
 
 	</div>
 </div>
