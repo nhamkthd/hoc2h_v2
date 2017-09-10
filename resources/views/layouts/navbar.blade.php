@@ -70,6 +70,12 @@
     <h3>Tin nhắn
     <i class="fa fa-times pull-right icon-close" id="close_message_slide" aria-hidden="true"></i>
     </h3>
+    <ul class="menu-list">  
+      <li>
+        <img src="https://graph.facebook.com/v2.10/840264186126752/picture?type=normal" class="is-circle is-outlined bg-white" width="64">
+        Phạm Tuấn Anh <i class="fa fa-circle user-status online" aria-hidden="true"></i>
+      </li>
+    </ul>
   </nav>
 </div>
 

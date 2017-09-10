@@ -25,8 +25,10 @@
         <link rel="stylesheet" href="{{ asset('css/slide-menus/component.css') }}">
 
         <!--App style-->
+
         <link href="{{ asset('css/angular-flash.css') }}" rel="stylesheet"> 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
+         <link href="{{ asset('css/message.css') }}" rel="stylesheet"> 
 
          <!--scripts -->
         <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
@@ -123,6 +125,8 @@
                 </div>
             </div>
             @yield('content')
+            @include('layouts.message')
         </div>
+         
     </body>
 </html>

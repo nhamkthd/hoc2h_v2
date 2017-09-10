@@ -45,12 +45,6 @@ Route::group(['prefix'=>'users'],function(){
 	});
 });
 
-//MESSAGES
-Route::group(['prefix' => 'messages'],function(){
-	Route::get('/fetch','MessageController@fetchMessage');
-	Route::post('/send','MessageController@sendMessage');
-});
-
 //TESTS
 Route::group(['prefix' => 'tests','middleware'=>'auth'], function(){
 	Route::get('/','TestController@index')->name('tests');
@@ -129,7 +123,14 @@ Route::group(['prefix' => 'questions'], function(){
 		Route::post('/answer/comment/delete','AnswerController@deleteComment');
 	});
 });
-
+//message
+Route::group(['prefix' => 'messages'], function(){
+		Route::group(['prefix' => 'api'], function(){
+			Route::get('getMessage/{id}', 'MessageController@getMessage');
+			//Route::get('/fetch','MessageController@fetchMessage');
+			//Route::post('/send','MessageController@sendMessage');
+		});
+	});
 //NOTIFICATIONS
 Route::group(['prefix' => 'notification'], function() {
 	Route::post('getNotification','NotificationController@show');

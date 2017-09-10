@@ -12,7 +12,7 @@
 							</div>
 							<div class="actions">
 								<span><i class="fa fa-user-plus" aria-hidden="true"></i></span>
-								<span><i class="fa fa-comment" aria-hidden="true"></i></span>
+								<span ng-app="hoc2h-message" ng-controller="MessageController" ng-click="add_msg(user.id)"><i class="fa fa-comment" aria-hidden="true"></i></span>
 								<span><i class="fa fa-ellipsis-h" aria-hidden="true"></i></span>
 							</div>
 						</div>
