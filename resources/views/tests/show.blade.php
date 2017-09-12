@@ -4,8 +4,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/rate.css')}}">
 <style type="text/css">
 	.test-info h3 {font-size: 17px; font-weight: 600px; color: #0099CC; text-transform: uppercase; text-align: center;margin-bottom: 20px;}
-	.test-info a{font-size: 13px; float: right; margin-bottom: 10px; margin-left: 10px;}
-	.test-info h5 > span{color: #FF8800; float: right;}
+	.test-info a{font-size: 13px; float: right; margin-bottom: 10px; margin-left: 10px; color: #4B515D;}
+	.test-info h5 > span{color: #FF8800; margin-left: 3px;}
 </style>
 <div class="container app-content ng-scope" ng-app ="hoc2h-test" ng-controller="ShowTestController">
 	@if($id_comment)

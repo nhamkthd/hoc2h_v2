@@ -47,11 +47,11 @@
 							<tbody>
 								@foreach($mtestAnswers as $answer)
 								<tr>
-									<td style="width:88%" data-title="Name">{{$answer->mtest->content}}</td>
+									<td class="color-unique" style="width:88%" data-title="Name">{{$answer->mtest->content}}</td>
 									@if($answer->user_test_choiced == $answer->mtest->incorrect_id)
-										<td class="text-center" data-title=""><i class="fa fa-check success-dark-text"></i></td>
+										<td class="text-center" data-title=""><i class="fa fa-check color-success"></i></td>
 									@else
-										<td class="text-center" data-title=""><i class="fa fa-times danger-dark-text" aria-hidden="true"></i></td>
+										<td class="text-center" data-title=""><i class="fa fa-times color-danger" aria-hidden="true"></i></td>
 									@endif
 									<td>
 										<a id="showexplan" data-answer_id={{$answer->id}} href="#nothing">

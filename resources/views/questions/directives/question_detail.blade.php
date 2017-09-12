@@ -4,6 +4,7 @@
 	@verbatim
 		{{setSelectedTab(0)}}
 	@endverbatim
+	<div ng-init="getQuestionRelated({{$question->id}})"></div>
 	<div ng-init="getListTagsWithQuestionCategory({{$question->category_id}})"></div>
 <div class="row" ng-controller="QuestionDetailController">
 	@if($question)
@@ -123,15 +124,6 @@
 						<button class="btn btn-primary " style="width: 100%" type="button" ng-click="addAnswer()">
 					     <span ng-show="sendAnswerText === 'Sending'"><i class="fa fa-spinner spinning" aria-hidden="true"></i></span>
 						{{sendAnswerText}}</button>
-					</div>
-				</div>
-				<div class="col-md-12  related">
-					<p class="filter-title">Câu hỏi liên quan</p>
-					<div class="list-group related-list">
-						<a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-						<a href="#" class="list-group-item">Morbi leo risus</a>
-						<a href="#" class="list-group-item">Porta ac consectetur ac</a>
-						<a href="#" class="list-group-item">Vestibulum at eros</a>
 					</div>
 				</div>
 			</div>

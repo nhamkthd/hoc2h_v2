@@ -98,6 +98,7 @@ Route::group(['prefix' => 'questions'], function(){
 		Route::get('/search','QuestionController@apiSearch');
 		Route::get('/search-related','QuestionController@apiSearchWithTitle');
 		Route::get('/tagged/{tag_id}','QuestionController@apiGetQuestionsTagged');
+		Route::get('/related/{question_id}','QuestionController@getQuestionsRelated');
 		
 		Route::post('/store','QuestionController@apiStore');
 		Route::post('/getQuestionInfo','QuestionController@apiQuestionWithID');

@@ -119,11 +119,6 @@
         <div class="loading" id="loading"></div>
         <div id="app" ng-app="Hoc2h">
             @include('layouts.navbar')
-            <div class="container">
-                <div class="row" style="height:100px; background: #81d4fa">
-                    <p>This is place for web site notifications...!</p>
-                </div>
-            </div>
             @yield('content')
             @include('layouts.message')
         </div>

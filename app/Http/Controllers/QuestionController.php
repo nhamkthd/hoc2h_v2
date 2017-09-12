@@ -259,13 +259,6 @@ class QuestionController extends Controller
         return $question;
     }
 
-    public function getQuestionsRelated($question_id){
-        $question = Question::find($question_id);
-        $question_tags = Question::getTags($question->id); 
-        foreach ($question_tags as $tags) {
-            
-        }
-    }
     //show question detail with ID
     public function apiQuestionWithID(Request $request){
         $question = Question::find($request->id);
@@ -307,11 +300,15 @@ class QuestionController extends Controller
                 $isVoted = 1;
             }
         }
-
         $question->isVoted = $isVoted;
         $question->tagsList = $tags;
-        $related_questions = Question::where('title','like','%'.$question->title.'%')->get();
-        return response()->json(array('question'=>$question,'categories'=>$categories,'related_questions' => $related_questions));
+        return response()->json(array('question'=>$question,'categories'=>$categories));
+    }
+
+    //get questions related
+    public function getQuestionsRelated($question_id){
+        $related_questions = Question::questionsRelated($question_id);
+        return $related_questions;
     }
   
     //edit question

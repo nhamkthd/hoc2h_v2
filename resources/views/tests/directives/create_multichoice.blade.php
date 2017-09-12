@@ -23,7 +23,7 @@
 								<div class="col-md-10">
 									<div class="form-group pmd-textfield">
 										<label for="Small">Câu Hỏi * :</label>
-										<textarea class="form-control" required ng-model="editTest.content"> </textarea>
+										<div ckeditor="ckEditorOption" ng-model="test_decription" ready="onReady()"></div>
 									</div>	
 
 
@@ -34,7 +34,7 @@
 								<div class="col-md-10">
 									<div class="form-group pmd-textfield">
 										<label for="Small">Hướng dẫn :</label>
-										<textarea class="form-control" required ng-model="editTest.explan"> </textarea>
+										<div ckeditor="ckEditorOption" ng-model="test_decription" ready="onReady()"></div>
 									</div>	
 								</div>
 							</div>
