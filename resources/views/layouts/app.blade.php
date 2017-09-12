@@ -125,7 +125,9 @@
                 </div>
             </div>
             @yield('content')
-            @include('layouts.message')
+            @if (Auth::check())
+                @include('layouts.message')
+            @endif
         </div>
          
     </body>

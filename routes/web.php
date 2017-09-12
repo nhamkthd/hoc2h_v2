@@ -127,8 +127,8 @@ Route::group(['prefix' => 'questions'], function(){
 Route::group(['prefix' => 'messages'], function(){
 		Route::group(['prefix' => 'api'], function(){
 			Route::get('getMessage/{id}', 'MessageController@getMessage');
-			//Route::get('/fetch','MessageController@fetchMessage');
-			//Route::post('/send','MessageController@sendMessage');
+			Route::get('getconversation/{id}', 'MessageController@getconversation');
+			Route::post('create','MessageController@create');
 		});
 	});
 //NOTIFICATIONS

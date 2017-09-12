@@ -1,5 +1,5 @@
-		@verbatim	
-			<div class="col-md-12 tab-content">
+		<div class="col-md-12 tab-content" ng-init="auth={{Auth::user()->id}}">
+			@verbatim
 				<div class="row">
 					<div class="col-md-3 side-info">
 						<div class="avt-card">
@@ -11,9 +11,9 @@
 								<span class="label-uppercase">coin</span>
 							</div>
 							<div class="actions">
-								<span><i class="fa fa-user-plus" aria-hidden="true"></i></span>
-								<span ng-app="hoc2h-message" ng-controller="MessageController" ng-click="add_msg(user.id)"><i class="fa fa-comment" aria-hidden="true"></i></span>
-								<span><i class="fa fa-ellipsis-h" aria-hidden="true"></i></span>
+								<span ng-show="auth!=user.id"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
+								<span ng-show="auth!=user.id" ng-app="hoc2h-message" ng-controller="MessageController" ng-click="add_msg(user.id)"><i class="fa fa-comment" aria-hidden="true"></i></span>
+								<span ng-show="auth!=user.id"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></span>
 							</div>
 						</div>
 					</div>
@@ -128,5 +128,6 @@
 							</table>
 						</div>
 					</div>
+					@endverbatim
 				</div>
-			@endverbatim
+			

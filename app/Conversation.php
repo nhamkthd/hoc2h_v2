@@ -8,6 +8,6 @@ class Conversation extends Model
 {
     public function message()
     {
-    	$this->hasMany('App\Message','conversation','id');
+    	return $this->hasMany('App\Message','conversation_id','id');
     }
 }
