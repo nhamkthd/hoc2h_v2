@@ -238,6 +238,15 @@
 	 			 });
 	 	}
 
+	 	//get list question related
+	 	$scope.getQuestionRelated = function(question_id){
+	 		$http.get('/questions/api/related/'+question_id)
+	 			 .then(function(response){
+	 			 	$scope.related_questions = response.data;
+	 			 	console.log('related_questions:',$scope.related_questions);
+	 			 },function(error){console.log(error.data);})
+	 	}
+
 	 	//questions searching....!
 	 	$scope.search = function(){
 	 		if ($scope.keywords === '' || typeof $scope.keywords === 'undefined') {
@@ -256,6 +265,7 @@
 	 		}
 	 	}
 	});
+
 
 	//--------------------------------------------CREATE QUESTION CONTROLLER--------------------------------------------//
 	app.controller('CreateQuestionController',function($scope,$http,Categories,Tags){
@@ -364,8 +374,6 @@
 	 			 	$scope.question = response.data.question;
 	 			 	Tags.getList($scope.question.category_id).then(function(response){$scope.tags = response.data;});
 	 			 	$scope.categories = response.data.categories;
-	 			 	$scope.related_questions = response.data.related_questions;
-	 			 	console.log('related_questions:',$scope.related_questions);
 	 			 	if (answer_id > 0) {
 	 			 		console.log('go to answer:',answer_id);
 	 			 		$scope.gotoAnchor(answer_id);

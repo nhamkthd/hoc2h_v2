@@ -1,67 +1,41 @@
-                
+                <style type="text/css">
+                    .user-panel {float: left; margin-bottom: 30px; margin-top: 20px;}
+                    .user-panel .panel-content { padding-left: 10px;}
+                    .panel-content-table {border-collapse: collapse;border-spacing: 0; width: 100%; overflow: auto;}
+                    .panel-content-table td {padding: 4px 0;vertical-align: top;}
+                    .panel-content-table td.count-cell {width:30px;}
+                    .mini-counts {font-size: 12px; font-weight: normal; line-height: 1.3; text-align: center; color: #6a737c; min-width: 30px; height: auto; padding: 3px 6px; margin-right: 10px; display: inline-block; border: 1px solid #b9b9b9; border-radius: 2px; }
+                    .mini-counts.best {background-color: #e4f3c5; color: #4F8A32;}
+                    a.title-hyperlink {color: #008ad6; font-size: 13px; font-weight: normal; line-height: 1.3; display: block; white-space: unset;}
+                </style>
                 <div ng-if="tab != 0">
                     <div ng-init="getListTags(0)"></div>
                 </div>
                 <div class="row sidebar" >
-                    <div class="col-md-10 col-md-offset-1" style="padding:10px;">
+                    <div class="col-md-10 col-md-offset-1" style="padding:0 18px;">
                         <a href="{{route('showQuestionCreateFrom')}}"  class="btn btn-info" style="width: 100%;" >Đăng câu hỏi</a>
                     </div>
                     <div class="col-md-10 col-md-offset-1" ng-hide="tab === 0">
                         <input placeholder="Tìm kiếm" type="text" ng-model="keywords" ng-change="search()" class="form-control" required>
                     </div>
-                    <div class = "col-md-10 col-md-offset-1">
-                        <p class="menu-label"><i class="fa fa-filter" aria-hidden="true"></i> Bộ lọc</p>
-                        <section>
-                            <ul class="menu-list">
-                                <li ng-class="{active:tab === 1}">
-                                    <a href ="{{url('/questions/')}}">
-                                        <i class="fa fa-globe" aria-hidden="true"></i> Mới nhất 
-                                    </a>
-                                </li>
-                                <li ng-class="{active:tab === 2}">
-                                    <a href="{{url('/questions/?filter=hot')}}" >
-                                        <i class="fa fa-flag" aria-hidden="true"></i> Nổi bật nhất
-                                    </a>
-                                </li>
-                                <li ng-class="{active:tab === 3}">
-                                    <a  href="{{url('/questions/?filter=hotinweek')}}" >
-                                        <i class="fa fa-fire" aria-hidden="true"></i> Nổi trong tuần 
-                                    </a>
-                                </li>
-                                <li ng-class="{active:tab === 4}">
-                                    <a  href="{{url('/questions/?filter=myquestions')}}" >
-                                        <i class="fa fa-user" aria-hidden="true"></i> Câu hỏi của tôi  
-                                    </a>
-                                </li>
-                                <li ng-class="{active:tab === 5}">
-                                    <a  href="{{url('/questions/?filter=following')}}" >
-                                        <i class="fa fa-eye" aria-hidden="true"></i> Đang theo dõi 
-                                    </a>
-                                    </li>
-                                <li ng-class="{active:tab === 6}">
-                                    <a  href="{{url('/questions/?filter=resolved')}}" >
-                                        <i class="fa fa-check-square-o" aria-hidden="true"></i> Đã được giải quyết 
-                                    </a>
-                                </li>
-                                <li ng-class="{active:tab === 7}">
-                                    <a href="{{url('/questions/?filter=notresolve')}}" >
-                                        <i class="fa fa-question-circle" aria-hidden="true"></i> Chưa được giải quyết 
-                                    </a>
-                                </li>
-                                <li ng-class="{active:tab === 8}">
-                                    <a  href="{{url('/questions/?filter=nothaveanswer')}}" >
-                                        <i class="fa fa-commenting-o" aria-hidden="true"></i> Chưa có câu trả lời 
-                                    </a>
-                                </li>
-                                <li ng-class="{active:tab === 9}">
-                                    <a  href="{{url('/questions/?filter=hotmembers')}}">
-                                        <i class="fa fa-signing" aria-hidden="true"></i> Thành viên tiêu biểu 
-                                    </a>
-                                </li>
-                            </ul>
-                        </section>
-                    </div>
                     @verbatim
+                        <div ng-show="tab === 0" class="col-md-11 col-md-offset-1 user-panel">
+                            <p class="menu-label">Câu hỏi liên quan</p>
+                            <div class="panel-content">
+                                <table class="panel-content-table">
+                                    <tbody>
+                                        <tr ng-repeat="related in related_questions">
+                                            <td class="count-cell">
+                                                <div class="mini-counts" ng-class="{best:related.question.is_resolved === 1}">{{related.question.votes_count}}</div>
+                                            </td>
+                                            <td >
+                                                <a class="title-hyperlink" href="/questions/question/{{related.question.id}}">{{related.question.title}}</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         <div class = "col-md-11 col-md-offset-1">
                             <p class="menu-label"><i class="fa fa-tags" aria-hidden="true"></i> Tags</p>
                             <select selector

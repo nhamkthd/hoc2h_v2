@@ -11,7 +11,7 @@
 		<legend class="text-center">Đăng câu hỏi</legend>
 		<div class="form-group col-md-12">
 			<div class="row">
-				<div class="col-md-6 col-md-offset-1">
+				<div class="col-md-6 col-md-offset-1" style="padding-left: 0;">
 					<select selector
 							multi="false"
 							model="category_id"
@@ -42,7 +42,7 @@
 		<div class ="col-md-12" ng-hide="questions_related.length == 0" style="margin-top:-10px;">
 			<div class=" row list-group"  ng-scrollbar is-bar-shown="barShown">
 			    <label class="col-md-10 col-md-offset-1">Các câu hỏi tương tự</label>
-			    <a class="col-md-10 col-md-offset-1" href="/questions/question/{{question.id}}"  ng-repeat="question in questions_related">{{question.title}}</a>
+			    <a style="font-size: 13px;" class="col-md-10 col-md-offset-1" href="/questions/question/{{question.id}}"  ng-repeat="question in questions_related">{{question.title}}</a>
 			</div>
 		</div>
 		@endverbatim

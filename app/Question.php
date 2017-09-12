@@ -40,6 +40,15 @@ class Question extends Model
         return $listTags;
     }
 
+    public static function questionsRelated($question_id){
+        $first_question_tag = QuestionTag::where('question_id',$question_id)->first();
+        $questionsRelated = QuestionTag::where('question_id','<>',$question_id)->where('tag_id',$first_question_tag->tag_id)->take(10)->get();
+        foreach ($questionsRelated as $question_tag) {
+            $question_tag->question;
+        }
+        return $questionsRelated;
+    }
+
     public static function haveBestAnswer($question_id){
         $question = Question::find($question_id);
         $answers = $question->answers;

@@ -56,9 +56,9 @@
 				<h4 class="title">
 					<a href="/questions/question/{{question.id}}">{{question.title}}
 						<span ng-show="question.is_resolved == 1">
-							<i class="fa fa-check-circle success-dark-text" aria-hidden="true"></i></span>
+							<i class="fa fa-check-circle color-success-dark" aria-hidden="true"></i></span>
 						<span ng-show="question.is_resolved == 0">
-							<i class="fa fa-question-circle danger-dark-text" aria-hidden="true"></i></span>
+							<i class="fa fa-question-circle color-danger-dark" aria-hidden="true"></i></span>
 					</a>
 				</h4>
 				<div class="meta in-caps mb-1">
