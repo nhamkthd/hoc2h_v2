@@ -197,13 +197,13 @@ class QuestionController extends Controller
     }
 
     //show detail 
-    public  function  showDetail($id, $answer_id = null){
+    public  function  showDetail($id, $answer_id = null, $comment_id = null){
         $question = Question::find($id);
         if ($question) {
             $question->views_count ++;
             $question->save();
         }
-        return view('questions.directives.question_detail',compact('question','answer_id'));
+        return view('questions.directives.question_detail',compact('question','answer_id','comment_id'));
     }
 
     //full text search
@@ -260,40 +260,33 @@ class QuestionController extends Controller
     }
 
     //show question detail with ID
-    public function apiQuestionWithID(Request $request){
-        $question = Question::find($request->id);
+    public function apiQuestionWithID($question_id, $answer_id,$comment_id){
+        $question = Question::find($question_id);
         $this->setDateFomat($question);
         $question->user;
         $question->category;
-        $question->haveBestAnswer = Question::haveBestAnswer($question->id);
-        $tags = Question::getTags($question->id);
-        $categories = Category::all();
-
-        $answers = array();
-        $comments = array();
-        if ($question->answers_count > 0 && $question->answers_count <= 15) {
-            foreach ($question->answers as $answer) {
-                $this->setDateFomat($answer);
-                $answer->user;
-                $answer->comments_count = $answer->comments->count();
-                if (Auth::check() && Auth::user()->answerVotes->where('answer_id',$answer->id)->count()) {
-                    $answer->isVoted = 1;
-                }else
-                    $answer->isVoted = 0;
-
-                if ($answer->comments->count()) {
-                    foreach ($answer->comments as $comment) { 
-                        $this->setDateFomat($comment);
-                        $comment->user;
-                        if (Auth::check() && Auth::user()->answerCommentVotes->where('answer_comment_id',$comment->id)->count()) 
-                            $comment->isVoted = 1;
-                        else
-                            $comment->isVoted = 0;
-                    }
+        $question->bestAnswer = Question::haveBestAnswer($question->id);
+        if($question->bestAnswer) {
+            $question->bestAnswer->user;
+            $this->setDateFomat($question->bestAnswer);
+            if (Auth::check() && Auth::user()->answerVotes->where('answer_id',$question->bestAnswer->id)->count()) {
+                $question->bestAnswer->isVoted = 1;
+            }else
+            $question->bestAnswer->isVoted = 0;
+            $question->bestAnswer->comments_count = $question->bestAnswer->comments->count();
+            if ($question->bestAnswer->comments->count()) {
+                foreach ($question->bestAnswer->comments as $comment) { 
+                    $this->setDateFomat($comment);
+                    $comment->user;
+                    if (Auth::check() && Auth::user()->answerCommentVotes->where('answer_comment_id',$comment->id)->count()) 
+                        $comment->isVoted = 1;
+                    else
+                        $comment->isVoted = 0;
                 }
             }
-        } else $question->answers;
-
+        }
+        
+        $tags = Question::getTags($question->id);
         $isVoted = 0;
         if (Auth::check()) {
             if (Auth::user()->questionVotes->where('question_id',$question->id)->count()) {
@@ -302,7 +295,20 @@ class QuestionController extends Controller
         }
         $question->isVoted = $isVoted;
         $question->tagsList = $tags;
-        return response()->json(array('question'=>$question,'categories'=>$categories));
+        //get current page containt answer_id
+        $currentAnswerPage = 1;
+        if ($answer_id > 0) {
+            $answerIndex = 0;
+            foreach ($question->answers as $key => $answer) {
+                if($answer->id == $answer_id){
+                    $answerIndex = $key;
+                    break;
+                }
+            }
+            $currentAnswerPage = (int)($answerIndex / 5) + 1;
+        }
+        $question->currentAnswerPage = $currentAnswerPage;
+        return response()->json($question);
     }
 
     //get questions related
@@ -332,9 +338,9 @@ class QuestionController extends Controller
                 $questionVote->question_id = $request->question_id;
                 $questionVote->save();
                 $question->votes_count++;
-                if (Auth::user()->id != $question->user->id) {
-                    $question->user->notify(new LikeQuestionNotification($request->question_id));
-                }
+                // if (Auth::user()->id != $question->user->id) {
+                //     $question->user->notify(new LikeQuestionNotification($request->question_id));
+                // }
                 $question->save();
                 return 1;
             } else if ($request->isVoted == 1) {

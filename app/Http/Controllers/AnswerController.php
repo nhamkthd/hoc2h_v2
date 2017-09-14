@@ -46,9 +46,9 @@ class AnswerController extends Controller
     }
 
   //show answer with id_question
-    public function apiGetAnswer(Request $req)
+    public function apiGetAnswer($question_id)
     {
-       $answers=Answer::where('question_id',$req->question_id)->orderby('id','desc')->paginate(5);
+       $answers = Answer::where('question_id',$question_id)->orderby('id','desc')->paginate(5);
        foreach ($answers as $answer) {
                 $this->setDateFomat($answer);
                 $answer->user;
@@ -57,7 +57,6 @@ class AnswerController extends Controller
                     $answer->isVoted = 1;
                 }else
                     $answer->isVoted = 0;
-
                 if ($answer->comments->count()) {
                     foreach ($answer->comments as $comment) { 
                         $this->setDateFomat($comment);
@@ -79,6 +78,7 @@ class AnswerController extends Controller
             $answer->user_id = Auth::user()->id;
             $answer->content = $request->content;
             $answer->votes_count = 0;
+            $answer->is_best = 0;
             $answer->save();
 
             $question = Question::find($request->question_id);
@@ -155,7 +155,6 @@ class AnswerController extends Controller
         $answer = Answer::find($request->answer_id);
         $answer->is_best = $request->is_best;
         $answer->save();
-
         return $answer->is_best;
     }
 

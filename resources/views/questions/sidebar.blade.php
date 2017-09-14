@@ -2,7 +2,7 @@
                     .user-panel {float: left; margin-bottom: 30px; margin-top: 20px;}
                     .user-panel .panel-content { padding-left: 10px;}
                     .panel-content-table {border-collapse: collapse;border-spacing: 0; width: 100%; overflow: auto;}
-                    .panel-content-table td {padding: 4px 0;vertical-align: top;}
+                    .panel-content-table td {padding: 4px 0;vertical-align: inherit;}
                     .panel-content-table td.count-cell {width:30px;}
                     .mini-counts {font-size: 12px; font-weight: normal; line-height: 1.3; text-align: center; color: #6a737c; min-width: 30px; height: auto; padding: 3px 6px; margin-right: 10px; display: inline-block; border: 1px solid #b9b9b9; border-radius: 2px; }
                     .mini-counts.best {background-color: #e4f3c5; color: #4F8A32;}

@@ -87,7 +87,7 @@ Route::group(['prefix' => 'questions'], function(){
 	Route::get('/','QuestionController@index');
 	Route::get('/tagged/','QuestionController@indexWithTagged');
 	Route::get('/question-create','QuestionController@create')->name('showQuestionCreateFrom')->middleware('auth');
-	Route::get('/question/{id}/{answer_id?}','QuestionController@showDetail');
+	Route::get('/question/{id}/{answer_id?}/{comment_id?}','QuestionController@showDetail');
 	Route::get('/question-card',function(){
 			return view('questions.directives.question_list_card');
 		});
@@ -95,14 +95,12 @@ Route::group(['prefix' => 'questions'], function(){
 		//this is group route api angular js
 		
 		Route::get('/','QuestionController@apiGetAll');
+		Route::get('/question-detail/{question_id}/{answer_id}/{comment_id}','QuestionController@apiQuestionWithID');
 		Route::get('/search','QuestionController@apiSearch');
 		Route::get('/search-related','QuestionController@apiSearchWithTitle');
 		Route::get('/tagged/{tag_id}','QuestionController@apiGetQuestionsTagged');
-		Route::get('/related/{question_id}','QuestionController@getQuestionsRelated');
-		
+		Route::get('/related/{question_id}','QuestionController@getQuestionsRelated');		
 		Route::post('/store','QuestionController@apiStore');
-		Route::post('/getQuestionInfo','QuestionController@apiQuestionWithID');
-		Route::get('/getAnswer', 'AnswerController@apiGetAnswer');
 		Route::post('/vote','QuestionController@apiVote');
 		Route::post('/edit','QuestionController@apiEdit');
 		Route::post('/delete','QuestionController@apiDelete');
@@ -111,7 +109,7 @@ Route::group(['prefix' => 'questions'], function(){
 		Route::post('/add-Tags','QuestionController@apiAddTags');
 		Route::post('/request-answer','QuestionController@requestAnswer');
 		
-
+		Route::get('/answers/question-id/{question_id}', 'AnswerController@apiGetAnswer');
 		Route::post('/answers','AnswerController@store');
 		Route::post('/answer/vote','AnswerController@vote');
 		Route::post('/answer/edit','AnswerController@edit');

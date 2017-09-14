@@ -1,5 +1,5 @@
 @verbatim
-<div class="media list-item-block"  id="anchor{{answer.id}}" >
+<div class="media list-item-block"  id="anchor{{answer.id}}" ng-show="answer.is_best == 0">
 	<span class="pull-left">
 		<img class="small-avt" src="{{answer.user.avatar}}" width="40" height="40">
 	</span>
@@ -28,53 +28,32 @@
 		<div class="media-heading">
 			<a href="/users/{{answer.user.id}}/profile" class="primary-text">{{answer.user.name}}</a>
 			<span ng-show="answer.user.class"> - học {{answer.user.class}}</span>
-			<span class="date-created pull-right"><i class="fa fa-clock-o" aria-hidden="true"></i> {{answer.date_created}}</span>
 		</div>
 		<p class="answer-body" ng-class="{best:answer.is_best == 1 , anchorAt:anchorAt === answer.id}" ng-bind-html="convertHtml(answer.content)">{{answer.content}}</p>
 
 		<div class="post-info">
 			<ul class="nav nav-pills" role="tablist">
-				<li >
-					<a ng-class="{voted:answer.isVoted == 1}" ng-click="voteAnswer(answers.indexOf(answer))">
-						<i ng-show="isAnswerVoting[answers.indexOf(answer)] === 1" class="fa fa-spinner spinning" aria-hidden="true"></i>
-					  	<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
-						Thích <span>{{answer.votes_count}}</span> 
-					</a>
-				</li>
-				<li >
-					<a href ng-click="showComments(answer.id)">
-						<i class="fa fa-comment" aria-hidden="true"></i> 
-						Bình luận <span>{{answer.comments_count}}</span>
-					</a> 
-				</li>
-				<li ng-show="user.id == question.user.id && answer.is_best == 0 && question.haveBestAnswer == 0">
-					<a ng-click="setBestAnswer(answers.indexOf(answer),1)">
-						<i class="fa fa-check" aria-hidden="true" style="color: gray;"></i>
-						Best answer
-					</a> 
-				</li>
-				<li ng-show="user.id == question.user.id && answer.is_best == 1">
-					<a ng-click="setBestAnswer(answers.indexOf(answer),0)">
-						<i class="fa fa-check " aria-hidden="true" style="color: green;"></i>
-						Best answer
-					</a> 
-				</li>
+				<li ng-class="{voted:answer.isVoted == 1}" ng-click="voteAnswer(answers.indexOf(answer))">
+					  	<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+						Thích <span>{{answer.votes_count}}</span></li>
+				<li href ng-click="showComments(answer.id)">
+						<i class="fa fa-comment-o" aria-hidden="true"></i>
+						Bình luận <span>{{answer.comments_count}}</span></li>
+				<li ng-show="user.id == question.user.id && question.bestAnswer == null"
+					ng-click="setBestAnswer(answers.indexOf(answer),1)">
+						<i class="fa fa-check color-success-dark " aria-hidden="true"></i>
+						Best answer</li>
+				<li><span class="date-created"><i class="fa fa-clock-o" aria-hidden="true"></i> {{answer.date_created}}</span></li>
 			</ul>
 			<ul class="nav nav-pills pull-right" role="tablist" ng-show="user.id == answer.user_id">
-				<li class="action">
-					<a ng-click="editAnswer(answers.indexOf(answer))">
-						<i class="fa fa-edit" aria-hidden="true"></i> Sửa 
-					</a>
-				</li>
-				<li class="action">
-					<a ng-click="deleteAnswer(answers.indexOf(answer))">
-						<i class="fa fa-trash" aria-hidden="true"></i> Xoá 
-					</a>
-				</li>
+				<li class="action" ng-click="editAnswer(answers.indexOf(answer))">
+						<i class="fa fa-edit" aria-hidden="true"></i> Sửa </li>
+				<li class="action" ng-click="deleteAnswer(answers.indexOf(answer))">
+						<i class="fa fa-trash" aria-hidden="true"></i> Xoá </li>
 			</ul>
 		</div> 
-		<div class="comment-block" ng-show="showComments[answer.id]">
-			<div class="comment-block-item" ng-repeat="comment in answer.comments">
+		<div class="comment-block" ng-show="showComments[answer.id]" >
+			<div class="comment-block-item" ng-repeat="comment in answer.comments" id="anchorComment{{comment.id}}">
 				<span class="pull-left avt">
 					<img class="small-avt" src="{{comment.user.avatar}}" width="40" height="40">
 				</span>
@@ -82,10 +61,9 @@
 					<div class="media-heading">
 						<a href="/users/{{comment.user.id}}/profile" class="primary-text">{{comment.user.name}}</a>
 						<span ng-show="comment.user.class">- học {{comment.user.class}}</span>
-						<span class="date-created pull-right"><i class="fa fa-clock-o" aria-hidden="true"></i> {{comment.date_created}}</span>
 					</div>
 					<div class="">
-						<div ng-show="comment_editing[$index] != 1"><p class="answer-body">{{comment.content}}</p></div>
+						<div ng-show="comment_editing[$index] != 1"><p class="answer-body" ng-class="{anchorAt:anchorCommentAt === comment.id}">{{comment.content}}</p></div>
 						<div ng-show="comment_editing[$index] === 1">
 							<textarea id="comment_field" class="form-control" 
 							  ng-model="comment_editing_field[$index]" 
@@ -94,21 +72,19 @@
 					</div>
 					<div class="post-info">
 						<ul class="nav nav-pills " role="tablist">
-							<li>
-								<a ng-class="{voted:comment.isVoted == 1}" ng-click="voteComment($index,$parent.answers.indexOf(answer))">
-									<i class="fa fa-thumbs-up" aria-hidden="true"></i> 
-									Thích <span>{{comment.votes_count}}</span>
-								</a>
-							</li>
+							<li ng-class="{voted:comment.isVoted == 1}" ng-click="voteComment($index,$parent.answers.indexOf(answer))">
+									<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+									Thích <span>{{comment.votes_count}}</span></li>
+							<li><span class="date-created"><i class="fa fa-clock-o" aria-hidden="true"></i> {{comment.date_created}}</span></li>
 						</ul>
 						<ul class="nav nav-pills pull-right" role="tablist" ng-show="user.id == comment.user.id">
-							<li ng-show = "comment_editing[$index] != 1" class="action"><a ng-click="editCommentMode($index,$parent.answers.indexOf(answer))"><i class="fa fa-edit" aria-hidden="true" ></i> Sửa </a></li>
-							<li ng-show = "comment_editing[$index] != 1" class="action">
-								<a confirm-delete="Delete comment?" ng-click="deleteComment($index,$parent.answers.indexOf(answer))">
+							<li ng-show = "comment_editing[$index] != 1" class="action"
+								ng-click="editCommentMode($index,$parent.answers.indexOf(answer))">
+									<i class="fa fa-edit" aria-hidden="true" ></i> Sửa </li>
+							<li ng-show = "comment_editing[$index] != 1" class="action"
+								confirm-delete="Delete comment?" ng-click="deleteComment($index,$parent.answers.indexOf(answer))">
 									<i class="fa fa-trash" aria-hidden="true"></i>
-									Xoá
-								</a>
-							</li>
+									Xoá</li>
 							<li ng-show="comment_editing[$index] === 1" class="action"><a ng-click="editComment($index,$parent.answers.indexOf(answer))"><i class="fa fa-save" aria-hidden="true"></i> Lưu lại </a></li>
 							<li ng-show="comment_editing[$index] === 1" class="action">
 								<a  ng-click="cancelEditComment($index)">

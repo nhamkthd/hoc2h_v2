@@ -316,16 +316,11 @@
 		$scope.isLogged = false;
 	 	$scope.showComments = [];
 	 	$scope.edit_answer_content = [];
+	 	$scope.answer_page_number = 2;
 	 	$scope.comment_content_field = [];
 	 	$scope.comment_editing = [];
 	 	$scope.comment_editing_field = [];
 	 	$scope.sendAnswerText = "Gửi đi";
-	 	$scope.isVoting = 0;
-	 	$scope.isAnswerVoting = [0];
-	 	$scope.question_id;
-	 	$scope.isAnswerVoting = new Array( 100 ).fill( 0 );
-	 	$scope.comment_adding = new Array( 100 ).fill( 0 );
-	 	$scope.isCommentVoting = new Array( 100 ).fill( 0 );
 
 	 	//auto scroll
 		$scope.gotoAnchor = function(x) {
@@ -337,6 +332,16 @@
 	      	}
 	      	$scope.anchorAt = x;
 	    };
+
+	    $scope.gotoCommentAnchor = function(x) {
+	    	var newHash = 'anchorComment' + x;
+	      	if ($location.hash() !== newHash) {
+	        	$location.hash('anchorComment' + x);
+	      	} else {
+	        	$anchorScroll();
+	      	}
+	      	$scope.anchorCommentAt = x;
+	    }
 
 	    //escape html tags
 		$scope.convertHtml = function(htmlText) {
@@ -354,49 +359,70 @@
         }
 
         //init question infomation with ID
-	 	$scope.initQuestion = function (question_id,answer_id) {
-	 		$scope.question_id=question_id;
-	 		$scope.question ={};
+	 	$scope.getQuestionInfo = function (question_id,answer_id,comment_id) {
+	 		$scope.question = {};
 	 		$scope.answers = [];
-	 		$scope.total;
 	 		$scope.related_questions = {};
 	 		$scope.isResolved = 0;
-	 		$http.get('/questions/api/getAnswer?question_id='+question_id)
+	 		//get question infomation
+	 		$http.get('/questions/api/question-detail/'+question_id+'/'+answer_id+'/'+comment_id)
 	 			 .then(function(response){
-	 			 	console.log(response.data.data);
-	 			 	$scope.answers = response.data.data;
-	 			 	$scope.total= response.data.total;
-	 			 	$scope.maxpageAnswer=response.data.last_page;
-	 		});
-	 		$http.post('/questions/api/getQuestionInfo',{id:question_id})
-	 			 .then(function(response){
-	 			 	console.log('Init question: ',response.data.data);
-	 			 	$scope.question = response.data.question;
+	 			 	console.log('Init question: ',response.data);
+	 			 	$scope.question = response.data;
 	 			 	Tags.getList($scope.question.category_id).then(function(response){$scope.tags = response.data;});
-	 			 	$scope.categories = response.data.categories;
+	 			 	$scope.getFirstAnswerPage();
 	 			 	if (answer_id > 0) {
-	 			 		console.log('go to answer:',answer_id);
-	 			 		$scope.gotoAnchor(answer_id);
+	 			 		if (comment_id > 0) {
+	 			 			$scope.showComments(answer_id);
+	 			 			$scope.gotoCommentAnchor(comment_id);
+	 			 		} else {
+	 			 			$scope.gotoAnchor(answer_id);
+	 			 		}
 	 			 	}
 	 			 },function(error){
 	 			 	console.log(error);
 	 		 });
 		}
-		$scope.pageAnswer=2;
-		$scope.loadingQa=function() {
-			$scope.isloadingQa=1;
-			$http.get('/questions/api/getAnswer?question_id='+$scope.question_id+'&page='+$scope.pageAnswer)
+		
+		$scope.getFirstAnswerPage = function() {
+			$http.get('/questions/api/answers/question-id/'+$scope.question.id)
 	 			 .then(function(response){
-	 			 	$scope.pageAnswer++;
-					$scope.isloadingQa=0;
+	 			 	$scope.answers = response.data.data;
+	 			 	console.log('answers:',$scope.answers);
+	 			 	$scope.answers_count= response.data.total;
+	 			 	$scope.last_answer_page = response.data.last_page;
+	 			 	if ($scope.question.currentAnswerPage > 1) {
+	 			 		console.log('currentAnswerPage: ',$scope.question.currentAnswerPage);
+	 			 		$scope.current_answer_page = $scope.question.currentAnswerPage - 1;
+	 			 		$scope.loadMoreAnswers()
+	 			 	}else{
+	 			 		$scope.current_answer_page = 1;
+	 			 	}
+	 			},function(error){
+	 				console.log(error.data)
+	 		});
+		}
+
+		$scope.loadMoreAnswers = function() {
+			console.log($scope.last_answer_page);
+			if ($scope.last_answer_page > $scope.current_answer_page) {
+	 			$scope.current_answer_page++;
+	 			console.log($scope.maxpageAnswer);
+	 		}else {
+	 			return;
+	 		}
+			$scope.isloadingQa = 1;
+			$http.get('/questions/api/answers/question-id/'+$scope.question.id+'?page='+$scope.current_answer_page)
+	 			 .then(function(response){
 	 			 	for (var i = 0; i < response.data.data.length; i++) {
 	 			 		$scope.answers.push(response.data.data[i]);
 	 			 	}
-	 			 	
-	 			 	
 	 			 	$scope.total= response.data.total;
+	 			 	$scope.isloadingQa=0;
 	 		});
 		}
+
+		//check user is online
 		$scope.authorIsOnline = function(param){
 			$scope.question_author_isOnline = param;
 			console.log('author is online...',param);
@@ -596,11 +622,12 @@
 	 			 	if (response.data == -1) {
 	 			 		window.location.href = '/login';
 	 			 	} else {
-	 			 		console.log("add new answer success...!");
+	 			 		
 	 			 		var newAnswer = response.data;
+	 			 		console.log("add new answer success...!",newAnswer);
 	 			 		newAnswer.date_created = "Vừa xong";
 		 			 	$scope.answers.push(newAnswer);
-		 			 	$scope.total++;
+		 			 	$scope.answers_count++;
 		 			 	console.log($scope.answers);
 		 			 	$scope.answer_content_field = " ";
 		 			 	$scope.sendAnswerText = "Gửi đi";
@@ -613,7 +640,7 @@
 
 		//vote answer
 		$scope.voteAnswer = function(index){
-			$scope.isAnswerVoting[index] = 1;
+
 			$http.post('/questions/api/answer/vote',{answer_id:$scope.answers[index].id,isVoted:$scope.answers[index].isVoted})
 	 			 .then(function(response){
 	 			 	console.log($scope.answers[index]);
@@ -621,13 +648,20 @@
 	 			 	if (response.data == 1) {
 	 			 		$scope.answers[index].isVoted = 1;
 	 			 		$scope.answers[index].votes_count++;
+	 			 		if (index == $scope.question.bestAnswer.index) {
+	 			 			$scope.question.bestAnswer.isVoted = 1;
+	 			 			$scope.question.bestAnswer.votes_count++;
+	 			 		}
 	 			 	} else if (response.data == 0){
 	 			 		$scope.answers[index].isVoted = 0;
 	 			 		$scope.answers[index].votes_count--;
+	 			 		if (index == $scope.question.bestAnswer.index) {
+	 			 			$scope.question.bestAnswer.isVoted = 0;
+	 			 			$scope.question.bestAnswer.votes_count--;
+	 			 		}
 	 			 	} else if (response.data == -1) {
 	 			 		window.location.href = '/login';
 	 			 	}
-	 			 	$scope.isAnswerVoting[index] = 0;
 	 			 },function(error){
 	 			 	console.log(error);
 	 		 });
@@ -637,21 +671,25 @@
 		$scope.setBestAnswer = function(index,param){
 			$http.post('/questions/api/answer/set-best',{answer_id:$scope.answers[index].id,is_best:param})
 				 .then(function(response){
-				 	console.log('set best answer:',response.data);
 				 	$scope.answers[index].is_best = response.data;
-				 	$scope.question.haveBestAnswer = response.data;
+				 	console.log('set best answer:',$scope.answers[index].is_best);
+				 	if (response.data == 0) {
+				 		$scope.question.bestAnswer = null;
+				 	}else {
+				 		$scope.question.bestAnswer = $scope.answers[index];
+				 		$scope.question.bestAnswer.index = index;
+				 	}
 				 },function(error){
 				 	console.log(error.data);
 				 });
 		}
-
 		//edit answer
 		$scope.editAnswer = function(index) {
 			$uibModal.open({
 	            templateUrl: 'editAnswerModal.html', // loads the template
 	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
 	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
-	            controller: function ($scope, $uibModalInstance,answers) {
+	            controller: function ($scope, $uibModalInstance,answers,question) {
 					$scope.edit_answer_content = answers[index].content;
 	                $scope.submit = function () {
 	                   	$http.post('/questions/api/answer/edit',{id:answers[index].id,content:$scope.edit_answer_content})
@@ -659,6 +697,9 @@
 				 			 	function(response){
 					 			 	console.log('Edit answer: ',response);
 					 			 	answers[index].content = response.data.content;
+					 			 	if (index == question.bestAnswer.index) {
+					 			 		question.bestAnswer.content = response.data.content;
+					 			 	}
 				 			 	}
 				 			 	,function(error){
 				 			 		console.log(error);
@@ -670,8 +711,11 @@
 	                };
 	            },
 	            resolve: {
-	                answers: function () {
-	                    return $scope.answers;
+	                question:function(){
+	                	return $scope.question;
+	                },
+	                answers:function(){
+	                	return $scope.answers;
 	                }
 	            }
 	        });//end of modal.open
@@ -684,7 +728,7 @@
 	            templateUrl: 'deleteAnswerModal.html', // loads the template
 	            backdrop: true, // setting backdrop allows us to close the modal window on clicking outside the modal window
 	            windowClass: 'modal', // windowClass - additional CSS class(es) to be added to a modal window template
-	            controller: function ($scope, $uibModalInstance,answers) {
+	            controller: function ($scope, $uibModalInstance,answers,question) {
 					$scope.edit_answer_content = answers[index].content;
 	                $scope.submit = function () {
 	                   	$http.post('/questions/api/answer/delete',{id:answers[index].id})
@@ -692,6 +736,9 @@
 				 			 	function(response){
 					 			 	console.log('delete answer: ',response);
 					 			 	answers.splice(index,1);
+					 			 	if (index == question.bestAnswer.index) {
+					 			 		question.bestAnswer = null;
+					 			 	}
 				 			 	}
 				 			 	,function(error){
 				 			 		console.log(error);
@@ -703,8 +750,11 @@
 	                };
 	            },
 	            resolve: {
-	                answers: function () {
-	                    return $scope.answers;
+	                question:function(){
+	                	return $scope.question;
+	                },
+	                answers:function(){
+	                	return $scope.answers;
 	                }
 	            }
 	        });//end of modal.open
@@ -717,7 +767,6 @@
 		//add new comment
 		$scope.addComment = function(index) {
 			ignoreLoadingBar: true;
-			$scope.comment_adding[index] = 1;
 			var comment_content = $scope.comment_content_field[index];
 			$http.post('/questions/api/answer/comment-add',{answer_id:$scope.answers[index].id,content:comment_content})
 	 			 .then(
@@ -727,8 +776,11 @@
 		 			 		$scope.answers[index].comments_count++;
 		 			 		response.data.date_created = "Vừa xong";
 		 			 		$scope.answers[index].comments.push(response.data);
+		 			 		if (index == $scope.question.bestAnswer.index) {
+		 			 			$scope.question.bestAnswer.comments.push(response.data);
+		 			 			$scope.question.bestAnswer.comments_count ++;
+		 			 		}
 		 			 		$scope.comment_content_field[index]="";
-		 			 		$scope.comment_adding[index] = 0;
 		 			 	}
 	 			 	}
 	 			 	,function(error){
@@ -750,9 +802,17 @@
 	 			 		else if (response.data == 1) {
 	 			 			$scope.answers[parentIndex].comments[index].votes_count++;
 	 			 			$scope.answers[parentIndex].comments[index].isVoted  = 1;
+	 			 			if (parentIndex == $scope.question.bestAnswer.index) {
+	 			 				$scope.question.bestAnswer.comments[index].votes_count++;
+	 			 				$scope.question.bestAnswer.comments[index].isVoted  = 1;
+	 			 			}
 	 			 		} else {
 	 			 			$scope.answers[parentIndex].comments[index].votes_count--;
 	 			 			$scope.answers[parentIndex].comments[index].isVoted = 0;
+	 			 			if (parentIndex == $scope.question.bestAnswer.index) {
+	 			 				$scope.question.bestAnswer.comments[index].votes_count--;
+	 			 				$scope.question.bestAnswer.comments[index].isVoted  = 0;
+	 			 			}
 	 			 		}
 	 			 		$scope.isCommentVoting[index] = 0;
 	 			 	}
@@ -766,6 +826,9 @@
 			console.log('editing comment....');
 			$scope.comment_editing[index] = 1;
 			$scope.comment_editing_field[index] = $scope.answers[parentIndex].comments[index].content;
+			if (parentIndex == $scope.question.bestAnswer.index) {
+				$scope.comment_editing_field[index] = $scope.question.bestAnswer.comments[index].content;
+			}
 		}
 
 		$scope.cancelEditComment = function(index) {
@@ -782,6 +845,9 @@
 	 			 	function(response){
 		 			 	console.log('Edit comment: ',response);
 		 			 	$scope.answers[parentIndex].comments[index].content = response.data.content;
+		 			 	if (parentIndex == $scope.question.bestAnswer.index) {
+							$scope.question.bestAnswer.comments[index].content = response.data.content;
+						}
 		 			 	$scope.comment_editing[index] = 0;
 	 			 	}
 	 			 	,function(error){
@@ -797,6 +863,10 @@
 	 			 		console.log('Delete comment:',response);
 	 			 		$scope.answers[parentIndex].comments.splice(index,1);
 	 			 		$scope.answers[parentIndex].comments_count--;
+	 			 		if (parentIndex == $scope.question.bestAnswer.index) {
+							$scope.question.bestAnswer.comments.splice(index,1);
+							$scope.question.bestAnswer.comments_count--;
+						}
 	 			 	}
 	 			 	,function(error){
 	 			 	console.log(error);
