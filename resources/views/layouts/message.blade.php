@@ -1,8 +1,8 @@
 <div ng-app="hoc2h-message" ng-controller="MessageController" ng-init="user_id={{Auth::user()->id}}">
 @verbatim
-    <div ng-show="show" style="position: fixed;bottom: 0px; right: 80px;">
-        <div ng-repeat="conversation in listConversation" style="width: 300px;float: right;margin-left: 5px;">
-            <div class="panel panel-primary">
+    <div style="position: fixed;bottom: 0px; right: 80px;">
+        <div ng-repeat="conversation in listConversation" style="width: 300px;float: right;margin-left: 5px;" >
+            <div class="panel panel-primary" scoll>
                 <div class="panel-heading top-bar">
                     <div class="col-md-8 col-xs-8 ">
                         <h3 class="panel-title"><i class="fa fa-circle user-status online" aria-hidden="true"></i> {{name}} </h3>
@@ -40,9 +40,9 @@
                 </div>
                 <div class="panel-footer" id="bottom">
                     <div class="input-group">
-                        <input ng-enter='send_msg(message,conversation.id,$index)' ng-model='message' id="btn-input" type="text" style="margin-top: 6px;" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+                        <input ng-model='message' id="btn-input" type="text" style="margin-top: 6px;" class="form-control input-sm chat_input" placeholder="Write your message here..." />
                         <span class="input-group-btn">
-                        <button class="btn btn-primary btn-sm" id="btn-chat" ng-click="send_msg(message,conversation.id,$index)">Send</button>
+                        <button class="btn btn-primary btn-sm" id="btn-chat" onclick="{$(this).parent().parent().find('input').val('')}" ng-click="send_msg(message,conversation.id,$index)">Send</button>
                         </span>
                     </div>
                 </div>

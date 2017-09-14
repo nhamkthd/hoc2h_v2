@@ -9,6 +9,7 @@ use App\Message;
 use Auth;
 use Illuminate\Http\Response;
 use Cookie;
+use App\User;
 class MessageController extends Controller
 {
      //reset date time fomat
@@ -31,13 +32,58 @@ class MessageController extends Controller
         return response()->json($message);
 
     }
-    public function getconversation($id_user)
+    public function getConversationOpen(Request $req)
     {
-        $Conversation=Conversation::where(['from_user_id'=>Auth::user()->id,'to_user_id'=>$id_user])->orwhere(['to_user_id'=>Auth::user()->id,'from_user_id'=>$id_user])->first();
+         $Conversation=Conversation::whereIn('id',$req->listConversation)->get();
+        if(count($Conversation))
+        {
             foreach ($Conversation->message as $messages) {
                 $this->setDateFomat($messages);
                 $messages->user;
             }
+        }
+        else
+        {
+            $conversation=new Conversation;
+            $conversation->from_user_id=Auth::user()->id;
+            $conversation->to_user_id=$id_user;
+            $conversation->save();
+            return response()->json($conversation);
+        }
+        return response()->json($Conversation);
+    }
+    public function listUserOnline()
+    {
+        return response()->json(User::all()->diffAssoc(Auth::user()));
+    }
+    public function getconversation($id_user)
+    {
+        $conversation1=Conversation::where(['to_user_id'=>Auth::user()->id,'from_user_id'=>$id_user])->first();
+        $conversation2=Conversation::where(['from_user_id'=>Auth::user()->id,'to_user_id'=>$id_user])->first();
+        if(count($conversation1)==1)
+        {
+            $Conversation=$conversation1;
+        }
+        else
+        {
+            $Conversation=$conversation2;
+        }
+        if(count($Conversation))
+        {
+            foreach ($Conversation->message as $messages) {
+                $this->setDateFomat($messages);
+                $messages->user;
+            }
+        }
+        else
+        {
+            $conversation=new Conversation;
+            $conversation->from_user_id=Auth::user()->id;
+            $conversation->to_user_id=$id_user;
+            $conversation->save();
+            $conversation->message=[];
+            return response()->json($conversation);
+        }
         return response()->json($Conversation);
     }
     public function getMessage($id_user)

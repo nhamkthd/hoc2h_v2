@@ -127,6 +127,8 @@ Route::group(['prefix' => 'messages'], function(){
 		Route::group(['prefix' => 'api'], function(){
 			Route::get('getMessage/{id}', 'MessageController@getMessage');
 			Route::get('getconversation/{id}', 'MessageController@getconversation');
+			Route::get('listUserOnline', 'MessageController@listUserOnline');
+			Route::post('getconversationopen', 'MessageController@getConversationOpen');
 			Route::post('create','MessageController@create');
 		});
 	});

@@ -3,17 +3,19 @@
 	app.run(function(){
 		console.log("hello message");
 	});
-
+	app.factory('listUserOnline', function($http){
+		listUserOnline=[];
+		$http.get('/messages/api/listUserOnline/').then(function(res) {
+			for (var i = 0; i < res.data.length; i++) {
+				listUserOnline.push(res.data[i]);
+			}
+		}, function(err){
+			console.log(err);
+		})
+		return listUserOnline;
+	});
 	app.factory('listConversation', function($http){
 		listConversation=[];
-		//lấy tất cả các tin nhắn đang mở
-		// $http.get('/messages/api/getConversationOpen').then(function (res) {
-		// 	for (var i = 0; i < res.data.length; i++) {
-		// 		listConversation.push(res.data[i]);
-		// 	}	
-		// }, function (err) {
-		// 	// body...
-		// })
 		return listConversation;
 	});
 	app.factory('listMessage', function(){
@@ -32,10 +34,23 @@
             });
         };
     });
-	app.controller('MessageController',function($scope, $http,listConversation,listMessage,$anchorScroll,$location){
+	 app.directive('scroll', function($timeout) {
+	 	return {
+	 		restrict: 'A',
+	 		link: function(scope, element, attr) {
+	 			scope.$watchCollection(attr.scroll, function(newVal) {
+	 				$timeout(function() {
+	 					element[0].scrollTop = element[0].scrollHeight;
+	 				});
+	 			});
+	 		}
+	 	}
+	 });
+	app.controller('MessageController',function($scope, $http,listConversation,listMessage,$anchorScroll,$location,listUserOnline){
 		$scope.listConversation=listConversation;
 		$scope.show=true;
 		$scope.listMessages=listMessage;
+		$scope.listUserOnline=listUserOnline;
 		$scope.close=function (index) {
 			$scope.listConversation.splice(index, 1);
 		}
