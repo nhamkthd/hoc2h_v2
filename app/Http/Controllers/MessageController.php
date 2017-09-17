@@ -34,21 +34,13 @@ class MessageController extends Controller
     }
     public function getConversationOpen(Request $req)
     {
-         $Conversation=Conversation::whereIn('id',$req->listConversation)->get();
-        if(count($Conversation))
-        {
-            foreach ($Conversation->message as $messages) {
+        $Conversation=Conversation::whereIn('id',$req->conversation_id)->get();
+        foreach ($Conversation as $Conv) {
+           foreach ($Conv->message as $messages) {
                 $this->setDateFomat($messages);
                 $messages->user;
             }
-        }
-        else
-        {
-            $conversation=new Conversation;
-            $conversation->from_user_id=Auth::user()->id;
-            $conversation->to_user_id=$id_user;
-            $conversation->save();
-            return response()->json($conversation);
+            $Conv->users=User::find(($Conv->from_user_id==Auth::user()->id)?$Conv->to_user_id:$Conv->from_user_id);
         }
         return response()->json($Conversation);
     }
@@ -84,6 +76,7 @@ class MessageController extends Controller
             $conversation->message=[];
             return response()->json($conversation);
         }
+         $Conversation->users=User::find($id_user);
         return response()->json($Conversation);
     }
     public function getMessage($id_user)

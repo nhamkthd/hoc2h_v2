@@ -1,11 +1,11 @@
 <div ng-app="hoc2h-message" ng-controller="MessageController" ng-init="user_id={{Auth::user()->id}}">
 @verbatim
     <div style="position: fixed;bottom: 0px; right: 80px;">
-        <div ng-repeat="conversation in listConversation" style="width: 300px;float: right;margin-left: 5px;" >
-            <div class="panel panel-primary" scoll>
+        <div ng-repeat="conversation in listConversation" style="width: 300px;float: right;margin-left: 5px;">
+            <div class="panel panel-primary" id="message">
                 <div class="panel-heading top-bar">
                     <div class="col-md-8 col-xs-8 ">
-                        <h3 class="panel-title"><i class="fa fa-circle user-status online" aria-hidden="true"></i> {{name}} </h3>
+                        <h3 class="panel-title"><i class="fa fa-circle user-status online" aria-hidden="true"></i> {{conversation.users.name}} </h3>
                     </div>
                     <div class="col-md-4 col-xs-4" style="text-align: right;">
                         &nbsp;&nbsp;<i id="minim_chat_window"  class="fa fa-minus" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;
@@ -47,6 +47,9 @@
                     </div>
                 </div>
             </div>
+            <script type="text/javascript">
+                $('#message').scrollTop(9999);
+            </script>
         </div>
     </div> 
 @endverbatim
