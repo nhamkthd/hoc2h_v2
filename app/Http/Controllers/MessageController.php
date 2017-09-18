@@ -10,6 +10,7 @@ use Auth;
 use Illuminate\Http\Response;
 use Cookie;
 use App\User;
+use App\Notifications\SendMessageNotification;
 class MessageController extends Controller
 {
      //reset date time fomat
@@ -29,6 +30,15 @@ class MessageController extends Controller
         $message->save();
         $this->setDateFomat($message);
         $message->user;
+        $conversation=Conversation::find($req->conversation);
+        if($conversation->from_user_id==Auth::user()->id)
+        {
+            User::find($conversation->to_user_id)->notify((new SendMessageNotification(response()->json($message),$conversation))->delay(Carbon::now()->addseconds(2)));
+        }
+        else
+        {
+            User::find($conversation->from_user_id)->notify((new SendMessageNotification(response()->json($message),$conversation))->delay(Carbon::now()->addseconds(2)));
+        }
         return response()->json($message);
 
     }
@@ -46,7 +56,8 @@ class MessageController extends Controller
     }
     public function listUserOnline()
     {
-        return response()->json(User::all()->diffAssoc(Auth::user()));
+        $user=User::where('id','<>',Auth::user()->id)->get();
+        return response()->json($user);
     }
     public function getconversation($id_user)
     {

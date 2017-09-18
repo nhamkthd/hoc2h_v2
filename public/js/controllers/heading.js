@@ -64,6 +64,8 @@
 
 	 	var channel = pusher.subscribe('private-App.User.' + user_id);
 	 	channel.bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function(data){
+	 		if(data.user)
+	 		{
 	 		$.notify({
     				message:data.user.name +' đã '+ data.kind +' '+ data.model +' của bạn' ,
     				url: data.link,
@@ -80,6 +82,7 @@
 	 		}, function (err) {
 	 			console.log(err);
 	 		})
+	 	}
 	 	});
 
 	 	$scope.navBarTabClick = function(nav_tab){

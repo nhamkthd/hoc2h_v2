@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Auth;
-class LikeQuestionNotification extends Notification
+class LikeQuestionNotification extends Notification implements ShouldQueue
 {
      use Queueable;
 

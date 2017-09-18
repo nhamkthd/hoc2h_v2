@@ -32,12 +32,18 @@
         @if(Route::has('login'))
           @if(Auth::check())
             <li class="dropdown" id="showRight">
-              <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> Tin nhắn</a>
+              <a href="#"><i class="fa fa-circle user-status online" aria-hidden="true"></i> Online</a>
+            </li>
+            <li class="dropdown" ng-app="hoc2h-message" ng-controller="ReceiveMessageController" ng-init="user_id={{Auth::user()->id}}">
+              <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> Tin nhắn <span class="badge notify-badge"></span></a>
+              <ul style="height: 70vh;overflow-y:auto;width: 40vw " class="dropdown-menu">
+                @include('conversations.list')
+              </ul>
             </li>
             <li class="dropdown" ng-mouseover="readNotify(unReadNotification.length)">
               <a href="#"><i class="fa fa-globe" aria-hidden="true"></i> Thông báo <span class="badge notify-badge" ng-hide="unReadNotification.length == 0"> 
               @verbatim {{unReadNotification.length}} @endverbatim</span></a>
-              <ul style=" max-height: 300px;overflow-y:scroll; " class="dropdown-menu">
+              <ul style="height: 70vh;overflow-y:auto;width: 30vw " class="dropdown-menu">
                 @include('notifications.list_notify')
               </ul>
             </li>
@@ -68,7 +74,7 @@
 
  <div ng-app="hoc2h-message" ng-controller="MessageController">
   <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2" style="margin-top: 70px;">
-    <h3>Tin nhắn
+    <h3>Online
     <i class="fa fa-times pull-right icon-close" id="close_message_slide" aria-hidden="true"></i>
     </h3>
     @verbatim

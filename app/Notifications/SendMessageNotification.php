@@ -6,9 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Carbon\Carbon;
-use Auth;
-class AnswerQuestionNotification extends Notification implements ShouldQueue
+
+class SendMessageNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -17,12 +16,12 @@ class AnswerQuestionNotification extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public $answer;
-    public $user;
-    public function __construct($answer,$user)
+    public $message;
+    public $conversation;
+    public function __construct($message,$conversation)
     {
-        $this->user=$user;
-        $this->answer=$answer;
+        $this->conversation=$conversation;
+        $this->message=$message;
     }
 
     /**
@@ -33,7 +32,7 @@ class AnswerQuestionNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database','broadcast'];
+        return ['broadcast'];
     }
 
    
@@ -46,11 +45,10 @@ class AnswerQuestionNotification extends Notification implements ShouldQueue
     public function toDatabase($notifiable)
     {
         return [
-            "user"=> $this->user,
-            "comment"=>$this->answer,
-            "kind"=>"trả lời",
-            "model"=>"câu hỏi",
-            "link"=>"/questions/question/".$this->answer['question_id']."/".$this->answer['id'],
+            "conversation"=> $this->conversation,
+            "message"=>$this->message,
+            "kind"=>"gửi",
+            "model"=>"tin nhắn",
         ];
     }
 
@@ -64,11 +62,10 @@ class AnswerQuestionNotification extends Notification implements ShouldQueue
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            "user"=> $this->user,
-            "answer"=>$this->answer,
-            "kind"=>"trả lời",
-            "model"=>"câu hỏi",
-           "link"=>"/questions/question/".$this->answer['question_id']."/".$this->answer['id'],
+            "conversation"=> $this->conversation,
+            "message"=>$this->message,
+            "kind"=>"gửi",
+            "model"=>"tin nhắn",
             ]);
     }
 }

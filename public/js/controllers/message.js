@@ -1,4 +1,14 @@
 (function(){
+	var pusher = new Pusher('5ac087c889597b081cac', {
+          cluster: 'ap1',
+          encrypted: true,
+           authEndpoint: '/pusher/auth',
+            auth: {
+                headers: {
+                    'X-CSRF-Token':  $('meta[name="csrf-token"]').attr('content')
+                }
+            }
+      });	
 	var app = angular.module('hoc2h-message', []);
 	app.run(function(){
 		console.log("hello message");
@@ -75,8 +85,6 @@
 		$scope.send_msg=function (message,conversation,index) {
 			$http.post('/messages/api/create', {message:message,conversation:conversation}).then(function (res) {
 				listConversation[index].message.push(res.data);
-				$location.hash('bottom');
-      			$anchorScroll();
 			}, function (err) {
 				
 			})
@@ -92,5 +100,18 @@
 			}
 		}
 	});
-
+	app.controller('ReceiveMessageController', function($scope,$window, $http,listConversation,listMessage,$anchorScroll,$location,listUserOnline){
+		var channel = pusher.subscribe('private-App.User.' + user_id);
+	 	channel.bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function(data){
+	 		if(data.conversation)
+	 		{
+	 			var temp=sessionStorage.conversation_id.split(',');
+				temp.pop();
+				if(temp.indexOf(''+data.conversation.id)!=-1)
+				{
+					listConversation[temp.indexOf(''+data.conversation.id)].message.push(data.message.original);
+				}
+	 		}
+	 	});
+	})
 })();
