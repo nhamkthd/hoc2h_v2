@@ -48,6 +48,7 @@ nav.navbar{position: fixed;top: 0;width: 100%; background-color:#0079B5; box-sha
 .navbar-default .navbar-brand {color: #FF8800; font-size: 20px; font-weight: 700;}
 .navbar-default .navbar-brand:hover {color: #ffbb33;}
 
+
 /*side bar style */
 .sidebar {border-left:solid 1px #e0e0e0 ; margin-left: 10px;}
 .menu-label {padding:10px; font-weight: 600;font-size: 15px;letter-spacing: -.5px;color:#757575;}
