@@ -38,6 +38,7 @@ label {font-weight: 700; margin-bottom: 5px;}
 a.btn-indigo.facebook-color {background: #3B5998;}
 a.category-title {color: #ff8800;}
 a.category-title:hover {color: #3F729B;}
+
 /*navbar styles*/
 nav.navbar{position: fixed;top: 0;width: 100%; background-color:#0079B5; box-shadow: unset; border-radius: unset;border: unset; border-bottom: solid 1px #3F729B;}
 .navbar-default .navbar-nav > li > a {color: #eceff1; font-size: 13px; text-transform: uppercase;}
