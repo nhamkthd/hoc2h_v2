@@ -9,7 +9,8 @@
         <title>{{ config('app.name', 'Hoc2H') }}</title>
         
         <!-- Styles -->
-        <link rel="stylesheet" href="{{asset('css/bootstrap/bootstrap.css')}}">
+        <link rel="stylesheet" href="{{asset('mdb/css/bootstrap.css')}}">
+         <link rel="stylesheet" href="{{asset('mdb/css/mdb.css')}}">
         <link rel="stylesheet" href="{{asset('js/flugin/alert/sweetalert.css')}}">
         <link rel="stylesheet" href="{{asset('css/mdb/css/mdb.css')}}" >
         <link rel="stylesheet" href="{{asset('css/font-awesome/css/font-awesome.css') }}">
@@ -25,14 +26,21 @@
         <link rel="stylesheet" href="{{ asset('css/slide-menus/component.css') }}">
 
         <!--App style-->
-
         <link href="{{ asset('css/angular-flash.css') }}" rel="stylesheet"> 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
-         <link href="{{ asset('css/message.css') }}" rel="stylesheet"> 
+        <link href="{{ asset('css/message.css') }}" rel="stylesheet"> 
 
-         <!--scripts -->
+        
+        <!-- pusher js -->
         <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
+
+        <!--mdb js-->
         <script src="{{asset('js/flugin/jquery-3.2.1.min.js')}}"></script> 
+        <script src="{{asset('mdb/js/popper.min.js')}}"></script> 
+        <script src="{{asset('mdb/js/bootstrap.js')}}"></script> 
+        <script src="{{asset('mdb/js/mdb.js')}}"></script> 
+
+        <!--angular js-->
         <script src="{{asset('js/flugin/angular/angular.min.js')}}"></script> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-sanitize.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
@@ -45,15 +53,15 @@
         <script src="{{asset('js/flugin/angular/ng-file-upload.js')}}"></script>
         <script src="{{asset('js/flugin/angular/angular-flash.js')}}"></script>  
         <script src="{{asset('js/flugin/angular/loading-bar.js')}}"></script>  
-       
-        <script src="{{asset('js/flugin/ckeditor/ckeditor.js')}}"></script>       
-        <script src="{{asset('js/flugin/angular/angular-ckeditor.js')}}"></script>
-        <script src="{{asset('js/flugin/bootstrap/bootstrap.min.js')}}"></script>
-        <script src="{{asset('js/flugin/bootstrap/ui-bootstrap-tpls-2.5.0.min.js')}}"></script>
-        <script src="{{asset('js/flugin/alert/sweetalert.min.js')}}"></script>
-        <script src="{{asset('js/flugin/slide-menus/modernizr.custom.js')}}"></script>
         <script src="{{asset('js/flugin/angular-chat/rltm.js')}}"></script>
         <script src="{{asset('js/flugin/angular-chat/angular-chat.js')}}"></script>
+        <script src="{{asset('js/flugin/angular/angular-ckeditor.js')}}"></script>
+        <script src="{{asset('js/flugin/bootstrap/ui-bootstrap-tpls-2.5.0.min.js')}}"></script>
+
+        <script src="{{asset('js/flugin/ckeditor/ckeditor.js')}}"></script>    
+        <script src="{{asset('js/flugin/alert/sweetalert.min.js')}}"></script>
+        <script src="{{asset('js/flugin/slide-menus/modernizr.custom.js')}}"></script>
+      
 
         <!-- Applycation Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
@@ -65,6 +73,7 @@
         <script src="{{ asset('js/controllers/editTest.js') }}"></script>
         <script src="{{asset('js/flugin/alert/sweetalert.min.js')}}"></script>
         <link rel="stylesheet" type="text/css" href="{{asset('js/flugin/alert/sweetalert.css')}}">
+        
         <style type="text/css">
             #loading{
                 background: url({{ asset('img/loading.gif') }}) center no-repeat #fff;

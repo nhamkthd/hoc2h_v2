@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" ng-app="hoc2h-heading" ng-controller="HeadingController">
+<nav class="navbar navbar-default navbar-fixed-top" ng-app="hoc2h-heading" ng-controller="HeadingController">
   @if(Route::has('login'))
     @if(Auth::check())
       <div ng-init="getUser({{Auth::user()}})"></div>
