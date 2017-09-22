@@ -31,7 +31,7 @@
                             </div>
                             <!--Body-->
                             <div class="md-form">
-                                <input type="email" id="email" class="form-control" value="{{ old('email') }}" required autofocus>
+                                <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required autofocus>
                                 <label for="Form-email1">Email</label>
                                 @if ($errors->has('email'))
                                     <span class="help-block">{{ $errors->first('email') }}</span>
