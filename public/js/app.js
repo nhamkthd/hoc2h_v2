@@ -7,3 +7,4 @@ main.config(function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = true;
   })
 
+

@@ -8,7 +8,6 @@
 	
 	//main user controller
 	app.controller('UserController',function($scope, $http,$sce, Upload, Flash,$filter){
-
 		$scope.setTab = function(tab){
 			$scope.currentTab = tab;
 			if (tab == 2) {

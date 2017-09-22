@@ -8,8 +8,8 @@ use App\Conversation;
 use App\Message;
 use Auth;
 use Illuminate\Http\Response;
-use Cookie;
 use App\User;
+use App\Cache;
 use App\Notifications\SendMessageNotification;
 class MessageController extends Controller
 {
@@ -37,7 +37,7 @@ class MessageController extends Controller
         }
         else
         {
-            User::find($conversation->from_user_id)->notify((new SendMessageNotification(response()->json($message),$conversation))->delay(Carbon::now()->addseconds(2)));
+            User::find($conversation->from_user_id)->notify((new SendMessageNotification(response()->json($message),$conversation))->delay(Carbon::now()->addseconds(0)));
         }
         return response()->json($message);
 
@@ -56,7 +56,12 @@ class MessageController extends Controller
     }
     public function listUserOnline()
     {
-        $user=User::where('id','<>',Auth::user()->id)->get();
+        $id_user=array();
+        $caches=Cache::all();
+        foreach ($caches as $cache) {
+            $id_user[]=substr($cache->key,22);
+        }
+        $user=User::whereIn('id',$id_user)->where('id','<>',Auth::user()->id)->get();
         return response()->json($user);
     }
     public function getconversation($id_user)
