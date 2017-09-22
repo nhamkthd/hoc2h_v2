@@ -16,10 +16,17 @@
 	@verbatim
 		{{setSelectedTab(0)}}
 	@endverbatim
-	<div ng-init="getQuestionRelated({{$question->id}})"></div>
-	<div ng-init="getListTagsWithQuestionCategory({{$question->category_id}})"></div>
+	@if($question)
+		<div ng-init="getQuestionRelated({{$question->id}})"></div>
+		<div ng-init="getListTagsWithQuestionCategory({{$question->category_id}})"></div>
+	@endif
 <div class="row" ng-controller="QuestionDetailController">
 	@if($question)
+		@if($question->user->isOnline())
+		   	<div ng-init="authorIsOnline(1)"></div>
+		@else 
+			<div ng-init="authorIsOnline(0)"></div>
+		@endif
 		@if($answer_id)
 			@if($comment_id)
 				<div ng-init="getQuestionInfo({{$question->id}},{{$answer_id}},{{$comment_id}})"></div>
@@ -38,12 +45,7 @@
 	<div ng-show ="isQuestionNotFound == 1" class="col-md-12">
 		<p>Câu hỏi không tồn tại...!</p>
 	</div>
-	@if($question->user->isOnline())
-	   	<div ng-init="authorIsOnline(1)"></div>
-	@else 
-		<div ng-init="authorIsOnline(0)"></div>
-	@endif
-
+	
 	<div ng-show="isQuestionNotFound == 0">
 		<div>
 			@verbatim

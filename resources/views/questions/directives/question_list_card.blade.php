@@ -14,14 +14,13 @@
 	@media screen and (min-width: 769px){
 		.question-list-item {padding: 0 0 1em;}
 	}
-	.question-list-item { -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-box-align: center; -ms-flex-align: center; align-items: center; color: #818181; margin: 0 0 1em; border-bottom: 1px solid #f1f0f0; padding-bottom: 0px;}
-	.question-list-avatar{ vertical-align:baseline; margin-top:8px; height:75px;text-align: center;}
-	.question-list-avatar img{width: 45px; height: 45px;}
+	.question-list-item { -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-box-align: center; -ms-flex-align: center; align-items: center; color: #818181; margin: 0 0 1em; border-bottom: 1px solid #f1f0f0; padding-bottom: 5px; padding-top: 5px;}
+	.content {font-size: 13px; color: #000;}
 
 	p.role-title{font-size:11px;font-weight:500; color:#3F729B;}
 	p.role-title.admin{color: #ff4444;}
 
-	.title a{color: #4d545d;}
+	.title a{color:#007E33;}
 	.title a:hover{text-decoration: underline;}
 	@media screen and (min-width: 769px) {
 		.question-list-summary.title {float: left;}
@@ -32,43 +31,28 @@
 
 	.footer {padding-bottom:0px; float:right; margin-top:0px; } 
 	.footer ul {list-style: none; display: flex; flex: row wrap; justify-content: flex-end; padding-left: 0; } 
-	.footer li:first-child {margin-right: auto; color: #4B515D; } 
 	.footer li + li {margin-left: .5rem; } 
 	.footer li {font-size: .75rem; height: 1.5rem;line-height: 1.5rem; text-align: center;  position: relative;  color:#3F729B;} 
-	.footer li >span {font-weight: 500;}
 </style>
 @verbatim
-<div class="question-list-item">
+
+ <div class="question-list-item">
 	<div class="row">
-		<div class="col-md-2 col-sm-2">
-			<div class="question-list-avatar">
-				<div>
-					<a href="/users/{{question.user.id}}/profile">
-						<img src="{{question.user.avatar}}" class="is-circle is-outlined bg-white">
-					</a>
-				</div>
-				<a href="/users/{{question.user.id}}/profile" class="is-link user-name"> {{question.user.name}}</a>
-				<p ng-class="{admin:question.user.role_id == 2}" class="role-title">{{question.user.role.title}}</p>
-			</div>
-		</div>
-		<div class="col-md-10 col-sm-10" style="padding-left:5px;">
+		<div class="col-md-12">
 			<div class="question-list-summary">
-				<h4 class="title">
-					<a href="/questions/question/{{question.id}}">{{question.title}}
-						<span ng-show="question.is_resolved == 1">
-							<i class="fa fa-check-circle color-success-dark" aria-hidden="true"></i></span>
-						<span ng-show="question.is_resolved == 0">
-							<i class="fa fa-question-circle color-danger-dark" aria-hidden="true"></i></span>
-					</a>
-				</h4>
+				<h5 class="title">
+					<a href="/questions/question/{{question.id}}">{{question.title}}</a>
+				</h5>
 				<div class="meta in-caps mb-1">
 					<span>
-						<a href="" class="is-link cl-orgin">{{question.category.title}}</a>
-						<i class="fa fa-clock-o" aria-hidden="true"></i> {{question.date_created}}
+						Đăng bởi <a href="/users/{{question.user.id}}/profile" class="is-link user-name"> {{question.user.name}}</a>
+						 • {{question.date_created}}
+						 • <a href="" class="is-link cl-orgin">{{question.category.title}}</a>
+						
 					</span>
 				</div>
 				<div class="content">
-					<p style="font-size: 13px;" ng-bind-html="question.content| textShortenerFilter: 220"></p>
+					<p ng-bind-html="question.content| textShortenerFilter: 220"></p>
 				</div>
 				<div class="question-tags" ng-hide="question.tags.length == 0" >
 					<ul>
@@ -78,7 +62,7 @@
 				</div>
 				<div class="footer">
 					<ul>
-						<li><i class="fa fa-bar-chart" aria-hidden="true"></i></li>
+						<li ng-show="question.is_resolved === 1"><i class="fa fa-check" aria-hidden="true" style="color: #007E33; font-size: 16px;"></i></li>
 						<li><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><span> {{question.votes_count}} thích</span> </li>
 						<li><i class="fa fa-comments-o" aria-hidden="true"></i><span> {{question.answers_count}} trả lời</span></li>
 						<li><i class="fa fa-eye" aria-hidden="true"></i> <span> {{question.views_count}} xem </span></li>
@@ -87,5 +71,5 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> 
 @endverbatim

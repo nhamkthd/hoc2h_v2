@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" ng-app="hoc2h-heading" ng-controller="HeadingController">
+<!-- <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" ng-app="hoc2h-heading" ng-controller="HeadingController">
   @if(Route::has('login'))
     @if(Auth::check())
       <div ng-init="getUser({{Auth::user()}})"></div>
@@ -6,7 +6,7 @@
   @endif
   <div ng-init="getCategories()"></div>
   <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
+ 
     <div class="navbar-header">
       <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
         <span class="sr-only">Toggle navigation</span>
@@ -16,7 +16,7 @@
       </button>
       <a href="{{url('/home')}}" class="navbar-brand">Hoc2H</a>
     </div>
-    <!-- Collection of nav links and other content for toggling -->
+   
     <div id="navbarCollapse" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li><a href="#" ng-click="navBarTabClick(1)">Đề Thi</a></li>
@@ -70,7 +70,79 @@
        </ul>
      </div>
    </div>
- </nav>
+ </nav> -->
+ <!--Navbar-->
+ <nav class="navbar fixed-top navbar-expand-lg navbar-dark info-color" ng-app="hoc2h-heading" ng-controller="HeadingController">
+    @if(Route::has('login'))
+      @if(Auth::check())
+       <div ng-init="getUser({{Auth::user()}})"></div>
+      @endif
+    @endif
+    <div ng-init="getCategories()"></div>
+    <a class="navbar-brand" href="{{url('/home')}}">Hoc2H</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-5">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" ng-click="navBarTabClick(1)">Đề Thi</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('/questions')}}">Hỏi Đáp</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" 
+            id="navbarDropdownMenuLink-Categories" 
+            data-toggle="dropdown" 
+            aria-haspopup="true" 
+            aria-expanded="false">Danh Mục 
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-Categories">
+            <a class="dropdown-item" ng-repeat="category in parents_categories" href="#">@verbatim {{category.title}} @endverbatim</a>
+          </div>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto nav-flex-icons">
+         <li class="nav-item" id="showRight">
+            <a class="nav-link waves-effect waves-light">Online</i></a>
+          </li>
+         @if(Route::has('login'))
+            @if(Auth::check())
+              <li class="nav-item" ng-app="hoc2h-message" ng-controller="ReceiveMessageController" ng-init="user_id={{Auth::user()->id}}">
+                <a class="nav-link "  id="navbarDropdownMenuLink-Messages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-envelope"></i>Tin nhắn</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-Messages">
+                    Messags
+                </div>
+              </li>
+              <li class="nav-item" ng-app="hoc2h-message" ng-controller="ReceiveMessageController" ng-init="user_id={{Auth::user()->id}}">
+                <a class="nav-link "  id="navbarDropdownMenuLink-Notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-globe" aria-hidden="true"></i> Thông báo</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink-Notifications">
+                  Notifications
+                </div>
+              </li>
+              <li class="nav-item avatar dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-User" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  @verbatim
+                  <img src="{{user.avatar}}" width="30" height="30" class="img-fluid rounded-circle z-depth-0">{{user.name}}</a>
+                  @endverbatim
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink-User">
+                    <a class="dropdown-item" href="{{url('/users/'.Auth::user()->id.'/profile')}}"><i class="fa fa-user-o" aria-hidden="true"></i> Trang cá nhân</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                  document.getElementById('logout-form').submit();"><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                   {{ csrf_field() }}
+                 </form>
+                  </div>
+              </li>
+            @else
+            <li class="nav-item"><a class="nav-link" href="{{url('/login')}}"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng Nhập</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{url('/register')}}"><i class="fa fa-unlock" aria-hidden="true"></i> Đăng ký</a></li>
+            @endif
+          @endif
+      </ul>
+    </div>
+</nav>
 
  <div ng-app="hoc2h-message" ng-controller="MessageController">
   <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2" style="margin-top: 70px;">
@@ -80,7 +152,7 @@
     @verbatim
     <ul class="menu-list">  
       <li ng-repeat="user in listUserOnline" ng-click="add_msg(user.id)">
-        <img src="{{user.avatar}}" class="is-circle is-outlined bg-white" width="64">
+        <img src="{{user.avatar}}" class="is-circle is-outlined bg-white" width="35">
         {{user.name}} <i class="fa fa-circle user-status online" aria-hidden="true"></i>
       </li>
     </ul>

@@ -11,12 +11,9 @@
                 <div ng-if="tab != 0">
                     <div ng-init="getListTags(0)"></div>
                 </div>
-                <div class="row sidebar" >
-                    <div class="col-md-10 col-md-offset-1" style="padding:0 18px;">
-                        <a href="{{route('showQuestionCreateFrom')}}"  class="btn btn-info" style="width: 100%;" >Đăng câu hỏi</a>
-                    </div>
-                    <div class="col-md-10 col-md-offset-1" ng-hide="tab === 0">
-                        <input placeholder="Tìm kiếm" type="text" ng-model="keywords" ng-change="search()" class="form-control" required>
+                <div class="row justify-content-md-center sidebar" >
+                    <div class="col-12 ">
+                        <a href="{{route('showQuestionCreateFrom')}}"  class="btn btn-block default-color">Đăng câu hỏi</a>
                     </div>
                     @verbatim
                         <div ng-show="tab === 0" class="col-md-11 col-md-offset-1 user-panel">

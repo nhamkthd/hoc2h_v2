@@ -23,6 +23,7 @@ class LoginRequest extends FormRequest
      */
     public function rules()
     {
+        return "adakalald";
         return [
             'username'=>'required|min:3',
             'password'=>'required|min:6',

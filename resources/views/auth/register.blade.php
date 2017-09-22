@@ -1,6 +1,73 @@
 @extends('layouts.app')
 @section('content')
+<style type="text/css">
+    .form-elegant .font-small {
+  font-size: 0.8rem; }
+
+.form-elegant .z-depth-1a {
+  -webkit-box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25);
+  box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25); }
+
+.form-elegant .z-depth-1-half,
+.form-elegant .btn:hover {
+  -webkit-box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15);
+  box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15); }
+.md-form label {font-weight: 400;}
+                
+</style>
 <div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-8">
+            <section class="form-elegant">
+                <!--Form without header-->
+                <form class="form-horizontal" name="regForm" method="POST" action="{{ route('register') }}" novalidate>
+                        {{ csrf_field() }}
+                    <div class="card">
+                        <div class="card-body mx-4">
+                            <!--Header-->
+                            <div class="text-center">
+                                <h3 class="dark-grey-text mb-5"><strong>Đăng Ký Tài Khoản</strong></h3>
+                            </div>
+                            <!--Body-->
+                            <div class="md-form">
+                                <input type="text" id="form-name" name="name" class="form-control" required>
+                                <label for="Form-email1">Họ tên</label>
+                            </div>
+                            <div class="md-form">
+                                <input type="text" id="form-user_name" name="user_name" class="form-control" required>
+                                <label for="Form-email1">Tên đăng nhập</label>
+                            </div>
+                            <div class="md-form">
+                                <input type="email" id="form-email" name="email" class="form-control" required>
+                                <label for="Form-email1">Email</label>
+                            </div>
+                            <div class="md-form pb-3">
+                                <input type="password" id="form-password" name="password" class="form-control" required>
+                                <label for="Form-pass1">Mật khẩu</label>
+                            </div>
+                            <div class="md-form pb-3">
+                                <input type="password" id="form-password-confirm" name="password_confirm" class="form-control" required>
+                                <label for="Form-pass1">Xác nhận mật khẩu</label>
+                            </div>
+                            <div class="text-center mb-3">
+                                <button type="submit" class="btn btn-block default-color">Đăng ký</button>
+                            </div>
+                        </div>
+
+                        <!--Footer-->
+                        <div class="modal-footer mx-5 pt-3 mb-1">
+                            <p class="font-small grey-text d-flex justify-content-end">Đã là thành viên? <a href="{{ route('login') }}" class="blue-text ml-1"> Đăng nhập</a></p>
+                        </div>
+
+                    </div>
+                </form>
+                <!--/Form without header-->
+            </section>
+           
+        </div>
+    </div>
+</div>
+<!-- <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="box" style="background-color: #fff;">
@@ -79,5 +146,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 @endsection

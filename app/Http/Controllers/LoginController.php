@@ -14,6 +14,7 @@ class LoginController extends Controller
     	return view('admin.business.login.login');
     }
     public function login(LoginRequest $request){
+        return "adladaljda";
         if($request->has('rememberme'))
         {
             $rememberme=true;
