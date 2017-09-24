@@ -2,10 +2,10 @@
 @section('content')
     <div class="container app-content" ng-app="hoc2h-question" ng-controller="QuestionController">
         <div class="row">
-            <div class="col-md-8 main-content">
+            <div class="col s8 main-content">
                 @yield('question_content')
             </div>
-            <div class="col-md-4">
+            <div class="col s4">
                 @include('questions.sidebar')
             </div>
         </div>

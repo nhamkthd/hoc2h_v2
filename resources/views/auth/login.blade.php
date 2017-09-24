@@ -2,63 +2,54 @@
 @extends('layouts.app')
 @section('content')
 <style type="text/css">
-    .form-elegant .font-small {
-  font-size: 0.8rem; }
-
-.form-elegant .z-depth-1a {
-  -webkit-box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25);
-  box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25); }
-
-.form-elegant .z-depth-1-half,
-.form-elegant .btn:hover {
-  -webkit-box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15);
-  box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15); }
-.md-form label {font-weight: 400;}
-                
+    .card {padding: 20px;} 
+    .form-elegant .font-small {font-size: 0.8rem; }
+    .form-body {margin-top: 60px;}
+    .question-lable {margin-bottom: 20px; margin-top:10px; float: right;}
+    .social-button {width: 28px;}
+    .social-button i {text-align: center;}
 </style>
 <div class="container ">
-    <div class="row justify-content-md-center">
-        <div class="col-6">
+    <div class="row ">
+        <div class="col s6 offset-s3">
             <section class="form-elegant">
                 <!--Form without header-->
                 <form role="form" method="POST" action="{{ route('login') }}" novalidate>
                      {{ csrf_field() }}
                     <div class="card">
-                        <div class="card-body mx-4">
+                        <div class="card-body">
                             <!--Header-->
                             <div class="text-center">
-                                <h3 class="dark-grey-text mb-5"><strong>Đăng Nhập</strong></h3>
+                                <h5 class="dark-grey-text"><strong>Đăng Nhập</strong></h5>
                             </div>
                             <!--Body-->
-                            <div class="md-form">
-                                <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required autofocus>
-                                <label for="Form-email1">Email</label>
-                                @if ($errors->has('email'))
-                                    <span class="help-block">{{ $errors->first('email') }}</span>
-                                @endif
+                            <div class="form-body">
+                                <div class="input-field">
+                                    <input placeholder="Email" type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required autofocus>
+                                    <label for="first_name">Địa chỉ email</label>
+                                    @if ($errors->has('email'))
+                                        <span class="help-block">{{ $errors->first('email') }}</span>
+                                    @endif
+                                </div>
+                                <div class="input-field">
+                                    <input placeholder="Mật khẩu" id="password" type="password" class="form-control" name="password" require>
+                                    <label for="first_name">Mật khẩu</label>
+                                    <p class="font-small">Quên <a href="{{ route('password.request') }}" class="blue-text ml-1"> mật khẩu?</a></p>
+                                </div>
                             </div>
+                            <button style="width: 100%; margin-top: 20px;" class="waves-effect waves-light btn">Đăng Nhập</button> 
+                            <p style="text-align: center;" class="font-small"> hoặc đăng nhập bằng</p>
 
-                            <div class="md-form pb-3">
-                                <input id="password" type="password" class="form-control" name="password" require>
-                                <label for="Form-pass1">Mật khẩu</label>
-                                <p class="font-small blue-text d-flex justify-content-end">Quên <a href="{{ route('password.request') }}" class="blue-text ml-1"> mật khẩu?</a></p>
-                            </div>
-
-                            <div class="text-center mb-3">
-                                <button type="submit" class="btn btn-block default-color">Đăng nhập</button>
-                            </div>
-                            <p class="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2"> hoặc đăng nhập bằng</p>
-
-                            <div class="row my-3 d-flex justify-content-center">
+                            <div class="">
                                     <!--Facebook-->
-                                <button type="button" class="btn btn-white btn-rounded mr-md-3 z-depth-1a"><i class="fa fa-facebook blue-text text-center"></i></button>
+                                <button class="btn waves-effect waves-light social-button" type="button" class=""><i class="fa fa-facebook"></i></button>
                                     <!--Google +-->
-                                <button type="button" class="btn btn-white btn-rounded z-depth-1a"><i class="fa fa-google-plus blue-text"></i></button>
+                                <button class="btn waves-effect waves-light social-button" type="button" class=""><i class="fa fa-google-plus "></i></button>
                             </div>
                         </div>
                         <!--Footer-->
-                        <div class="modal-footer mx-5 pt-3 mb-1">
-                            <p class="font-small grey-text d-flex justify-content-end">Chưa là thành viên? <a href="{{ route('register') }}" class="blue-text ml-1"> Đăng ký</a></p>
+                        <div >
+                            <p class="font-small text-right">Chưa là thành viên? <a href="{{ route('register') }}" class="blue-text ml-1"> Đăng ký</a></p>
                         </div>
                     </div>
                 </form>

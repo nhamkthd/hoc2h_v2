@@ -7,6 +7,7 @@
                     .mini-counts {font-size: 12px; font-weight: normal; line-height: 1.3; text-align: center; color: #6a737c; min-width: 30px; height: auto; padding: 3px 6px; margin-right: 10px; display: inline-block; border: 1px solid #b9b9b9; border-radius: 2px; }
                     .mini-counts.best {background-color: #e4f3c5; color: #4F8A32;}
                     a.title-hyperlink {color: #008ad6; font-size: 13px; font-weight: normal; line-height: 1.3; display: block; white-space: unset;}
+                    .hot-tags {margin: 20px 0;}
                 </style>
                 <div ng-if="tab != 0">
                     <div ng-init="getListTags(0)"></div>
@@ -33,8 +34,8 @@
                                 </table>
                             </div>
                         </div>
-                        <div class = "col-md-11 col-md-offset-1">
-                            <p class="menu-label"><i class="fa fa-tags" aria-hidden="true"></i> Tags</p>
+                        <div class = "col-12 hot-tags">
+                            <p class="menu-label"><i class="fa fa-tags" aria-hidden="true"></i> Hot Tags</p>
                             <select selector
                                     multi="false"
                                     model="tags_category_id"
@@ -42,8 +43,7 @@
                                     value-attr="id"
                                     label-attr="title"
                                     placeholder="Tất cả danh mục" 
-                                    change ="changeCategory(newValue)" 
-                                    style="margin-left: 8px;max-width: 268px;"></select>
+                                    change ="changeCategory(newValue)" ></select>
                             <div class="sidebar-tags">
                                 <ul>
                                     <li ng-repeat="tag in sidebarTags"><a href="/questions/tagged/?id={{tag.id}}">{{tag.name}} <span class="badge badge-primary badge-pill">{{tag.questions_count}}</span></a></li>
@@ -52,3 +52,5 @@
                         </div>
                     @endverbatim
                 </div>
+                <!--Blue select-->
+                

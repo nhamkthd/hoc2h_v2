@@ -22,14 +22,14 @@
     </style>
 	<div ng-init="setSelectedTab({{$tabSelected}})"></div>
 	<div class="row ">
-		<div class="col-12 search-form" ng-hide="tab === 0">
+		<div class="col s12 search-form" ng-hide="tab === 0">
             <input placeholder="Tìm kiếm câu hỏi" type="text" ng-model="keywords" ng-change="search()" class="form-control" required>
         </div>
 	</div>
 	@verbatim
 		<div ng-init="getQuestionsWithTab(1)"></div>
 		<div class="row justify-content-md-center" id="top">
-			<div class="col-12 tab-bar">
+			<div class="col s12 tab-bar">
 				<div class="question-tab-header full-tab-header">
 					Tất cả câu hỏi  <span class="info-dark-text"> ({{total}})</span>
 					<div class="question-tabs question-tab-sort">
@@ -41,7 +41,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-12 list-questions">
+			<div class="col s12 list-questions">
 				<div ng-repeat="question in questions">
 					<question-card></question-card>
 				</div>

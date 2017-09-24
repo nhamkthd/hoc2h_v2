@@ -14,7 +14,16 @@
 	@media screen and (min-width: 769px){
 		.question-list-item {padding: 0 0 1em;}
 	}
-	.question-list-item { -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-box-align: center; -ms-flex-align: center; align-items: center; color: #818181; margin: 0 0 1em; border-bottom: 1px solid #f1f0f0; padding-bottom: 5px; padding-top: 5px;}
+	.question-list-item { -webkit-box-pack: justify; 
+		-ms-flex-pack: justify; 
+		justify-content: space-between; 
+		-webkit-box-align: center; 
+		-ms-flex-align: center; 
+		align-items: center; 
+		background-color: #fff;
+		color: #818181; 
+		margin: 0 0 1em; 
+		padding:10px;}
 	.content {font-size: 13px; color: #000;}
 
 	p.role-title{font-size:11px;font-weight:500; color:#3F729B;}
@@ -29,16 +38,16 @@
 	.question-list-summary.content{font-size: 12px;}
 	.content{line-height: 1.4em;}
 
-	.footer {padding-bottom:0px; float:right; margin-top:0px; } 
+	.footer {padding-bottom:0px; float:right; margin-top:0px; height: 30px;} 
 	.footer ul {list-style: none; display: flex; flex: row wrap; justify-content: flex-end; padding-left: 0; } 
 	.footer li + li {margin-left: .5rem; } 
-	.footer li {font-size: .75rem; height: 1.5rem;line-height: 1.5rem; text-align: center;  position: relative;  color:#3F729B;} 
+	.footer li {font-size: .75rem; text-align: center;  position: relative;  color:#3F729B;} 
 </style>
 @verbatim
 
- <div class="question-list-item">
+ <div class="question-list-item z-depth-2 hoverable">
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col s12">
 			<div class="question-list-summary">
 				<h5 class="title">
 					<a href="/questions/question/{{question.id}}">{{question.title}}</a>

@@ -15,8 +15,10 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
 
         <!--Material Design Bootstrap-->
-        <link rel="stylesheet" href="{{asset('mdb/css/bootstrap.css')}}">
-        <link rel="stylesheet" href="{{asset('mdb/css/mdb.css')}}">
+        <link rel="stylesheet" href="{{ asset('css/materialize/materialize.css') }}">
+      {{--   <link rel="stylesheet" href="{{asset('css/mdb/bootstrap.css')}}"> --}}
+        {{--<link rel="stylesheet" href="{{asset('css/mdb/mdb.css')}}"> --}}
+        
 
         <!--Sweet Alery Style-->
         <link rel="stylesheet" href="{{asset('js/flugin/alert/sweetalert.css')}}">
@@ -44,9 +46,11 @@
         <script src="{{asset('js/flugin/jquery-3.2.1.min.js')}}"></script> 
 
         <!--Material Design Bootstrap JS-->
-        <script src="{{asset('mdb/js/popper.min.js')}}"></script>
-        <script src="{{asset('mdb/js/bootstrap.min.js')}}"></script>
-        <script src="{{asset('mdb/js/mdb.js')}}"></script>
+        <script src="{{asset('js/flugin/materialize/materialize.js') }}"></script>
+       {{--  <script src="{{asset('js/flugin/mdb/popper.min.js')}}"></script>
+        <script src="{{asset('js/flugin/mdb/bootstrap.min.js')}}"></script>
+        <script src="{{asset('js/flugin/mdb/mdb.js')}}"></script> --}}
+       
 
         <!--Pusher JS-->
         <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
