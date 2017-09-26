@@ -13,6 +13,20 @@
 	app.run(function(){
 		console.log("hello message");
 	});
+	app.directive('finishRender', function ($timeout,listConversation) {
+		return {
+			restrict: 'A',
+			link: function (scope, element, attr) {
+				if (scope.$last === true) {
+					$timeout(function () {
+						for (var i = 0; i < listConversation.length; i++) {
+							angular.element("#messages"+listConversation[i].id)[0].scrollTop=99999;
+						}
+					});
+				}
+			}
+		}
+	});
 	app.factory('listUserOnline', function($http){
 		listUserOnline=[];
 		$http.get('/messages/api/listUserOnline/').then(function(res) {
@@ -65,12 +79,8 @@
 			listConversation.splice(index, 1);
 		}
 		$scope.add_msg=function (id_user) {
-			var mang=[];
-			for (var i = 0; i < listConversation.length; i++) {
-				mang.push(listConversation[i].id);
-			}
 			$http.get('/messages/api/getconversation/'+id_user).then(function (res) {
-					if(mang.indexOf(res.data.id)==-1)
+					if(findWithAttr(listConversation,'id',res.data.id)==-1)
 					{
 						listConversation.unshift(res.data);
 						if(listConversation.length>3)
@@ -83,7 +93,8 @@
 			})
 		}
 		$scope.send_msg=function (message,conversation,index) {
-			$http.post('/messages/api/create', {message:message,conversation:conversation}).then(function (res) {
+			var promise=$http.post('/messages/api/create', {message:message,conversation:conversation});
+			promise.then(function (res) {
 				listConversation[index].message.push(res.data);
 			}, function (err) {
 				
@@ -105,13 +116,34 @@
 	 	channel.bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function(data){
 	 		if(data.conversation)
 	 		{
-	 			var temp=sessionStorage.conversation_id.split(',');
-				temp.pop();
-				if(temp.indexOf(''+data.conversation.id)!=-1)
+				if(findWithAttr(listConversation,'id',data.conversation.id)!=-1)
 				{
-					listConversation[temp.indexOf(''+data.conversation.id)].message.push(data.message.original);
+					$http.get('/').then(function(err){
+						listConversation[findWithAttr(listConversation,'id',data.conversation.id)].message.push(data.message.original);
+					})
+				}
+				else
+				{
+					$http.get('/messages/api/getconversation/'+data.message.original.user_id).then(function (res) {
+							listConversation.unshift(res.data);
+							if(listConversation.length>3)
+							{
+								listConversation.pop();
+							}
+					}, function (err) {
+						console.log(err);
+					})
 				}
 	 		}
 	 	});
+	 	
 	})
 })();
+function findWithAttr(array, attr, value) {
+	 		for(var i = 0; i < array.length; i += 1) {
+	 			if(array[i][attr] === value) {
+	 				return i;
+	 			}
+	 		}
+	 		return -1;
+	 	}
