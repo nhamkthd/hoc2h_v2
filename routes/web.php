@@ -90,8 +90,15 @@ Route::group(['prefix' => 'questions'], function(){
 	Route::get('/question-create','QuestionController@create')->name('showQuestionCreateFrom')->middleware('auth');
 	Route::get('/question/{id}/{answer_id?}/{comment_id?}','QuestionController@showDetail');
 	Route::get('/question-card',function(){
-			return view('questions.directives.question_list_card');
-		});
+		return view('questions.directives.question_list_card');
+	});
+	Route::get('/answers/best-answer',function(){
+		return view('questions.directives.best_answer');
+	});
+
+	Route::get('/answers/answer-item',function(){
+		return view('questions.directives.answer_list_item');
+	});
 	Route::group(['prefix' => 'api'], function(){
 		//this is group route api angular js
 		

@@ -259,14 +259,14 @@ class QuestionController extends Controller
         return $question;
     }
 
-    //show question detail with ID
+    //show question detail
     public function apiQuestionWithID($question_id, $answer_id,$comment_id){
         $question = Question::find($question_id);
         $this->setDateFomat($question);
         $question->user;
         $question->category;
-        $question->bestAnswer = Question::haveBestAnswer($question->id);
-        if($question->bestAnswer) {
+        $question->bestAnswer = Question::bestAnswer($question->id);
+        if($question->bestAnswer != null) {
             $question->bestAnswer->user;
             $this->setDateFomat($question->bestAnswer);
             if (Auth::check() && Auth::user()->answerVotes->where('answer_id',$question->bestAnswer->id)->count()) {

@@ -5,26 +5,26 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 class Question extends Model
 {
-    public function user()
-    {
-    	return $this->belongsTo('App\User','user_id','id');
+    protected $table = 'questions';
+    
+    public function user() {
+    	return $this->belongsTo('App\User','user_id');
     }
 
     public function answers(){
-        return $this->hasMany('App\Answer','question_id','id')->orderby('id','desc');
+        return $this->hasMany('App\Answer')->orderby('is_best','desc')->orderby('id','desc');
     }
 
-    public function votes()
-    {
-    	return $this->hasMany('App\QuestionVote','question_id','id');
+    public function votes(){
+    	return $this->hasMany('App\QuestionVote');
     }
 
     public function category() {
-        return $this->belongsTo('App\Category','category_id','id');
+        return $this->belongsTo('App\Category','category_id');
     }
 
     public function followers() {
-        return $this->hasMany('App\QuestionFollwer','question_id','id');
+        return $this->hasMany('App\QuestionFollwer');
     }
 
     public static function questionsInWeek(){
@@ -49,18 +49,13 @@ class Question extends Model
         return $questionsRelated;
     }
 
-    public static function haveBestAnswer($question_id){
-        $question = Question::find($question_id);
-        $answers = $question->answers;
-        $bestAnswer = null;
-        foreach ($answers as $key => $answer){
-            if ($answer->is_best == 1) {
-               $bestAnswer = $answer;
-               $bestAnswer->index = $key;
-                break;
-            }
+    public static function bestAnswer($question_id){
+        $bestAnswer = Answer::where('question_id',$question_id)->where('is_best',1)->first();
+        if ($bestAnswer) {
+            return $bestAnswer;
+        }else {
+            return null;
         }
-        return $bestAnswer;
     }
 
 }

@@ -79,7 +79,21 @@
 			templateUrl:'/questions/question-card',
 		}	
 	});
-	//confirm delete driective
+
+	app.directive('bestAnswer',function(){
+		return {
+			restrict:'E',
+			templateUrl:'/questions/answers/best-answer',
+		}
+	});
+
+	app.directive('answerItem',function(){
+		return{
+			restrict:'E',
+			templateUrl:'/questions/answers/answer-item',
+		}
+	});
+	//confirm delete directive
 	app.directive('confirmDelete', [function () {
         return {
             priority: 100,
@@ -640,7 +654,6 @@
 
 		//vote answer
 		$scope.voteAnswer = function(index){
-
 			$http.post('/questions/api/answer/vote',{answer_id:$scope.answers[index].id,isVoted:$scope.answers[index].isVoted})
 	 			 .then(function(response){
 	 			 	console.log($scope.answers[index]);
@@ -648,17 +661,9 @@
 	 			 	if (response.data == 1) {
 	 			 		$scope.answers[index].isVoted = 1;
 	 			 		$scope.answers[index].votes_count++;
-	 			 		if (index == $scope.question.bestAnswer.index) {
-	 			 			$scope.question.bestAnswer.isVoted = 1;
-	 			 			$scope.question.bestAnswer.votes_count++;
-	 			 		}
 	 			 	} else if (response.data == 0){
 	 			 		$scope.answers[index].isVoted = 0;
 	 			 		$scope.answers[index].votes_count--;
-	 			 		if (index == $scope.question.bestAnswer.index) {
-	 			 			$scope.question.bestAnswer.isVoted = 0;
-	 			 			$scope.question.bestAnswer.votes_count--;
-	 			 		}
 	 			 	} else if (response.data == -1) {
 	 			 		window.location.href = '/login';
 	 			 	}
@@ -697,9 +702,6 @@
 				 			 	function(response){
 					 			 	console.log('Edit answer: ',response);
 					 			 	answers[index].content = response.data.content;
-					 			 	if (index == question.bestAnswer.index) {
-					 			 		question.bestAnswer.content = response.data.content;
-					 			 	}
 				 			 	}
 				 			 	,function(error){
 				 			 		console.log(error);
@@ -736,9 +738,6 @@
 				 			 	function(response){
 					 			 	console.log('delete answer: ',response);
 					 			 	answers.splice(index,1);
-					 			 	if (index == question.bestAnswer.index) {
-					 			 		question.bestAnswer = null;
-					 			 	}
 				 			 	}
 				 			 	,function(error){
 				 			 		console.log(error);
@@ -776,10 +775,6 @@
 		 			 		$scope.answers[index].comments_count++;
 		 			 		response.data.date_created = "Vừa xong";
 		 			 		$scope.answers[index].comments.push(response.data);
-		 			 		if (index == $scope.question.bestAnswer.index) {
-		 			 			$scope.question.bestAnswer.comments.push(response.data);
-		 			 			$scope.question.bestAnswer.comments_count ++;
-		 			 		}
 		 			 		$scope.comment_content_field[index]="";
 		 			 	}
 	 			 	}
@@ -802,17 +797,9 @@
 	 			 		else if (response.data == 1) {
 	 			 			$scope.answers[parentIndex].comments[index].votes_count++;
 	 			 			$scope.answers[parentIndex].comments[index].isVoted  = 1;
-	 			 			if (parentIndex == $scope.question.bestAnswer.index) {
-	 			 				$scope.question.bestAnswer.comments[index].votes_count++;
-	 			 				$scope.question.bestAnswer.comments[index].isVoted  = 1;
-	 			 			}
 	 			 		} else {
 	 			 			$scope.answers[parentIndex].comments[index].votes_count--;
 	 			 			$scope.answers[parentIndex].comments[index].isVoted = 0;
-	 			 			if (parentIndex == $scope.question.bestAnswer.index) {
-	 			 				$scope.question.bestAnswer.comments[index].votes_count--;
-	 			 				$scope.question.bestAnswer.comments[index].isVoted  = 0;
-	 			 			}
 	 			 		}
 	 			 		$scope.isCommentVoting[index] = 0;
 	 			 	}
@@ -845,9 +832,6 @@
 	 			 	function(response){
 		 			 	console.log('Edit comment: ',response);
 		 			 	$scope.answers[parentIndex].comments[index].content = response.data.content;
-		 			 	if (parentIndex == $scope.question.bestAnswer.index) {
-							$scope.question.bestAnswer.comments[index].content = response.data.content;
-						}
 		 			 	$scope.comment_editing[index] = 0;
 	 			 	}
 	 			 	,function(error){
@@ -863,10 +847,6 @@
 	 			 		console.log('Delete comment:',response);
 	 			 		$scope.answers[parentIndex].comments.splice(index,1);
 	 			 		$scope.answers[parentIndex].comments_count--;
-	 			 		if (parentIndex == $scope.question.bestAnswer.index) {
-							$scope.question.bestAnswer.comments.splice(index,1);
-							$scope.question.bestAnswer.comments_count--;
-						}
 	 			 	}
 	 			 	,function(error){
 	 			 	console.log(error);

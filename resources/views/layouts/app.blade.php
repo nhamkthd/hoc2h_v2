@@ -12,9 +12,7 @@
         <link rel="stylesheet" href="{{asset('css/bootstrap/bootstrap.css')}}">
         <link rel="stylesheet" href="{{asset('js/flugin/alert/sweetalert.css')}}">
         <link rel="stylesheet" href="{{asset('css/mdb/css/mdb.css')}}" >
-        <link rel="stylesheet" href="{{asset('css/font-awesome/css/font-awesome.css') }}">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"> 
+        <link rel="stylesheet" href="{{asset('css/fonts/font-awesome.css') }}">
 
         <link rel="stylesheet" href="{{ asset('css/ng-tags-input/ng-tags-input.css') }}">
         <link rel="stylesheet" href="{{ asset('css/ng-selector/angular-selector.css') }}">
