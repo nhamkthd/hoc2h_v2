@@ -181,6 +181,9 @@ return [
         //fulltext search advance
         AdvanceSearch\AdvanceSearchProvider\AdvanceSearchProvider::class,
 
+        //user permission provider
+        Spatie\Permission\PermissionServiceProvider::class,
+
     ],
 
     /*

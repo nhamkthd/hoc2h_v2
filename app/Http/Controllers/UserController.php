@@ -46,6 +46,11 @@ class UserController extends Controller
     return User::all();
   }
 
+  public function allMembers() {
+    $users =  User::orderby('coin','desc')->get();
+    return view('users.members',compact('users'));
+  }
+
   public function apiGetProfile($id){
     $user = User::find($id);
     $user->join_date = $user->created_at->format('d/m/Y');

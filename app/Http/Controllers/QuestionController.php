@@ -17,6 +17,9 @@ use App\RequestAnswer;
 
 class QuestionController extends Controller
 {   
+    public function __construct() {
+        $this->middleware(['auth', 'clearance'])->except('index', 'show');
+    }
     //reset date time fomat
     public function setDateFomat($object){
        if($object->created_at->diffInDays(Carbon::now()) > 1){
@@ -197,7 +200,7 @@ class QuestionController extends Controller
     }
 
     //show detail 
-    public  function  showDetail($id, $answer_id = null, $comment_id = null){
+    public  function  show($id, $answer_id = null, $comment_id = null){
         $question = Question::find($id);
         if ($question) {
             $question->views_count ++;
@@ -244,6 +247,11 @@ class QuestionController extends Controller
     //store new question
     public function apiStore(Request $request)
     {
+        $this->validate($request, [
+            'title'=>'required|max:200',
+            'category_id' =>'required',
+            ]);
+
         $question = new Question;
         $question->category_id = $request->category;
         $question->user_id = Auth::user()->id;
@@ -320,6 +328,9 @@ class QuestionController extends Controller
     //edit question
     public function apiEdit(Request $request)
     {
+         $this->validate($request, [
+            'title'=>'required|max:200',
+            ]);
         $question = Question::find($request->id);
         $question->title  = $request->title;
         $question->content = $request->content;

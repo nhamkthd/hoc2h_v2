@@ -24,9 +24,10 @@ Route::group(['prefix' => 'categories'],function(){
 //USER
 Route::group(['prefix'=>'users'],function(){
 	Route::get('/{id}/{tab?}','UserController@userIndex')->where('id', '[0-9]+');
+	Route::get('/members-list','UserController@allMembers');
 	Route::group(['prefix'=>'api'],function(){
 		//GET METHOD
-		Route::get('all-users','UserController@getAll');
+		Route::get('/all-users','UserController@getAll');
 		Route::get('/user-profile/{id}','UserController@apiGetProfile');
 		Route::get('/user-activity-overview/{user_id}','UserController@getActivityOverview');
 		Route::get('/user-questions/{user_id}/{sort_id}','QuestionController@apiGetUserQuestions');
@@ -88,7 +89,7 @@ Route::group(['prefix' => 'questions'], function(){
 	Route::get('/','QuestionController@index');
 	Route::get('/tagged/','QuestionController@indexWithTagged');
 	Route::get('/question-create','QuestionController@create')->name('showQuestionCreateFrom')->middleware('auth');
-	Route::get('/question/{id}/{answer_id?}/{comment_id?}','QuestionController@showDetail');
+	Route::get('/question/{id}/{answer_id?}/{comment_id?}','QuestionController@show');
 	Route::get('/question-card',function(){
 		return view('questions.directives.question_list_card');
 	});

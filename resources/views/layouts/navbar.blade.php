@@ -26,6 +26,7 @@
               <li ng-repeat="category in parents_categories"><a href="#">@verbatim {{category.title}} @endverbatim</a></li>
             </ul>
         </li>
+        <li><a  href="{{url('/users/members-list')}}">Thành Viên</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a  href="#"><i class="fa fa-search" aria-hidden="true"></i> tìm kiếm</a></li>
@@ -53,6 +54,9 @@
               {{Auth::user()->name}}<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="{{url('/users/'.Auth::user()->id.'/profile')}}"><i class="fa fa-user-o" aria-hidden="true"></i> Trang cá nhân</a></li>
+                @role('Admin')
+                  <li><a href="{{url('/admin')}}"><i class="fa fa-user-o" aria-hidden="true"></i>Admin</a></li>
+                @endrole
                 <li role="separator" class="divider"></li>
                 <li><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                   document.getElementById('logout-form').submit();"><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
@@ -71,6 +75,20 @@
      </div>
    </div>
  </nav>
+
+@if(Session::has('flash_message'))
+ <div class="container">      
+  <div class="alert alert-success"><em> {!! session('flash_message') !!}</em>
+  </div>
+</div>
+@endif 
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">              
+    @include ('errors.list') {{-- Including error file --}}
+  </div>
+</div>
+
 
  <div ng-app="hoc2h-message" ng-controller="MessageController">
   <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2" style="margin-top: 70px;">
