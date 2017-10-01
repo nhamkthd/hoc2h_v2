@@ -165,6 +165,11 @@ return [
         App\Providers\ComposerServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+
+        //permission provider...
+        Spatie\Permission\PermissionServiceProvider::class,        
+        Laracasts\Flash\FlashServiceProvider::class,        
+        Collective\Html\HtmlServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -180,9 +185,6 @@ return [
         
         //fulltext search advance
         AdvanceSearch\AdvanceSearchProvider\AdvanceSearchProvider::class,
-
-        //user permission provider
-        Spatie\Permission\PermissionServiceProvider::class,
 
     ],
 
@@ -236,6 +238,7 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+
     ],
 
 ];

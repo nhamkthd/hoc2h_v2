@@ -83,13 +83,6 @@
 </div>
 @endif 
 
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">              
-    @include ('errors.list') {{-- Including error file --}}
-  </div>
-</div>
-
-
  <div ng-app="hoc2h-message" ng-controller="MessageController">
   <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2" style="margin-top: 70px;">
     <h3>Online

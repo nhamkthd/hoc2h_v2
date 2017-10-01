@@ -271,4 +271,27 @@ class UserController extends Controller
       $pms = json_decode($out,true);
       return $pms;
   }
+
+  private function syncPermissions(Request $request, $user)
+  {
+        // Get the submitted roles
+    $roles = $request->get('roles', []);
+    $permissions = $request->get('permissions', []);
+
+        // Get the roles
+    $roles = Role::find($roles);
+
+        // check for current role changes
+    if( ! $user->hasAllRoles( $roles ) ) {
+            // reset all direct permissions for user
+      $user->permissions()->sync([]);
+    } else {
+            // handle permissions
+      $user->syncPermissions($permissions);
+    }
+
+    $user->syncRoles($roles);
+
+    return $user;
+  }
 }

@@ -17,9 +17,7 @@ use App\RequestAnswer;
 
 class QuestionController extends Controller
 {   
-    public function __construct() {
-        $this->middleware(['auth', 'clearance'])->except('index', 'show');
-    }
+
     //reset date time fomat
     public function setDateFomat($object){
        if($object->created_at->diffInDays(Carbon::now()) > 1){
