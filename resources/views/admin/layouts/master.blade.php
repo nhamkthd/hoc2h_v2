@@ -44,7 +44,13 @@
   <script src="{{asset('js/controllers/admin/category.js')}}"></script>
    <script src="{{asset('js/flugin/notify/bootstrap-notify.js')}}"></script>
   <script src="{{asset('js/flugin/notify/bootstrap-notify.min.js')}}"></script>
-
+  <script type="text/javascript">
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+      }
+    });
+  </script>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>

@@ -1,4 +1,5 @@
-				<div ng-if="has_bestAnswer" class="best-answer-panel" id="anchor{{question.bestAnswer.id}}">	
+				@verbatim
+				<div ng-if="has_bestAnswer=true" class="best-answer-panel" id="anchor{{question.bestAnswer.id}}">	
 					<h5 class="panel-title">Câu trả lời tốt nhất</h5>
 					<div class="panel-body">
 						<span class="pull-left">
@@ -15,13 +16,13 @@
 							<div class="post-info">
 								<ul class="nav nav-pills" role="tablist">
 									<li ng-class="{voted:question.bestAnswer.isVoted == 1}" 
-											ng-click="voteAnswer(question.bestAnswer.index)">
+											ng-click="voteAnswer(question.bestAnswer.index,0)">
 											<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
 											Thích <span>{{question.bestAnswer.votes_count}}</span></li>
 									<li href ng-click="showComments(question.bestAnswer.id)">
 											<i class="fa fa-comment-o" aria-hidden="true"></i>
 											Bình luận <span>{{question.bestAnswer.votes_count}}</span></li>
-									<li ng-show="user.id == question.user.id" ng-click="setBestAnswer(question.bestAnswer.index,0)">
+									<li ng-show="user.id == question.user.id" ng-click="setBestAnswer(question.bestAnswer.id,0,0)">
 											<i class="fa fa-close color-danger-dark" aria-hidden="true"></i>
 											Not best answer</li>
 									<li><span class="date-created"><i class="fa fa-clock-o" aria-hidden="true"></i> {{question.bestAnswer.date_created}}</span></li>
@@ -98,3 +99,4 @@
 						</div>
 					</div>
 				</div>
+				@endverbatim

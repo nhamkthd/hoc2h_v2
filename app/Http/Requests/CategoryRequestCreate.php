@@ -24,8 +24,7 @@ class CategoryRequestCreate extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required|max:191|min:3|unique:Categories,title',
-            'description'=>'required|min:3'
+            'title'=>'required|max:191|min:3',
         ];
     }
     public function messages(){
@@ -33,9 +32,6 @@ class CategoryRequestCreate extends FormRequest
                 'title.required'=>'Trường này không được để trống',
                 'title.max'=>'Trường này có độ dài đến 191 ký tự',
                 'title.min'=>'Trường này có độ dài từ 3 ký tự',
-                'title.unique'=>'Trường này đã tồn tại',
-                'description.required'=>'Trường này không được để trống',
-                'description.min'=>'Trường này có độ dài từ 3 ký tự'
         ];
     }
 }

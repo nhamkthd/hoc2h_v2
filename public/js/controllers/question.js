@@ -673,16 +673,19 @@
 		}
 
 		//set best answer 
-		$scope.setBestAnswer = function(index,param){
-			$http.post('/questions/api/answer/set-best',{answer_id:$scope.answers[index].id,is_best:param})
+		$scope.setBestAnswer = function(index,param,type){
+			var indexs;
+			if(type==1)
+			{
+				indexs=index;
+				index=$scope.answers[index].id;
+			}
+			$http.post('/questions/api/answer/set-best',{answer_id:index,is_best:param})
 				 .then(function(response){
-				 	$scope.answers[index].is_best = response.data;
-				 	console.log('set best answer:',$scope.answers[index].is_best);
 				 	if (response.data == 0) {
 				 		$scope.question.bestAnswer = null;
 				 	}else {
-				 		$scope.question.bestAnswer = $scope.answers[index];
-				 		$scope.question.bestAnswer.index = index;
+				 		$scope.question.bestAnswer = $scope.answers[indexs];
 				 	}
 				 },function(error){
 				 	console.log(error.data);

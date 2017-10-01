@@ -1,5 +1,5 @@
 @verbatim
-<div class="media list-item-block"  id="anchor{{answer.id}}" ng-show="answer.is_best == 0">
+<div class="media list-item-block"  id="anchor{{answer.id}}" ng-show="answer.id != question.bestAnswer.id">
 	<span class="pull-left">
 		<img class="small-avt" src="{{answer.user.avatar}}" width="40" height="40">
 	</span>
@@ -33,14 +33,14 @@
 
 		<div class="post-info">
 			<ul class="nav nav-pills" role="tablist">
-				<li ng-class="{voted:answer.isVoted == 1}" ng-click="voteAnswer(answers.indexOf(answer))">
+				<li ng-class="{voted:answer.isVoted == 1}" ng-click="voteAnswer(answers.indexOf(answer),1)">
 					  	<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
 						Thích <span>{{answer.votes_count}}</span></li>
 				<li href ng-click="showComments(answer.id)">
 						<i class="fa fa-comment-o" aria-hidden="true"></i>
 						Bình luận <span>{{answer.comments_count}}</span></li>
 				<li ng-show="user.id == question.user.id && question.bestAnswer == null"
-					ng-click="setBestAnswer(answers.indexOf(answer),1)">
+					ng-click="setBestAnswer(answers.indexOf(answer),1,1)">
 						<i class="fa fa-check color-success-dark " aria-hidden="true"></i>
 						Best answer</li>
 				<li><span class="date-created"><i class="fa fa-clock-o" aria-hidden="true"></i> {{answer.date_created}}</span></li>

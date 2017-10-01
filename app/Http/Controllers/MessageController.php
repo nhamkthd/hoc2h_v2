@@ -33,11 +33,11 @@ class MessageController extends Controller
         $conversation=Conversation::find($req->conversation);
         if($conversation->from_user_id==Auth::user()->id)
         {
-            User::find($conversation->to_user_id)->notify((new SendMessageNotification(response()->json($message),$conversation))->delay(Carbon::now()->addseconds(2)));
+            User::find($conversation->to_user_id)->notify((new SendMessageNotification(response()->json($message),$conversation))->delay(Carbon::now()->addseconds(1)));
         }
         else
         {
-            User::find($conversation->from_user_id)->notify((new SendMessageNotification(response()->json($message),$conversation))->delay(Carbon::now()->addseconds(2)));
+            User::find($conversation->from_user_id)->notify((new SendMessageNotification(response()->json($message),$conversation))->delay(Carbon::now()->addseconds(1)));
         }
         return response()->json($message);
 

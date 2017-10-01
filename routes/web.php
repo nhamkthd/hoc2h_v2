@@ -163,7 +163,7 @@ Route::group(['middleware'=>['login']],function(){
 		Route::post('category/create/{category}',array('as'=>'postcreateCategoryid','uses'=>'CategoryController@postCreateid'));
 		Route::get('category/show/{category}',array('as'=>'showCategory','uses'=>'CategoryController@Show'));
 		Route::post('category/show/{category}',array('as'=>'updateCategory','uses'=>'CategoryController@update'));
-		// Route::get('category/{id}',array('as'=>'destroyCategory','uses'=>'CategoryController@destroy'));
+		Route::delete('category/{id}',array('as'=>'destroyCategory','uses'=>'CategoryController@destroy'));
 		Route::get('category/setting',function()
 		{
 			return view('admin.business.category.setting');
