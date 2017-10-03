@@ -2,10 +2,11 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 //AUTH
 Auth::routes();
+
 Route::get('test','Test@test');
 Route::get('/redirect', 'Auth\SocialAuthController@redirect');
 Route::get('/callback', 'Auth\SocialAuthController@callback');

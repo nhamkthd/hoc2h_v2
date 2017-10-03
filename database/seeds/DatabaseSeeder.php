@@ -28,12 +28,12 @@ class DatabaseSeeder extends Seeder
         //         $role->syncPermissions(Permission::where('name', 'LIKE', 'view_%')->get());
         //     }
         // }
-        //  $this->call(CategoriesTableSeeder::class);
-        $this->call(TagsTableSeeder::class);
-        //$this->call(QuestionsTableSeeder::class);
+        // $this->call(CategoriesTableSeeder::class);
+        //$this->call(TagsTableSeeder::class);
+        $this->call(QuestionsTableSeeder::class);
         // $this->call(QuestionTagsTableSeeder::class);
         // $this->call(AnswersTableSeeder::class);
-        //$this->call(TestsSeeder::class);
+        $this->call(TestsSeeder::class);
         // $this->call(MultilChoiceTestSeeder::class);
          //$this->call(MultiChoiceAnswerSeeder::class);
     }

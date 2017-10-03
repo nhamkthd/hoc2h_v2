@@ -15,10 +15,11 @@ use App\Http\Requests\updateUserRequest;
 use Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Authorizable;
 
 class UserController extends Controller
 {
-  use Authorizable;
+  //use Authorizable;
   public function index() {
     $users = User::latest()->paginate(15);
     return view('admin.business.user.index',compact('users'));
@@ -243,128 +244,128 @@ class UserController extends Controller
 
     return $result;
   }
-  //ADMIN   
-  public function index(){
-    //$user = User::all();
-    return view('admin.business.user.index');
-  }
+  // //ADMIN   
+  // public function index(){
+  //   //$user = User::all();
+  //   return view('admin.business.user.index');
+  // }
 
-  public function getList(){
+  // public function getList(){
    
-  }
+  // }
 
-  public function create(){
-    $role = Role::all();
-    return view('admin.business.user.create',compact('role'));
-  }
+  // public function create(){
+  //   $role = Role::all();
+  //   return view('admin.business.user.create',compact('role'));
+  // }
 
-  public function store(UserRequest $request,User $user){
-    $user = new User();
-    $user->name=$request->name;
-    $user->user_name=$request->user_name;
-    $user->email=$request->email;
-    $user->phone=$request->phone;
-    $user->class=$request->class;
-    $user->gender=$request->gender;
-    $user->birthday=$request->birthday;
-    if($request->hasFile('avatar')){
-      $user->avatar=$this->uploadImgur($_FILES['avatar'])['data']['link'];
-    }
-    else {
-    $user->avatar="https://imgur.com/a/djlvB";
-    }
-    $user->local=$request->local;
-    $user->coin=$request->coin;
-    $user->status=$request->status;
-    $user->description=$request->description;
-    $user->password=Hash::make($request->password);
-    $user->code=$request->code;
-    $user->save();
+  // public function store(UserRequest $request,User $user){
+  //   $user = new User();
+  //   $user->name=$request->name;
+  //   $user->user_name=$request->user_name;
+  //   $user->email=$request->email;
+  //   $user->phone=$request->phone;
+  //   $user->class=$request->class;
+  //   $user->gender=$request->gender;
+  //   $user->birthday=$request->birthday;
+  //   if($request->hasFile('avatar')){
+  //     $user->avatar=$this->uploadImgur($_FILES['avatar'])['data']['link'];
+  //   }
+  //   else {
+  //   $user->avatar="https://imgur.com/a/djlvB";
+  //   }
+  //   $user->local=$request->local;
+  //   $user->coin=$request->coin;
+  //   $user->status=$request->status;
+  //   $user->description=$request->description;
+  //   $user->password=Hash::make($request->password);
+  //   $user->code=$request->code;
+  //   $user->save();
 
-    if ( $user = User::create($request->except('roles', 'permissions')) ) {
-        $this->syncPermissions($request, $user);
-        flash('User has been created.');
-    } else {
-        flash()->error('Unable to create user.');
-    }
+  //   if ( $user = User::create($request->except('roles', 'permissions')) ) {
+  //       $this->syncPermissions($request, $user);
+  //       flash('User has been created.');
+  //   } else {
+  //       flash()->error('Unable to create user.');
+  //   }
 
-    return redirect('admin/user');
-  }
+  //   return redirect('admin/user');
+  // }
 
-  public function destroy($id) {
-    $User = User::find($id);
-    $User->delete();
-    \Session::flash('notify','Xóa thành công');
-    return redirect()->route('indexUser');
-  }
+  // public function destroy($id) {
+  //   $User = User::find($id);
+  //   $User->delete();
+  //   \Session::flash('notify','Xóa thành công');
+  //   return redirect()->route('indexUser');
+  // }
 
-  public function show($id){
-    $user = User::find($id);
-    $roles = Role::all();
-    return view('admin.business.user.show',compact('user','roles'));
-  }
+  // public function show($id){
+  //   $user = User::find($id);
+  //   $roles = Role::all();
+  //   return view('admin.business.user.show',compact('user','roles'));
+  // }
 
-  public function update(Request $request,User $user){
-    $user->name=$request->name;
-    $user->user_name=$request->user_name;
-    $user->email=$request->email;
-    $user->role_id=$request->role;
-    $user->phone=$request->phone;
-    $user->class=$request->class;
-    $user->gender=$request->gender;
-    $user->birthday=$request->birthday;
-    if($request->hasFile('avatar')){
-      $user->avatar=$this->uploadImgur($_FILES['avatar'])['data']['link'];
-    }
-    else {
+  // public function update(Request $request,User $user){
+  //   $user->name=$request->name;
+  //   $user->user_name=$request->user_name;
+  //   $user->email=$request->email;
+  //   $user->role_id=$request->role;
+  //   $user->phone=$request->phone;
+  //   $user->class=$request->class;
+  //   $user->gender=$request->gender;
+  //   $user->birthday=$request->birthday;
+  //   if($request->hasFile('avatar')){
+  //     $user->avatar=$this->uploadImgur($_FILES['avatar'])['data']['link'];
+  //   }
+  //   else {
      
-    }
-    $user->local=$request->local;
-    $user->coin=$request->coin;
-    $user->status=$request->status;
-    $user->description=$request->description;
-    $user->password=Hash::make($request->password);
-    $user->code=$request->code;
-    $user->save();
+  //   }
+  //   $user->local=$request->local;
+  //   $user->coin=$request->coin;
+  //   $user->status=$request->status;
+  //   $user->description=$request->description;
+  //   $user->password=Hash::make($request->password);
+  //   $user->code=$request->code;
+  //   $user->save();
     
-    return redirect('admin/user');
-  }
+  //   return redirect('admin/user');
+  // }
 
-  public function multiDelete(Request $req)
-  {
-    foreach ($req->id as $key => $value) {
-      User::find($value)->delete();
-    }
-    return 'true';
-  }
+  // public function multiDelete(Request $req)
+  // {
+  //   foreach ($req->id as $key => $value) {
+  //     User::find($value)->delete();
+  //   }
+  //   return 'true';
+  // }
 
-  public function search(Request $req) {
-    $user=User::where('name', 'LIKE', '%'.$req->key.'%')->get();
-    foreach ($user as $key => $u) {
-     $u->role;
-    }
-    return response()->json($user);
-  }
+  // public function search(Request $req) {
+  //   $user=User::where('name', 'LIKE', '%'.$req->key.'%')->get();
+  //   foreach ($user as $key => $u) {
+  //    $u->role;
+  //   }
+  //   return response()->json($user);
+  // }
 
-  public function uploadImgur($img) {
-      $filename = $img['tmp_name'];
-      $client_id="5f83e114af0de78";
-      $handle = fopen($filename, "r");
-      $data = fread($handle, filesize($filename));
-      $pvars   = array('image' => base64_encode($data));
-      $timeout = 30;
-      $curl = curl_init();
-      curl_setopt($curl, CURLOPT_URL, 'https://api.imgur.com/3/image.json');
-      curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
-      curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Client-ID ' . $client_id));
-      curl_setopt($curl, CURLOPT_POST, 1);
-      curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-      curl_setopt($curl, CURLOPT_POSTFIELDS, $pvars);
-      $out = curl_exec($curl);
-      curl_close ($curl);
-      $pms = json_decode($out,true);
-      return $pms;
-  }
+  // public function uploadImgur($img) {
+  //     $filename = $img['tmp_name'];
+  //     $client_id="5f83e114af0de78";
+  //     $handle = fopen($filename, "r");
+  //     $data = fread($handle, filesize($filename));
+  //     $pvars   = array('image' => base64_encode($data));
+  //     $timeout = 30;
+  //     $curl = curl_init();
+  //     curl_setopt($curl, CURLOPT_URL, 'https://api.imgur.com/3/image.json');
+  //     curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
+  //     curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Client-ID ' . $client_id));
+  //     curl_setopt($curl, CURLOPT_POST, 1);
+  //     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+  //     curl_setopt($curl, CURLOPT_POSTFIELDS, $pvars);
+  //     $out = curl_exec($curl);
+  //     curl_close ($curl);
+  //     $pms = json_decode($out,true);
+  //     return $pms;
+  // }
 
   
 }

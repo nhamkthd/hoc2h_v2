@@ -74,9 +74,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
-        // UserProfile::create(['user_id'=>$new_user->id]);
-        // UserPrivate::create(['user_id' => $new_user->id]);
-        // UserNotificationSetting::create(['user_id'=> $new_user->id]);
+        
         $user_private = new UserPrivate();
         $user_private->user_id = $new_user->id;
         $user_private->save();
@@ -89,8 +87,7 @@ class RegisterController extends Controller
         $user_profile->user_id = $new_user->id;
         $user_profile->save();
 
-        $role = Role::where('id',4)->first();
-        $user->assignRole($role);
+        $new_user->assignRole('Member');
         
         return $new_user;
 

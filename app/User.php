@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-//use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Traits\HasRoles;
 use Cache;
 class User extends Authenticatable
 {
     use Notifiable;
-    //use HasRoles;
+    use HasRoles;
     /**
      * The attributes that are mass assignable.
      *
@@ -29,12 +29,16 @@ class User extends Authenticatable
         return Cache::has('user-is-online-' . $this->id);
     }
 
+    public function profile() {
+      return $this->belongsTo('App\UserProfile','user_id');
+    }
+
     public function privateSetting(){
-        return $this->belongsTo('App\UserPrivate','user_id','id');
+        return $this->belongsTo('App\UserPrivate','user_id');
     }
 
     public function notifcationSetting(){
-        return $this->belongsTo('App\UserNotificationSetting','user_id','id');
+        return $this->belongsTo('App\UserNotificationSetting','user_id');
     }
 
     public function questionVotes()

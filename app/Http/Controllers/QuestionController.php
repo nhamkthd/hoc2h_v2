@@ -17,10 +17,6 @@ use App\RequestAnswer;
 
 class QuestionController extends Controller
 {   
-    public function __construct() {
-        $this->middleware(['auth'])->except('index', 'show','apiGetAll','getQuestionsRelated','apiGetQuestionsTagged','apiGetUserQuestions','apiSearch','apiQuestionWithID');
-    }
-
     //reset date time fomat
     public function setDateFomat($object){
        if($object->created_at->diffInDays(Carbon::now()) > 1){
