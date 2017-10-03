@@ -4,26 +4,25 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 use Cache;
 class User extends Authenticatable
 {
     use Notifiable;
-
+    use HasRoles;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+    protected $table = "users";
     protected $hidden = [
         'password', 'remember_token',
     ];
-    protected $table = "users";
+    protected $fillable = [
+        'name', 'user_name','email', 'password','phone','class','local','gender','status','coin','avatar','role_id','birthday','description',
+    ];
+    
 
     public function isOnline()
     {
@@ -50,13 +49,6 @@ class User extends Authenticatable
 
     public function answerCommentVotes() {
         return $this->hasMany('App\AnswerCommentVote','user_id','id');
-    }
-    protected $fillable = [
-        'name', 'user_name','email', 'password','phone','class','local','gender','status','coin','avatar','role_id','birthday','description',
-    ];
-   
-    public function role(){
-        return $this->belongsTo('App\Role','role_id','id');
     }
 
     public function messages(){
