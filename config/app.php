@@ -182,7 +182,7 @@ return [
         AdvanceSearch\AdvanceSearchProvider\AdvanceSearchProvider::class,
 
         //user permission provider
-        Spatie\Permission\PermissionServiceProvider::class,
+        //Spatie\Permission\PermissionServiceProvider::class,
 
     ],
 
