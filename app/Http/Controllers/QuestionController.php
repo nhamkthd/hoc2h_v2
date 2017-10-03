@@ -17,6 +17,9 @@ use App\RequestAnswer;
 
 class QuestionController extends Controller
 {   
+    public function __construct() {
+        $this->middleware(['auth'])->except('index', 'show','apiGetAll','getQuestionsRelated','apiGetQuestionsTagged','apiGetUserQuestions','apiSearch','apiQuestionWithID');
+    }
 
     //reset date time fomat
     public function setDateFomat($object){
@@ -64,6 +67,21 @@ class QuestionController extends Controller
            }
         }
     	return view('questions.index',compact('tabSelected'));
+    }
+
+      //show detail 
+    public  function  show($id, $answer_id = null, $comment_id = null){
+        $question = Question::find($id);
+        if ($question) {
+            $question->views_count ++;
+            $question->save();
+        }
+        return view('questions.directives.question_detail',compact('question','answer_id','comment_id'));
+    }
+
+    //direct create question form
+    public function create() {
+        return view('questions.directives.question_create');  
     }
 
     //get questions with tab(sort)
@@ -190,21 +208,6 @@ class QuestionController extends Controller
         }
 
         return $user_request_answers;
-    }
-
-    //direct create question form
-    public function create() {
-        return view('questions.directives.question_create');  
-    }
-
-    //show detail 
-    public  function  show($id, $answer_id = null, $comment_id = null){
-        $question = Question::find($id);
-        if ($question) {
-            $question->views_count ++;
-            $question->save();
-        }
-        return view('questions.directives.question_detail',compact('question','answer_id','comment_id'));
     }
 
     //full text search

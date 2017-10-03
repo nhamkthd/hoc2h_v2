@@ -16,7 +16,7 @@ class TagsTableSeeder extends Seeder
 
         foreach(range(1,50) as $index){
             $company =App\Tag::create([
-                'name' => $faker->company,
+                'name' => $faker->name,
                 'category_id' => $faker->randomElement($categories),
             ]);
         }

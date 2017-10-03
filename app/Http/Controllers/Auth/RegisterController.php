@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use App\UserPrivate;
-use App\UserNotificationSetting;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Spatie\Permission\Contracts\Role;
+use Spatie\Permission\Models\Permission;
+use App\UserProfile;
+use App\User;
+use App\UserPrivate;
+use App\UserNotificationSetting;
 
 class RegisterController extends Controller
 {
@@ -64,21 +67,30 @@ class RegisterController extends Controller
      * @return User
      */
     protected function create(array $data)
-    {
+    {  
         $new_user = User::create([
             'name' => $data['name'],
             'user_name' => $data['user_name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
-
-        $user_private = new UserPrivate;
+        // UserProfile::create(['user_id'=>$new_user->id]);
+        // UserPrivate::create(['user_id' => $new_user->id]);
+        // UserNotificationSetting::create(['user_id'=> $new_user->id]);
+        $user_private = new UserPrivate();
         $user_private->user_id = $new_user->id;
         $user_private->save();
 
-        $user_noti_setting = new UserNotificationSetting;
+        $user_noti_setting = new UserNotificationSetting();
         $user_noti_setting->user_id = $new_user->id;
         $user_noti_setting->save();
+
+        $user_profile = new UserProfile();
+        $user_profile->user_id = $new_user->id;
+        $user_profile->save();
+
+        $role = Role::where('id',4)->first();
+        $user->assignRole($role);
         
         return $new_user;
 

@@ -18,16 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('user_name')->nullable();
             $table->string('email')->nullable();
-            $table->integer('phone')->nullable();
-            $table->string('job')->nullable();
-            $table->integer('gender')->nullable();
-            $table->string('birthday')->nullable();
-            $table->string('avatar')->default('http://i.imgur.com/kHn39EY.jpg');
-            $table->string('local')->nullable();
-            $table->integer('coin')->default(0);
-            $table->integer('status')->default(1);
-            $table->text('description')->nullable();
             $table->string('password');
+            $table->integer('role')->default(4);
+            $table->integer('status')->default(1);
             $table->string('code')->nullable();
             $table->string('provider_id')->nullable();
             $table->string('provider')->nullable();

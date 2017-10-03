@@ -55,7 +55,7 @@
               <ul class="dropdown-menu">
                 <li><a href="{{url('/users/'.Auth::user()->id.'/profile')}}"><i class="fa fa-user-o" aria-hidden="true"></i> Trang cá nhân</a></li>
                 @role('Admin')
-                  <li><a href="{{url('/admin')}}"><i class="fa fa-user-o" aria-hidden="true"></i>Admin</a></li>
+                  <li><a href="{{url('/admin')}}"><i class="fa fa-user-o" aria-hidden="true"></i> Admin</a></li>
                 @endrole
                 <li role="separator" class="divider"></li>
                 <li><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();

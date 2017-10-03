@@ -37,10 +37,10 @@
       <form action='{{asset("admin/login")}}' method="post">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         @if($errors->has('errorslogin'))
-                <div class="alert alert-danger">
-                    {{$errors->first('errorslogin')}}
-                </div>
-            @endif
+          <div class="alert alert-danger">
+            {{$errors->first('errorslogin')}}
+          </div>
+        @endif
         <div class="form-group has-feedback">
           <input type="text" class="form-control" name="username" placeholder="username">
           <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

@@ -8,18 +8,114 @@ use Auth;
 use App\User;
 use App\UserPrivate;
 use App\UserNotificationSetting;
-use App\Role;
-use App\Question;
-use App\Answer;
-use App\Test;
+use App\UserProfile;
 use App\RequestAnswer;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\updateUserRequest;
 use Hash;
-
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
+  use Authorizable;
+  public function index() {
+    $users = User::latest()->paginate(15);
+    return view('admin.business.user.index',compact('users'));
+  }
+
+  public function create() {
+
+    $roles = Role::pluck('name','id');
+    return view('admin.business.user.create',compact('roles'));
+  }
+
+  public function store(Requests $request){
+    $this->validate($request, [
+        'name' => 'bail|required|min:5',
+        'user_name' => 'required|string|min:5',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|string|min:6|confirmed',
+        'roles' => 'required|min:1'
+    ]);
+    $request->merge(['password' => bcrypt($request->get('password'))]);
+    if ( $user = User::create($request->except('roles', 'permissions')) ) {
+        $this->syncPermissions($request, $user);
+        UserProfile::firstOrCreate(['user_id'=>$user->id]);
+        flash('User has been created.');
+    } else {
+        flash()->error('Unable to create user.');
+    }
+
+    return $user;
+  }
+
+  public function show($id) {
+    return view('admin.business.user.show',compact('id'));
+  }
+
+  public function update(Requests $request){
+   
+    $this->validate($request, [
+        'name' => 'bail|required|min:5',
+        'user_name' => 'required|string|min:5',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|min:6',
+        'roles' => 'required|min:1'
+    ]);
+    $user = User::findOrFail($id);
+    $user->fill($request->except('roles', 'permissions', 'password'));
+
+    if($request->get('password')) {
+        $user->password = bcrypt($request->get('password'));
+    }
+    // Handle the user roles
+    $this->syncPermissions($request, $user);
+
+    $user->save();
+    flash()->success('User has been updated.');
+    return $user;
+  }
+
+  public function destroy($id) {
+    if ( Auth::user()->id == $id ) {
+        flash()->warning('Deletion of currently logged in user is not allowed :(')->important();
+        return redirect()->back();
+    }
+
+    if( User::findOrFail($id)->delete() ) {
+        flash()->success('User has been deleted');
+    } else {
+        flash()->success('User not deleted');
+    }
+    return 1;
+  }
+
+  public function ban($id) {
+
+  }
+
+  private function syncPermissions(Request $request, $user) {
+        // Get the submitted roles
+    $permissions = $request->get('permissions', []);
+
+        // Get the roles
+    $role = Role::find($request->role_id);
+
+        // check for current role changes
+    if( ! $user->hasAllRoles( $role) ) {
+            // reset all direct permissions for user
+      $user->permissions()->sync([]);
+    } else {
+            // handle permissions
+      $user->syncPermissions($permissions);
+    }
+
+    $user->syncRoles($role);
+
+    return $user;
+  }
+
   //USER
   public function userIndex($user_id, $tab){
     $currentTab = 1;
@@ -152,33 +248,21 @@ class UserController extends Controller
     //$user = User::all();
     return view('admin.business.user.index');
   }
-  public function getList()
-  {
-    if(Auth::user()->role_id==1)
-    {
-       $user = User::where('role_id','<>',1)->orderBy('id', 'desc')->paginate(50);
-    }
-    else
-    {
-      $user = User::where('role_id','<>',1)->where('role_id','<>',2)->orderBy('id', 'desc')->paginate(50);
-    }
-    foreach ($user as $key => $u) {
-      $u->role;
-    }
-    return response()->json($user);
+
+  public function getList(){
+   
   }
 
-  public function getCreate(){
+  public function create(){
     $role = Role::all();
     return view('admin.business.user.create',compact('role'));
   }
 
-  public function postCreate(UserRequest $request,User $user){
+  public function store(UserRequest $request,User $user){
     $user = new User();
     $user->name=$request->name;
     $user->user_name=$request->user_name;
     $user->email=$request->email;
-    $user->role_id=$request->role;
     $user->phone=$request->phone;
     $user->class=$request->class;
     $user->gender=$request->gender;
@@ -187,7 +271,7 @@ class UserController extends Controller
       $user->avatar=$this->uploadImgur($_FILES['avatar'])['data']['link'];
     }
     else {
-      $user->avatar="";
+    $user->avatar="https://imgur.com/a/djlvB";
     }
     $user->local=$request->local;
     $user->coin=$request->coin;
@@ -196,20 +280,28 @@ class UserController extends Controller
     $user->password=Hash::make($request->password);
     $user->code=$request->code;
     $user->save();
+
+    if ( $user = User::create($request->except('roles', 'permissions')) ) {
+        $this->syncPermissions($request, $user);
+        flash('User has been created.');
+    } else {
+        flash()->error('Unable to create user.');
+    }
+
     return redirect('admin/user');
   }
 
-  public function destroy($id){
+  public function destroy($id) {
     $User = User::find($id);
     $User->delete();
     \Session::flash('notify','Xóa thành công');
     return redirect()->route('indexUser');
   }
 
-  public function Show($id){
+  public function show($id){
     $user = User::find($id);
-    $role = Role::all();
-    return view('admin.business.user.show',compact('user','role'));
+    $roles = Role::all();
+    return view('admin.business.user.show',compact('user','roles'));
   }
 
   public function update(Request $request,User $user){
@@ -234,8 +326,10 @@ class UserController extends Controller
     $user->password=Hash::make($request->password);
     $user->code=$request->code;
     $user->save();
+    
     return redirect('admin/user');
   }
+
   public function multiDelete(Request $req)
   {
     foreach ($req->id as $key => $value) {
@@ -243,16 +337,16 @@ class UserController extends Controller
     }
     return 'true';
   }
-  public function search(Request $req)
-  {
+
+  public function search(Request $req) {
     $user=User::where('name', 'LIKE', '%'.$req->key.'%')->get();
     foreach ($user as $key => $u) {
      $u->role;
     }
     return response()->json($user);
   }
-  public function uploadImgur($img)
-  {
+
+  public function uploadImgur($img) {
       $filename = $img['tmp_name'];
       $client_id="5f83e114af0de78";
       $handle = fopen($filename, "r");
@@ -272,26 +366,5 @@ class UserController extends Controller
       return $pms;
   }
 
-  private function syncPermissions(Request $request, $user)
-  {
-        // Get the submitted roles
-    $roles = $request->get('roles', []);
-    $permissions = $request->get('permissions', []);
-
-        // Get the roles
-    $roles = Role::find($roles);
-
-        // check for current role changes
-    if( ! $user->hasAllRoles( $roles ) ) {
-            // reset all direct permissions for user
-      $user->permissions()->sync([]);
-    } else {
-            // handle permissions
-      $user->syncPermissions($permissions);
-    }
-
-    $user->syncRoles($roles);
-
-    return $user;
-  }
+  
 }

@@ -173,11 +173,12 @@ Route::group(['middleware'=>['login']],function(){
 		Route::get('profile', function() {
 		    return view('admin.business.user.profile');
 		});
-		Route::get('user/create',array('as'=>'getcreateUser','uses'=>'UserController@getCreate'));
-		Route::post('user/create',array('as'=>'postcreateUser','uses'=>'UserController@postCreate'));
-		Route::get('user/show/{user}',array('as'=>'showUser','uses'=>'UserController@Show'));
-		Route::post('user/show/{user}',array('as'=>'updateUser','uses'=>'UserController@update'));
-		Route::get('user/{id}',array('as'=>'destroyUser','uses'=>'UserController@destroy'));
+
+		Route::get('user/create',array('as'=>'getcreateUser','uses'=>'UserController@create'));
+		Route::post('user/create',array('as'=>'postcreateUser','uses'=>'UserController@store'));
+		Route::get('user/show/{id}',array('as'=>'showUser','uses'=>'UserController@show'));
+		Route::post('user/update',array('as'=>'updateUser','uses'=>'UserController@update'));
+		Route::get('user/destroy/{id}',array('as'=>'destroyUser','uses'=>'UserController@destroy'));
 
 		Route::get('role',array('as'=>'indexRole','uses'=>'RoleController@index'));
 		Route::get('role/permission/{id}',array('as'=>'indexRole','uses'=>'UserPermissionsController@index'));
