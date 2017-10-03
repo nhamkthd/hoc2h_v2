@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Auth;
-class LikeQuestionNotification extends Notification implements ShouldQueue
+class LikeQuestionNotification extends Notification
 {
      use Queueable;
 
@@ -63,7 +63,7 @@ class LikeQuestionNotification extends Notification implements ShouldQueue
             "user"=>Auth::user(),
             "kind"=>"Thích",
             "model"=>"Câu hỏi",
-            "link"=>"/questions/question/".$this->question_id['question_id']
+            "link"=>"/questions/question/".$this->question_id
             ]);
     }
 }

@@ -90,7 +90,7 @@ class AnswerController extends Controller
             {
                // $followers = $question->followers;
                // foreach ($followers as $follower) {
-                   $question->user->notify((new AnswerQuestionNotification($answer,Auth::user()))->delay(Carbon::now()->addseconds(10)));
+                   $question->user->notify((new AnswerQuestionNotification($answer,Auth::user()))->delay(Carbon::now()->addseconds(1)));
               // }
             }
             $question->answers_count++;

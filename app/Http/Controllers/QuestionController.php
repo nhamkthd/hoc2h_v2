@@ -347,7 +347,7 @@ class QuestionController extends Controller
                 $questionVote->save();
                 $question->votes_count++;
                 if (Auth::user()->id != $question->user->id) {
-                    $question->user->notify((new LikeQuestionNotification($request->question_id))->delay(Carbon::now()->addseconds(10)));
+                    $question->user->notify((new LikeQuestionNotification($request->question_id))->delay(Carbon::now()->addseconds(1)));
                 }
                 $question->save();
                 return 1;

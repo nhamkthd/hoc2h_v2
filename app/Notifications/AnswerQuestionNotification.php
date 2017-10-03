@@ -7,7 +7,6 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Carbon\Carbon;
-use Auth;
 class AnswerQuestionNotification extends Notification implements ShouldQueue
 {
     use Queueable;
