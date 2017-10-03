@@ -153,7 +153,7 @@ Route::get('admin/login',array('as'=>'getlogin','uses'=>'LoginController@index')
 Route::post('admin/login',array('as'=>'postlogin','uses'=>'LoginController@login'));
 Route::get('signout',array('as'=>'signout','uses'=>'LoginController@signout'));
 
-Route::group(['middleware'=>['login']],function(){
+//Route::group(['middleware'=>['login']],function(){
 	Route::group(['prefix'=>'admin'],function(){
 		Route::get('',array('as'=>'homeadmin',function(){return view('admin.business.admin.admin');}));
 		Route::get('category',array('as'=>'indexCategory','uses'=>'CategoryController@index'));
@@ -202,5 +202,5 @@ Route::group(['middleware'=>['login']],function(){
 		    });
 		});
 
-	});
+	//});
 });

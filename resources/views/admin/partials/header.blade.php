@@ -223,7 +223,7 @@
               <img src='{{Auth::user()->avatar}}' width="160px" height="160px" class="img-circle" alt="User Image">
 
                 <p>
-                  {{Auth::user()->role->title}}
+                  {{-- {{Auth::user()->role->title}} --}}
                   <small>{{Auth::user()->email}}</small>
                 </p>
               </li>

@@ -167,9 +167,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
 
         //permission provider...
-        Spatie\Permission\PermissionServiceProvider::class,        
-        Laracasts\Flash\FlashServiceProvider::class,        
-        Collective\Html\HtmlServiceProvider::class,
+        // Spatie\Permission\PermissionServiceProvider::class,        
+        // Laracasts\Flash\FlashServiceProvider::class,        
         /*
          * Package Service Providers...
          */
